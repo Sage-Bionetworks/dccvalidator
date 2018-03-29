@@ -1,0 +1,14 @@
+Package: dccvalidator
+Version: 0.0.0.9000
+Title: Validate CNS Data and Metadata
+Description: Performs automatic checks for common data/metadata quality issues.
+Authors@R: c(
+    person("Kara", "Woo", email = "kara.woo@sagebase.org", role = c("aut", "cre")),
+    person("Sage Bionetworks", role = c("cph"))
+    )
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.0.1.9000
