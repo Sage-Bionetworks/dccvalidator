@@ -7,9 +7,9 @@
 #' @param assay Data frame of assay metadata
 #' @export
 check_indiv_ids <- function(clinical, assay) {
-  if (!"indID" %in% colnames(clinical) | !"indID" %in% colnames(assay)) {
+  if (!"individualID" %in% colnames(clinical) | !"individualID" %in% colnames(assay)) {
     stop(
-      "Both clinical and assay metadata must contain indID column",
+      "Both clinical and assay metadata must contain an `individualID` column",
       call. = FALSE
     )
   }
