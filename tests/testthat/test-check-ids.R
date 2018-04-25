@@ -21,3 +21,10 @@ test_that("check_indiv_ids returns list of missing IDs for invalid metadata", {
     expected_result
   )
 })
+
+test_that("check_indiv_ids throws error if column is missing", {
+  clinical <- data.frame(x = 1:10, y = 1:10)
+  assay <- data.frame(x = 1:5, y = 1:5)
+
+  expect_error(check_indiv_ids(clinical, assay))
+})
