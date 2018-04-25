@@ -14,8 +14,8 @@ check_indiv_ids <- function(clinical, assay) {
     )
   }
   
-  missing_from_assay    <- setdiff(clinical$indID, assay$indID)
-  missing_from_clinical <- setdiff(assay$indID, clinical$indID)
+  missing_from_assay    <- setdiff(clinical$individualID, assay$individualID)
+  missing_from_clinical <- setdiff(assay$individualID, clinical$individualID)
   
   list(
     missing_from_assay = missing_from_assay,
