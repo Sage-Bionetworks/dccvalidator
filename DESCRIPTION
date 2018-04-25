@@ -6,9 +6,10 @@ Authors@R: c(
     person("Kara", "Woo", email = "kara.woo@sagebase.org", role = c("aut", "cre")),
     person("Sage Bionetworks", role = c("cph"))
     )
-Suggests:
+Suggests: 
     fs,
-    testthat
+    testthat,
+    covr
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
