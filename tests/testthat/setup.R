@@ -25,13 +25,13 @@ sampleIDs <- sprintf("%03d", seq_len(length(indIDs) * 2))
 ######################
 
 valid_clinical <- data.frame(
-  indID = indIDs,
+  individualID = indIDs,
   age = sample(18:50, size = 5),
   stringsAsFactors = FALSE
 )
 
 valid_assay <- data.frame(
-  indID = indIDs,
+  individualID = indIDs,
   sampleID = sampleIDs,
   filename = paste0(LETTERS[seq_along(sampleIDs)], ".bam"),
   stringsAsFactors = FALSE
