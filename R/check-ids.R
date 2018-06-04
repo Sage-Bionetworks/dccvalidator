@@ -13,6 +13,14 @@ check_indiv_ids <- function(individual, assay) {
       call. = FALSE
     )
   }
+
+  ## Ensure that factor columns are coerced to character
+  if (is.factor(individual$individualID)) {
+    individual$individualID <- as.character(individual$individualID)
+  }
+  if (is.factor(assay$individualID)) {
+    assay$individualID <- as.character(assay$individualID)
+  }
   
   missing_from_assay      <- setdiff(individual$individualID, assay$individualID)
   missing_from_individual <- setdiff(assay$individualID, individual$individualID)
