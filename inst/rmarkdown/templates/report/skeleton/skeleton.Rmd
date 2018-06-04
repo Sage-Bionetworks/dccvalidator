@@ -1,0 +1,53 @@
+---
+title: Validation Report
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+params:
+  manifest: NA
+  individual: NA
+  assay: NA
+---
+
+```{r knitr-setup, include = FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+library("dccvalidator")
+```
+
+```{r load-data}
+manifest <- params$manifest
+individual <- params$individual
+assay <- params$assay
+```
+
+## Individual IDs
+
+```{r compare-individual-ids}
+indiv_comparison <- check_indiv_ids(individual, assay)
+missing_from_assay <- !identical(indiv_comparison$missing_from_assay, character(0))
+missing_from_individual <- !identical(indiv_comparison$missing_from_individual, character(0))
+```
+
+```{r missing_from_assay, eval = missing_from_assay, results = "asis"}
+cat(
+  "The following individual IDs are missing from the assay metadata file: ",
+  indiv_comparison$missing_from_assay,
+  sep = "\n"
+)
+```
+
+```{r missing_from_individual, eval = missing_from_individual, results = "asis"}
+cat(
+  "The following individual IDs are missing from the individual metadata file: ",
+  indiv_comparison$missing_from_individual
+)
+```
+
+<!-- If neither assay nor individual metadata is missing individual IDs: -->
+
+```{r indviduals-all-good, eval = !any(c(missing_from_assay, missing_from_individual)), results = "asis"}
+cat("**All good!** No mismatched individual IDs found.")
+```
