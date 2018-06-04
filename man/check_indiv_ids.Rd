@@ -4,14 +4,14 @@
 \alias{check_indiv_ids}
 \title{Check individual IDs}
 \usage{
-check_indiv_ids(clinical, assay)
+check_indiv_ids(individual, assay)
 }
 \arguments{
-\item{clinical}{Data frame of clinical metadata}
+\item{individual}{Data frame of individual metadata}
 
 \item{assay}{Data frame of assay metadata}
 }
 \description{
-Ensure that all individual IDs in assay metadata are present in clinical
+Ensure that all individual IDs in assay metadata are present in individual
 metadata and vice versa.
 }

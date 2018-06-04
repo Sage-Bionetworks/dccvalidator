@@ -1,25 +1,25 @@
 #' Check individual IDs
 #'
-#' Ensure that all individual IDs in assay metadata are present in clinical
+#' Ensure that all individual IDs in assay metadata are present in individual
 #' metadata and vice versa.
 #'  
-#' @param clinical Data frame of clinical metadata
+#' @param individual Data frame of individual metadata
 #' @param assay Data frame of assay metadata
 #' @export
-check_indiv_ids <- function(clinical, assay) {
-  if (!"individualID" %in% colnames(clinical) | !"individualID" %in% colnames(assay)) {
+check_indiv_ids <- function(individual, assay) {
+  if (!"individualID" %in% colnames(individual) | !"individualID" %in% colnames(assay)) {
     stop(
-      "Both clinical and assay metadata must contain an `individualID` column",
+      "Both individual and assay metadata must contain an `individualID` column",
       call. = FALSE
     )
   }
   
-  missing_from_assay    <- setdiff(clinical$individualID, assay$individualID)
-  missing_from_clinical <- setdiff(assay$individualID, clinical$individualID)
+  missing_from_assay      <- setdiff(individual$individualID, assay$individualID)
+  missing_from_individual <- setdiff(assay$individualID, individual$individualID)
   
   list(
     missing_from_assay = missing_from_assay,
-    missing_from_clinical = missing_from_clinical
+    missing_from_individual = missing_from_individual
   )
 }
 
