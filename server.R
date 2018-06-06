@@ -41,7 +41,8 @@ server <- function(input, output) {
       params <- list(
         manifest = NA,
         individual = individual(),
-        assay = assay()
+        assay = assay(),
+        assay_name = input$assay_name
       )
 
       rmarkdown::render(

@@ -42,6 +42,8 @@ ui <- fluidPage(
         )
       ),
 
+      radioButtons("assay_name", "Assay type", "rnaseq"),
+
       # Button to download report
       downloadButton("report", "Generate report")
 
