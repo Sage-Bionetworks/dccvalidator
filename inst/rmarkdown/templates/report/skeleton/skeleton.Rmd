@@ -37,9 +37,9 @@ assay_name <- params$assay_name
 ## Column names
 
 ```{r check-column-names}
-manifest_cols <- check_column_names(manifest, "manifest")
-indiv_cols <- check_column_names(individual, "individual")
-assay_cols <- check_column_names(assay, paste("assay", assay_name, sep = "_"))
+manifest_cols <- check_col_names(manifest, "manifest")
+indiv_cols <- check_col_names(individual, "individual")
+assay_cols <- check_col_names(assay, paste("assay", assay_name, sep = "_"))
 ```
 
 ```{r manifest-missing-cols, eval = manifest_cols != character(0)}
