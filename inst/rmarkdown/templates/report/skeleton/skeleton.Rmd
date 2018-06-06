@@ -46,7 +46,7 @@ assay_cols <- check_col_names(assay, paste("assay", assay_name, sep = "_"))
 report("The following columns are missing from the manifest: ", manifest_cols)
 ```
 
-```{r individual-missing-cols, eval = individual_cols != character(0)}
+```{r individual-missing-cols, eval = indiv_cols != character(0)}
 report("The following columns are missing from the individual metadata: ", indiv_cols)
 ```
 
