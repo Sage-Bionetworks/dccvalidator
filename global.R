@@ -18,6 +18,6 @@ use_package <- function(p,
   library(p, character.only = TRUE)
 }
 
-cran_packages <- c("devtools", "shiny")
+cran_packages <- c("devtools", "shiny", "rmarkdown")
 lapply(cran_packages, use_package)
 use_package("dccvalidator", github = "Sage-Bionetworks")

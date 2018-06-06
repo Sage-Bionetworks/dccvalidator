@@ -8,6 +8,7 @@ ui <- fluidPage(
 
     sidebarPanel(
 
+      # Upload files to be validated
       fileInput(
         "manifest",
         "Upload Manifest File",
@@ -39,7 +40,10 @@ ui <- fluidPage(
           "text/comma-separated-values,text/plain",
           ".csv"
         )
-      )
+      ),
+
+      # Button to download report
+      downloadButton("report", "Generate report")
 
     ),
 
