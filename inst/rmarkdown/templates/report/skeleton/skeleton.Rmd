@@ -6,6 +6,7 @@ params:
   manifest: NA
   individual: NA
   assay: NA
+  assay_name: NA
 ---
 
 ```{r knitr-setup, include = FALSE}
@@ -15,13 +16,44 @@ knitr::opts_chunk$set(
   warning = FALSE
 )
 library("dccvalidator")
+
+report <- function(message, object) {
+  if (missing(object)) {
+    cat(message)
+  } else {
+    cat(message, object, sep = "\n")
+  }
+}
+
 ```
 
 ```{r load-data}
 manifest <- params$manifest
 individual <- params$individual
 assay <- params$assay
+assay_name <- params$assay_name
 ```
+
+## Column names
+
+```{r check-column-names}
+manifest_cols <- check_column_names(manifest, "manifest")
+indiv_cols <- check_column_names(individual, "individual")
+assay_cols <- check_column_names(assay, paste("assay", assay_name, sep = "_"))
+```
+
+```{r manifest-missing-cols, eval = manifest_cols != character(0)}
+report("The following columns are missing from the manifest: ", manifest_cols)
+```
+
+```{r individual-missing-cols, eval = individual_cols != character(0)}
+report("The following columns are missing from the individual metadata: ", indiv_cols)
+```
+
+```{r assay-missing-cols, eval = assay_cols != character(0)}
+report("The following columns are missing from the individual metadata: ", assay_cols)
+```
+
 
 ## Individual IDs
 
@@ -32,15 +64,14 @@ missing_from_individual <- !identical(indiv_comparison$missing_from_individual, 
 ```
 
 ```{r missing_from_assay, eval = missing_from_assay, results = "asis"}
-cat(
+report(
   "The following individual IDs are missing from the assay metadata file: ",
-  indiv_comparison$missing_from_assay,
-  sep = "\n"
+  indiv_comparison$missing_from_assay
 )
 ```
 
 ```{r missing_from_individual, eval = missing_from_individual, results = "asis"}
-cat(
+report(
   "The following individual IDs are missing from the individual metadata file: ",
   indiv_comparison$missing_from_individual
 )
@@ -49,5 +80,5 @@ cat(
 <!-- If neither assay nor individual metadata is missing individual IDs: -->
 
 ```{r indviduals-all-good, eval = !any(c(missing_from_assay, missing_from_individual)), results = "asis"}
-cat("**All good!** No mismatched individual IDs found.")
+report("**All good!** No mismatched individual IDs found.")
 ```
