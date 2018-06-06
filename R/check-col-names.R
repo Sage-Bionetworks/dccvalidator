@@ -6,22 +6,41 @@
 #'   the data file.
 #' @export
 check_col_names <- function(data, template) {
-  template <- match.arg(template, c("manifest", "individual", "assay_rnaseq"))
-  template_names <- templist()[[template]]
-  return(setdiff(template_names, names(data)))
+  setdiff(template, names(data))
+}
+
+#' @export
+#' @rdname check_col_names
+check_cols_manifest <- function(data) {
+  check_col_names(data, manifest_cols())
+}
+
+#' @export
+#' @rdname check_col_names
+check_cols_individual <- function(data, template) {
+  template <- match.arg(template, c("human", "animal"))
+  check_col_names(data, individual_cols()[[template]])
+}
+
+#' @export
+#' @rdname check_col_names
+check_cols_assay <- function(data, template) {
+  template <- match.arg(template, c("rnaSeq", "proteomics"))
+  check_col_names(data, assay_cols()[[template]])
 }
 
 
-templist <- function() {
-  templist <- list(
-    manifest = c(
-      "path",
-      "parent",
-      "name",
-      "used",
-      "executed"
-    ),
-    individual = c(
+manifest_cols <- function() {
+  c("path", "parent", "name", "used", "executed")
+}
+
+individual_cols <- function() {
+  list(
+    human = c(
+      "consortium",
+      "grant",
+      "study",
+      "species",
       "individualID",
       "individualIdSource",
       "sex",
@@ -36,7 +55,28 @@ templist <- function() {
       "pH",
       "brain_weight"
     ),
-    assay_rnaseq = c(
+    animal = c(
+      "consortium",
+      "grant",
+      "study",
+      "species",
+      "individualID",
+      "individualIdSource",
+      "sex",
+      "genotype",
+      "genotype_background",
+      "room",
+      "litter",
+      "matingID",
+      "treatmentType"
+    )
+  )
+}
+
+
+assay_cols <- function() {
+  list(
+    rnaSeq = c(
       "individualID",
       "specimenID",
       "file_name",
@@ -55,7 +95,19 @@ templist <- function() {
       "isStranded",
       "runType",
       "readLength"
+    ),
+    proteomics = c(
+      "consortium",
+      "grant",
+      "study",
+      "specimenID",
+      "assay",
+      "platform",
+      "GIS",
+      "TMTkit_batch",
+      "searchEngine",
+      "FDR",
+      "proteome_database"
     )
   )
-  templist
 }
