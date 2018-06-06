@@ -5,6 +5,7 @@ output: html_document
 params:
   manifest: NA
   individual: NA
+  species: NA
   assay: NA
   assay_name: NA
 ---
@@ -31,6 +32,7 @@ report <- function(message, object) {
 ```{r load-data}
 manifest <- params$manifest
 individual <- params$individual
+species <- params$species
 assay <- params$assay
 assay_name <- params$assay_name
 ```
@@ -38,9 +40,9 @@ assay_name <- params$assay_name
 ## Column names
 
 ```{r check-column-names}
-manifest_cols <- check_col_names(manifest, "manifest")
-indiv_cols <- check_col_names(individual, "individual")
-assay_cols <- check_col_names(assay, paste("assay", assay_name, sep = "_"))
+manifest_cols <- check_cols_manifest(manifest)
+indiv_cols <- check_cols_individual(individual, species)
+assay_cols <- check_col_names(assay, assay_name)
 ```
 
 ```{r manifest-missing-cols, eval = manifest_cols != character(0)}
