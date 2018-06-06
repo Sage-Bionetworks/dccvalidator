@@ -41,6 +41,7 @@ server <- function(input, output) {
       params <- list(
         manifest = NA,
         individual = individual(),
+        species = input$species,
         assay = assay(),
         assay_name = input$assay_name
       )

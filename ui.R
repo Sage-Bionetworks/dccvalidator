@@ -30,6 +30,7 @@ ui <- fluidPage(
           ".csv"
         )
       ),
+      radioButtons("species", "Species", c("human", "animal")),
 
       fileInput(
         "assay",
@@ -42,7 +43,7 @@ ui <- fluidPage(
         )
       ),
 
-      radioButtons("assay_name", "Assay type", "rnaseq"),
+      radioButtons("assay_name", "Assay type", c("rnaSeq", "proteomics")),
 
       # Button to download report
       downloadButton("report", "Generate report")
