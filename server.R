@@ -15,16 +15,16 @@ server <- function(input, output) {
   })
 
   # Show data in tabs
-  output$manifest_tab <- renderTable({
-    manifest()
+  output$manifest_tab <- renderPrint({
+    skimr::skim(manifest())
   })
 
-  output$indiv_tab <- renderTable({
-    individual()
+  output$indiv_tab <- renderPrint({
+    skimr::skim(individual())
   })
 
-  output$assay_tab <- renderTable({
-    assay()
+  output$assay_tab <- renderPrint({
+    skimr::skim(assay())
   })
 
   # Generate report
