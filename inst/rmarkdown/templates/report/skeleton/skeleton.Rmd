@@ -19,11 +19,13 @@ knitr::opts_chunk$set(
 )
 library("dccvalidator")
 
-report <- function(message, object) {
-  if (missing(object)) {
-    cat(message)
-  } else {
-    cat(message, object, sep = "\n")
+report <- function(...) {
+  cat(..., "\n\n", sep = "\n\n")
+}
+
+report_if <- function(condition, ...) {
+  if (condition) {
+    report(...)
   }
 }
 
@@ -43,20 +45,23 @@ assay_name <- params$assay_name
 manifest_cols <- check_cols_manifest(manifest)
 indiv_cols <- check_cols_individual(individual, species)
 assay_cols <- check_col_names(assay, assay_name)
-```
 
-```{r manifest-missing-cols, eval = manifest_cols != character(0)}
-report("The following columns are missing from the manifest: ", manifest_cols)
+report_if(
+  !identical(manifest_cols, character(0)),
+  "The following columns are missing from the manifest: ",
+  paste(manifest_cols, collapse = ", ")
+)
+report_if(
+  !identical(indiv_cols, character(0)),
+  "The following columns are missing from the individual metadata: ",
+  paste(indiv_cols, collapse = ", ")
+)
+report_if(
+  !identical(assay_cols, character(0)),
+  "The following columns are missing from the individual metadata: ",
+  paste(assay_cols, collapse = ", ")
+)
 ```
-
-```{r individual-missing-cols, eval = indiv_cols != character(0)}
-report("The following columns are missing from the individual metadata: ", indiv_cols)
-```
-
-```{r assay-missing-cols, eval = assay_cols != character(0)}
-report("The following columns are missing from the individual metadata: ", assay_cols)
-```
-
 
 ## Individual IDs
 
@@ -64,24 +69,22 @@ report("The following columns are missing from the individual metadata: ", assay
 indiv_comparison <- check_indiv_ids(individual, assay)
 missing_from_assay <- !identical(indiv_comparison$missing_from_assay, character(0))
 missing_from_individual <- !identical(indiv_comparison$missing_from_individual, character(0))
-```
 
-```{r missing_from_assay, eval = missing_from_assay}
-report(
+report_if(
+  missing_from_assay,
   "The following individual IDs are missing from the assay metadata file: ",
-  indiv_comparison$missing_from_assay
+  paste(indiv_comparison$missing_from_assay, collapse = ", ")
 )
-```
 
-```{r missing_from_individual, eval = missing_from_individual}
-report(
+report_if(
+  missing_from_individual,
   "The following individual IDs are missing from the individual metadata file: ",
-  indiv_comparison$missing_from_individual
+  paste(indiv_comparison$missing_from_individual, collapse = ", ")
+)
+
+report_if(
+  !any(c(missing_from_assay, missing_from_individual)),
+  "**All good!** No mismatched individual IDs found."
 )
 ```
 
-<!-- If neither assay nor individual metadata is missing individual IDs: -->
-
-```{r indviduals-all-good, eval = !any(c(missing_from_assay, missing_from_individual))}
-report("**All good!** No mismatched individual IDs found.")
-```
