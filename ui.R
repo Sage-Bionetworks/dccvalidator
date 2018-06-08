@@ -55,7 +55,8 @@ ui <- fluidPage(
       tabsetPanel(
         tabPanel("Manifest", verbatimTextOutput("manifest_tab")),
         tabPanel("Individual Metadata", verbatimTextOutput("indiv_tab")),
-        tabPanel("Assay Metadata", verbatimTextOutput("assay_tab"))
+        tabPanel("Assay Metadata", verbatimTextOutput("assay_tab")),
+        tabPanel("Report", uiOutput("report_tab"))
       )
     )
   )
