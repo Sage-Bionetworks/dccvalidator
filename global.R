@@ -23,5 +23,4 @@ lapply(cran_packages, use_package)
 use_package("dccvalidator", github = "Sage-Bionetworks")
 
 ## Set width for skimr output
-cols <- Sys.getenv("COLUMNS")
-if(nzchar(cols)) options(width = as.integer(cols))
+options(width = 110)
