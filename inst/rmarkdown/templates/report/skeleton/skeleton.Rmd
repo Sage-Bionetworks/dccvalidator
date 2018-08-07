@@ -67,25 +67,33 @@ report_if(
 ## Individual IDs
 
 ```{r compare-individual-ids}
-indiv_comparison <- check_indiv_ids(individual, assay)
-missing_from_assay <- !identical(indiv_comparison$missing_from_assay, character(0))
-missing_from_individual <- !identical(indiv_comparison$missing_from_individual, character(0))
+indiv_comparison <- try(check_indiv_ids(individual, assay))
+if (!inherits(indiv_comparison, "try-error")) {
+  missing_from_assay <- !identical(indiv_comparison$missing_from_assay, character(0))
+  missing_from_individual <- !identical(indiv_comparison$missing_from_individual, character(0))
 
-report_if(
-  missing_from_assay,
-  "The following individual IDs are missing from the assay metadata file: ",
-  paste(indiv_comparison$missing_from_assay, collapse = ", ")
-)
+  report_if(
+    missing_from_assay,
+    "The following individual IDs are missing from the assay metadata file: ",
+    paste(indiv_comparison$missing_from_assay, collapse = ", ")
+  )
 
-report_if(
-  missing_from_individual,
-  "The following individual IDs are missing from the individual metadata file: ",
-  paste(indiv_comparison$missing_from_individual, collapse = ", ")
-)
+  report_if(
+    missing_from_individual,
+    "The following individual IDs are missing from the individual metadata file: ",
+    paste(indiv_comparison$missing_from_individual, collapse = ", ")
+  )
 
+  report_if(
+    !any(c(missing_from_assay, missing_from_individual)),
+    "**All good!** No mismatched individual IDs found."
+  )
+}
+
+msg <- attr(res, "condition")$message
 report_if(
-  !any(c(missing_from_assay, missing_from_individual)),
-  "**All good!** No mismatched individual IDs found."
+  msg == "Both individual and assay metadata must contain an `individualID` column",
+  msg
 )
 ```
 
