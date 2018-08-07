@@ -37,23 +37,23 @@ manifest_cols <- function() {
 individual_cols <- function() {
   list(
     human = c(
-      "consortium",
-      "grant",
-      "study",
-      "species",
       "individualID",
       "individualIdSource",
+      "species",
       "sex",
+      "race",
       "ethnicity",
-      "years_of_education",
-      "BMI",
-      "age_of_death",
-      "description_of_death",
-      "year_of_autosy",
-      "apoe_genotype",
-      "PMI",
+      "yearsEducation",
+      "ageDeath",
+      "causeDeath",
+      "descriptionDeath",
+      "yearAutopsy",
+      "apoeGenotype",
+      "pmi",
       "pH",
-      "brain_weight"
+      "brainWeight",
+      "diagnosis",
+      "diagnosisCriteria"
     ),
     animal = c(
       "consortium",
@@ -64,7 +64,7 @@ individual_cols <- function() {
       "individualIdSource",
       "sex",
       "genotype",
-      "genotype_background",
+      "genotypeBackground",
       "room",
       "litter",
       "matingID",
@@ -77,7 +77,9 @@ individual_cols <- function() {
 assay_cols <- function() {
   list(
     rnaSeq = c(
-      "individualID",
+      "consortium",
+      "grant",
+      "study",
       "specimenID",
       "file_name",
       "Synapse_ID",

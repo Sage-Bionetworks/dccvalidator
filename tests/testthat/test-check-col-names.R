@@ -17,7 +17,7 @@ test_that("check_cols_individual works for individual columns", {
   cols <- individual_cols()[["human"]]
   full_col_indiv <- data.frame(matrix(ncol = length(cols)))
   colnames(full_col_indiv) <- cols
-  incomplete_col_indiv <- full_col_indiv[, !names(full_col_indiv) %in% "years_of_education"]
+  incomplete_col_indiv <- full_col_indiv[, !names(full_col_indiv) %in% "yearsEducation"]
 
   expect_equal(
     check_cols_individual(full_col_indiv, "human"),
@@ -25,7 +25,7 @@ test_that("check_cols_individual works for individual columns", {
   )
   expect_equal(
     check_cols_individual(incomplete_col_indiv, "human"),
-    "years_of_education"
+    "yearsEducation"
   )
 })
 
