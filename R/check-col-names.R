@@ -56,12 +56,9 @@ individual_cols <- function() {
       "diagnosisCriteria"
     ),
     animal = c(
-      "consortium",
-      "grant",
-      "study",
-      "species",
       "individualID",
       "individualIdSource",
+      "species",
       "sex",
       "genotype",
       "genotypeBackground",
