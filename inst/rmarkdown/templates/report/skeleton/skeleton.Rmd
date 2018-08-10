@@ -59,7 +59,7 @@ report_if(
 )
 report_if(
   !identical(assay_cols, character(0)),
-  "The following columns are missing from the individual metadata: ",
+  "The following columns are missing from the assay metadata: ",
   paste(assay_cols, collapse = ", ")
 )
 ```
