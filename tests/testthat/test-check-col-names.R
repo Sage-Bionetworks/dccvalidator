@@ -41,7 +41,7 @@ test_that("check_cols_assay works for assay columns", {
   )
   expect_equal(
     check_cols_assay(incomplete_col_assay, "rnaSeq"),
-    c("tissue", "RIN")
+    "RIN"
   )
 
 })

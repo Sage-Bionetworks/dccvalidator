@@ -77,39 +77,26 @@ individual_cols <- function() {
 assay_cols <- function() {
   list(
     rnaSeq = c(
-      "consortium",
-      "grant",
-      "study",
       "specimenID",
-      "file_name",
-      "Synapse_ID",
-      "species",
-      "organ",
-      "tissue",
-      "cellType",
-      "assay",
       "platform",
       "RIN",
-      "RNA_isolation_batch",
-      "library_batch",
-      "sequencing_batch",
+      "rnaBatch",
+      "libraryBatch",
+      "sequencingBatch",
       "libraryPrep",
       "isStranded",
       "runType",
       "readLength"
     ),
     proteomics = c(
-      "consortium",
-      "grant",
-      "study",
       "specimenID",
       "assay",
       "platform",
-      "GIS",
-      "TMTkit_batch",
+      "gis",
+      "tmTkitBatch",
       "searchEngine",
-      "FDR",
-      "proteome_database"
+      "fdr",
+      "proteomeDatabase"
     )
   )
 }
