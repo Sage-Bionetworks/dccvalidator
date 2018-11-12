@@ -61,7 +61,7 @@ check_annotation_keys.CsvFileTable <- function(x) {
     "dataFileHandleId"
   )
   dat_annots <- names(dat)[!names(dat) %in% fv_synapse_cols]
-  invalid_keys <- setdiff(names(x), annotations$key)
+  invalid_keys <- setdiff(dat_annots, annotations$key)
   report_invalid_keys(invalid_keys)
   return(invisible(invalid_keys))
 }
