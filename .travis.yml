@@ -10,5 +10,9 @@ r:
 - release
 - devel
 
+env:
+  global:
+    - R_REMOTES_NO_ERRORS_FROM_WARNINGS=true
+
 after_success:
   - test $TRAVIS_R_VERSION_STRING = "release" && Rscript -e 'covr::codecov()'
