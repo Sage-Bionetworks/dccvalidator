@@ -1,0 +1,5 @@
+library("synapser")
+library("syndccutils")
+synLogin()
+annotations <- get_synapse_annotations()
+use_data(annotations, internal = TRUE)
