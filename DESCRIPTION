@@ -6,13 +6,22 @@ Authors@R: c(
     person("Kara", "Woo", email = "kara.woo@sagebase.org", role = c("aut", "cre")),
     person("Sage Bionetworks", role = c("cph"))
     )
+Depends:
+    R (>= 3.3)
+Imports:
+    synapser
 Suggests: 
     fs,
     testthat,
-    covr
+    covr,
+    syndccutils
+Additional_repositories:
+    https://sage-bionetworks.github.io/ran
+Remotes:
+    Sage-Bionetworks/syndccutils/R
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 6.1.1
