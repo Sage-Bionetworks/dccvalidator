@@ -34,6 +34,8 @@ test_that("check_annotation_keys works for File objects", {
 })
 
 test_that("check_annotation_keys works for file views", {
+  library("synapser")
+  synLogin()
   fv <- synTableQuery("SELECT * FROM syn17038067")
   res <- suppressMessages(check_annotation_keys(fv))
   expect_equal(res, "randomAnnotation")
