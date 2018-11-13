@@ -79,7 +79,7 @@ check_values_of_key <- function(value, key) {
   if (all(is.na(annot_values)) | all(value %in% annot_values)) {
     return(NULL)
   } else {
-    return(value[!value %in% annot_values & !is.na(value)])
+    return(unique(value[!value %in% annot_values & !is.na(value)]))
   }
 }
 

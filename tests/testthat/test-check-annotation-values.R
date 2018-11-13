@@ -47,3 +47,9 @@ test_that("check_annotation_values works for file views", {
   res <- suppressMessages(check_annotation_values(fv))
   expect_equal(res, list(assay = "wrongAssay", species = "wrongSpecies"))
 })
+
+test_that("check annotation values returns unique wrong values, not every single one", {
+  dat <- data.frame(assay = c("foo", "foo", "rnaSeq"), stringsAsFactors = FALSE)
+  res <- suppressMessages(check_annotation_values(dat))
+  expect_equal(res, list(assay = "foo"))
+})
