@@ -16,3 +16,32 @@ Installation
 ``` r
 devtools::install_github("Sage-Bionetworks/dccvalidator")
 ```
+
+Check annotations
+-----------------
+
+You can check whether a Synapse file has valid annotation keys and
+values. You can also check file views and data frames to see if their
+columns correspond to valid annotations, and if the values in the
+columns are valid.
+
+``` r
+library("synapser")
+library("dccvalidator")
+synLogin()
+
+## File
+my_file <- synGet("syn17038065", downloadFile = FALSE)
+check_annotation_keys(my_file)
+check_annotation_values(my_file)
+
+## File view
+fv <- synTableQuery("SELECT * FROM syn17038067")
+check_annotation_keys(fv)
+check_annotation_values(my_file)
+
+## Data frame
+dat <- data.frame(assay = "foo", b = 2)
+check_annotation_keys(dat)
+check_annotation_values(dat)
+```
