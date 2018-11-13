@@ -7,7 +7,7 @@ Authors@R: c(
     person("Sage Bionetworks", role = c("cph"))
     )
 Depends:
-    R (>= 3.4.1)
+    R (>= 3.4)
 Imports:
     purrr,
     synapser
