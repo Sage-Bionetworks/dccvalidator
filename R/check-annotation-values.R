@@ -86,6 +86,9 @@ check_values_of_key <- function(value, key) {
 report_invalid_values <- function(invalid_values) {
   if (length(invalid_values) > 0) {
     message("Invalid values found:")
-    purrr::iwalk(invalid_values, ~ message(paste0(.y, ": ", paste(.x, sep = ", "))))
+    purrr::iwalk(
+      invalid_values,
+      ~ message(paste0(.y, ": ", paste0("\"", .x, "\"", collapse = ", ")))
+    )
   }
 }

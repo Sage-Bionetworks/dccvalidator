@@ -34,7 +34,7 @@ test_that("check_annotation_values works for File objects", {
   expect_equal(resa, structure(list(), .Names = character(0)))
   expect_equal(
     resb,
-    list(species = list("wrongSpecies"), assay = list("wrongAssay"))
+    list(assay = list("wrongAssay"), species = list("wrongSpecies"))
   )
 })
 
