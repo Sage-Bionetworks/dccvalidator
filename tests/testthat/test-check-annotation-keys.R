@@ -34,6 +34,8 @@ test_that("check_annotation_keys works for File objects", {
 })
 
 test_that("check_annotation_keys works for file views", {
+  skip_on_travis()
+  skip_on_cran()
   library("synapser")
   synLogin()
   fv <- synTableQuery("SELECT * FROM syn17038067")
