@@ -64,7 +64,7 @@ check_annotation_values.CsvFileTable <- function(x) {
     "modifiedBy",
     "dataFileHandleId"
   )
-  dat_annots <- names(dat)[!names(dat) %in% fv_synapse_cols]
+  dat_annots <- dat[!names(dat) %in% fv_synapse_cols]
   invalid_values <- purrr::imap(dat_annots, check_values_of_key)
   invalid_values <- purrr::compact(invalid_values)
   report_invalid_values(invalid_values)
