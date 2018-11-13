@@ -1,0 +1,47 @@
+context("test-check-annotation-values.R")
+
+test_that("check_annotation_values returns empty list when no invalid annotations present", {
+  dat1 <- data.frame()
+  dat2 <- data.frame(assay = "rnaSeq")
+  res1 <- check_annotation_values(dat1)
+  res2 <- check_annotation_values(dat2)
+  ## Returns an empty list if data frame was empty
+  expect_equal(res1, list())
+  ## Returns an empty named list if nothing was invalid
+  expect_equal(res2, structure(list(), .Names = character(0)))
+})
+
+test_that("check_annotation_values returns invalid annotation values", {
+  dat <- data.frame(a = 1, b = 2)
+  res <- suppressMessages(check_annotation_values(dat))
+  expect_equal(res, structure(list(), .Names = character(0)))
+})
+
+test_that("check_annotation_values provides message", {
+  dat <- data.frame(assay = "foo", b = 2)
+  expect_message(check_annotation_values(dat))
+})
+
+test_that("check_annotation_values works for File objects", {
+  skip_on_travis()
+  skip_on_cran()
+  library("synapser")
+  synLogin()
+  a <- synGet("syn17038064", downloadFile = FALSE)
+  b <- synGet("syn17038065", downloadFile = FALSE)
+  resa <- suppressMessages(check_annotation_values(a))
+  resb <- suppressMessages(check_annotation_values(b))
+  expect_equal(resa, structure(list(), .Names = character(0)))
+  expect_equal(
+    resb,
+    list(species = list("wrongSpecies"), assay = list("wrongAssay"))
+  )
+})
+
+test_that("check_annotation_values works for file views", {
+  library("synapser")
+  synLogin()
+  fv <- synTableQuery("SELECT * FROM syn17038067")
+  res <- suppressMessages(check_annotation_values(fv))
+  expect_equal(res, list(assay = "wrongAssay", species = "wrongSpecies"))
+})
