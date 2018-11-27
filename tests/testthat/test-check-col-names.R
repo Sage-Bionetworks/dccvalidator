@@ -47,11 +47,11 @@ test_that("check_cols_assay works for assay columns", {
 })
 
 test_that("check_cols_manifest works for manifest columns", {
-  cols <- c("path", "parent", "name", "used", "executed")
+  cols <- c("path", "parent", "name")
   dat <- data.frame(matrix(ncol = length(cols)))
   names(dat) <- cols
 
   expect_equal(check_cols_manifest(dat), character(0))
-  expect_equal(check_cols_manifest(dat[, c("path", "parent")]), c("name", "used", "executed"))
+  expect_equal(check_cols_manifest(dat[, c("path", "parent")]), c("name"))
 
 })

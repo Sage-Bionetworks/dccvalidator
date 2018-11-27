@@ -31,7 +31,7 @@ check_cols_assay <- function(data, template) {
 
 
 manifest_cols <- function() {
-  c("path", "parent", "name", "used", "executed")
+  c("path", "parent", "name")
 }
 
 individual_cols <- function() {
