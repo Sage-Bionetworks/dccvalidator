@@ -56,3 +56,12 @@ write.csv(invalid_individual, "testdata-invalid/invalid_individual.csv", row.nam
 write.csv(invalid_assay, "testdata-invalid/invalid_assay.csv", row.names = FALSE)
 file_create(paste0("testdata-invalid/metadata/", invalid_assay$filename))
 
+#########################################################
+####  Data with IDs as factors instead of character  ####
+#########################################################
+
+factor_individual <- valid_individual
+factor_individual$individualID <- as.factor(factor_individual$individualID)
+
+factor_assay <- valid_assay
+factor_assay$individualID <- as.factor(factor_assay$individualID)

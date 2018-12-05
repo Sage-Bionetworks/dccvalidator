@@ -28,3 +28,9 @@ test_that("check_indiv_ids throws error if column is missing", {
 
   expect_error(check_indiv_ids(individual, assay))
 })
+
+test_that("factor columns are coerced to character", {
+  char <- check_indiv_ids(valid_individual, valid_assay)
+  fact <- check_indiv_ids(factor_individual, factor_assay)
+  expect_equal(char, fact)
+})

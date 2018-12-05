@@ -42,3 +42,7 @@ test_that("check_annotation_keys works for file views", {
   res <- suppressMessages(check_annotation_keys(fv))
   expect_equal(res, "randomAnnotation")
 })
+
+test_that("report_invalid_keys creates a message", {
+  expect_message(report_invalid_keys("foo"))
+})
