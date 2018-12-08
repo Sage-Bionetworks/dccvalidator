@@ -12,88 +12,42 @@ check_col_names <- function(data, template) {
 #' @export
 #' @rdname check_col_names
 check_cols_manifest <- function(data) {
-  check_col_names(data, manifest_cols())
+  check_col_names(data, c("path", "parent"))
 }
 
 #' @export
 #' @rdname check_col_names
 check_cols_individual <- function(data, template) {
   template <- match.arg(template, c("human", "animal"))
-  check_col_names(data, individual_cols()[[template]])
+  names <- get_template(template)
+  check_col_names(data, names)
 }
 
 #' @export
 #' @rdname check_col_names
 check_cols_assay <- function(data, template) {
   template <- match.arg(template, c("rnaSeq", "proteomics"))
-  check_col_names(data, assay_cols()[[template]])
+  names <- get_template(template)
+  check_col_names(data, names)
 }
 
-
-manifest_cols <- function() {
-  c("path", "parent", "name")
-}
-
-individual_cols <- function() {
-  list(
-    human = c(
-      "individualID",
-      "individualIdSource",
-      "species",
-      "sex",
-      "race",
-      "ethnicity",
-      "yearsEducation",
-      "ageDeath",
-      "causeDeath",
-      "descriptionDeath",
-      "yearAutopsy",
-      "apoeGenotype",
-      "pmi",
-      "pH",
-      "brainWeight",
-      "diagnosis",
-      "diagnosisCriteria"
-    ),
-    animal = c(
-      "individualID",
-      "individualIdSource",
-      "species",
-      "sex",
-      "genotype",
-      "genotypeBackground",
-      "room",
-      "litter",
-      "matingID",
-      "treatmentType"
-    )
+get_template <- function(name, ...) {
+  name <- match.arg(name, c("human", "animal", "rnaSeq", "proteomics"))
+  synID <- switch(
+    name,
+    human = "syn12973254",
+    animal = "syn12973253",
+    rnaSeq = "syn12973256",
+    proteomics = "syn12973255"
   )
-}
-
-
-assay_cols <- function() {
-  list(
-    rnaSeq = c(
-      "specimenID",
-      "platform",
-      "RIN",
-      "rnaBatch",
-      "libraryBatch",
-      "sequencingBatch",
-      "libraryPrep",
-      "isStranded",
-      "runType",
-      "readLength"
-    ),
-    proteomics = c(
-      "specimenID",
-      "assay",
-      "platform",
-      "gis",
-      "tmTkitBatch",
-      "searchEngine",
-      "fdr",
-      "proteomeDatabase"
+  template <- try(synapser::synGet(synID))
+  if (inherits(template, "try-error")) {
+    stop(
+      "Couldn't download metadata template. Are you logged in to Synapse?",
+      .call = FALSE
     )
-  )
+  } else {
+    template <- readxl::read_excel(template$path, sheet = 1)
+    return(names(template))
+  }
 }

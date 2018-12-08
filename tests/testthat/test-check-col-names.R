@@ -14,7 +14,9 @@ test_that("check_col_names returns vector of missing columns", {
 
 
 test_that("check_cols_individual works for individual columns", {
-  cols <- individual_cols()[["human"]]
+  skip_on_travis()
+
+  cols <- get_template("human")
   full_col_indiv <- data.frame(matrix(ncol = length(cols)))
   colnames(full_col_indiv) <- cols
   incomplete_col_indiv <- full_col_indiv[, !names(full_col_indiv) %in% "yearsEducation"]
@@ -30,9 +32,11 @@ test_that("check_cols_individual works for individual columns", {
 })
 
 test_that("check_cols_assay works for assay columns", {
+  skip_on_travis()
+  rnaseq_names <- get_template("rnaSeq")
 
-  full_col_assay <- data.frame(matrix(ncol = length(assay_cols()[["rnaSeq"]])))
-  colnames(full_col_assay) <- assay_cols()[["rnaSeq"]]
+  full_col_assay <- data.frame(matrix(ncol = length(rnaseq_names)))
+  colnames(full_col_assay) <- rnaseq_names
   incomplete_col_assay <- full_col_assay[, !names(full_col_assay) %in% c("tissue", "RIN")]
 
   expect_equal(
@@ -43,15 +47,14 @@ test_that("check_cols_assay works for assay columns", {
     check_cols_assay(incomplete_col_assay, "rnaSeq"),
     "RIN"
   )
-
 })
 
 test_that("check_cols_manifest works for manifest columns", {
   cols <- c("path", "parent", "name")
   dat <- data.frame(matrix(ncol = length(cols)))
   names(dat) <- cols
+  incomplete <- data.frame(path = "/home/file.txt")
 
   expect_equal(check_cols_manifest(dat), character(0))
-  expect_equal(check_cols_manifest(dat[, c("path", "parent")]), c("name"))
-
+  expect_equal(check_cols_manifest(incomplete), "parent")
 })
