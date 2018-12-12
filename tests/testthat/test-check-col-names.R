@@ -15,6 +15,8 @@ test_that("check_col_names returns vector of missing columns", {
 
 test_that("check_cols_individual works for individual columns", {
   skip_on_travis()
+  library("synapser")
+  synLogin()
 
   cols <- get_template("human")
   full_col_indiv <- data.frame(matrix(ncol = length(cols)))
