@@ -10,6 +10,7 @@ Depends:
     R (>= 3.4)
 Imports:
     purrr,
+    readxl,
     synapser
 Suggests: 
     fs,
