@@ -31,12 +31,23 @@ check_cols_assay <- function(data, template) {
   check_col_names(data, names)
 }
 
+#' @export
+#' @rdname check_col_names
+check_cols_biospecimen <- function(data) {
+  names <- get_template("biospecimen")
+  check_col_names(data, names)
+}
+
 get_template <- function(name, ...) {
-  name <- match.arg(name, c("human", "animal", "rnaSeq", "proteomics"))
+  name <- match.arg(
+    name,
+    c("human", "animal", "biospecimen", "rnaSeq", "proteomics")
+  )
   synID <- switch(
     name,
     human = "syn12973254",
     animal = "syn12973253",
+    biospecimen = "syn12973252",
     rnaSeq = "syn12973256",
     proteomics = "syn12973255"
   )

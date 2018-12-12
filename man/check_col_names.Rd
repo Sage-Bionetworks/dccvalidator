@@ -5,6 +5,7 @@
 \alias{check_cols_manifest}
 \alias{check_cols_individual}
 \alias{check_cols_assay}
+\alias{check_cols_biospecimen}
 \title{Check column names against their corresponding template}
 \usage{
 check_col_names(data, template)
@@ -14,6 +15,8 @@ check_cols_manifest(data)
 check_cols_individual(data, template)
 
 check_cols_assay(data, template)
+
+check_cols_biospecimen(data)
 }
 \arguments{
 \item{data}{Data file (manifest, individual metadata, or assay metadata)}
