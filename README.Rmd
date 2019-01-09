@@ -53,3 +53,7 @@ dat <- data.frame(assay = "foo", b = 2)
 check_annotation_keys(dat)
 check_annotation_values(dat)
 ```
+
+Please note that the dccvalidator project is released with a [Contributor Code
+of Conduct](.github/CODE_OF_CONDUCT.md). By contributing to this project, you
+agree to abide by its terms.
