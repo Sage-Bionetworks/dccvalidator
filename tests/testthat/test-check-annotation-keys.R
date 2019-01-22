@@ -21,10 +21,14 @@ test_that("check_annotation_keys provides message", {
 })
 
 test_that("check_annotation_keys works for File objects", {
-  skip_on_travis()
   skip_on_cran()
+
   library("synapser")
-  synLogin()
+  if (on_travis()) {
+    syn_travis_login()
+  } else {
+    synLogin()
+  }
   a <- synGet("syn17038064", downloadFile = FALSE)
   b <- synGet("syn17038065", downloadFile = FALSE)
   resa <- suppressMessages(check_annotation_keys(a))
@@ -34,10 +38,14 @@ test_that("check_annotation_keys works for File objects", {
 })
 
 test_that("check_annotation_keys works for file views", {
-  skip_on_travis()
   skip_on_cran()
+
   library("synapser")
-  synLogin()
+  if (on_travis()) {
+    syn_travis_login()
+  } else {
+    synLogin()
+  }
   fv <- synTableQuery("SELECT * FROM syn17038067")
   res <- suppressMessages(check_annotation_keys(fv))
   expect_equal(res, "randomAnnotation")

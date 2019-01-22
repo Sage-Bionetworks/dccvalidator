@@ -23,26 +23,35 @@ test_that("check_annotation_values provides message", {
 })
 
 test_that("check_annotation_values works for File objects", {
-  skip_on_travis()
   skip_on_cran()
+
   library("synapser")
-  synLogin()
+  if (on_travis()) {
+    syn_travis_login()
+  } else {
+    synLogin()
+  }
   a <- synGet("syn17038064", downloadFile = FALSE)
   b <- synGet("syn17038065", downloadFile = FALSE)
   resa <- suppressMessages(check_annotation_values(a))
   resb <- suppressMessages(check_annotation_values(b))
   expect_equal(resa, structure(list(), .Names = character(0)))
   expect_equal(
-    resb,
+    resb[order(names(resb))], # need to ensure these are in the right order,
+                              # sometimes they get returned in a different order
     list(assay = list("wrongAssay"), species = list("wrongSpecies"))
   )
 })
 
 test_that("check_annotation_values works for file views", {
-  skip_on_travis()
   skip_on_cran()
+
   library("synapser")
-  synLogin()
+  if (on_travis()) {
+    syn_travis_login()
+  } else {
+    synLogin()
+  }
   fv <- synTableQuery("SELECT * FROM syn17038067")
   res <- suppressMessages(check_annotation_values(fv))
   expect_equal(res, list(assay = "wrongAssay", species = "wrongSpecies"))
