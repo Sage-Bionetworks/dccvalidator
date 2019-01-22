@@ -1,13 +1,8 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: R
-sudo: required
+sudo: false
 cache: packages
-
-before_install:
-  - sudo apt-get update -y
-  - sudo apt-get install -y dpkg-dev zlib1g-dev libssl-dev libffi-dev
-  - sudo apt-get install -y curl libcurl4-openssl-dev
 
 r:
 - 3.4
@@ -18,5 +13,3 @@ r:
 env:
   global:
     - R_REMOTES_NO_ERRORS_FROM_WARNINGS=true
-    - PYTHON_CLIENT_GITHUB_USERNAME=kimyen
-    - PYTHON_CLIENT_GITHUB_BRANCH=SYNPY-833
