@@ -37,7 +37,7 @@ check_annotation_values(my_file)
 ## File view
 fv <- synTableQuery("SELECT * FROM syn17038067")
 check_annotation_keys(fv)
-check_annotation_values(my_file)
+check_annotation_values(fv)
 
 ## Data frame
 dat <- data.frame(assay = "foo", b = 2)
