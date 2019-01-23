@@ -8,7 +8,7 @@ test_that("login works on travis", {
   ## Lots of other things will fail too if it doesn't, but doesn't hurt to have
   ## a dedicated test
   if (!on_travis()) { # only run on travis
-    skip()
+    skip("This test should run on Travis only")
   }
   login <- try(syn_travis_login(), silent = TRUE)
   expect_false(inherits(login, "try-error"))
