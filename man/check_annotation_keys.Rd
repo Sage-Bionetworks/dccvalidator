@@ -2,19 +2,24 @@
 % Please edit documentation in R/check-annotation-keys.R
 \name{check_annotation_keys}
 \alias{check_annotation_keys}
+\alias{valid_annotation_keys}
 \title{Check annotation keys}
 \usage{
 check_annotation_keys(x)
+
+valid_annotation_keys(x)
 }
 \arguments{
 \item{x}{An object to check.}
 }
 \value{
-A character vector of invalid annotation keys present in \code{x}.
+A character vector of invalid (for \code{check_annotation_keys()}) or
+valid (for \code{valid_annotation_keys()}) annotation keys present in \code{x}.
 }
 \description{
 Checks that all annotation keys on a file, in a file view, or in a data frame
-are valid annotations.
+are valid annotations. \code{check_annotation_keys()} returns any invalid
+annotation keys; \code{valid_annotation_keys()} returns \emph{valid} annotation keys.
 }
 \examples{
 \dontrun{

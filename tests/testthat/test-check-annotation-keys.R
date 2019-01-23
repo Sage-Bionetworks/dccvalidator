@@ -51,6 +51,6 @@ test_that("check_annotation_keys works for file views", {
   expect_equal(res, "randomAnnotation")
 })
 
-test_that("report_invalid_keys creates a message", {
-  expect_message(report_invalid_keys("foo"))
+test_that("report_keys creates a message", {
+  expect_message(report_keys("a message:", "foo"))
 })
