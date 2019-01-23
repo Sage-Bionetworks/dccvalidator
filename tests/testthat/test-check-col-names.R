@@ -14,9 +14,14 @@ test_that("check_col_names returns vector of missing columns", {
 
 
 test_that("check_cols_individual works for individual columns", {
-  skip_on_travis()
+  skip_on_cran()
+
   library("synapser")
-  synLogin()
+  if (on_travis()) {
+    syn_travis_login()
+  } else {
+    synLogin()
+  }
 
   cols <- get_template("human")
   full_col_indiv <- data.frame(matrix(ncol = length(cols)))
@@ -34,7 +39,15 @@ test_that("check_cols_individual works for individual columns", {
 })
 
 test_that("check_cols_assay works for assay columns", {
-  skip_on_travis()
+  skip_on_cran()
+
+  library("synapser")
+  if (on_travis()) {
+    syn_travis_login()
+  } else {
+    synLogin()
+  }
+
   rnaseq_names <- get_template("rnaSeq")
 
   full_col_assay <- data.frame(matrix(ncol = length(rnaseq_names)))
