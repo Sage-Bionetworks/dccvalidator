@@ -8,7 +8,7 @@ syn_travis_login <- function() {
 
 ## Check if we are running on travis
 on_travis <- function() {
-  if (!identical(Sys.getenv("TRAVIS"), "true")) {
+  if (identical(Sys.getenv("TRAVIS"), "true")) {
     return(TRUE)
   } else {
     return(FALSE)
