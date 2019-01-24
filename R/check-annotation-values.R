@@ -1,9 +1,10 @@
 #' Check annotation values
 #'
-#' Checks that all annotation values. Currently only checks enumerated values
-#' for standard annotation keys; it does not check types for annotations such as
-#' `compoundDoseUnit` which are required to be strings but have no enumerated
-#' list of values.
+#' Checks that all annotation values are valid. Currently only checks enumerated
+#' values for standard annotation keys; it does not check types for annotations
+#' such as `compoundDoseUnit` which are required to be strings but have no
+#' enumerated list of values. It also does not report on values for invalid
+#' _keys_; see [check_annotation_keys()].
 #'
 #' @param x An object to check.
 #' @return A named list of invalid annotation values.
