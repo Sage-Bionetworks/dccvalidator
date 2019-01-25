@@ -102,7 +102,10 @@ test_that("check_annotation_values works for file views", {
   }
   fv <- synTableQuery("SELECT * FROM syn17038067")
   res <- suppressMessages(valid_annotation_values(fv))
-  expect_equal(res, list(fileFormat = c("txt", "csv")))
+  ## Slightly awkward test because synapse seems to return the values in
+  ## different orders sometimes
+  expect_equal(names(res), "fileFormat")
+  expect_equal(sort(res$fileFormat), c("csv", "txt"))
 })
 
 test_that("check_value returns NULL if key is not present", {

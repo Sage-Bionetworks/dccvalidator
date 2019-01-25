@@ -78,7 +78,8 @@ test_that("valid_annotation_keys works for File objects", {
   resa <- suppressMessages(valid_annotation_keys(a))
   resb <- suppressMessages(valid_annotation_keys(b))
   expect_equal(resa, "fileFormat")
-  expect_equal(resb, c("species", "assay", "fileFormat"))
+  ## Sort because I think Synapse doesn't always return the same order
+  expect_equal(sort(resb), c("assay", "fileFormat", "species"))
 })
 
 test_that("valid_annotation_keys works for file views", {
@@ -92,7 +93,8 @@ test_that("valid_annotation_keys works for file views", {
   }
   fv <- synTableQuery("SELECT * FROM syn17038067")
   res <- suppressMessages(valid_annotation_keys(fv))
-  expect_equal(res, c("fileFormat", "assay", "species"))
+  ## Sort because I think Synapse doesn't always return the same order
+  expect_equal(sort(res), c("assay", "fileFormat", "species"))
 })
 
 test_that("check_keys", {
