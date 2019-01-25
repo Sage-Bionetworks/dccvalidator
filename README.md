@@ -44,6 +44,11 @@ check_annotation_keys(dat)
 check_annotation_values(dat)
 ```
 
+If you instead wish to view which annotations *are* valid, you can use
+`valid_annotation_keys()` and `valid_annotation_values()`.
+
+-----
+
 Please note that the dccvalidator project is released with a
 [Contributor Code of Conduct](.github/CODE_OF_CONDUCT.md). By
 contributing to this project, you agree to abide by its terms.
