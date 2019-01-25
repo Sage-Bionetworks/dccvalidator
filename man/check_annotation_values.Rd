@@ -2,9 +2,12 @@
 % Please edit documentation in R/check-annotation-values.R
 \name{check_annotation_values}
 \alias{check_annotation_values}
+\alias{valid_annotation_values}
 \title{Check annotation values}
 \usage{
 check_annotation_values(x)
+
+valid_annotation_values(x)
 }
 \arguments{
 \item{x}{An object to check.}
