@@ -5,12 +5,15 @@
 \alias{valid_annotation_values}
 \title{Check annotation values}
 \usage{
-check_annotation_values(x)
+check_annotation_values(x, annotations)
 
-valid_annotation_values(x)
+valid_annotation_values(x, annotations)
 }
 \arguments{
 \item{x}{An object to check.}
+
+\item{annotations}{A data frame of annotation definitions. Must contain at
+least two columns: \code{key} and \code{value}.}
 }
 \value{
 A named list of invalid annotation values.
@@ -26,13 +29,20 @@ enumerated list of values. It also does not report on values for invalid
 \dontrun{
 library("synapser")
 synLogin()
+annots <- get_synapse_annotations()
 my_file <- synGet("syn11931757", downloadFile = FALSE)
-check_annotation_values(my_file)
+check_annotation_values(my_file, annots)
 
 dat <- data.frame(non_annotation = 5, assay = "rnaSeq")
-check_annotation_values(dat)
+check_annotation_values(dat, annots)
 
 fv <- synTableQuery("SELECT * FROM syn17020234")
-check_annotation_values(fv)
+check_annotation_values(fv, annots)
+
+# If you don't specify an annotations data frame, these functions will
+# download annotations automatically using `get_synapse_annotations()` (must
+# be logged in to Synapse)
+my_file <- synGet("syn11931757", downloadFile = FALSE)
+check_annotation_values(my_file)
 }
 }

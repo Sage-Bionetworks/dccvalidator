@@ -6,7 +6,7 @@
 #' enumerated list of values. It also does not report on values for invalid
 #' _keys_; see [check_annotation_keys()].
 #'
-#' @param x An object to check.
+#' @inheritParams check_annotation_keys
 #' @return A named list of invalid annotation values.
 #' @export
 #'
@@ -14,32 +14,39 @@
 #' \dontrun{
 #' library("synapser")
 #' synLogin()
+#' annots <- get_synapse_annotations()
 #' my_file <- synGet("syn11931757", downloadFile = FALSE)
-#' check_annotation_values(my_file)
+#' check_annotation_values(my_file, annots)
 #'
 #' dat <- data.frame(non_annotation = 5, assay = "rnaSeq")
-#' check_annotation_values(dat)
+#' check_annotation_values(dat, annots)
 #'
 #' fv <- synTableQuery("SELECT * FROM syn17020234")
-#' check_annotation_values(fv)
+#' check_annotation_values(fv, annots)
+#'
+#' # If you don't specify an annotations data frame, these functions will
+#' # download annotations automatically using `get_synapse_annotations()` (must
+#' # be logged in to Synapse)
+#' my_file <- synGet("syn11931757", downloadFile = FALSE)
+#' check_annotation_values(my_file)
 #' }
-check_annotation_values <- function (x) {
+check_annotation_values <- function (x, annotations) {
   UseMethod("check_annotation_values", x)
 }
 
 #' @export
-check_annotation_values.File <- function(x) {
+check_annotation_values.File <- function(x, annotations) {
   annots <- synapser::synGetAnnotations(x)
-  check_values(annots, return_valid = FALSE)
+  check_values(annots, annotations, return_valid = FALSE)
 }
 
 #' @export
-check_annotation_values.data.frame <- function(x) {
-  check_values(x, return_valid = FALSE)
+check_annotation_values.data.frame <- function(x, annotations) {
+  check_values(x, annotations, return_valid = FALSE)
 }
 
 #' @export
-check_annotation_values.CsvFileTable <- function(x) {
+check_annotation_values.CsvFileTable <- function(x, annotations) {
   dat <- synapser::as.data.frame(x)
   fv_synapse_cols <- c(
     "ROW_ID",
@@ -60,28 +67,28 @@ check_annotation_values.CsvFileTable <- function(x) {
     "dataFileHandleId"
   )
   dat_annots <- dat[!names(dat) %in% fv_synapse_cols]
-  check_values(dat_annots, return_valid = FALSE)
+  check_values(dat_annots, annotations, return_valid = FALSE)
 }
 
 #' @export
 #' @rdname check_annotation_values
-valid_annotation_values <- function (x) {
+valid_annotation_values <- function (x, annotations) {
   UseMethod("valid_annotation_values", x)
 }
 
 #' @export
-valid_annotation_values.File <- function(x) {
+valid_annotation_values.File <- function(x, annotations) {
   annots <- synapser::synGetAnnotations(x)
-  check_values(annots, return_valid = TRUE)
+  check_values(annots, annotations, return_valid = TRUE)
 }
 
 #' @export
-valid_annotation_values.data.frame <- function(x) {
-  check_values(x, return_valid = TRUE)
+valid_annotation_values.data.frame <- function(x, annotations) {
+  check_values(x, annotations, return_valid = TRUE)
 }
 
 #' @export
-valid_annotation_values.CsvFileTable <- function(x) {
+valid_annotation_values.CsvFileTable <- function(x, annotations) {
   dat <- synapser::as.data.frame(x)
   fv_synapse_cols <- c(
     "ROW_ID",
@@ -102,11 +109,14 @@ valid_annotation_values.CsvFileTable <- function(x) {
     "dataFileHandleId"
   )
   dat_annots <- dat[!names(dat) %in% fv_synapse_cols]
-  check_values(dat_annots, return_valid = TRUE)
+  check_values(dat_annots, annotations, return_valid = TRUE)
 }
 
 ## Check one value against its key
-check_value <- function(value, key, return_valid = FALSE) {
+check_value <- function(value, key, annotations, return_valid = FALSE) {
+  if (missing(annotations)) {
+    annotations <- syndccutils::get_synapse_annotations()
+  }
   if (!key %in% annotations$key) {
     return(NULL)
   }
@@ -119,8 +129,11 @@ check_value <- function(value, key, return_valid = FALSE) {
 }
 
 ## Check a set of values against their keys
-check_values <- function(x, return_valid = FALSE) {
-  values <- purrr::imap(x, check_value, return_valid = return_valid)
+check_values <- function(x, annotations, return_valid = FALSE) {
+  if (missing(annotations)) {
+    annotations <- syndccutils::get_synapse_annotations()
+  }
+  values <- purrr::imap(x, check_value, annotations, return_valid = return_valid)
   values <- purrr::compact(values)
 
   if (isTRUE(return_valid)) {
