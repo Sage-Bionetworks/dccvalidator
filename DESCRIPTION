@@ -11,12 +11,12 @@ Depends:
 Imports:
     purrr,
     readxl,
-    synapser
+    synapser,
+    syndccutils
 Suggests: 
     fs,
     testthat,
-    covr,
-    syndccutils
+    covr
 Additional_repositories:
     https://sage-bionetworks.github.io/ran
 Remotes:
