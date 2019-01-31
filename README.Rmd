@@ -34,25 +34,39 @@ You can check whether a Synapse file has valid annotation keys and values. You
 can also check file views and data frames to see if their columns correspond to
 valid annotations, and if the values in the columns are valid.
 
-```{r check-annotations, eval = FALSE}
+```{r login, message = FALSE, results = "hide"}
 library("synapser")
 library("dccvalidator")
 synLogin()
+```
+
+```{r check-annotations }
+## Get annotations
+annots <- get_synapse_annotations()
 
 ## File
 my_file <- synGet("syn17038065", downloadFile = FALSE)
-check_annotation_keys(my_file)
-check_annotation_values(my_file)
+check_annotation_keys(my_file, annots)
+check_annotation_values(my_file, annots)
 
 ## File view
 fv <- synTableQuery("SELECT * FROM syn17038067")
-check_annotation_keys(fv)
-check_annotation_values(fv)
+check_annotation_keys(fv, annots)
+check_annotation_values(fv, annots)
 
 ## Data frame
 dat <- data.frame(assay = "foo", b = 2)
-check_annotation_keys(dat)
-check_annotation_values(dat)
+check_annotation_keys(dat, annots)
+check_annotation_values(dat, annots)
+```
+
+If you do not provide the annotations data frame to check against, the functions
+will download the data automatically with `get_synapse_annotations()`.
+
+```{r, check-annotations-2}
+my_file <- synGet("syn17038065", downloadFile = FALSE)
+check_annotation_keys(my_file)
+check_annotation_values(my_file)
 ```
 
 If you instead wish to view which annotations _are_ valid, you can use
