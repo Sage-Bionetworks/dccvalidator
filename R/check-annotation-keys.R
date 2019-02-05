@@ -115,6 +115,9 @@ valid_annotation_keys.CsvFileTable <- function(x, annotations) {
 
 
 check_keys <- function(x, annotations, return_valid = FALSE) {
+  if (length(x) == 0) {
+    stop("No annotations present to check", call. = FALSE)
+  }
   if (missing(annotations)) {
     annotations <- syndccutils::get_synapse_annotations()
   }

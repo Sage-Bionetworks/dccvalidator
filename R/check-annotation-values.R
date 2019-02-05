@@ -130,6 +130,9 @@ check_value <- function(value, key, annotations, return_valid = FALSE) {
 
 ## Check a set of values against their keys
 check_values <- function(x, annotations, return_valid = FALSE) {
+  if (length(names(x)) == 0) {
+    stop("No annotations present to check", call. = FALSE)
+  }
   if (missing(annotations)) {
     annotations <- syndccutils::get_synapse_annotations()
   }

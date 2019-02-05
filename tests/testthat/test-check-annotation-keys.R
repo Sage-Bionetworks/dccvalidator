@@ -5,12 +5,14 @@ if (on_travis()) syn_travis_login() else synLogin()
 annots <- syndccutils::get_synapse_annotations()
 
 test_that("check_annotation_keys returns character(0) when no invalid annotations present", {
-  dat1 <- data.frame()
-  dat2 <- data.frame(assay = "rnaSeq")
-  res1 <- check_annotation_keys(dat1, annots)
-  res2 <- check_annotation_keys(dat2, annots)
-  expect_equal(res1, character(0))
-  expect_equal(res2, character(0))
+  dat <- data.frame(assay = "rnaSeq")
+  res <- check_annotation_keys(dat, annots)
+  expect_equal(res, character(0))
+})
+
+test_that("check_annotation_keys errors when no data provided", {
+  dat <- data.frame()
+  expect_error(check_annotation_keys(dat, annots))
 })
 
 test_that("check_annotation_keys returns invalid annotation values", {
