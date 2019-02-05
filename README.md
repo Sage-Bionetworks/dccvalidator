@@ -8,7 +8,7 @@ Status](https://travis-ci.org/Sage-Bionetworks/dccvalidator.svg?branch=master)](
 status](https://codecov.io/gh/Sage-Bionetworks/dccvalidator/branch/master/graph/badge.svg)](https://codecov.io/github/Sage-Bionetworks/dccvalidator?branch=master)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
-Validate CNS Data and Metadata
+Validate CNS data/metadata and annotations.
 
 ## Installation
 
