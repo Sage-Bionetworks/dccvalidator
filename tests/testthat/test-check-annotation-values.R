@@ -5,12 +5,14 @@ if (on_travis()) syn_travis_login() else synLogin()
 annots <- syndccutils::get_synapse_annotations()
 
 test_that("check_annotation_values returns empty list when no invalid annotations present", {
-  dat1 <- data.frame()
-  dat2 <- data.frame(assay = "rnaSeq")
-  res1 <- check_annotation_values(dat1, annots)
-  res2 <- check_annotation_values(dat2, annots)
-  expect_equal(res1, structure(list(), .Names = character(0)))
-  expect_equal(res2, structure(list(), .Names = character(0)))
+  dat <- data.frame(assay = "rnaSeq")
+  res <- check_annotation_values(dat, annots)
+  expect_equal(res, structure(list(), .Names = character(0)))
+})
+
+test_that("check_annotation_values errors when there are no annotations to check", {
+  dat <- data.frame()
+  expect_error(check_annotation_values(dat, annots))
 })
 
 test_that("check_annotation_values returns invalid annotation values", {
@@ -52,17 +54,18 @@ test_that("check annotation values returns unique wrong values, not every single
 })
 
 test_that("valid_annotation_values returns valid values", {
-  dat1 <- data.frame()
-  dat2 <- data.frame(assay = "rnaSeq")
-  res1 <- valid_annotation_values(dat1)
-  res2 <- suppressMessages(valid_annotation_values(dat2, annots))
-  ## Returns an empty named list if data frame was empty
-  expect_equal(res1, structure(list(), .Names = character(0)))
+  dat <- data.frame(assay = "rnaSeq")
+  res <- suppressMessages(valid_annotation_values(dat, annots))
   ## Returns list of valid values
   expect_equal(
-    res2,
+    res,
     list(assay = structure(1L, .Label = "rnaSeq", class = "factor"))
   )
+})
+
+test_that("valid_annotation_values fails when no annotations present", {
+  dat <- data.frame()
+  expect_error(valid_annotation_values(dat, annots))
 })
 
 test_that("valid_annotation_values works for File objects", {
