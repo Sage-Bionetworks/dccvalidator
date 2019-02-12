@@ -7,8 +7,7 @@
 find_specimen_mismatches(synID, fileID)
 }
 \arguments{
-\item{synID}{One or more Synapse IDs whose annotations contain specimenIDs to
-check.}
+\item{synID}{Synapse IDs of data files annotated with specimenID}
 
 \item{fileID}{Synapse ID of the metadata file to check.}
 }

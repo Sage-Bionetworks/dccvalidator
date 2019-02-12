@@ -1,16 +1,3 @@
-#' Get specimenID annotations from one or more Synapse objects
-#'
-#' @param synID One or more Synapse IDs whose annotations contain specimenIDs to
-#'   check.
-#' @return A named character vector of specimenIDs corresponding to the given
-#'   synIDs.
-#' @export
-get_specimenID_data <- function(synID) {
-  names <- purrr::set_names(synID)
-  ids <- purrr::map(names, get_annotation, "specimenID")
-  unlist(ids)
-}
-
 #' Extract specimen IDs from a metadata file
 #'
 #' Given the Synapse ID for a metadata file, this function downloads the file,
@@ -34,8 +21,8 @@ get_specimenID_metadata <- function(fileID) {
 
 #' Compare specimenIDs between data file annotations and metadata file contents
 #'
-#' @inheritParams get_specimenID_data
 #' @inheritParams get_specimenID_metadata
+#' @param synID Synapse IDs of data files annotated with specimenID
 #' @return A list of specimen IDs missing from the metadata and from the data.
 #' @export
 #' @examples
@@ -45,7 +32,7 @@ get_specimenID_metadata <- function(fileID) {
 #' find_specimen_mismatches(synIDs, meta_file)
 #' }
 find_specimen_mismatches <- function(synID, fileID) {
-  data_ids <- get_specimenID_data(synID)
+  data_ids <- get_annotation(synID, "specimenID")
   meta_ids <- get_specimenID_metadata(fileID)
   list(
     ## Not using setdiff() for things in missing_from_metadata because I want to

@@ -15,10 +15,12 @@ on_travis <- function() {
   }
 }
 
-## Get the value of an annotation on object x
-get_annotation <- function(x, key) {
+## Get the value of an annotation on object(s) x
+get_annotation <- function(ids, key) {
   if (missing(key)) {
     stop("Please provide an annotation key to look up", call. = FALSE)
   }
-  synapser::synGetAnnotations(x)[[key]]
+  ids <- purrr::set_names(ids)
+  annots <- purrr::map(ids, function(x) synapser::synGetAnnotations(x)[[key]])
+  unlist(annots)
 }
