@@ -1,9 +1,7 @@
 #' Extract specimen IDs from a metadata file
 #'
-#' Given the Synapse ID for a metadata file, this function downloads the file,
-#' reads in the first sheet, and looks for the specimenID column. It expects the
-#' file to be an .xlsx file (consistent with AMP-AD templates); this may be
-#' generalized to accommodate CSV files and other column names in the future.
+#' Given the Synapse ID for a metadata file, this function downloads the file
+#' and looks for the specimenID column. It expects the file to be a CSV file.
 #'
 #' @param fileID Synapse ID of the metadata file to check.
 #' @return A character vector of specimen IDs present in the specimenID column
@@ -11,7 +9,7 @@
 #' @export
 get_specimenID_metadata <- function(fileID) {
   file <- synapser::synGet(fileID)
-  dat <- readxl::read_excel(file$path, sheet = 1)
+  dat <- read.csv(file$path, stringsAsFactors = FALSE)
   if ("specimenID" %in% names(dat)) {
     dat$specimenID
   } else {

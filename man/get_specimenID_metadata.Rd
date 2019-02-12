@@ -14,8 +14,6 @@ A character vector of specimen IDs present in the specimenID column
 of the file.
 }
 \description{
-Given the Synapse ID for a metadata file, this function downloads the file,
-reads in the first sheet, and looks for the specimenID column. It expects the
-file to be an .xlsx file (consistent with AMP-AD templates); this may be
-generalized to accommodate CSV files and other column names in the future.
+Given the Synapse ID for a metadata file, this function downloads the file
+and looks for the specimenID column. It expects the file to be a CSV file.
 }
