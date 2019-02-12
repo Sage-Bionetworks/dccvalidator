@@ -14,3 +14,11 @@ on_travis <- function() {
     return(FALSE)
   }
 }
+
+## Get the value of an annotation on object x
+get_annotation <- function(x, key) {
+  if (missing(key)) {
+    stop("Please provide an annotation key to look up", call. = FALSE)
+  }
+  synapser::synGetAnnotations(x)[[key]]
+}

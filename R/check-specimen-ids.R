@@ -11,13 +11,6 @@ get_specimenID_data <- function(synID) {
   unlist(ids)
 }
 
-get_annotation <- function(x, key) {
-  if (missing(key)) {
-    stop("Please provide an annotation key to look up", call. = FALSE)
-  }
-  synapser::synGetAnnotations(x)[[key]]
-}
-
 #' Extract specimen IDs from a metadata file
 #'
 #' Given the Synapse ID for a metadata file, this function downloads the file,
