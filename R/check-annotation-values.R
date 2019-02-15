@@ -174,6 +174,12 @@ check_values <- function(x, annotations, return_valid = FALSE) {
   if (missing(annotations)) {
     annotations <- syndccutils::get_synapse_annotations()
   }
+  if (!all(c("key", "value", "columnType") %in% names(annotations))) {
+    stop(
+      "Annotations must have the following columns: 'key', 'value', and 'columnType'",
+      call. = FALSE
+    )
+  }
   values <- purrr::imap(x, check_value, annotations, return_valid = return_valid)
   values <- purrr::compact(values)
 

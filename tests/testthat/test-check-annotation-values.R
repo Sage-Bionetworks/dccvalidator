@@ -200,3 +200,9 @@ test_that("check_type can handle factor annotation values as strings", {
     check_value(b, "x", annotations, return_valid = FALSE),
   )
 })
+
+test_that("check_values checks that necessary annotation columns are present", {
+  annotations <- tibble(key = "x", value = NA)
+  a <- tibble(x = c("a", "b"))
+  expect_error(check_values(a, annotations))
+})

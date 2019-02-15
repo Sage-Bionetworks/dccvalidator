@@ -13,7 +13,7 @@ valid_annotation_values(x, annotations)
 \item{x}{An object to check.}
 
 \item{annotations}{A data frame of annotation definitions. Must contain at
-least two columns: \code{key} and \code{value}.}
+least three columns: \code{key}, \code{value}, and \code{columnType}.}
 }
 \value{
 A named list of invalid annotation values.

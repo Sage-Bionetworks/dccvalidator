@@ -6,7 +6,7 @@
 #'
 #' @param x An object to check.
 #' @param annotations A data frame of annotation definitions. Must contain at
-#'   least two columns: `key` and `value`.
+#'   least three columns: `key`, `value`, and `columnType`.
 #' @return A character vector of invalid (for `check_annotation_keys()`) or
 #'   valid (for `valid_annotation_keys()`) annotation keys present in `x`.
 #' @export
@@ -120,6 +120,12 @@ check_keys <- function(x, annotations, return_valid = FALSE) {
   }
   if (missing(annotations)) {
     annotations <- syndccutils::get_synapse_annotations()
+  }
+  if (!all(c("key", "value", "columnType") %in% names(annotations))) {
+    stop(
+      "Annotations must have the following columns: 'key', 'value', and 'columnType'",
+      call. = FALSE
+    )
   }
   if (isTRUE(return_valid)) {
     keys <- intersect(x, annotations$key)

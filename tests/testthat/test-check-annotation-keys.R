@@ -95,3 +95,9 @@ test_that("check_keys falls back to get_synapse_annotations", {
   res <- suppressMessages(check_keys("not a key", return_valid = FALSE))
   expect_equal(res, "not a key")
 })
+
+test_that("check_keys checks that necessary annotation columns are present", {
+  annotations <- data.frame(key = "x", value = NA)
+  a <- tibble(x = c("a", "b"))
+  expect_error(check_keys(a, annotations))
+})
