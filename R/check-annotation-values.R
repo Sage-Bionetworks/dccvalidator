@@ -18,7 +18,11 @@
 #' my_file <- synGet("syn11931757", downloadFile = FALSE)
 #' check_annotation_values(my_file, annots)
 #'
-#' dat <- data.frame(non_annotation = 5, assay = "rnaSeq")
+#' dat <- data.frame(
+#'   non_annotation = 5:7,
+#'   assay = c("rnaSeq", "foo", "bar"),
+#'   stringsAsFactors = FALSE
+#' )
 #' check_annotation_values(dat, annots)
 #'
 #' fv <- synTableQuery("SELECT * FROM syn17020234")
