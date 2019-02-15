@@ -16,6 +16,7 @@ Imports:
 Suggests: 
     fs,
     testthat,
+    tibble,
     covr
 Additional_repositories:
     https://sage-bionetworks.github.io/ran

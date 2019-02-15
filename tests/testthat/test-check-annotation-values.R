@@ -1,28 +1,29 @@
 context("test-check-annotation-values.R")
 
 library("synapser")
+library("tibble")
 if (on_travis()) syn_travis_login() else synLogin()
 annots <- syndccutils::get_synapse_annotations()
 
 test_that("check_annotation_values returns empty list when no invalid annotations present", {
-  dat <- data.frame(assay = "rnaSeq")
+  dat <- tibble(assay = "rnaSeq")
   res <- check_annotation_values(dat, annots)
   expect_equal(res, structure(list(), .Names = character(0)))
 })
 
 test_that("check_annotation_values errors when there are no annotations to check", {
-  dat <- data.frame()
+  dat <- tibble()
   expect_error(check_annotation_values(dat, annots))
 })
 
 test_that("check_annotation_values returns invalid annotation values", {
-  dat <- data.frame(a = 1, b = 2)
+  dat <- tibble(assay = "foo", consortium = "bar")
   res <- suppressMessages(check_annotation_values(dat, annots))
-  expect_equal(res, structure(list(), .Names = character(0)))
+  expect_equal(res, list(assay = "foo", consortium = "bar"))
 })
 
 test_that("check_annotation_values provides message", {
-  dat <- data.frame(assay = "foo", b = 2)
+  dat <- tibble(assay = "foo", b = 2)
   expect_message(check_annotation_values(dat, annots))
 })
 
@@ -36,7 +37,7 @@ test_that("check_annotation_values works for File objects", {
   expect_equal(
     resb[order(names(resb))], # need to ensure these are in the right order,
                               # sometimes they get returned in a different order
-    list(assay = list("wrongAssay"), species = list("wrongSpecies"))
+    list(assay = "wrongAssay", species = "wrongSpecies")
   )
 })
 
@@ -48,23 +49,20 @@ test_that("check_annotation_values works for file views", {
 })
 
 test_that("check annotation values returns unique wrong values, not every single one", {
-  dat <- data.frame(assay = c("foo", "foo", "rnaSeq"), stringsAsFactors = FALSE)
+  dat <- tibble(assay = c("foo", "foo", "rnaSeq"))
   res <- suppressMessages(check_annotation_values(dat, annots))
   expect_equal(res, list(assay = "foo"))
 })
 
 test_that("valid_annotation_values returns valid values", {
-  dat <- data.frame(assay = "rnaSeq")
+  dat <- tibble(assay = "rnaSeq")
   res <- suppressMessages(valid_annotation_values(dat, annots))
   ## Returns list of valid values
-  expect_equal(
-    res,
-    list(assay = structure(1L, .Label = "rnaSeq", class = "factor"))
-  )
+  expect_equal(res, list(assay = "rnaSeq"))
 })
 
 test_that("valid_annotation_values fails when no annotations present", {
-  dat <- data.frame()
+  dat <- tibble()
   expect_error(valid_annotation_values(dat, annots))
 })
 
@@ -72,7 +70,7 @@ test_that("valid_annotation_values works for File objects", {
   skip_on_cran()
   a <- synGet("syn17038064", downloadFile = FALSE)
   resa <- suppressMessages(valid_annotation_values(a, annots))
-  expect_equal(resa, list(fileFormat = list("txt")))
+  expect_equal(resa, list(fileFormat = "txt"))
 })
 
 test_that("check_annotation_values works for file views", {
@@ -97,30 +95,16 @@ test_that("check_value returns valid or invalid valies", {
 })
 
 test_that("check_values checks multiple values", {
-  dat <- data.frame(fileFormat = c("wrong", "txt", "csv", "wrong again"))
+  dat <- tibble(fileFormat = c("wrong", "txt", "csv", "wrong again"))
   resa <- suppressMessages(check_values(dat, annots, return_valid = TRUE))
   resb <- suppressMessages(check_values(dat, annots, return_valid = FALSE))
   expect_equal(
     resa,
-    list(
-      fileFormat = structure(
-        2:1,
-        .Label = c("csv", "txt", "wrong",
-                   "wrong again"),
-        class = "factor"
-      )
-    )
+    list(fileFormat = c("txt", "csv"))
   )
   expect_equal(
     resb,
-    list(
-      fileFormat = structure(
-        3:4,
-        .Label = c("csv", "txt", "wrong",
-                   "wrong again"),
-        class = "factor"
-      )
-    )
+    list(fileFormat = c("wrong", "wrong again"))
   )
 })
 
@@ -134,5 +118,85 @@ test_that("check_value falls back to get_synapse_annotations", {
   expect_equal(
     res,
     check_value("wrong", "fileFormat", annots, return_valid = FALSE)
+  )
+})
+
+test_that("check_type returns right value depending on class and `return_valid` option", {
+  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
+  a <- c("a", "b")
+  b <- c(1, 2)
+  expect_equal(
+    check_type(a, "x", annotations, return_valid = FALSE),
+    character(0)
+  )
+  expect_equal(
+    check_type(b, "x", annotations, return_valid = FALSE),
+    c(1, 2)
+  )
+  expect_equal(
+    check_type(a, "x", annotations, return_valid = TRUE),
+    c("a", "b")
+  )
+  expect_equal(
+    check_type(b, "x", annotations, return_valid = TRUE),
+    character(0)
+  )
+})
+
+test_that("check_type checks different classes", {
+  annotations <- tibble(key = "x", columnType = "BOOLEAN", value = NA)
+  a <- c("a", "b")
+  b <- c(1, 2)
+  c <- c(TRUE, FALSE)
+  d <- c(1L, 2L)
+  expect_equal(
+    check_type(a, "x", annotations, return_valid = FALSE),
+    c("a", "b")
+  )
+  expect_equal(
+    check_type(b, "x", annotations, return_valid = FALSE),
+    c(1, 2)
+  )
+  expect_equal(
+    check_type(c, "x", annotations, return_valid = FALSE),
+    character(0)
+  )
+  expect_equal(
+    check_type(d, "x", annotations, return_valid = FALSE),
+    c(1L, 2L)
+  )
+})
+
+test_that("check_value checks column type when enumerated values aren't defined", {
+  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
+  a <- c("a", "b")
+  expect_equal(
+    check_value(a, "x", annotations, return_valid = FALSE),
+    character(0)
+  )
+})
+
+test_that("check_type can handle annotations as either data frames or tibbles", {
+  a1 <- tibble(key = "x", columnType = "STRING", value = NA)
+  a2 <- data.frame(key = "x", columnType = "STRING", value = NA, stringsAsFactors = FALSE)
+  a3 <- data.frame(key = "x", columnType = "STRING", value = NA, stringsAsFactors = TRUE)
+  a <- c("a", "b")
+  expect_equal(
+    check_value(a, "x", a1, return_valid = FALSE),
+    check_value(a, "x", a2, return_valid = FALSE)
+  )
+  expect_equal(
+    check_value(a, "x", a2, return_valid = FALSE),
+    check_value(a, "x", a3, return_valid = FALSE)
+  )
+})
+
+test_that("check_type can handle factor annotation values as strings", {
+  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
+  a <- c("a", "b")
+  b <- factor(c("a", "b"))
+  expect_equal(
+    check_value(a, "x", annotations, return_valid = FALSE),
+    check_value(b, "x", annotations, return_valid = FALSE),
   )
 })
