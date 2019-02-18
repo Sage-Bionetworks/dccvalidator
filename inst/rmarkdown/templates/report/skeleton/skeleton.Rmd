@@ -35,11 +35,13 @@ report_if <- function(condition, ...) {
 
 ## Column names
 
+Metadata files are expected to contain certain columns. If any are missing, they will be reported below.
+
 ```{r check-column-names}
 manifest_cols <- check_cols_manifest(params$manifest)
-indiv_cols <- check_cols_individual(params$individual, params$species)
+indiv_cols <- check_cols_individual(params$individual, params$indiv_template)
 biosp_cols <- check_cols_biospecimen(params$biospecimen)
-assay_cols <- check_col_names(params$assay, params$assay_name)
+assay_cols <- check_cols_assay(params$assay, params$assay_name)
 
 report_if(
   !identical(manifest_cols, character(0)),
@@ -65,34 +67,70 @@ report_if(
 
 ## Individual IDs
 
-```{r compare-individual-ids}
-indiv_comparison <- try(check_indiv_ids(individual, assay))
-if (!inherits(indiv_comparison, "try-error")) {
-  missing_from_assay <- !identical(indiv_comparison$missing_from_assay, character(0))
-  missing_from_individual <- !identical(indiv_comparison$missing_from_individual, character(0))
+Individual and biospecimen metadata files should contain an `specimenID` column,
+and individual IDs should match between these files.
 
-  report_if(
-    missing_from_assay,
-    "The following individual IDs are missing from the assay metadata file: ",
-    paste(indiv_comparison$missing_from_assay, collapse = ", ")
-  )
+```{r eval-compare-individual-ids}
+eval_individual <- "individualID" %in% names(params$individual) & "individualID" %in% names(params$biospecimen)
+```
 
-  report_if(
-    missing_from_individual,
-    "The following individual IDs are missing from the individual metadata file: ",
-    paste(indiv_comparison$missing_from_individual, collapse = ", ")
-  )
+```{r missing-indivID-col, eval = !eval_individual}
+report("The individual and/or biospecimen metadata file is missing an `individualID` column.")
+```
 
-  report_if(
-    !any(c(missing_from_assay, missing_from_individual)),
-    "**All good!** No mismatched individual IDs found."
-  )
-}
+```{r compare-individual-ids, eval = eval_individual}
+indiv_comparison <- check_indiv_ids(params$individual, params$biospecimen)
 
-msg <- attr(res, "condition")$message
 report_if(
-  msg == "Both individual and assay metadata must contain an `individualID` column",
-  msg
+  length(indiv_comparison$missing_from_x) > 0,
+  "The following individual IDs are missing from the assay metadata file: ",
+  paste(indiv_comparison$missing_from_y, collapse = ", ")
+)
+
+report_if(
+  length(indiv_comparison$missing_from_y) > 0,
+  "The following individual IDs are missing from the individual metadata file: ",
+  paste(indiv_comparison$missing_from_x, collapse = ", ")
+)
+
+report_if(
+  length(indiv_comparison$missing_from_x) == 0 &
+    length(indiv_comparison$missing_from_y) == 0,
+  "**All good!** No mismatched individual IDs found."
 )
 ```
 
+## Specimen IDs
+
+Biospecimen and assay metadata files should contain a `specimenID` column, and
+specimen IDs should match between these files.
+
+```{r eval-compare-specimen-ids}
+eval_specimen <- "specimenID" %in% names(params$biospecimen) & "specimenID" %in% names(params$assay)
+```
+
+```{r missing-specimenID-col, eval = !eval_specimen}
+report("The individual and/or biospecimen metadata file is missing a `specimenID` column.")
+```
+
+```{r compare-specimen-ids, eval = eval_individual}
+specimen_comparison <- check_specimen_ids(params$biospecimen, params$assay)
+
+report_if(
+  length(specimen_comparison$missing_from_x) > 0,
+  "The following specimen IDs are missing from the biospecimen metadata file: ",
+  paste(specimen_comparison$missing_from_x, collapse = ", ")
+)
+
+report_if(
+  length(specimen_comparison$missing_from_y) > 0,
+  "The following specimen IDs are missing from the assay metadata file: ",
+  paste(specimen_comparison$missing_from_x, collapse = ", ")
+)
+
+report_if(
+  length(specimen_comparison$missing_from_x) == 0 &
+    length(specimen_comparison$missing_from_y) == 0,
+  "**All good!** No mismatched specimen IDs found."
+)
+```
