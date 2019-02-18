@@ -13,9 +13,9 @@ Imports:
     readxl,
     synapser,
     syndccutils
-Suggests: 
-    fs,
+Suggests:
     testthat,
+    tibble,
     covr
 Additional_repositories:
     https://sage-bionetworks.github.io/ran
