@@ -5,10 +5,10 @@ output: html_document
 params:
   manifest: NA
   individual: NA
-  species: NA
+  indiv_template: "animal"
   biospecimen: NA
   assay: NA
-  assay_name: NA
+  assay_name: "rnaSeq"
 ---
 
 ```{r knitr-setup, include = FALSE}
