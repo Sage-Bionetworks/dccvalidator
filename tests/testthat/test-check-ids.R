@@ -2,8 +2,8 @@ context("test-check-ids.R")
 
 test_that("check_indiv_ids returns list of empty elements for valid metadata", {
   expected_result <- list(
-    missing_from_assay = character(0),
-    missing_from_individual = character(0)
+    missing_from_x = character(0),
+    missing_from_y = character(0)
   )
   expect_equal(
     check_indiv_ids(valid_individual, valid_assay),
@@ -13,8 +13,8 @@ test_that("check_indiv_ids returns list of empty elements for valid metadata", {
 
 test_that("check_indiv_ids returns list of missing IDs for invalid metadata", {
   expected_result <- list(
-    missing_from_assay = character(0),
-    missing_from_individual = "ABC"
+    missing_from_x = "ABC",
+    missing_from_y = character(0)
   )
   expect_equal(
     check_indiv_ids(invalid_individual, invalid_assay),

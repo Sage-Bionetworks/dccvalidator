@@ -1,33 +1,33 @@
 #' Check individual IDs
 #'
-#' Ensure that all individual IDs in assay metadata are present in individual
-#' metadata and vice versa.
+#' Ensure that all individual IDs in two data frames match.
 #'  
-#' @param individual Data frame of individual metadata
-#' @param assay Data frame of assay metadata
+#' @param x,y Data frames of metadata to compare
+#' @return A list of individual IDs missing from x (but present in y) and
+#'   missing from y (but present in x)
 #' @export
-check_indiv_ids <- function(individual, assay) {
-  if (!"individualID" %in% colnames(individual) | !"individualID" %in% colnames(assay)) {
+check_indiv_ids <- function(x, y) {
+  if (!"individualID" %in% colnames(x) | !"individualID" %in% colnames(y)) {
     stop(
-      "Both individual and assay metadata must contain an `individualID` column",
+      "Both x and y must contain an `individualID` column",
       call. = FALSE
     )
   }
 
   ## Ensure that factor columns are coerced to character
-  if (is.factor(individual$individualID)) {
-    individual$individualID <- as.character(individual$individualID)
+  if (is.factor(x$individualID)) {
+    x$individualID <- as.character(x$individualID)
   }
-  if (is.factor(assay$individualID)) {
-    assay$individualID <- as.character(assay$individualID)
+  if (is.factor(y$individualID)) {
+    y$individualID <- as.character(y$individualID)
   }
-  
-  missing_from_assay      <- setdiff(individual$individualID, assay$individualID)
-  missing_from_individual <- setdiff(assay$individualID, individual$individualID)
+
+  missing_from_x <- setdiff(y$individualID, x$individualID)
+  missing_from_y <- setdiff(x$individualID, y$individualID)
   
   list(
-    missing_from_assay = missing_from_assay,
-    missing_from_individual = missing_from_individual
+    missing_from_x = missing_from_x,
+    missing_from_y = missing_from_y
   )
 }
 

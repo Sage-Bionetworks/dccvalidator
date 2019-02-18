@@ -4,14 +4,15 @@
 \alias{check_indiv_ids}
 \title{Check individual IDs}
 \usage{
-check_indiv_ids(individual, assay)
+check_indiv_ids(x, y)
 }
 \arguments{
-\item{individual}{Data frame of individual metadata}
-
-\item{assay}{Data frame of assay metadata}
+\item{x, y}{Data frames of metadata to compare}
+}
+\value{
+A list of individual IDs missing from x (but present in y) and
+missing from y (but present in x)
 }
 \description{
-Ensure that all individual IDs in assay metadata are present in individual
-metadata and vice versa.
+Ensure that all individual IDs in two data frames match.
 }
