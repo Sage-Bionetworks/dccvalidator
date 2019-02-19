@@ -1,17 +1,26 @@
 server <- function(input, output) {
 
+  synLogin()
+
   # Load data files
   manifest <- reactive({
     req(input$manifest)
     read.csv(input$manifest$datapath)
   })
-  individual <- reactive({
-    req(input$individual)
-    read.csv(input$individual$datapath)
+  indiv <- reactive({
+    req(input$indiv_meta)
+    indiv <- synGet(input$indiv_meta)
+    read.csv(indiv$path)
+  })
+  biosp <- reactive({
+    req(input$biosp_meta)
+    biosp <- synGet(input$biosp_meta)
+    read.csv(biosp$path)
   })
   assay <- reactive({
-    req(input$assay)
-    read.csv(input$assay$datapath)
+    req(input$assay_meta)
+    assay <- synGet(input$assay_meta)
+    read.csv(assay$path)
   })
 
   # Show data in tabs
@@ -20,7 +29,7 @@ server <- function(input, output) {
   })
 
   output$indiv_tab <- renderPrint({
-    skimr::skim(individual())
+    skimr::skim(indiv())
   })
 
   output$assay_tab <- renderPrint({

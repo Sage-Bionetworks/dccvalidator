@@ -8,7 +8,35 @@ ui <- fluidPage(
 
     sidebarPanel(
 
-      # Upload files to be validated
+      # Files to be validated
+      textInput(
+        "indiv_meta",
+        "Individual metadata file",
+        value = "",
+        width = NULL,
+        placeholder = "syn123456"
+      ),
+
+      radioButtons("species", "Species", c("human", "animal")),
+
+      textInput(
+        "biosp_meta",
+        "Biospecimen metadata file",
+        value = "",
+        width = NULL,
+        placeholder = "syn123456"
+      ),
+
+      textInput(
+        "assay_meta",
+        "Assay metadata file",
+        value = "",
+        width = NULL,
+        placeholder = "syn123456"
+      ),
+
+      radioButtons("assay_name", "Assay type", c("rnaSeq", "proteomics")),
+
       fileInput(
         "manifest",
         "Upload Manifest File",
@@ -19,31 +47,6 @@ ui <- fluidPage(
           ".csv"
         )
       ),
-
-      fileInput(
-        "individual",
-        "Upload Individual Metadata File",
-        multiple = FALSE,
-        accept = c(
-          "text/csv",
-          "text/comma-separated-values,text/plain",
-          ".csv"
-        )
-      ),
-      radioButtons("species", "Species", c("human", "animal")),
-
-      fileInput(
-        "assay",
-        "Upload Assay Metadata File",
-        multiple = FALSE,
-        accept = c(
-          "text/csv",
-          "text/comma-separated-values,text/plain",
-          ".csv"
-        )
-      ),
-
-      radioButtons("assay_name", "Assay type", c("rnaSeq", "proteomics")),
 
       # Button to download report
       downloadButton("report", "Generate report")
