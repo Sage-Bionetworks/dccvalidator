@@ -181,21 +181,5 @@ check_values <- function(x, annotations, return_valid = FALSE) {
   }
   values <- purrr::imap(x, check_value, annotations, return_valid = return_valid)
   values <- purrr::compact(values)
-
-  if (isTRUE(return_valid)) {
-    report_values("Valid values: ", values)
-  } else {
-    report_values("Invalid values: ", values)
-  }
-  invisible(values)
-}
-
-report_values <- function(message, values) {
-  if (length(values) > 0) {
-    message(message)
-    purrr::iwalk(
-      values,
-      ~ message(paste0(.y, ": ", paste0("\"", .x, "\"", collapse = ", ")))
-    )
-  }
+  values
 }
