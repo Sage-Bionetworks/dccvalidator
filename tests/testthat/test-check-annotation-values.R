@@ -18,21 +18,16 @@ test_that("check_annotation_values errors when there are no annotations to check
 
 test_that("check_annotation_values returns invalid annotation values", {
   dat <- tibble(assay = "foo", consortium = "bar")
-  res <- suppressMessages(check_annotation_values(dat, annots))
+  res <- check_annotation_values(dat, annots)
   expect_equal(res, list(assay = "foo", consortium = "bar"))
-})
-
-test_that("check_annotation_values provides message", {
-  dat <- tibble(assay = "foo", b = 2)
-  expect_message(check_annotation_values(dat, annots))
 })
 
 test_that("check_annotation_values works for File objects", {
   skip_on_cran()
   a <- synGet("syn17038064", downloadFile = FALSE)
   b <- synGet("syn17038065", downloadFile = FALSE)
-  resa <- suppressMessages(check_annotation_values(a, annots))
-  resb <- suppressMessages(check_annotation_values(b, annots))
+  resa <- check_annotation_values(a, annots)
+  resb <- check_annotation_values(b, annots)
   expect_equal(resa, structure(list(), .Names = character(0)))
   expect_equal(
     resb[order(names(resb))], # need to ensure these are in the right order,
@@ -44,19 +39,19 @@ test_that("check_annotation_values works for File objects", {
 test_that("check_annotation_values works for file views", {
   skip_on_cran()
   fv <- synTableQuery("SELECT * FROM syn17038067")
-  res <- suppressMessages(check_annotation_values(fv, annots))
+  res <- check_annotation_values(fv, annots)
   expect_equal(res, list(assay = "wrongAssay", species = "wrongSpecies"))
 })
 
 test_that("check annotation values returns unique wrong values, not every single one", {
   dat <- tibble(assay = c("foo", "foo", "rnaSeq"))
-  res <- suppressMessages(check_annotation_values(dat, annots))
+  res <- check_annotation_values(dat, annots)
   expect_equal(res, list(assay = "foo"))
 })
 
 test_that("valid_annotation_values returns valid values", {
   dat <- tibble(assay = "rnaSeq")
-  res <- suppressMessages(valid_annotation_values(dat, annots))
+  res <- valid_annotation_values(dat, annots)
   ## Returns list of valid values
   expect_equal(res, list(assay = "rnaSeq"))
 })
@@ -69,14 +64,14 @@ test_that("valid_annotation_values fails when no annotations present", {
 test_that("valid_annotation_values works for File objects", {
   skip_on_cran()
   a <- synGet("syn17038064", downloadFile = FALSE)
-  resa <- suppressMessages(valid_annotation_values(a, annots))
+  resa <- valid_annotation_values(a, annots)
   expect_equal(resa, list(fileFormat = "txt"))
 })
 
 test_that("check_annotation_values works for file views", {
   skip_on_cran()
   fv <- synTableQuery("SELECT * FROM syn17038067")
-  res <- suppressMessages(valid_annotation_values(fv, annots))
+  res <- valid_annotation_values(fv, annots)
   ## Slightly awkward test because synapse seems to return the values in
   ## different orders sometimes
   expect_equal(names(res), "fileFormat")
@@ -96,8 +91,8 @@ test_that("check_value returns valid or invalid valies", {
 
 test_that("check_values checks multiple values", {
   dat <- tibble(fileFormat = c("wrong", "txt", "csv", "wrong again"))
-  resa <- suppressMessages(check_values(dat, annots, return_valid = TRUE))
-  resb <- suppressMessages(check_values(dat, annots, return_valid = FALSE))
+  resa <- check_values(dat, annots, return_valid = TRUE)
+  resb <- check_values(dat, annots, return_valid = FALSE)
   expect_equal(
     resa,
     list(fileFormat = c("txt", "csv"))
@@ -110,9 +105,7 @@ test_that("check_values checks multiple values", {
 
 
 test_that("check_value falls back to get_synapse_annotations", {
-  res <- suppressMessages(
-    check_value("wrong", "fileFormat", return_valid = FALSE)
-  )
+  res <- check_value("wrong", "fileFormat", return_valid = FALSE)
   expect_equal(res, "wrong")
   ## Should be the same as passing in annots:
   expect_equal(

@@ -129,17 +129,8 @@ check_keys <- function(x, annotations, return_valid = FALSE) {
   }
   if (isTRUE(return_valid)) {
     keys <- intersect(x, annotations$key)
-    report_keys("Valid keys: ", keys)
   } else {
     keys <- setdiff(x, annotations$key)
-    report_keys("Invalid keys: ", keys)
   }
-  invisible(keys)
-}
-
-report_keys <- function(message, keys) {
-  if (length(keys) > 0) {
-    message(message)
-    message(paste0(keys, collapse = ", "))
-  }
+  keys
 }
