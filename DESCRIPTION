@@ -13,8 +13,7 @@ Imports:
     readxl,
     synapser,
     syndccutils
-Suggests: 
-    fs,
+Suggests:
     testthat,
     tibble,
     covr
