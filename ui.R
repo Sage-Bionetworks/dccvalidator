@@ -42,14 +42,14 @@ ui <- fluidPage(
         "Upload Manifest File",
         multiple = FALSE,
         accept = c(
-          "text/csv",
-          "text/comma-separated-values,text/plain",
-          ".csv"
+          "text/tsv",
+          "text/tab-separated-values,text/plain",
+          ".tsv"
         )
       ),
 
       # Button to download report
-      downloadButton("report", "Generate report")
+      downloadButton("report", "Download report")
 
     ),
 
@@ -57,8 +57,7 @@ ui <- fluidPage(
     mainPanel(
       tabsetPanel(
         tabPanel("Metadata", uiOutput("meta_tab")),
-        tabPanel("Manifest", verbatimTextOutput("manifest_tab"))
-        ## tabPanel("Report", uiOutput("report_tab"))
+        tabPanel("Report", uiOutput("report_tab"))
       )
     )
   )
