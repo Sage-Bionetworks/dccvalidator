@@ -13,7 +13,7 @@ valid_annotation_values(x, annotations)
 \item{x}{An object to check.}
 
 \item{annotations}{A data frame of annotation definitions. Must contain at
-least two columns: \code{key} and \code{value}.}
+least three columns: \code{key}, \code{value}, and \code{columnType}.}
 }
 \value{
 A named list of invalid annotation values.
@@ -33,7 +33,11 @@ annots <- get_synapse_annotations()
 my_file <- synGet("syn11931757", downloadFile = FALSE)
 check_annotation_values(my_file, annots)
 
-dat <- data.frame(non_annotation = 5, assay = "rnaSeq")
+dat <- data.frame(
+  non_annotation = 5:7,
+  assay = c("rnaSeq", "foo", "bar"),
+  stringsAsFactors = FALSE
+)
 check_annotation_values(dat, annots)
 
 fv <- synTableQuery("SELECT * FROM syn17020234")

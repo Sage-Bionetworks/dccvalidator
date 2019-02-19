@@ -18,7 +18,11 @@
 #' my_file <- synGet("syn11931757", downloadFile = FALSE)
 #' check_annotation_values(my_file, annots)
 #'
-#' dat <- data.frame(non_annotation = 5, assay = "rnaSeq")
+#' dat <- data.frame(
+#'   non_annotation = 5:7,
+#'   assay = c("rnaSeq", "foo", "bar"),
+#'   stringsAsFactors = FALSE
+#' )
 #' check_annotation_values(dat, annots)
 #'
 #' fv <- synTableQuery("SELECT * FROM syn17020234")
@@ -112,8 +116,35 @@ valid_annotation_values.CsvFileTable <- function(x, annotations) {
   check_values(dat_annots, annotations, return_valid = TRUE)
 }
 
-## Check one value against its key
+## Check that class of value matches annotation columnType
+check_type <- function(value, key, annotations, return_valid = FALSE) {
+  coltype <- annotations[annotations$key == key, "columnType"]
+  if (inherits(coltype, "tbl_df")) {
+    ## need to be sure to get a vector if annotations is a tibble
+    coltype <- unlist(coltype)
+  }
+  correct_class <- switch(
+    unique(as.character(coltype)),
+    "STRING" = "character",
+    "BOOLEAN" = "logical",
+    "INTEGER" = "integer",
+    "DOUBLE" = "numeric"
+  )
+  ## Convert factors to strings
+  value <- if (is.factor(value)) as.character(value) else value
+
+  ## Check if class matches
+  matches <- class(value) == correct_class
+  if (return_valid & matches | !return_valid & !matches) {
+    return(value)
+  } else {
+    return(character(0))
+  }
+}
+
+## Check values for one key
 check_value <- function(value, key, annotations, return_valid = FALSE) {
+  value <- unlist(value)
   if (missing(annotations)) {
     annotations <- syndccutils::get_synapse_annotations()
   }
@@ -121,6 +152,12 @@ check_value <- function(value, key, annotations, return_valid = FALSE) {
     return(NULL)
   }
   annot_values <- annotations[annotations$key == key, "value"]
+  ## Some annotation keys don't have enumerated acceptable values (e.g.
+  ## specimenID). In that case just check the type.
+  if (all(is.na(annot_values))) {
+    return(check_type(value, key, annotations, return_valid))
+  }
+  ## Check values against enumerated values in annotation definitions.
   if (isTRUE(return_valid)) {
     unique(value[value %in% annot_values & !is.na(value)])
   } else {
@@ -128,13 +165,19 @@ check_value <- function(value, key, annotations, return_valid = FALSE) {
   }
 }
 
-## Check a set of values against their keys
+## Check a set of keys and their values
 check_values <- function(x, annotations, return_valid = FALSE) {
   if (length(names(x)) == 0) {
     stop("No annotations present to check", call. = FALSE)
   }
   if (missing(annotations)) {
     annotations <- syndccutils::get_synapse_annotations()
+  }
+  if (!all(c("key", "value", "columnType") %in% names(annotations))) {
+    stop(
+      "Annotations must have the following columns: 'key', 'value', and 'columnType'",
+      call. = FALSE
+    )
   }
   values <- purrr::imap(x, check_value, annotations, return_valid = return_valid)
   values <- purrr::compact(values)

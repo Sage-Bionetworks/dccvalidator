@@ -1,28 +1,29 @@
 context("test-check-annotation-keys.R")
 
 library("synapser")
+library("tibble")
 if (on_travis()) syn_travis_login() else synLogin()
 annots <- syndccutils::get_synapse_annotations()
 
 test_that("check_annotation_keys returns character(0) when no invalid annotations present", {
-  dat <- data.frame(assay = "rnaSeq")
+  dat <- tibble(assay = "rnaSeq")
   res <- check_annotation_keys(dat, annots)
   expect_equal(res, character(0))
 })
 
 test_that("check_annotation_keys errors when no data provided", {
-  dat <- data.frame()
+  dat <- tibble()
   expect_error(check_annotation_keys(dat, annots))
 })
 
 test_that("check_annotation_keys returns invalid annotation values", {
-  dat <- data.frame(a = 1, b = 2)
+  dat <- tibble(a = 1, b = 2)
   suppressMessages(res <- check_annotation_keys(dat, annots))
   expect_equal(res, names(dat))
 })
 
 test_that("check_annotation_keys provides message", {
-  dat <- data.frame(a = 1, b = 2)
+  dat <- tibble(a = 1, b = 2)
   expect_message(check_annotation_keys(dat, annots))
 })
 
@@ -50,8 +51,8 @@ test_that("report_keys creates a message", {
 })
 
 test_that("valid_annotation_keys returns valid annotation keys", {
-  dat1 <- data.frame(assay = "rnaSeq")
-  dat2 <- data.frame(assay = "rnaSeq", fileFormat = "fastq")
+  dat1 <- tibble(assay = "rnaSeq")
+  dat2 <- tibble(assay = "rnaSeq", fileFormat = "fastq")
   res1 <- suppressMessages(valid_annotation_keys(dat1, annots))
   res2 <- suppressMessages(valid_annotation_keys(dat2, annots))
   expect_equal(res1, "assay")
@@ -94,4 +95,10 @@ test_that("check_keys", {
 test_that("check_keys falls back to get_synapse_annotations", {
   res <- suppressMessages(check_keys("not a key", return_valid = FALSE))
   expect_equal(res, "not a key")
+})
+
+test_that("check_keys checks that necessary annotation columns are present", {
+  annotations <- tibble(key = "x", value = NA)
+  a <- tibble(x = c("a", "b"))
+  expect_error(check_keys(a, annotations))
 })
