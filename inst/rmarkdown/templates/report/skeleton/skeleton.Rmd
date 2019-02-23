@@ -83,14 +83,14 @@ indiv_comparison <- check_indiv_ids(params$individual, params$biospecimen)
 
 report_if(
   length(indiv_comparison$missing_from_x) > 0,
-  "The following individual IDs are missing from the assay metadata file: ",
-  paste(indiv_comparison$missing_from_y, collapse = ", ")
+  "The following individual IDs are missing from the individual metadata file. This should be fixed:\n",
+  paste(indiv_comparison$missing_from_x, collapse = ", ")
 )
 
 report_if(
   length(indiv_comparison$missing_from_y) > 0,
-  "The following individual IDs are missing from the individual metadata file: ",
-  paste(indiv_comparison$missing_from_x, collapse = ", ")
+  "The following individual IDs are missing from the biospecimen metadata file. This may need to be fixed:\n",
+  paste(indiv_comparison$missing_from_y, collapse = ", ")
 )
 
 report_if(
@@ -118,14 +118,14 @@ specimen_comparison <- check_specimen_ids(params$biospecimen, params$assay)
 
 report_if(
   length(specimen_comparison$missing_from_x) > 0,
-  "The following specimen IDs are missing from the biospecimen metadata file: ",
+  "The following specimen IDs are missing from the biospecimen metadata file. This should be fixed:\n",
   paste(specimen_comparison$missing_from_x, collapse = ", ")
 )
 
 report_if(
   length(specimen_comparison$missing_from_y) > 0,
-  "The following specimen IDs are missing from the assay metadata file: ",
-  paste(specimen_comparison$missing_from_x, collapse = ", ")
+  "The following specimen IDs are missing from the assay metadata file. This may need to be fixed:\n",
+  paste(specimen_comparison$missing_from_y, collapse = ", ")
 )
 
 report_if(
