@@ -21,6 +21,3 @@ use_package <- function(p,
 hosted_packages <- c("devtools", "shiny", "rmarkdown", "skimr", "synapser", "purrr")
 lapply(hosted_packages, use_package)
 use_package("dccvalidator", github = "Sage-Bionetworks")
-
-## Set width for skimr output
-options(width = 110)
