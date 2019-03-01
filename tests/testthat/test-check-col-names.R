@@ -87,3 +87,14 @@ test_that("check_cols_manifest works for manifest columns", {
   expect_equal(check_cols_manifest(dat), character(0))
   expect_equal(check_cols_manifest(incomplete), "parent")
 })
+
+test_that("get_template errors for files that are not xlsx or csv", {
+  expect_error(get_template("syn17039045"))
+})
+
+test_that("get_template can read in excel and csv templates", {
+  csv <- get_template("syn18384877")
+  xlsx <- get_template("syn18384878")
+  expect_equal(csv, c("a", "b", "c"))
+  expect_equal(xlsx, c("a", "b", "c"))
+})
