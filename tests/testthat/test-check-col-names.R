@@ -17,7 +17,7 @@ test_that("check_col_names returns vector of missing columns", {
 
 test_that("get_template fails when not logged in to Synapse", {
   synLogout()
-  expect_error(get_template("biospecimen"))
+  expect_error(get_template("syn12973252"))
 })
 
 if (on_travis()) syn_travis_login() else synLogin()
@@ -25,7 +25,7 @@ if (on_travis()) syn_travis_login() else synLogin()
 test_that("check_cols_individual works for individual columns", {
   skip_on_cran()
 
-  cols <- get_template("human")
+  cols <- get_template("syn12973254")
   full_col_indiv <- data.frame(matrix(ncol = length(cols)))
   colnames(full_col_indiv) <- cols
   incomplete_col_indiv <- full_col_indiv[, !names(full_col_indiv) %in% "yearsEducation"]
@@ -43,7 +43,7 @@ test_that("check_cols_individual works for individual columns", {
 test_that("check_cols_biospecimen works for biospecimen columns", {
   skip_on_cran()
 
-  biosp_names <- get_template("biospecimen")
+  biosp_names <- get_template("syn12973252")
 
   full_col_biosp <- data.frame(matrix(ncol = length(biosp_names)))
   colnames(full_col_biosp) <- biosp_names
@@ -62,7 +62,7 @@ test_that("check_cols_biospecimen works for biospecimen columns", {
 test_that("check_cols_assay works for assay columns", {
   skip_on_cran()
 
-  rnaseq_names <- get_template("rnaSeq")
+  rnaseq_names <- get_template("syn12973256")
 
   full_col_assay <- data.frame(matrix(ncol = length(rnaseq_names)))
   colnames(full_col_assay) <- rnaseq_names

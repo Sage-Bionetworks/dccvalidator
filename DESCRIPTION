@@ -12,7 +12,9 @@ Imports:
     purrr,
     readxl,
     synapser,
-    syndccutils
+    syndccutils,
+    tools,
+    utils
 Suggests:
     testthat,
     tibble,
