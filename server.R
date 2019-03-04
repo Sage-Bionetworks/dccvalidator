@@ -42,16 +42,65 @@ server <- function(input, output) {
           )
         }
       })
-
     if (!all(map_lgl(missing_cols, is.null))) {
       missing_cols <- map(missing_cols, tags$p)
     } else {
       missing_cols <- p("Hooray! No columns are missing from metadata.")
     }
 
+    ## Check individual IDs between individual and biospecimen files
+    individual_ids <- check_indiv_ids(indiv(), biosp()) %>%
+      imap(function(x, name) {
+        new_name <- switch(
+          name,
+          "missing_from_x" = "individual",
+          "missing_from_y" = "biospecimen"
+        )
+        if(length(x) > 0) {
+          paste(
+            "The following individual IDs are missing from the",
+            new_name,
+            "metadata file:",
+            paste(x, collapse = ", ")
+          )
+        }
+      })
+    if (!all(map_lgl(individual_ids, is.null))) {
+      individual_ids <- map(individual_ids, tags$p)
+    } else {
+      individual_ids <- p("Hooray! Individual IDs in the individual and biospecimen files match.")
+    }
+
+    ## Check specimen IDs between biospecimen and assay files
+    specimen_ids <- check_specimen_ids(biosp(), assay()) %>%
+      imap(function(x, name) {
+        new_name <- switch(
+          name,
+          "missing_from_x" = "biospecimen",
+          "missing_from_y" = "assay"
+        )
+        if(length(x) > 0) {
+          paste(
+            "The following specimen IDs are missing from the",
+            new_name,
+            "metadata file:",
+            paste(x, collapse = ", ")
+          )
+        }
+      })
+    if (!all(map_lgl(specimen_ids, is.null))) {
+      specimen_ids <- map(specimen_ids, tags$p)
+    } else {
+      specimen_ids <- p("Hooray! Specimen IDs in the biospecimen and assay files match.")
+    }
+
     list(
       h2("Checking column names"),
-      missing_cols
+      missing_cols,
+      h2("Checking individual IDs"),
+      individual_ids,
+      h2("Checking specimen IDs"),
+      specimen_ids
     )
   })
 
