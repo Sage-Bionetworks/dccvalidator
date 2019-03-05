@@ -61,7 +61,7 @@ ui <- function(request) {
       mainPanel(
         tabsetPanel(
           tabPanel("Metadata", uiOutput("meta_tab")),
-          tabPanel("Report", uiOutput("report_tab"))
+          tabPanel("Manifest", uiOutput("manifest_tab"))
         )
       )
     )

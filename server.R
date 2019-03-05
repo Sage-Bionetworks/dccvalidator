@@ -137,8 +137,23 @@ server <- function(input, output) {
     }
   )
 
-  output$report_tab <- renderUI({
-    file <- generate_report("validation_report.html")
-    includeHTML(file)
+  output$manifest_tab <- renderUI({
+    ## Check that manifest has path and parent columns
+    manifest_cols_results <- check_cols_manifest(manifest())
+    if (length(manifest_cols_results) == 0) {
+      manifest_cols <- p("Hooray! No columns are missing from metadata.")
+    } else {
+      manifest_cols <- p(
+        paste0(
+          "The following column(s) are missing from the manifest: ",
+          paste(manifest_cols_r)
+        )
+      )
+    }
+
+    list(
+      h2("Checking manifest columns"),
+      manifest_cols
+    )
   })
 }
