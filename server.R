@@ -146,14 +146,29 @@ server <- function(input, output) {
       manifest_cols <- p(
         paste0(
           "The following column(s) are missing from the manifest: ",
-          paste(manifest_cols_r)
+          paste0(manifest_cols_results, collapse = ", ")
         )
+      )
+    }
+
+    ## Check annotation keys
+    annot_keys_results <- check_annotation_keys(manifest())
+    annot_keys_results <- setdiff(annot_keys_results, c("path", "parent")) # remove path, parent
+    if (length(annot_keys_results) == 0) {
+      annot_keys <- p("Hooray! All annotation keys are valid")
+    } else {
+      annot_keys <- paste0(
+        "The following annotation keys are not part of our annotation dictionary: ",
+        paste0(annot_keys_results, collapse = ", ")
       )
     }
 
     list(
       h2("Checking manifest columns"),
-      manifest_cols
+      manifest_cols,
+      h2("Checking annotations"),
+      h3("Checking annotation keys"),
+      annot_keys
     )
   })
 }
