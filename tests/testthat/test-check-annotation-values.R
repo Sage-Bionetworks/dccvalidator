@@ -199,3 +199,26 @@ test_that("check_values checks that necessary annotation columns are present", {
   a <- tibble(x = c("a", "b"))
   expect_error(check_values(a, annotations))
 })
+
+test_that("check_type omits NAs", {
+  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
+  a <- c("a", "b", NA)
+  b <- c(1, NA, 2)
+  expect_equal(
+    check_type(a, "x", annotations, return_valid = FALSE),
+    character(0)
+  )
+  expect_equal(
+    check_type(b, "x", annotations, return_valid = FALSE),
+    c(1, 2)
+  )
+})
+
+test_that("check_type does not return duplicates", {
+  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
+  a <- c("a", "b", NA, "b", "a")
+  expect_equal(
+    check_type(a, "x", annotations, return_valid = FALSE),
+    character(0)
+  )
+})
