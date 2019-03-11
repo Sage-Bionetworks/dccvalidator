@@ -136,7 +136,7 @@ check_type <- function(value, key, annotations, return_valid = FALSE) {
   ## Check if class matches
   matches <- class(value) == correct_class
   if (return_valid & matches | !return_valid & !matches) {
-    return(value)
+    return(unique(na.omit(value)))
   } else {
     return(character(0))
   }
