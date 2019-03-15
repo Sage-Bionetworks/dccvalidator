@@ -1,63 +1,68 @@
-ui <- fluidPage(
+ui <- function(request) {
+  fluidPage(
 
-  # Application title
-  titlePanel("Metadata Validation"),
+    # Application title
+    titlePanel("Metadata Validation"),
 
-  # Sidebar
-  sidebarLayout(
+    # Sidebar
+    sidebarLayout(
 
-    sidebarPanel(
+      sidebarPanel(
 
-      # Upload files to be validated
-      fileInput(
-        "manifest",
-        "Upload Manifest File",
-        multiple = FALSE,
-        accept = c(
-          "text/csv",
-          "text/comma-separated-values,text/plain",
-          ".csv"
-        )
+        # Files to be validated
+        textInput(
+          "indiv_meta",
+          "Individual metadata file",
+          value = "syn17101431",
+          width = NULL,
+          placeholder = "syn123456"
+        ),
+
+        radioButtons("species", "Species", c("human", "animal")),
+
+        textInput(
+          "biosp_meta",
+          "Biospecimen metadata file",
+          value = "syn17101430",
+          width = NULL,
+          placeholder = "syn123456"
+        ),
+
+        textInput(
+          "assay_meta",
+          "Assay metadata file",
+          value = "syn17101433",
+          width = NULL,
+          placeholder = "syn123456"
+        ),
+
+        radioButtons("assay_name", "Assay type", c("rnaSeq", "proteomics")),
+
+        fileInput(
+          "manifest",
+          "Upload Manifest File",
+          multiple = FALSE,
+          accept = c(
+            "text/tsv",
+            "text/tab-separated-values,text/plain",
+            ".tsv"
+          )
+        ),
+
+        # Bookmark
+        bookmarkButton(),
+
+        p("This will bookmark the results from checking metadata stored in Synapse. It will not store results from checking the uploaded manifest file.")
+
       ),
 
-      fileInput(
-        "individual",
-        "Upload Individual Metadata File",
-        multiple = FALSE,
-        accept = c(
-          "text/csv",
-          "text/comma-separated-values,text/plain",
-          ".csv"
+      # Main panel
+      mainPanel(
+        tabsetPanel(
+          tabPanel("Metadata", uiOutput("meta_tab")),
+          tabPanel("Manifest", uiOutput("manifest_tab"))
         )
-      ),
-      radioButtons("species", "Species", c("human", "animal")),
-
-      fileInput(
-        "assay",
-        "Upload Assay Metadata File",
-        multiple = FALSE,
-        accept = c(
-          "text/csv",
-          "text/comma-separated-values,text/plain",
-          ".csv"
-        )
-      ),
-
-      radioButtons("assay_name", "Assay type", c("rnaSeq", "proteomics")),
-
-      # Button to download report
-      downloadButton("report", "Generate report")
-
-    ),
-
-    # Main panel
-    mainPanel(
-      tabsetPanel(
-        tabPanel("Manifest", verbatimTextOutput("manifest_tab")),
-        tabPanel("Individual Metadata", verbatimTextOutput("indiv_tab")),
-        tabPanel("Assay Metadata", verbatimTextOutput("assay_tab")),
-        tabPanel("Report", uiOutput("report_tab"))
       )
     )
   )
-)
+}
