@@ -5,7 +5,12 @@ server <- function(input, output) {
   # Load data files
   manifest <- reactive({
     req(input$manifest)
-    read.table(input$manifest$datapath, sep = "\t", header = TRUE)
+    read.table(
+      input$manifest$datapath,
+      sep = "\t",
+      header = TRUE,
+      na.strings = ""
+    )
   })
   indiv <- reactive({
     req(input$indiv_meta)
@@ -125,6 +130,20 @@ server <- function(input, output) {
       )
     }
 
+    ## Check specimen IDs against biospecimen and assay metadata
+    specimen_ids_manifest_biosp <- check_specimen_ids(biosp(), manifest()) %>%
+      create_mismatched_id_message("biospecimen", "manifest", "specimen IDs") %>%
+      report_mismatched_ids(
+        fallback_msg = "Hooray! Specimen IDs in the biospecimen and manifest files match."
+      )
+      specimen_ids_manifest_assay <- check_specimen_ids(assay(), manifest()) %>%
+        create_mismatched_id_message("assay", "manifest", "specimen IDs") %>%
+        report_mismatched_ids(
+          fallback_msg = "Hooray! Specimen IDs in the assay and manifest files match."
+        ) %>%
+      ## Look for missing data (NAs)
+      add_missing_ids(manifest()$specimenID, "manifest")
+
     list(
       h2("Checking manifest columns"),
       manifest_cols,
@@ -132,7 +151,10 @@ server <- function(input, output) {
       h3("Checking annotation keys"),
       annot_keys,
       h3("Checking annotation values"),
-      annot_values
+      annot_values,
+      h2("Checking specimen IDs"),
+      specimen_ids_manifest_biosp,
+      specimen_ids_manifest_assay
     )
   })
 }
