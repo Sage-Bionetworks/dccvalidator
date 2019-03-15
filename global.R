@@ -43,7 +43,9 @@ create_mismatched_id_message <- function(x, df1, df2, idtype) {
         idtype,
         "are missing from the",
         new_name,
-        "metadata file:",
+        "metadata file but present in the",
+        setdiff(c(df1, df2), new_name),
+        "file:",
         paste(x, collapse = ", ")
       )
     }
