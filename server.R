@@ -56,7 +56,7 @@ server <- function(input, output) {
           "missing_from_x" = "individual",
           "missing_from_y" = "biospecimen"
         )
-        if(length(x) > 0) {
+        if(length(na.omit(x)) > 0) {
           paste(
             "The following individual IDs are missing from the",
             new_name,
@@ -79,7 +79,7 @@ server <- function(input, output) {
           "missing_from_x" = "biospecimen",
           "missing_from_y" = "assay"
         )
-        if(length(x) > 0) {
+        if(length(na.omit(x)) > 0) {
           paste(
             "The following specimen IDs are missing from the",
             new_name,
