@@ -52,8 +52,7 @@ ui <- function(request) {
         # Bookmark
         bookmarkButton(),
 
-        # Button to download report
-        downloadButton("report", "Download report")
+        p("This will bookmark the results from checking metadata stored in Synapse. It will not store results from checking the uploaded manifest file.")
 
       ),
 

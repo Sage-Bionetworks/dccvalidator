@@ -86,39 +86,6 @@ server <- function(input, output) {
     )
   })
 
-  # Generate report
-  generate_report <- function(file = "validation_report.html") {
-    temp_report <- file.path(tempdir(), "validation_report.Rmd")
-    file.copy(
-      system.file("rmarkdown/templates/report/skeleton/skeleton.Rmd", package = "dccvalidator"),
-      temp_report,
-      overwrite = TRUE
-    )
-
-    params <- list(
-      manifest = manifest(),
-      individual = indiv(),
-      indiv_template = input$species,
-      biospecimen = biosp(),
-      assay = assay(),
-      assay_name = input$assay_name
-    )
-
-    rmarkdown::render(
-      temp_report,
-      output_file = file,
-      params = params,
-      envir = new.env(parent = globalenv())
-    )
-  }
-
-  output$report <- downloadHandler(
-    file = "validation_report.html",
-    content = function(file) {
-      generate_report(file)
-    }
-  )
-
   output$manifest_tab <- renderUI({
     ## Check that manifest has path and parent columns
     manifest_cols_results <- check_cols_manifest(manifest())
