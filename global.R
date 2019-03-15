@@ -24,3 +24,38 @@ use_package("dccvalidator", github = "Sage-Bionetworks")
 
 ## Enable bookmarking
 enableBookmarking(store = "url")
+
+#####################
+####  Functions  ####
+#####################
+
+## Function to generate messages when some IDs are mismatched
+create_mismatched_id_message <- function(x, df1, df2, idtype) {
+  imap(x, function(x, name) {
+    new_name <- switch(
+      name,
+      "missing_from_x" = df1,
+      "missing_from_y" = df2
+    )
+    if(length(na.omit(x)) > 0) {
+      paste(
+        "The following",
+        idtype,
+        "are missing from the",
+        new_name,
+        "metadata file:",
+        paste(x, collapse = ", ")
+      )
+    }
+  })
+}
+
+## Create html output of messages about missing ids
+report_mismatched_ids <- function(x, fallback_msg) {
+  if (!all(map_lgl(x, is.null))) {
+    result <- map(x, tags$p)
+  } else {
+    result <- p(fallback_msg)
+  }
+  result
+}
