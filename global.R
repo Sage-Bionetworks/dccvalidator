@@ -18,7 +18,7 @@ use_package <- function(p,
   library(p, character.only = TRUE)
 }
 
-hosted_packages <- c("devtools", "shiny", "rmarkdown", "skimr", "synapser", "purrr")
+hosted_packages <- c("devtools", "DT", "shiny", "rmarkdown", "skimr", "synapser", "purrr")
 lapply(hosted_packages, use_package)
 use_package("dccvalidator", github = "Sage-Bionetworks")
 
@@ -78,4 +78,14 @@ add_missing_ids <- function(x, column, file) {
   } else {
     x
   }
+}
+
+create_annotation_value_table <- function(output) {
+  map2_dfr(
+    output,
+    names(output),
+    function(x, y) {
+      tibble::tibble(Key = y, Values = paste(x, collapse = ", "))
+    }
+  )
 }

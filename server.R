@@ -112,12 +112,27 @@ server <- function(input, output) {
       )
     }
 
+    ## Check annotation values and convert list to table for display
+    annot_values_results <- check_annotation_values(manifest()) %>%
+      create_annotation_value_table()
+
+    if (nrow(annot_values_results) == 0) {
+      annot_values <- p("Hooray! All annotation values are valid")
+    } else {
+      annot_values <- list(
+        p("The following annotation values are not part of our annotation dictionary:"),
+        datatable(annot_values_results, fillContainer = TRUE)
+      )
+    }
+
     list(
       h2("Checking manifest columns"),
       manifest_cols,
       h2("Checking annotations"),
       h3("Checking annotation keys"),
-      annot_keys
+      annot_keys,
+      h3("Checking annotation values"),
+      annot_values
     )
   })
 }
