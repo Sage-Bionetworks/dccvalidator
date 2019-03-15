@@ -59,3 +59,21 @@ report_mismatched_ids <- function(x, fallback_msg) {
   }
   result
 }
+
+## Report on completely missing ids
+add_missing_ids <- function(x, column, file) {
+  missing_ids <- which(is.na(column))
+  if (length(missing_ids) > 0) {
+    output <- p(
+      paste(
+        "The following rows of the",
+        file,
+        "metadata file are missing IDs:",
+        paste(missing_ids, collapse = ", ")
+      )
+    )
+    c(x, list(output))
+  } else {
+    x
+  }
+}

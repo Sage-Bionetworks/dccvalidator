@@ -48,19 +48,33 @@ server <- function(input, output) {
       missing_cols <- p("Hooray! No columns are missing from metadata.")
     }
 
+    ##########################
+    ####  Individual IDs  ####
+    ##########################
+
     ## Check individual IDs between individual and biospecimen files
     individual_ids <- check_indiv_ids(indiv(), biosp()) %>%
       create_mismatched_id_message("individual", "biospecimen", "individual IDs") %>%
       report_mismatched_ids(
         fallback_msg = "Hooray! Individual IDs in the individual and biospecimen files match."
-      )
+      ) %>%
+      ## Look for missing data (NAs) in individualIDs
+      add_missing_ids(indiv()$individualID, "individual") %>%
+      add_missing_ids(biosp()$individualID, "biospecimen")
+
+    ########################
+    ####  Specimen IDs  ####
+    ########################
 
     ## Check specimen IDs between biospecimen and assay files
     specimen_ids <- check_specimen_ids(biosp(), assay()) %>%
       create_mismatched_id_message("biospecimen", "assay", "specimen IDs") %>%
       report_mismatched_ids(
         fallback_msg = "Hooray! Specimen IDs in the biospecimen and assay files match."
-      )
+      ) %>%
+      ## Look for missing data (NAs) in specimenIDs
+      add_missing_ids(biosp()$specimenID, "biospecimen") %>%
+      add_missing_ids(assay()$specimenID, "assay")
 
     list(
       h2("Checking column names"),
