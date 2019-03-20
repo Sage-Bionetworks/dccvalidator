@@ -1,26 +1,17 @@
-#####################################
-####  Install and load packages  ####
-#####################################
+#########################
+####  Load packages  ####
+#########################
 
-use_package <- function(p,
-                        github,
-                        repos = c(
-                          CRAN = "https://cran.rstudio.com/",
-                          Sage = "https://sage-bionetworks.github.io/ran"
-                        ),
-                        ...) {
-  if (!missing(github)) {
-    devtools::install_github(paste(github, p, sep = "/"), ...)
-  }
-  if (!p %in% installed.packages()[, "Package"]) {
-    install.packages(p, repos = repos, dependencies = TRUE)
-  }
-  library(p, character.only = TRUE)
+## If running on server, load packages from local library
+if (grepl("^ip-(.+)", Sys.info()["nodename"])) {
+  .libPaths(new = "/home/kwoo/ShinyApps/dccvalidator-app/lib/")
 }
 
-hosted_packages <- c("devtools", "DT", "shiny", "rmarkdown", "skimr", "synapser", "purrr")
-lapply(hosted_packages, use_package)
-use_package("dccvalidator", github = "Sage-Bionetworks")
+library("DT")
+library("shiny")
+library("synapser")
+library("purrr")
+library("dccvalidator")
 
 ## Enable bookmarking
 enableBookmarking(store = "url")
