@@ -1,5 +1,12 @@
 ui <- function(request) {
+
   fluidPage(
+
+    tags$head(
+      singleton(
+        includeScript("www/readCookie.js")
+      )
+    ),
 
     # Application title
     titlePanel("Metadata Validation"),
