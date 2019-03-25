@@ -20,7 +20,7 @@ ui <- function(request) {
         textInput(
           "indiv_meta",
           "Individual metadata file",
-          value = "syn17101431",
+          value = "",
           width = NULL,
           placeholder = "syn123456"
         ),
@@ -30,7 +30,7 @@ ui <- function(request) {
         textInput(
           "biosp_meta",
           "Biospecimen metadata file",
-          value = "syn17101430",
+          value = "",
           width = NULL,
           placeholder = "syn123456"
         ),
@@ -38,7 +38,7 @@ ui <- function(request) {
         textInput(
           "assay_meta",
           "Assay metadata file",
-          value = "syn17101433",
+          value = "",
           width = NULL,
           placeholder = "syn123456"
         ),
