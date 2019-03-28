@@ -16,6 +16,10 @@ ui <- function(request) {
 
       sidebarPanel(
 
+        actionButton("instructions", "Show instructions"),
+        br(),
+        br(),
+
         # Files to be validated
         textInput(
           "indiv_meta",
