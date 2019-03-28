@@ -29,8 +29,6 @@ ui <- function(request) {
           placeholder = "syn123456"
         ),
 
-        radioButtons("species", "Species", c("human", "animal")),
-
         textInput(
           "biosp_meta",
           "Biospecimen metadata file",
@@ -47,7 +45,9 @@ ui <- function(request) {
           placeholder = "syn123456"
         ),
 
-        radioButtons("assay_name", "Assay type", c("rnaSeq", "proteomics")),
+        radioButtons("species", "Species", c("animal", "human"), ),
+
+        selectInput("assay_name", "Assay type", c("rnaSeq", "proteomics")),
 
         fileInput(
           "manifest",
