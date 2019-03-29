@@ -45,7 +45,12 @@ server <- function(input, output, session) {
       )
     })
 
-
+    observe({
+      toggle(
+        selector = "span.placeholder",
+        condition = any(c(input$indiv_meta, input$biosp_meta, input$assay_meta) == "")
+      )
+    })
 
     ####################
     ####  Metadata  ####

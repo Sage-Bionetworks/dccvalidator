@@ -2,6 +2,8 @@ ui <- function(request) {
 
   fluidPage(
 
+    useShinyjs(),
+
     tags$head(
       singleton(
         includeScript("www/readCookie.js")
@@ -73,10 +75,13 @@ ui <- function(request) {
           tabPanel(
             "Metadata",
             h2("Column names"),
+            p(span(class = "placeholder", "Enter Synapse IDs to check metadata")),
             uiOutput("missing_cols"),
             h2("Individual IDs"),
+            p(span(class = "placeholder", "Enter Synapse IDs to check metadata")),
             uiOutput("individual_ids"),
             h2("Specimen IDs"),
+            p(span(class = "placeholder", "Enter Synapse IDs to check metadata")),
             uiOutput("specimen_ids")
           ),
           tabPanel("Manifest", uiOutput("manifest_tab"))
