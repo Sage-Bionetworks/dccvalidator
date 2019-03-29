@@ -70,7 +70,15 @@ ui <- function(request) {
       # Main panel
       mainPanel(
         tabsetPanel(
-          tabPanel("Metadata", uiOutput("meta_tab")),
+          tabPanel(
+            "Metadata",
+            h2("Column names"),
+            uiOutput("missing_cols"),
+            h2("Individual IDs"),
+            uiOutput("individual_ids"),
+            h2("Specimen IDs"),
+            uiOutput("specimen_ids")
+          ),
           tabPanel("Manifest", uiOutput("manifest_tab"))
         )
       )

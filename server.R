@@ -45,9 +45,14 @@ server <- function(input, output, session) {
       )
     })
 
-    # Show data in tabs
-    output$meta_tab <- renderUI({
 
+
+    ####################
+    ####  Metadata  ####
+    ####################
+
+    ## Missing columns
+    output$missing_cols <- renderUI({
       ## Check column names
       missing_cols <- list(
         individual = check_cols_individual(indiv(), input$species),
@@ -69,11 +74,11 @@ server <- function(input, output, session) {
       } else {
         missing_cols <- p("Hooray! No columns are missing from metadata.")
       }
+      missing_cols
+    })
 
-      ##########################
-      ####  Individual IDs  ####
-      ##########################
-
+    ## Individual IDs
+    output$individual_ids <- renderUI({
       ## Check individual IDs between individual and biospecimen files
       individual_ids <- check_indiv_ids(indiv(), biosp()) %>%
         create_mismatched_id_message("individual", "biospecimen", "individual IDs") %>%
@@ -83,11 +88,11 @@ server <- function(input, output, session) {
         ## Look for missing data (NAs) in individualIDs
         add_missing_ids(indiv()$individualID, "individual") %>%
         add_missing_ids(biosp()$individualID, "biospecimen")
+      individual_ids
+    })
 
-      ########################
-      ####  Specimen IDs  ####
-      ########################
-
+    ## Specimen IDs
+    output$specimen_ids <- renderUI({
       ## Check specimen IDs between biospecimen and assay files
       specimen_ids <- check_specimen_ids(biosp(), assay()) %>%
         create_mismatched_id_message("biospecimen", "assay", "specimen IDs") %>%
@@ -97,16 +102,12 @@ server <- function(input, output, session) {
         ## Look for missing data (NAs) in specimenIDs
         add_missing_ids(biosp()$specimenID, "biospecimen") %>%
         add_missing_ids(assay()$specimenID, "assay")
-
-      list(
-        h2("Checking column names"),
-        missing_cols,
-        h2("Checking individual IDs"),
-        individual_ids,
-        h2("Checking specimen IDs"),
-        specimen_ids
-      )
+      specimen_ids
     })
+
+    ########################
+    ####  Manifest tab  ####
+    ########################
 
     output$manifest_tab <- renderUI({
       ## Check that manifest has path and parent columns
