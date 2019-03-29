@@ -32,18 +32,18 @@ server <- function(input, output, session) {
       read.csv(assay$path)
     })
 
-  observeEvent(input$instructions, {
-    showModal(
-      modalDialog(
-        title = "Instructions",
-        p("Input the Synapse IDs (e.g. syn12345) for the individual, biospecimen, and assay metadata you have uploaded. The app will check your data for common errors."),
-        p("Then, upload your completed manifest. The app will check the metadata annotations in the manifest and ensure that there are no missing specimen IDs between the data files and metadata. To read more about the correct format of a manifest, see this",
-          HTML("<a href=\"https://docs.synapse.org/articles/uploading_in_bulk.html\">documentation</a>.")),
-        p("Note you must be logged in to Synapse for this application to work."),
-        easyClose = TRUE
+    observeEvent(input$instructions, {
+      showModal(
+        modalDialog(
+          title = "Instructions",
+          p("Input the Synapse IDs (e.g. syn12345) for the individual, biospecimen, and assay metadata you have uploaded. The app will check your data for common errors."),
+          p("Then, upload your completed manifest. The app will check the metadata annotations in the manifest and ensure that there are no missing specimen IDs between the data files and metadata. To read more about the correct format of a manifest, see this",
+            HTML("<a href=\"https://docs.synapse.org/articles/uploading_in_bulk.html\">documentation</a>.")),
+          p("Note you must be logged in to Synapse for this application to work."),
+          easyClose = TRUE
+        )
       )
-    )
-  })
+    })
 
     # Show data in tabs
     output$meta_tab <- renderUI({
