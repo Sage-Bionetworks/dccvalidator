@@ -45,10 +45,20 @@ server <- function(input, output, session) {
       )
     })
 
+    ## Toggle placeholder text in UI for output that requires metadata files
     observe({
       toggle(
         selector = "span.placeholder",
         condition = any(c(input$indiv_meta, input$biosp_meta, input$assay_meta) == "")
+      )
+    })
+
+    ## Toggle placeholder text in UI for output that requires manifest and
+    ## metadata files
+    observe({
+      toggle(
+        selector = "span.manifestandmetadata",
+        condition = any(c(input$indiv_meta, input$biosp_meta, input$assay_meta) == "", is.null(input$manifest))
       )
     })
 
@@ -114,7 +124,7 @@ server <- function(input, output, session) {
     ####  Manifest tab  ####
     ########################
 
-    output$manifest_tab <- renderUI({
+    output$manifest_cols <- renderUI({
       ## Check that manifest has path and parent columns
       manifest_cols_results <- check_cols_manifest(manifest())
       if (length(manifest_cols_results) == 0) {
@@ -127,10 +137,13 @@ server <- function(input, output, session) {
           )
         )
       }
+      manifest_cols
+    })
 
+    output$annot_keys <- renderUI({
       ## Check annotation keys
       annot_keys_results <- check_annotation_keys(manifest())
-      annot_keys_results <- setdiff(annot_keys_results, c("path", "parent")) # remove path, parent
+      annot_keys_results <- setdiff(annot_keys_results, c("path", "parent", "name", "used", "executed")) # remove path, parent
       if (length(annot_keys_results) == 0) {
         annot_keys <- p("Hooray! All annotation keys are valid")
       } else {
@@ -139,7 +152,10 @@ server <- function(input, output, session) {
           paste0(annot_keys_results, collapse = ", ")
         )
       }
+      annot_keys
+    })
 
+    output$annot_values <- renderUI({
       ## Check annotation values and convert list to table for display
       annot_values_results <- check_annotation_values(manifest()) %>%
         create_annotation_value_table()
@@ -152,7 +168,10 @@ server <- function(input, output, session) {
           datatable(annot_values_results, fillContainer = TRUE)
         )
       }
+      annot_values
+    })
 
+    output$specimen_ids_manifest <- renderUI({
       ## Check specimen IDs against biospecimen and assay metadata
       specimen_ids_manifest_biosp <- check_specimen_ids(biosp(), manifest()) %>%
         create_mismatched_id_message("biospecimen", "manifest", "specimen IDs") %>%
@@ -168,14 +187,6 @@ server <- function(input, output, session) {
         add_missing_ids(manifest()$specimenID, "manifest")
 
       list(
-        h2("Checking manifest columns"),
-        manifest_cols,
-        h2("Checking annotations"),
-        h3("Checking annotation keys"),
-        annot_keys,
-        h3("Checking annotation values"),
-        annot_values,
-        h2("Checking specimen IDs"),
         specimen_ids_manifest_biosp,
         specimen_ids_manifest_assay
       )

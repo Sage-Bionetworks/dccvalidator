@@ -84,7 +84,22 @@ ui <- function(request) {
             p(span(class = "placeholder", "Enter Synapse IDs to check metadata")),
             uiOutput("specimen_ids")
           ),
-          tabPanel("Manifest", uiOutput("manifest_tab"))
+          tabPanel(
+            "Manifest",
+            h2("Checking manifest columns"),
+            p(span(class = "manifestandmetadata", "Enter Synapse IDs and upload manifest file")),
+            uiOutput("manifest_cols"),
+            h2("Checking annotations"),
+            h3("Checking annotation keys"),
+            p(span(class = "manifestandmetadata", "Enter Synapse IDs and upload manifest file")),
+            uiOutput("annot_keys"),
+            h3("Checking annotation values"),
+            p(span(class = "manifestandmetadata", "Enter Synapse IDs and upload manifest file")),
+            uiOutput("annot_values"),
+            h2("Checking specimen IDs"),
+            p(span(class = "manifestandmetadata", "Enter Synapse IDs and upload manifest file")),
+            uiOutput("specimen_ids_manifest")
+          )
         )
       )
     )
