@@ -1,6 +1,7 @@
 server <- function(input, output, session) {
 
   session$sendCustomMessage(type = "readCookie", message = list())
+  setBookmarkExclude(c("cookie"))
 
   foo <- observeEvent(input$cookie, {
 
