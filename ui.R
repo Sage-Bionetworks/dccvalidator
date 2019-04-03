@@ -4,6 +4,8 @@ ui <- function(request) {
 
     useShinyjs(),
 
+    includeCSS("www/custom.css"),
+
     tags$head(
       singleton(
         includeScript("www/readCookie.js")
