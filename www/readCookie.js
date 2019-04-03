@@ -9,9 +9,13 @@ function readCookie() {
   xhr.withCredentials = true;
   xhr.onreadystatechange = function() {
     if (xhr.readyState == XMLHttpRequest.DONE) {
-      Shiny.onInputChange("cookie",xhr.responseText);
-    }
-  }
+      if (xhr.status == 401) {
+        Shiny.onInputChange("authorized", false);
+      } else {
+        Shiny.onInputChange("cookie",xhr.responseText);
+      }
+    };
+  };
   xhr.open("GET", url);
   xhr.send();
 }
