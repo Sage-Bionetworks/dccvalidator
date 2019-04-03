@@ -67,7 +67,7 @@ ui <- function(request) {
         # Bookmark
         bookmarkButton(),
 
-        p("This will bookmark the results from checking metadata stored in Synapse. It will not store results from checking the uploaded manifest file.")
+        p("This will bookmark the results from checking metadata files so you can share the results. It will not store results from checking the uploaded manifest file.")
 
       ),
 
