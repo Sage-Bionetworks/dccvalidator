@@ -57,7 +57,7 @@ server <- function(input, output, session) {
     ## Toggle placeholder text in UI for output that requires metadata files
     observe({
       toggle(
-        selector = "span.placeholder",
+        selector = "span.placeholder.metadata",
         condition = any(c(input$indiv_meta, input$biosp_meta, input$assay_meta) == "")
       )
     })
@@ -66,7 +66,7 @@ server <- function(input, output, session) {
     ## metadata files
     observe({
       toggle(
-        selector = "span.manifestandmetadata",
+        selector = "span.placeholder.manifest",
         condition = any(c(input$indiv_meta, input$biosp_meta, input$assay_meta) == "", is.null(input$manifest))
       )
     })
