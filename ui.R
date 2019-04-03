@@ -76,13 +76,13 @@ ui <- function(request) {
         tabsetPanel(
           tabPanel(
             "Metadata",
-            h2("Column names"),
+            h2("Checking column names"),
             p(span(class = "placeholder metadata", "Enter Synapse IDs to check metadata")),
             uiOutput("missing_cols"),
-            h2("Individual IDs"),
+            h2("Checking individual IDs"),
             p(span(class = "placeholder metadata", "Enter Synapse IDs to check metadata")),
             uiOutput("individual_ids"),
-            h2("Specimen IDs"),
+            h2("Checking specimen IDs"),
             p(span(class = "placeholder metadata", "Enter Synapse IDs to check metadata")),
             uiOutput("specimen_ids")
           ),
