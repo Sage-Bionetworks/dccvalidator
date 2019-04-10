@@ -4,7 +4,6 @@
 
 library("DT")
 library("shiny")
-library("shinyjs")
 library("synapser")
 library("purrr")
 library("dccvalidator")
@@ -75,4 +74,15 @@ create_annotation_value_table <- function(output) {
       tibble::tibble(Key = y, Values = paste(x, collapse = ", "))
     }
   )
+}
+
+## Report on missing columns
+report_missing_cols <- function(data, fun, name, ...) {
+  fun <- match.fun(fun)
+  missing_cols <- fun(data, ...)
+  if (length(missing_cols) > 0) {
+    res <- paste0("Columns missing in ", name, " metadata template: ", paste(missing_cols, collapse = ", "))
+  } else {
+    res <- paste0("Hooray! No columns missing from ", name, " metadata template!")
+  }
 }

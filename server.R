@@ -17,7 +17,7 @@ server <- function(input, output, session) {
 
     # Load data files
     manifest <- reactive({
-      req(input$manifest)
+      validate(need(input$manifest, "Please upload manifest file"))
       read.table(
         input$manifest$datapath,
         sep = "\t",
@@ -26,17 +26,17 @@ server <- function(input, output, session) {
       )
     })
     indiv <- reactive({
-      req(input$indiv_meta)
+      validate(need(input$indiv_meta, "Enter Synapse ID of individual metadata"))
       indiv <- synGet(input$indiv_meta)
       read.csv(indiv$path)
     })
     biosp <- reactive({
-      req(input$biosp_meta)
+      validate(need(input$biosp_meta, "Enter Synapse ID of biospecimen metadata"))
       biosp <- synGet(input$biosp_meta)
       read.csv(biosp$path)
     })
     assay <- reactive({
-      req(input$assay_meta)
+      validate(need(input$assay_meta, "Enter Synapse ID of assay metadata"))
       assay <- synGet(input$assay_meta)
       read.csv(assay$path)
     })
@@ -54,55 +54,43 @@ server <- function(input, output, session) {
       )
     })
 
-    ## Toggle placeholder text in UI for output that requires metadata files
-    observe({
-      toggle(
-        selector = "span.placeholder.metadata",
-        condition = any(c(input$indiv_meta, input$biosp_meta, input$assay_meta) == "")
-      )
-    })
-
-    ## Toggle placeholder text in UI for output that requires manifest and
-    ## metadata files
-    observe({
-      toggle(
-        selector = "span.placeholder.manifest",
-        condition = any(c(input$indiv_meta, input$biosp_meta, input$assay_meta) == "", is.null(input$manifest))
-      )
-    })
-
     ####################
     ####  Metadata  ####
     ####################
 
     ## Missing columns
-    output$missing_cols <- renderUI({
-      ## Check column names
-      missing_cols <- list(
-        individual = check_cols_individual(indiv(), input$species),
-        biospecimen = check_cols_biospecimen(biosp()),
-        assay = check_cols_assay(assay(), input$assay)
-      ) %>%
-        imap(function (x, name) {
-          if (length(x) > 0) {
-            paste0(
-              "Columns missing in ",
-              name,
-              " metadata template: ",
-              paste(x, collapse = ", ")
-            )
-          }
-        })
-      if (!all(map_lgl(missing_cols, is.null))) {
-        missing_cols <- map(missing_cols, tags$p)
-      } else {
-        missing_cols <- p("Hooray! No columns are missing from metadata.")
-      }
-      missing_cols
+    output$missing_cols_indiv <- renderUI({
+      report_missing_cols(
+        indiv(),
+        check_cols_individual,
+        "individual",
+        input$species
+      )
+    })
+
+    output$missing_cols_biosp <- renderUI({
+      report_missing_cols(
+        biosp(),
+        check_cols_biospecimen,
+        "biospecimen"
+      )
+    })
+
+    output$missing_cols_assay <- renderUI({
+      report_missing_cols(
+        assay(),
+        check_cols_assay,
+        "assay",
+        input$assay
+      )
     })
 
     ## Individual IDs
     output$individual_ids <- renderUI({
+      validate(
+        need(input$indiv_meta, "Enter Synapse ID of individual metadata"),
+        need(input$biosp_meta, "Enter Synapse ID of biospecimen metadata")
+      )
       ## Check individual IDs between individual and biospecimen files
       individual_ids <- check_indiv_ids(indiv(), biosp()) %>%
         create_mismatched_id_message("individual", "biospecimen", "individual IDs") %>%
@@ -117,6 +105,10 @@ server <- function(input, output, session) {
 
     ## Specimen IDs
     output$specimen_ids <- renderUI({
+      validate(
+        need(input$biosp_meta, "Enter Synapse ID of biospecimen metadata"),
+        need(input$assay_meta, "Enter Synapse ID of assay metadata")
+      )
       ## Check specimen IDs between biospecimen and assay files
       specimen_ids <- check_specimen_ids(biosp(), assay()) %>%
         create_mismatched_id_message("biospecimen", "assay", "specimen IDs") %>%
@@ -181,6 +173,10 @@ server <- function(input, output, session) {
     })
 
     output$specimen_ids_manifest <- renderUI({
+      validate(
+        need(input$biosp_meta, "Enter Synapse ID of biospecimen metadata"),
+        need(input$manifest, "Please upload manifest file")
+      )
       ## Check specimen IDs against biospecimen and assay metadata
       specimen_ids_manifest_biosp <- check_specimen_ids(biosp(), manifest()) %>%
         create_mismatched_id_message("biospecimen", "manifest", "specimen IDs") %>%
