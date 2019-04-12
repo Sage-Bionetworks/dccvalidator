@@ -19,11 +19,8 @@ least three columns: \code{key}, \code{value}, and \code{columnType}.}
 A named list of invalid annotation values.
 }
 \description{
-Checks that all annotation values are valid. Currently only checks enumerated
-values for standard annotation keys; it does not check types for annotations
-such as \code{compoundDoseUnit} which are required to be strings but have no
-enumerated list of values. It also does not report on values for invalid
-\emph{keys}; see \code{\link[=check_annotation_keys]{check_annotation_keys()}}.
+Checks that all annotation values are valid. It does not report on values for
+invalid \emph{keys}; see \code{\link[=check_annotation_keys]{check_annotation_keys()}}.
 }
 \examples{
 \dontrun{
