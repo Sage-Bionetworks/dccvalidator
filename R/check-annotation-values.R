@@ -113,7 +113,12 @@ valid_annotation_values.CsvFileTable <- function(x, annotations) {
   check_values(dat_annots, annotations, return_valid = TRUE)
 }
 
-## Check that class of value matches annotation columnType
+#' Check that class of value matches annotation columnType
+#'
+#' @inheritParams check_value
+#' @return A vector of invalid values (if `return_valid = FALSE`; otherwise a
+#'   vector of valid values).
+#' @rdname check_values
 check_type <- function(value, key, annotations, return_valid = FALSE) {
   coltype <- annotations[annotations$key == key, "columnType"]
   if (inherits(coltype, "tbl_df")) {
@@ -139,7 +144,16 @@ check_type <- function(value, key, annotations, return_valid = FALSE) {
   }
 }
 
-## Check values for one key
+#' Check values for one key
+#'
+#' @param value The value of an annotation
+#' @param key An annotation key
+#' @param annotations A data frame of annotations to check against
+#' @param return_valid Should the function return valid values? Defaults to
+#'   `FALSE` (i.e. the function will return invalid values).
+#' @return A vector of invalid (if `return_valid = FALSE`) or valid (if
+#'   `return_valid` = TRUE) values.
+#' @rdname check_values
 check_value <- function(value, key, annotations, return_valid = FALSE) {
   value <- unlist(value)
   if (missing(annotations)) {
@@ -162,7 +176,15 @@ check_value <- function(value, key, annotations, return_valid = FALSE) {
   }
 }
 
-## Check a set of keys and their values
+#' Check a set of keys and their values
+#'
+#' @param x A data frame of annotation data
+#' @param annotations A data frame of annotations to check against
+#' @param return_valid Should the function return valid values? Defaults to
+#'   `FALSE` (i.e. the function will return invalid values).
+#' @return A named list where each element corresponds to a key that contains
+#'   invalid values (if `return_valid = FLASE`), and the contents of each
+#'   element is a vector of invalid values.
 check_values <- function(x, annotations, return_valid = FALSE) {
   if (length(names(x)) == 0) {
     stop("No annotations present to check", call. = FALSE)
