@@ -5,15 +5,19 @@
 \alias{valid_annotation_keys}
 \title{Check annotation keys}
 \usage{
-check_annotation_keys(x, annotations)
+check_annotation_keys(x, annotations, whitelist_keys = NULL)
 
-valid_annotation_keys(x, annotations)
+valid_annotation_keys(x, annotations, whitelist_keys = NULL)
 }
 \arguments{
 \item{x}{An object to check.}
 
 \item{annotations}{A data frame of annotation definitions. Must contain at
 least three columns: \code{key}, \code{value}, and \code{columnType}.}
+
+\item{whitelist_keys}{A character vector keys to whitelist. If these keys are
+present in \code{x} but absent from \code{annotations}, they will still be treated as
+valid.}
 }
 \value{
 A character vector of invalid (for \code{check_annotation_keys()}) or

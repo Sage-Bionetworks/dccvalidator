@@ -93,3 +93,30 @@ test_that("check_keys checks that necessary annotation columns are present", {
   a <- tibble(x = c("a", "b"))
   expect_error(check_keys(a, annotations))
 })
+
+test_that("check_keys allows whitelisting keys that aren't part of the annotations", {
+  resa <- check_keys(c("assay", "foo"), whitelist_keys = "foo")
+  resb <- check_keys(c("assay", "foo", "bar"), whitelist_keys = "foo")
+  resc <- check_keys(c("assay", "foo"), whitelist_keys = c("foo", "bar"))
+  resd <- check_keys(
+    c("assay", "foo"),
+    whitelist_keys = "foo",
+    return_valid = TRUE
+  )
+  rese <- check_keys(
+    c("assay", "foo", "bar"),
+    whitelist_keys = "foo",
+    return_valid = TRUE
+  )
+  resf <- check_keys(
+    c("assay", "foo"),
+    whitelist_keys = c("foo", "bar"),
+    return_valid = TRUE
+  )
+  expect_equal(resa, character(0))
+  expect_equal(resb, "bar")
+  expect_equal(resc, character(0))
+  expect_equal(resd, c("assay", "foo"))
+  expect_equal(rese, c("assay", "foo"))
+  expect_equal(resf, c("assay", "foo"))
+})
