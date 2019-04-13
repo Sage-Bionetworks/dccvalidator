@@ -8,12 +8,14 @@
 \usage{
 check_type(value, key, annotations, return_valid = FALSE)
 
-check_value(value, key, annotations, return_valid = FALSE)
+check_value(value, key, annotations, whitelist_keys = NULL,
+  return_valid = FALSE)
 
-check_values(x, annotations, return_valid = FALSE)
+check_values(x, annotations, whitelist_keys = NULL,
+  return_valid = FALSE)
 }
 \arguments{
-\item{value}{The value of an annotation}
+\item{value}{The values of an annotation}
 
 \item{key}{An annotation key}
 
@@ -22,19 +24,14 @@ check_values(x, annotations, return_valid = FALSE)
 \item{return_valid}{Should the function return valid values? Defaults to
 \code{FALSE} (i.e. the function will return invalid values).}
 
+\item{whitelist_keys}{A chracter vector of annotation keys to whitelist. If
+provided, all values for the given keys will be treated as valid.}
+
 \item{x}{A data frame of annotation data}
-
-\item{annotations}{A data frame of annotations to check against}
-
-\item{return_valid}{Should the function return valid values? Defaults to
-\code{FALSE} (i.e. the function will return invalid values).}
 }
 \value{
 A vector of invalid values (if \code{return_valid = FALSE}; otherwise a
 vector of valid values).
-
-A vector of invalid (if \code{return_valid = FALSE}) or valid (if
-\code{return_valid} = TRUE) values.
 
 A named list where each element corresponds to a key that contains
 invalid values (if \code{return_valid = FLASE}), and the contents of each
