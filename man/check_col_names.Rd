@@ -21,7 +21,8 @@ check_cols_biospecimen(data)
 \arguments{
 \item{data}{Data file (manifest, individual metadata, or assay metadata)}
 
-\item{template}{Template to check against}
+\item{template}{Character vector of column names from the template to check
+against}
 }
 \value{
 A character vector containing any column names that are missing from
@@ -29,4 +30,7 @@ the data file.
 }
 \description{
 Check column names against their corresponding template
+}
+\seealso{
+\code{\link[dccvalidator:get_template]{dccvalidator::get_template()}}
 }
