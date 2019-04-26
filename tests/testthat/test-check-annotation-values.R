@@ -288,3 +288,15 @@ test_that("can whitelist keys and values simultaneously", {
   )
   expect_equal(res, list(fileFormat = "wrongest"))
 })
+
+test_that("whitelist_values works in check_type", {
+  expect_equal(
+    check_type(
+      1:3,
+      "BrodmannArea",
+      annots,
+      whitelist_values = list(BrodmannArea = 1:2)
+    ),
+    3
+  )
+})

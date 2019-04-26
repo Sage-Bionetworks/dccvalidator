@@ -175,7 +175,8 @@ valid_annotation_values.CsvFileTable <- function(x, annotations,
 #' @return A vector of invalid values (if `return_valid = FALSE`; otherwise a
 #'   vector of valid values).
 #' @rdname check_values
-check_type <- function(values, key, annotations, return_valid = FALSE) {
+check_type <- function(values, key, annotations, whitelist_values = NULL,
+                       return_valid = FALSE) {
   coltype <- annotations[annotations$key == key, "columnType"]
   if (inherits(coltype, "tbl_df")) {
     ## need to be sure to get a vector if annotations is a tibble
@@ -191,10 +192,14 @@ check_type <- function(values, key, annotations, return_valid = FALSE) {
   ## Convert factors to strings
   values <- if (is.factor(values)) as.character(values) else values
 
+  ## Get whitelisted values for key, if any
+  whitelist <- unique(whitelist_values[[key]])
+
   ## Check if class matches
   matches <- class(values) == correct_class
   if (return_valid & matches | !return_valid & !matches) {
-    return(unique(na.omit(values)))
+    ## Return valid or invalid values, minus whitelisted values
+    return(setdiff(unique(na.omit(values)), whitelist))
   } else {
     return(character(0))
   }
@@ -232,7 +237,7 @@ check_value <- function(values, key, annotations, whitelist_keys = NULL,
   ## Some annotation keys don't have enumerated acceptable values (e.g.
   ## specimenID). In that case just check the type.
   if (all(is.na(annot_values))) {
-    return(check_type(values, key, annotations, return_valid))
+    return(check_type(values, key, annotations, whitelist_values, return_valid))
   }
   ## Check values against enumerated values in annotation definitions.
   if (isTRUE(return_valid)) {
