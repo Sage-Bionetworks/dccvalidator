@@ -11,8 +11,11 @@ Depends:
 Imports:
     purrr,
     readxl,
+    stats,
     synapser,
-    syndccutils
+    syndccutils,
+    tools,
+    utils
 Suggests:
     testthat,
     tibble,
