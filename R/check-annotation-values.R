@@ -4,9 +4,7 @@
 #' invalid _keys_; see [check_annotation_keys()].
 #'
 #' @inheritParams check_annotation_keys
-#' @param whitelist_keys A character vector keys to whitelist. If these keys are
-#'   present in `x` but absent from `annotations`, all of the values for these
-#'   keys will be treated as valid.
+#' @inheritParams check_values
 #' @return A named list of invalid annotation values.
 #' @export
 #'
@@ -157,7 +155,8 @@ check_type <- function(value, key, annotations, return_valid = FALSE) {
 #'
 #' @param value The values of an annotation
 #' @param key An annotation key
-#' @inheritParams check_values whitelist_keys, annotations, return_valid
+#' @inheritParams check_values
+#' @return A character vector of valid or invalid values
 #' @rdname check_values
 check_value <- function(value, key, annotations, whitelist_keys = NULL,
                         return_valid = FALSE) {

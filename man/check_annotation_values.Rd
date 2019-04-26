@@ -16,8 +16,8 @@ valid_annotation_values(x, annotations, whitelist_keys = NULL)
 least three columns: \code{key}, \code{value}, and \code{columnType}.}
 
 \item{whitelist_keys}{A character vector keys to whitelist. If these keys are
-present in \code{x} but absent from \code{annotations}, all of the values for these
-keys will be treated as valid.}
+present in \code{x} but absent from \code{annotations}, they will still be treated as
+valid.}
 }
 \value{
 A named list of invalid annotation values.

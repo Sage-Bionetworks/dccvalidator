@@ -33,6 +33,8 @@ provided, all values for the given keys will be treated as valid.}
 A vector of invalid values (if \code{return_valid = FALSE}; otherwise a
 vector of valid values).
 
+A character vector of valid or invalid values
+
 A named list where each element corresponds to a key that contains
 invalid values (if \code{return_valid = FLASE}), and the contents of each
 element is a vector of invalid values.
