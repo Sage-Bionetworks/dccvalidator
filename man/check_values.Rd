@@ -9,10 +9,10 @@
 check_type(value, key, annotations, return_valid = FALSE)
 
 check_value(values, key, annotations, whitelist_keys = NULL,
-  return_valid = FALSE)
+  whitelist_values = NULL, return_valid = FALSE)
 
 check_values(x, annotations, whitelist_keys = NULL,
-  return_valid = FALSE)
+  whitelist_values = NULL, return_valid = FALSE)
 }
 \arguments{
 \item{value}{The values of an annotation}
@@ -24,8 +24,11 @@ check_values(x, annotations, whitelist_keys = NULL,
 \item{return_valid}{Should the function return valid values? Defaults to
 \code{FALSE} (i.e. the function will return invalid values).}
 
-\item{whitelist_keys}{A chracter vector of annotation keys to whitelist. If
+\item{whitelist_keys}{A character vector of annotation keys to whitelist. If
 provided, all values for the given keys will be treated as valid.}
+
+\item{whitelist_values}{A named list of keys (as the names) and values (as
+vectors) to whitelist}
 
 \item{x}{A data frame of annotation data}
 }

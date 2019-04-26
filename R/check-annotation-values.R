@@ -31,27 +31,48 @@
 #' # be logged in to Synapse)
 #' my_file <- synGet("syn11931757", downloadFile = FALSE)
 #' check_annotation_values(my_file)
+#'
+#' # It is possible to whitelist certain certain values, or all values for
+#' # certain keys:
+#' check_annotation_values(dat, whitelist_keys = "assay")
+#' check_annotation_values(dat, whitelist_values = list(assay = c("foo")))
 #' }
-check_annotation_values <- function (x, annotations, whitelist_keys = NULL) {
+check_annotation_values <- function (x, annotations, whitelist_keys = NULL,
+                                     whitelist_values = NULL) {
   UseMethod("check_annotation_values", x)
 }
 
 #' @export
 check_annotation_values.File <- function(x, annotations,
-                                         whitelist_keys = NULL) {
+                                         whitelist_keys = NULL,
+                                         whitelist_values = NULL) {
   annots <- synapser::synGetAnnotations(x)
-  check_values(annots, annotations, whitelist_keys, return_valid = FALSE)
+  check_values(
+    annots,
+    annotations,
+    whitelist_keys,
+    whitelist_values,
+    return_valid = FALSE
+  )
 }
 
 #' @export
 check_annotation_values.data.frame <- function(x, annotations,
-                                               whitelist_keys = NULL) {
-  check_values(x, annotations, whitelist_keys, return_valid = FALSE)
+                                               whitelist_keys = NULL,
+                                               whitelist_values = NULL) {
+  check_values(
+    x,
+    annotations,
+    whitelist_keys,
+    whitelist_values,
+    return_valid = FALSE
+  )
 }
 
 #' @export
 check_annotation_values.CsvFileTable <- function(x, annotations,
-                                                 whitelist_keys = NULL) {
+                                                 whitelist_keys = NULL,
+                                                 whitelist_values = NULL) {
   dat <- synapser::as.data.frame(x)
   fv_synapse_cols <- c(
     "ROW_ID",
@@ -72,31 +93,53 @@ check_annotation_values.CsvFileTable <- function(x, annotations,
     "dataFileHandleId"
   )
   dat_annots <- dat[!names(dat) %in% fv_synapse_cols]
-  check_values(dat_annots, annotations, whitelist_keys, return_valid = FALSE)
+  check_values(
+    dat_annots,
+    annotations,
+    whitelist_keys,
+    whitelist_values,
+    return_valid = FALSE
+  )
 }
 
 #' @export
 #' @rdname check_annotation_values
-valid_annotation_values <- function (x, annotations, whitelist_keys = NULL) {
+valid_annotation_values <- function (x, annotations, whitelist_keys = NULL,
+                                     whitelist_values = NULL) {
   UseMethod("valid_annotation_values", x)
 }
 
 #' @export
 valid_annotation_values.File <- function(x, annotations,
-                                         whitelist_keys = NULL) {
+                                         whitelist_keys = NULL,
+                                         whitelist_values = NULL) {
   annots <- synapser::synGetAnnotations(x)
-  check_values(annots, annotations, whitelist_keys, return_valid = TRUE)
+  check_values(
+    annots,
+    annotations,
+    whitelist_keys,
+    whitelist_values,
+    return_valid = TRUE
+  )
 }
 
 #' @export
 valid_annotation_values.data.frame <- function(x, annotations,
-                                               whitelist_keys = NULL) {
-  check_values(x, annotations, whitelist_keys, return_valid = TRUE)
+                                               whitelist_keys = NULL,
+                                               whitelist_values = NULL) {
+  check_values(
+    x,
+    annotations,
+    whitelist_keys,
+    whitelist_values,
+    return_valid = TRUE
+  )
 }
 
 #' @export
 valid_annotation_values.CsvFileTable <- function(x, annotations,
-                                                 whitelist_keys = NULL) {
+                                                 whitelist_keys = NULL,
+                                                 whitelist_values = NULL) {
   dat <- synapser::as.data.frame(x)
   fv_synapse_cols <- c(
     "ROW_ID",
@@ -117,7 +160,13 @@ valid_annotation_values.CsvFileTable <- function(x, annotations,
     "dataFileHandleId"
   )
   dat_annots <- dat[!names(dat) %in% fv_synapse_cols]
-  check_values(dat_annots, annotations, whitelist_keys, return_valid = TRUE)
+  check_values(
+    dat_annots,
+    annotations,
+    whitelist_keys,
+    whitelist_values,
+    return_valid = TRUE
+  )
 }
 
 #' Check that class of value matches annotation columnType
@@ -159,8 +208,12 @@ check_type <- function(value, key, annotations, return_valid = FALSE) {
 #' @return A character vector of valid or invalid values
 #' @rdname check_values
 check_value <- function(values, key, annotations, whitelist_keys = NULL,
-                        return_valid = FALSE) {
+                        whitelist_values = NULL, return_valid = FALSE) {
   values <- unlist(values)
+
+  ## Get whitelisted values for key, if any
+  whitelist <- unique(whitelist_values[[key]])
+
   if (missing(annotations)) {
     annotations <- syndccutils::get_synapse_annotations()
   }
@@ -183,9 +236,9 @@ check_value <- function(values, key, annotations, whitelist_keys = NULL,
   }
   ## Check values against enumerated values in annotation definitions.
   if (isTRUE(return_valid)) {
-    unique(values[values %in% annot_values & !is.na(values)])
+    unique(values[values %in% c(annot_values, whitelist) & !is.na(values)])
   } else {
-    unique(values[!values %in% annot_values & !is.na(values)])
+    unique(values[!values %in% c(annot_values, whitelist) & !is.na(values)])
   }
 }
 
@@ -193,14 +246,17 @@ check_value <- function(values, key, annotations, whitelist_keys = NULL,
 #'
 #' @param x A data frame of annotation data
 #' @param annotations A data frame of annotations to check against
-#' @param whitelist_keys A chracter vector of annotation keys to whitelist. If
+#' @param whitelist_keys A character vector of annotation keys to whitelist. If
 #'   provided, all values for the given keys will be treated as valid.
+#' @param whitelist_values A named list of keys (as the names) and values (as
+#'   vectors) to whitelist
 #' @param return_valid Should the function return valid values? Defaults to
 #'   `FALSE` (i.e. the function will return invalid values).
 #' @return A named list where each element corresponds to a key that contains
 #'   invalid values (if `return_valid = FLASE`), and the contents of each
 #'   element is a vector of invalid values.
-check_values <- function(x, annotations, whitelist_keys = NULL, return_valid = FALSE) {
+check_values <- function(x, annotations, whitelist_keys = NULL,
+                         whitelist_values = NULL, return_valid = FALSE) {
   if (length(names(x)) == 0) {
     stop("No annotations present to check", call. = FALSE)
   }
@@ -218,6 +274,7 @@ check_values <- function(x, annotations, whitelist_keys = NULL, return_valid = F
     check_value,
     annotations,
     whitelist_keys = whitelist_keys,
+    whitelist_values = whitelist_values,
     return_valid = return_valid
   )
   values <- purrr::compact(values)

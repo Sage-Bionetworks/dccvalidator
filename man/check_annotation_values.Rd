@@ -5,9 +5,11 @@
 \alias{valid_annotation_values}
 \title{Check annotation values}
 \usage{
-check_annotation_values(x, annotations, whitelist_keys = NULL)
+check_annotation_values(x, annotations, whitelist_keys = NULL,
+  whitelist_values = NULL)
 
-valid_annotation_values(x, annotations, whitelist_keys = NULL)
+valid_annotation_values(x, annotations, whitelist_keys = NULL,
+  whitelist_values = NULL)
 }
 \arguments{
 \item{x}{An object to check.}
@@ -18,6 +20,9 @@ least three columns: \code{key}, \code{value}, and \code{columnType}.}
 \item{whitelist_keys}{A character vector keys to whitelist. If these keys are
 present in \code{x} but absent from \code{annotations}, they will still be treated as
 valid.}
+
+\item{whitelist_values}{A named list of keys (as the names) and values (as
+vectors) to whitelist}
 }
 \value{
 A named list of invalid annotation values.
@@ -49,5 +54,10 @@ check_annotation_values(fv, annots)
 # be logged in to Synapse)
 my_file <- synGet("syn11931757", downloadFile = FALSE)
 check_annotation_values(my_file)
+
+# It is possible to whitelist certain certain values, or all values for
+# certain keys:
+check_annotation_values(dat, whitelist_keys = "assay")
+check_annotation_values(dat, whitelist_values = list(assay = c("foo")))
 }
 }

@@ -248,3 +248,43 @@ test_that("check_values can whitelist certain keys", {
   expect_equal(names(rese), c("fileFormat", "assay"))
   expect_equal(names(resf), c("fileFormat"))
 })
+
+test_that("check_values can whitelist certain key/value combinations", {
+  dat <- tibble(
+    fileFormat = c("wrong", "wronger", "wrongest", "txt"),
+    assay = c("rnaSeq", "rnaSeq", "rnaSeq", "also wrong")
+  )
+  resa <- check_values(
+    dat,
+    annots,
+    whitelist_values = list(fileFormat = c("wrong", "wronger"))
+  )
+  resb <- check_values(
+    dat,
+    annots,
+    whitelist_values = list(assay = "also wrong")
+  )
+  resc <- check_values(
+    dat,
+    annots,
+    whitelist_values = list(assay = "also wrong"),
+    return_valid = TRUE
+  )
+  expect_equal(resa, list(fileFormat = "wrongest", assay = "also wrong"))
+  expect_equal(resb, list(fileFormat = c("wrong", "wronger", "wrongest")))
+  expect_equal(resc, list(fileFormat = "txt", assay = c("rnaSeq", "also wrong")))
+})
+
+test_that("can whitelist keys and values simultaneously", {
+  dat <- tibble(
+    fileFormat = c("wrong", "wronger", "wrongest", "txt"),
+    assay = c("rnaSeq", "rnaSeq", "rnaSeq", "also wrong")
+  )
+  res <- check_values(
+    dat,
+    annots,
+    whitelist_keys = "assay",
+    whitelist_values = list(fileFormat = c("wrong", "wronger"))
+  )
+  expect_equal(res, list(fileFormat = "wrongest"))
+})
