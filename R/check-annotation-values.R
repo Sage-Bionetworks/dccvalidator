@@ -175,7 +175,7 @@ valid_annotation_values.CsvFileTable <- function(x, annotations,
 #' @return A vector of invalid values (if `return_valid = FALSE`; otherwise a
 #'   vector of valid values).
 #' @rdname check_values
-check_type <- function(value, key, annotations, return_valid = FALSE) {
+check_type <- function(values, key, annotations, return_valid = FALSE) {
   coltype <- annotations[annotations$key == key, "columnType"]
   if (inherits(coltype, "tbl_df")) {
     ## need to be sure to get a vector if annotations is a tibble
@@ -189,12 +189,12 @@ check_type <- function(value, key, annotations, return_valid = FALSE) {
     "DOUBLE" = "numeric"
   )
   ## Convert factors to strings
-  value <- if (is.factor(value)) as.character(value) else value
+  values <- if (is.factor(values)) as.character(values) else values
 
   ## Check if class matches
-  matches <- class(value) == correct_class
+  matches <- class(values) == correct_class
   if (return_valid & matches | !return_valid & !matches) {
-    return(unique(na.omit(value)))
+    return(unique(na.omit(values)))
   } else {
     return(character(0))
   }
@@ -202,7 +202,7 @@ check_type <- function(value, key, annotations, return_valid = FALSE) {
 
 #' Check values for one key
 #'
-#' @param value The values of an annotation
+#' @param values The values of an annotation
 #' @param key An annotation key
 #' @inheritParams check_values
 #' @return A character vector of valid or invalid values

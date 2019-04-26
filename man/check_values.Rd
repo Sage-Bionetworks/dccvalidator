@@ -6,7 +6,7 @@
 \alias{check_values}
 \title{Check that class of value matches annotation columnType}
 \usage{
-check_type(value, key, annotations, return_valid = FALSE)
+check_type(values, key, annotations, return_valid = FALSE)
 
 check_value(values, key, annotations, whitelist_keys = NULL,
   whitelist_values = NULL, return_valid = FALSE)
@@ -15,7 +15,7 @@ check_values(x, annotations, whitelist_keys = NULL,
   whitelist_values = NULL, return_valid = FALSE)
 }
 \arguments{
-\item{value}{The values of an annotation}
+\item{values}{The values of an annotation}
 
 \item{key}{An annotation key}
 
