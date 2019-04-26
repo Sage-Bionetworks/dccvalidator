@@ -11,42 +11,49 @@ check_col_names <- function(data, template) {
   setdiff(template, names(data))
 }
 
+#' @inheritParams check_col_names
 #' @export
 #' @rdname check_col_names
 check_cols_manifest <- function(data) {
   check_col_names(data, c("path", "parent"))
 }
 
+#' @inheritParams check_col_names
+#' @inheritParams get_template
 #' @export
 #' @rdname check_col_names
-check_cols_individual <- function(data, template) {
+check_cols_individual <- function(data, template, ...) {
   template <- match.arg(template, c("human", "animal"))
   id <- switch(
     template,
     human = "syn12973254",
     animal = "syn12973253"
   )
-  names <- get_template(id)
+  names <- get_template(id, ...)
   check_col_names(data, names)
 }
 
+#' @inheritParams check_col_names
+#' @inheritParams get_template
 #' @export
 #' @rdname check_col_names
-check_cols_assay <- function(data, template) {
+check_cols_assay <- function(data, template, ...) {
   template <- match.arg(template, c("rnaSeq", "proteomics"))
   id <- switch(
     template,
     rnaSeq = "syn12973256",
     proteomics = "syn12973255"
   )
-  names <- get_template(id)
+  names <- get_template(id, ...)
   check_col_names(data, names)
 }
 
+#' @inheritParams check_col_names
+#' @inheritParams get_template
 #' @export
 #' @rdname check_col_names
-check_cols_biospecimen <- function(data) {
-  names <- get_template("syn12973252")
+check_cols_biospecimen <- function(data, ...) {
+  names <- get_template("syn12973252", ...)
   check_col_names(data, names)
 }
 
@@ -54,10 +61,11 @@ check_cols_biospecimen <- function(data) {
 #'
 #' @param synID Synapse ID of an excel or csv file containing a metadata
 #'   template
+#' @param ... Additional arguments passed to [synapser::synGet()]
 #' @return Character vector of template column names
 #' @export
-get_template <- function(synID) {
-  template <- try(synapser::synGet(synID), silent = TRUE)
+get_template <- function(synID, ...) {
+  template <- try(synapser::synGet(synID, ...), silent = TRUE)
   if (inherits(template, "try-error")) {
     stop(
       "Couldn't download metadata template. Make sure you are logged in to Synapse and that `synID` is a valid synapse ID.",

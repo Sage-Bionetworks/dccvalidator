@@ -98,3 +98,28 @@ test_that("get_template can read in excel and csv templates", {
   expect_equal(csv, c("a", "b", "c"))
   expect_equal(xlsx, c("a", "b", "c"))
 })
+
+test_that("get_template can get different version of a template", {
+  xlsx1 <- get_template("syn18384878", version = 1)
+  xlsx2 <- get_template("syn18384878", version = 2)
+  expect_equal(xlsx1, c("a", "b", "c"))
+  expect_equal(xlsx2, c("a", "b", "c", "d"))
+})
+
+test_that("wrapper functions for specific template gets the correct version", {
+  dat <- data.frame(
+    individualID = 1,
+    specimenID = 1,
+    organ = 1,
+    tissue = 1,
+    BrodmannArea = 1,
+    tissueWeight = 1,
+    nucleicAcidSource = 1,
+    cellType = 1
+  )
+  expect_equal(check_cols_biospecimen(dat, version = 2), character(0))
+  expect_equal(
+    check_cols_biospecimen(dat, version = 3),
+    c("samplingDate", "sampleStatus", "tissueVolume", "fastingState")
+  )
+})
