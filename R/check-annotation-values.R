@@ -158,9 +158,9 @@ check_type <- function(value, key, annotations, return_valid = FALSE) {
 #' @inheritParams check_values
 #' @return A character vector of valid or invalid values
 #' @rdname check_values
-check_value <- function(value, key, annotations, whitelist_keys = NULL,
+check_value <- function(values, key, annotations, whitelist_keys = NULL,
                         return_valid = FALSE) {
-  value <- unlist(value)
+  values <- unlist(values)
   if (missing(annotations)) {
     annotations <- syndccutils::get_synapse_annotations()
   }
@@ -171,7 +171,7 @@ check_value <- function(value, key, annotations, whitelist_keys = NULL,
   ## If key is being whitelisted, treat all values as valid
   if (key %in% whitelist_keys) {
     if (isTRUE(return_valid)) {
-      return(unique(value))
+      return(unique(values))
     } else {
       return(character(0))
     }
@@ -179,13 +179,13 @@ check_value <- function(value, key, annotations, whitelist_keys = NULL,
   ## Some annotation keys don't have enumerated acceptable values (e.g.
   ## specimenID). In that case just check the type.
   if (all(is.na(annot_values))) {
-    return(check_type(value, key, annotations, return_valid))
+    return(check_type(values, key, annotations, return_valid))
   }
   ## Check values against enumerated values in annotation definitions.
   if (isTRUE(return_valid)) {
-    unique(value[value %in% annot_values & !is.na(value)])
+    unique(values[values %in% annot_values & !is.na(values)])
   } else {
-    unique(value[!value %in% annot_values & !is.na(value)])
+    unique(values[!values %in% annot_values & !is.na(values)])
   }
 }
 

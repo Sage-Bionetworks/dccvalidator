@@ -8,7 +8,7 @@
 \usage{
 check_type(value, key, annotations, return_valid = FALSE)
 
-check_value(value, key, annotations, whitelist_keys = NULL,
+check_value(values, key, annotations, whitelist_keys = NULL,
   return_valid = FALSE)
 
 check_values(x, annotations, whitelist_keys = NULL,
