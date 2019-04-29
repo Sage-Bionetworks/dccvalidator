@@ -12,17 +12,19 @@ check_col_names(data, template)
 
 check_cols_manifest(data)
 
-check_cols_individual(data, template)
+check_cols_individual(data, template, ...)
 
-check_cols_assay(data, template)
+check_cols_assay(data, template, ...)
 
-check_cols_biospecimen(data)
+check_cols_biospecimen(data, ...)
 }
 \arguments{
 \item{data}{Data file (manifest, individual metadata, or assay metadata)}
 
 \item{template}{Character vector of column names from the template to check
 against}
+
+\item{...}{Additional arguments passed to \code{\link[synapser:synGet]{synapser::synGet()}}}
 }
 \value{
 A character vector containing any column names that are missing from
