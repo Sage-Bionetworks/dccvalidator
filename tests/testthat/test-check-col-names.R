@@ -43,7 +43,7 @@ test_that("check_cols_individual works for individual columns", {
 test_that("check_cols_biospecimen works for biospecimen columns", {
   skip_on_cran()
 
-  biosp_names <- get_template("syn12973252", version = 3)
+  biosp_names <- get_template("syn12973252", version = 4)
 
   full_col_biosp <- data.frame(matrix(ncol = length(biosp_names)))
   colnames(full_col_biosp) <- biosp_names
