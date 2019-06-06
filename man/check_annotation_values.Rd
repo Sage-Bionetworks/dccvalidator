@@ -5,25 +5,31 @@
 \alias{valid_annotation_values}
 \title{Check annotation values}
 \usage{
-check_annotation_values(x, annotations)
+check_annotation_values(x, annotations, whitelist_keys = NULL,
+  whitelist_values = NULL)
 
-valid_annotation_values(x, annotations)
+valid_annotation_values(x, annotations, whitelist_keys = NULL,
+  whitelist_values = NULL)
 }
 \arguments{
 \item{x}{An object to check.}
 
 \item{annotations}{A data frame of annotation definitions. Must contain at
 least three columns: \code{key}, \code{value}, and \code{columnType}.}
+
+\item{whitelist_keys}{A character vector keys to whitelist. If these keys are
+present in \code{x} but absent from \code{annotations}, they will still be treated as
+valid.}
+
+\item{whitelist_values}{A named list of keys (as the names) and values (as
+vectors) to whitelist}
 }
 \value{
 A named list of invalid annotation values.
 }
 \description{
-Checks that all annotation values are valid. Currently only checks enumerated
-values for standard annotation keys; it does not check types for annotations
-such as \code{compoundDoseUnit} which are required to be strings but have no
-enumerated list of values. It also does not report on values for invalid
-\emph{keys}; see \code{\link[=check_annotation_keys]{check_annotation_keys()}}.
+Checks that all annotation values are valid. It does not report on values for
+invalid \emph{keys}; see \code{\link[=check_annotation_keys]{check_annotation_keys()}}.
 }
 \examples{
 \dontrun{
@@ -48,5 +54,10 @@ check_annotation_values(fv, annots)
 # be logged in to Synapse)
 my_file <- synGet("syn11931757", downloadFile = FALSE)
 check_annotation_values(my_file)
+
+# It is possible to whitelist certain certain values, or all values for
+# certain keys:
+check_annotation_values(dat, whitelist_keys = "assay")
+check_annotation_values(dat, whitelist_values = list(assay = c("foo")))
 }
 }

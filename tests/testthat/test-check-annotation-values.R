@@ -103,7 +103,6 @@ test_that("check_values checks multiple values", {
   )
 })
 
-
 test_that("check_value falls back to get_synapse_annotations", {
   res <- check_value("wrong", "fileFormat", return_valid = FALSE)
   expect_equal(res, "wrong")
@@ -220,5 +219,84 @@ test_that("check_type does not return duplicates", {
   expect_equal(
     check_type(a, "x", annotations, return_valid = FALSE),
     character(0)
+  )
+})
+
+test_that("check_values can whitelist certain keys", {
+  dat1 <- tibble(
+    fileFormat = "wrong",
+    assay = "also wrong",
+    organ = "wrong again"
+  )
+  resa <- check_values(dat1, annots, whitelist_keys = "fileFormat")
+  resb <- check_values(dat1, annots, whitelist_keys = c("fileFormat", "assay"))
+  resc <- check_values(dat1, annots, whitelist_keys = c("fileFormat", "tissue"))
+
+  dat2 <- tibble(
+    fileFormat = "txt",
+    assay = "rnaSeq",
+    organ = "brain"
+  )
+  resd <- check_values(dat1, annots, whitelist_keys = "fileFormat", return_valid = TRUE)
+  rese <- check_values(dat1, annots, whitelist_keys = c("fileFormat", "assay"), return_valid = TRUE)
+  resf <- check_values(dat1, annots, whitelist_keys = c("fileFormat", "tissue"), return_valid = TRUE)
+
+  expect_equal(names(resa), c("assay", "organ"))
+  expect_equal(names(resb), c("organ"))
+  expect_equal(names(resc), c("assay", "organ"))
+  expect_equal(names(resd), c("fileFormat"))
+  expect_equal(names(rese), c("fileFormat", "assay"))
+  expect_equal(names(resf), c("fileFormat"))
+})
+
+test_that("check_values can whitelist certain key/value combinations", {
+  dat <- tibble(
+    fileFormat = c("wrong", "wronger", "wrongest", "txt"),
+    assay = c("rnaSeq", "rnaSeq", "rnaSeq", "also wrong")
+  )
+  resa <- check_values(
+    dat,
+    annots,
+    whitelist_values = list(fileFormat = c("wrong", "wronger"))
+  )
+  resb <- check_values(
+    dat,
+    annots,
+    whitelist_values = list(assay = "also wrong")
+  )
+  resc <- check_values(
+    dat,
+    annots,
+    whitelist_values = list(assay = "also wrong"),
+    return_valid = TRUE
+  )
+  expect_equal(resa, list(fileFormat = "wrongest", assay = "also wrong"))
+  expect_equal(resb, list(fileFormat = c("wrong", "wronger", "wrongest")))
+  expect_equal(resc, list(fileFormat = "txt", assay = c("rnaSeq", "also wrong")))
+})
+
+test_that("can whitelist keys and values simultaneously", {
+  dat <- tibble(
+    fileFormat = c("wrong", "wronger", "wrongest", "txt"),
+    assay = c("rnaSeq", "rnaSeq", "rnaSeq", "also wrong")
+  )
+  res <- check_values(
+    dat,
+    annots,
+    whitelist_keys = "assay",
+    whitelist_values = list(fileFormat = c("wrong", "wronger"))
+  )
+  expect_equal(res, list(fileFormat = "wrongest"))
+})
+
+test_that("whitelist_values works in check_type", {
+  expect_equal(
+    check_type(
+      1:3,
+      "BrodmannArea",
+      annots,
+      whitelist_values = list(BrodmannArea = 1:2)
+    ),
+    3
   )
 })
