@@ -199,7 +199,7 @@ check_type <- function(values, key, annotations, whitelist_values = NULL,
   matches <- class(values) == correct_class
   if (return_valid & matches | !return_valid & !matches) {
     ## Return valid or invalid values, minus whitelisted values
-    return(setdiff(unique(stats::na.omit(value)), whitelist))
+    return(setdiff(unique(stats::na.omit(values)), whitelist))
   } else {
     return(character(0))
   }
