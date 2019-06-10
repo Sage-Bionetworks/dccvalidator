@@ -3,19 +3,36 @@
 #' @param data Data file (manifest, individual metadata, or assay metadata)
 #' @param template Character vector of column names from the template to check
 #'   against
-#' @return A character vector containing any column names that are missing from
-#'   the data file.
+#' @return A condition object indicating whether the required columns were
+#'   present (`"check_pass"`) or absent (`"check_fail"`).
 #' @export
 #' @seealso [dccvalidator::get_template()]
 check_col_names <- function(data, template) {
-  setdiff(template, names(data))
+  missing <- setdiff(template, names(data))
 }
 
 #' @inheritParams check_col_names
 #' @export
 #' @rdname check_col_names
 check_cols_manifest <- function(data) {
-  check_col_names(data, c("path", "parent"))
+  required <- c("path", "parent")
+  behavior <- paste0(
+    "Manifest should contain columns: ",
+    paste(required, collapse = ", ")
+  )
+  missing <- check_col_names(data, required)
+  if (length(missing) > 0) {
+    check_fail(
+      msg = "Missing columns in the manifest",
+      behavior = behavior,
+      data = missing
+    )
+  } else {
+    check_pass(
+      msg = "All manifest columns present",
+      behavior = behavior
+    )
+  }
 }
 
 #' @inheritParams check_col_names
@@ -29,8 +46,24 @@ check_cols_individual <- function(data, template, ...) {
     human = "syn12973254",
     animal = "syn12973253"
   )
-  names <- get_template(id, ...)
-  check_col_names(data, names)
+  required <- get_template(id, ...)
+  behavior <- paste0(
+    "Individual file should contain columns: ",
+    paste(required, collapse = ", ")
+  )
+  missing <- check_col_names(data, required)
+  if (length(missing) > 0) {
+    check_fail(
+      msg = "Missing columns in the individual metadata file",
+      behavior = behavior,
+      data = missing
+    )
+  } else {
+    check_pass(
+      msg = "All individual metadata columns present",
+      behavior = behavior
+    )
+  }
 }
 
 #' @inheritParams check_col_names
@@ -44,8 +77,24 @@ check_cols_assay <- function(data, template, ...) {
     rnaSeq = "syn12973256",
     proteomics = "syn12973255"
   )
-  names <- get_template(id, ...)
-  check_col_names(data, names)
+  required <- get_template(id, ...)
+  behavior <- paste0(
+    "Assay file should contain columns: ",
+    paste(required, collapse = ", ")
+  )
+  missing <- check_col_names(data, required)
+  if (length(missing) > 0) {
+    check_fail(
+      msg = "Missing columns in the assay metadata file",
+      behavior = behavior,
+      data = missing
+    )
+  } else {
+    check_pass(
+      msg = "All assay metadata columns present",
+      behavior = behavior
+    )
+  }
 }
 
 #' @inheritParams check_col_names
@@ -53,8 +102,24 @@ check_cols_assay <- function(data, template, ...) {
 #' @export
 #' @rdname check_col_names
 check_cols_biospecimen <- function(data, ...) {
-  names <- get_template("syn12973252", ...)
-  check_col_names(data, names)
+  required <- get_template("syn12973252", ...)
+  behavior <- paste0(
+    "Biospecimen file should contain columns: ",
+    paste(required, collapse = ", ")
+  )
+  missing <- check_col_names(data, required)
+  if (length(missing) > 0) {
+    check_fail(
+      msg = "Missing columns in the biospecimen metadata file",
+      behavior = behavior,
+      data = missing
+    )
+  } else {
+    check_pass(
+      msg = "All biospecimen metadata columns present",
+      behavior = behavior
+    )
+  }
 }
 
 #' Get a template
