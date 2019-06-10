@@ -4,16 +4,26 @@
 #'
 #' @param x,y Data frames to compare
 #' @param idcol Name of column containing ids to compare
+#' @param xname,yname Names of x and y (to be used in resulting messages)
 #' @return List of IDs missing from x (but present in y) and missing from y (but
 #'   present in x)
 #' @export
-check_ids <- function(x, y, idcol = c("individualID", "specimenID")) {
+check_ids <- function(x, y, idcol = c("individualID", "specimenID"),
+                      xname = NULL, yname = NULL) {
   idcol <- match.arg(idcol)
   if (!idcol %in% colnames(x) | !idcol %in% colnames(y)) {
-    stop(
-      paste0("Both x and y must contain column ", idcol),
-      call. = FALSE
+    failure <- check_fail(
+      msg = paste0("Missing column ", idcol, " in ", xname, " or ", yname),
+      behavior = paste0(
+        xname,
+        " and ",
+        yname,
+        " metadata should both contain a column called ",
+        idcol
+      ),
+      data = list(colnames(x), colnames(y))
     )
+    return(failure)
   }
 
   ## Ensure that factor columns are coerced to character
@@ -40,8 +50,8 @@ check_ids <- function(x, y, idcol = c("individualID", "specimenID")) {
 #' @inheritParams check_ids
 #' @export
 #' @rdname check_ids
-check_indiv_ids <- function(x, y) {
-  check_ids(x, y, "individualID")
+check_indiv_ids <- function(x, y, xname = NULL, yname = NULL) {
+  check_ids(x, y, "individualID", xname, yname)
 }
 
 #' Check specimen IDs
@@ -51,6 +61,6 @@ check_indiv_ids <- function(x, y) {
 #' @inheritParams check_ids
 #' @export
 #' @rdname check_ids
-check_specimen_ids <- function(x, y) {
-  check_ids(x, y, "specimenID")
+check_specimen_ids <- function(x, y, xname = NULL, yname = NULL) {
+  check_ids(x, y, "specimenID", xname, yname)
 }
