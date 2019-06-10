@@ -8,6 +8,7 @@
 #'   present in x)
 #' @export
 check_ids <- function(x, y, idcol = c("individualID", "specimenID")) {
+  idcol <- match.arg(idcol)
   if (!idcol %in% colnames(x) | !idcol %in% colnames(y)) {
     stop(
       paste0("Both x and y must contain column ", idcol),
