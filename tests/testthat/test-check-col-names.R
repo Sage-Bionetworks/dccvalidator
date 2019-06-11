@@ -30,12 +30,24 @@ test_that("check_cols_individual works for individual columns", {
   colnames(full_col_indiv) <- cols
   incomplete_col_indiv <- full_col_indiv[, !names(full_col_indiv) %in% "yearsEducation"]
 
-  expect_equal(
-    check_cols_individual(full_col_indiv, "human"),
-    character(0)
+  expect_true(
+    inherits(check_cols_individual(full_col_indiv, "human"), "check_pass")
   )
+  expect_true(
+    inherits(check_cols_individual(incomplete_col_indiv, "human"), "check_fail")
+  )
+})
+
+test_that("check_cols_individual returns invalid columns within condition object", {
+  skip_on_cran()
+
+  cols <- get_template("syn12973254", version = 1)
+  full_col_indiv <- data.frame(matrix(ncol = length(cols)))
+  colnames(full_col_indiv) <- cols
+  incomplete_col_indiv <- full_col_indiv[, !names(full_col_indiv) %in% "yearsEducation"]
+
   expect_equal(
-    check_cols_individual(incomplete_col_indiv, "human"),
+    check_cols_individual(incomplete_col_indiv, "human")$data,
     "yearsEducation"
   )
 })
@@ -49,12 +61,25 @@ test_that("check_cols_biospecimen works for biospecimen columns", {
   colnames(full_col_biosp) <- biosp_names
   incomplete_col_biosp <- full_col_biosp[, !names(full_col_biosp) == "organ"]
 
-  expect_equal(
-    check_cols_biospecimen(full_col_biosp),
-    character(0)
+  expect_true(
+    inherits(check_cols_biospecimen(full_col_biosp), "check_pass")
   )
+  expect_true(
+    inherits(check_cols_biospecimen(incomplete_col_biosp), "check_fail")
+  )
+})
+
+test_that("check_cols_biospecimen returns invalid columns within condition object", {
+  skip_on_cran()
+
+  biosp_names <- get_template("syn12973252", version = 4)
+
+  full_col_biosp <- data.frame(matrix(ncol = length(biosp_names)))
+  colnames(full_col_biosp) <- biosp_names
+  incomplete_col_biosp <- full_col_biosp[, !names(full_col_biosp) == "organ"]
+
   expect_equal(
-    check_cols_biospecimen(incomplete_col_biosp),
+    check_cols_biospecimen(incomplete_col_biosp)$data,
     "organ"
   )
 })
@@ -68,12 +93,25 @@ test_that("check_cols_assay works for assay columns", {
   colnames(full_col_assay) <- rnaseq_names
   incomplete_col_assay <- full_col_assay[, !names(full_col_assay) == "RIN"]
 
-  expect_equal(
-    check_cols_assay(full_col_assay, "rnaSeq"),
-    character(0)
+  expect_true(
+    inherits(check_cols_assay(full_col_assay, "rnaSeq"), "check_pass")
   )
+  expect_true(
+    inherits(check_cols_assay(incomplete_col_assay, "rnaSeq"), "check_fail")
+  )
+})
+
+test_that("check_cols_biospecimen returns invalid columns within condition object", {
+  skip_on_cran()
+
+  rnaseq_names <- get_template("syn12973256", version = 2)
+
+  full_col_assay <- data.frame(matrix(ncol = length(rnaseq_names)))
+  colnames(full_col_assay) <- rnaseq_names
+  incomplete_col_assay <- full_col_assay[, !names(full_col_assay) == "RIN"]
+
   expect_equal(
-    check_cols_assay(incomplete_col_assay, "rnaSeq"),
+    check_cols_assay(incomplete_col_assay, "rnaSeq")$data,
     "RIN"
   )
 })
@@ -84,8 +122,8 @@ test_that("check_cols_manifest works for manifest columns", {
   names(dat) <- cols
   incomplete <- data.frame(path = "/home/file.txt")
 
-  expect_equal(check_cols_manifest(dat), character(0))
-  expect_equal(check_cols_manifest(incomplete), "parent")
+  expect_true(inherits(check_cols_manifest(dat), "check_pass"))
+  expect_equal(check_cols_manifest(incomplete)$data, "parent")
 })
 
 test_that("get_template errors for files that are not xlsx or csv", {
@@ -117,9 +155,9 @@ test_that("wrapper functions for specific template gets the correct version", {
     nucleicAcidSource = 1,
     cellType = 1
   )
-  expect_equal(check_cols_biospecimen(dat, version = 2), character(0))
+  expect_true(inherits(check_cols_biospecimen(dat, version = 2), "check_pass"))
   expect_equal(
-    check_cols_biospecimen(dat, version = 3),
+    check_cols_biospecimen(dat, version = 3)$data,
     c("samplingDate", "sampleStatus", "tissueVolume", "fastingState")
   )
 })
