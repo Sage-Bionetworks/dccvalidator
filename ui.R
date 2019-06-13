@@ -47,7 +47,7 @@ ui <- function(request) {
           placeholder = "syn123456"
         ),
 
-        radioButtons("species", "Species", c("animal", "human"), ),
+        radioButtons("species", "Species", c("animal", "human")),
 
         selectInput("assay_name", "Assay type", c("rnaSeq", "proteomics")),
 
