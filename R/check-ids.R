@@ -13,7 +13,15 @@ check_ids <- function(x, y, idcol = c("individualID", "specimenID"),
   idcol <- match.arg(idcol)
   if (!idcol %in% colnames(x) | !idcol %in% colnames(y)) {
     failure <- check_fail(
-      msg = paste0("Missing column ", idcol, " in ", xname, " or ", yname),
+      msg = paste0(
+        "Missing column ",
+        idcol,
+        " in ",
+        xname,
+        " or ",
+        yname,
+        " metadata."
+      ),
       behavior = paste0(
         xname,
         " and ",
@@ -37,10 +45,50 @@ check_ids <- function(x, y, idcol = c("individualID", "specimenID"),
   missing_from_x <- setdiff(y[[idcol]], x[[idcol]])
   missing_from_y <- setdiff(x[[idcol]], y[[idcol]])
 
-  list(
-    missing_from_x = missing_from_x,
-    missing_from_y = missing_from_y
-  )
+  ## Message of correct behavior. Uses the names of the x and y data if present,
+  ## otherwise gives a more generic message.
+  if (is.null(xname) | is.null(yname)) {
+    behavior <- paste0(idcol, " values should match.")
+  } else {
+    behavior <- paste0(
+      idcol,
+      " values in the ",
+      xname,
+      " and ",
+      yname,
+      "metadata should match."
+    )
+  }
+
+  ## If nothing is missing, return check_pass
+  if (length(missing_from_x) == 0 & length(missing_from_y) == 0) {
+    check_pass(
+      msg = paste0(
+        "All ",
+        idcol,
+        " values match between ",
+        xname,
+        " and ",
+        yname
+      ),
+      behavior = behavior
+    )
+  } else {
+    check_fail(
+      msg = paste0(
+        idcol,
+        " values are mismatched between ",
+        xname,
+        " and ",
+        yname
+      ),
+      behavior = behavior,
+      data = list(
+        missing_from_x = missing_from_x,
+        missing_from_y = missing_from_y
+      )
+    )
+  }
 }
 
 #' Check individual IDs
