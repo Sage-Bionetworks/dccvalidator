@@ -5,8 +5,9 @@
 #' @param x,y Data frames to compare
 #' @param idcol Name of column containing ids to compare
 #' @param xname,yname Names of x and y (to be used in resulting messages)
-#' @return List of IDs missing from x (but present in y) and missing from y (but
-#'   present in x)
+#' @return A condition object indicating whether IDs match (`"check_pass"`) or
+#'   not (`"check_fail"`). Mismatched IDs are included as data within the
+#'   object.
 #' @export
 check_ids <- function(x, y, idcol = c("individualID", "specimenID"),
                       xname = NULL, yname = NULL) {

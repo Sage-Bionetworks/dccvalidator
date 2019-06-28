@@ -21,8 +21,9 @@ check_specimen_ids(x, y, xname = NULL, yname = NULL)
 \item{xname, yname}{Names of x and y (to be used in resulting messages)}
 }
 \value{
-List of IDs missing from x (but present in y) and missing from y (but
-present in x)
+A condition object indicating whether IDs match (\code{"check_pass"}) or
+not (\code{"check_fail"}). Mismatched IDs are included as data within the
+object.
 }
 \description{
 Compare IDs (such as individual IDs or specimen IDs) between two data frames.
