@@ -81,8 +81,14 @@ check_annotation_keys.CsvFileTable <- function(x, annotations,
   check_keys(dat_annots, annotations, whitelist_keys, return_valid = FALSE)
 }
 
+#' Valid annotation keys
+#'
+#' Checks for and returns the valid annotation keys in a data framae, Synapse
+#' file, or Synapse file view.
+#'
+#' @inheritParams check_annotation_keys
+#' @return A vector of valid annotation keys present in `x`.
 #' @export
-#' @rdname check_annotation_keys
 valid_annotation_keys <- function(x, annotations, whitelist_keys = NULL) {
   UseMethod("valid_annotation_keys", x)
 }
