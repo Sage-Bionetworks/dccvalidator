@@ -2,12 +2,9 @@
 % Please edit documentation in R/check-annotation-keys.R
 \name{check_annotation_keys}
 \alias{check_annotation_keys}
-\alias{valid_annotation_keys}
 \title{Check annotation keys}
 \usage{
 check_annotation_keys(x, annotations, whitelist_keys = NULL)
-
-valid_annotation_keys(x, annotations, whitelist_keys = NULL)
 }
 \arguments{
 \item{x}{An object to check.}
@@ -20,8 +17,8 @@ present in \code{x} but absent from \code{annotations}, they will still be treat
 valid.}
 }
 \value{
-A character vector of invalid (for \code{check_annotation_keys()}) or
-valid (for \code{valid_annotation_keys()}) annotation keys present in \code{x}.
+A condition object indicating whether keys match the given annotation
+dictionary. Erroneous keys are included as data within the object.
 }
 \description{
 Checks that all annotation keys on a file, in a file view, or in a data frame
@@ -48,4 +45,7 @@ check_annotation_keys(fv, annots)
 my_file <- synGet("syn11931757", downloadFile = FALSE)
 check_annotation_keys(my_file)
 }
+}
+\seealso{
+\code{\link[=valid_annotation_keys]{valid_annotation_keys()}}
 }

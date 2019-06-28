@@ -5,10 +5,10 @@ library("tibble")
 if (on_travis()) syn_travis_login() else synLogin()
 annots <- syndccutils::get_synapse_annotations()
 
-test_that("check_annotation_keys returns character(0) when no invalid annotations present", {
+test_that("check_annotation_keys returns check_pass when no invalid annotations present", {
   dat <- tibble(assay = "rnaSeq")
   res <- check_annotation_keys(dat, annots)
-  expect_equal(res, character(0))
+  expect_true(inherits(res, "check_pass"))
 })
 
 test_that("check_annotation_keys errors when no data provided", {
@@ -19,7 +19,8 @@ test_that("check_annotation_keys errors when no data provided", {
 test_that("check_annotation_keys returns invalid annotation values", {
   dat <- tibble(a = 1, b = 2)
   res <- check_annotation_keys(dat, annots)
-  expect_equal(res, names(dat))
+  expect_true(inherits(res, "check_fail"))
+  expect_equal(res$data, names(dat))
 })
 
 test_that("check_annotation_keys works for File objects", {
@@ -29,8 +30,11 @@ test_that("check_annotation_keys works for File objects", {
   b <- synGet("syn17038065", downloadFile = FALSE)
   resa <- check_annotation_keys(a, annots)
   resb <- check_annotation_keys(b, annots)
-  expect_equal(resa, character(0))
-  expect_equal(resb, "randomAnnotation")
+
+  expect_true(inherits(resa, "check_pass"))
+  expect_true(inherits(resb, "check_fail"))
+  expect_equal(resa$data, NA)
+  expect_equal(resb$data, "randomAnnotation")
 })
 
 test_that("check_annotation_keys works for file views", {
@@ -38,7 +42,8 @@ test_that("check_annotation_keys works for file views", {
 
   fv <- synTableQuery("SELECT * FROM syn17038067")
   res <- check_annotation_keys(fv, annots)
-  expect_equal(res, "randomAnnotation")
+  expect_true(inherits(res, "check_fail"))
+  expect_equal(res$data, "randomAnnotation")
 })
 
 test_that("valid_annotation_keys returns valid annotation keys", {
@@ -77,15 +82,19 @@ test_that("check_keys", {
   a2 <- check_keys(test_valid, annots, return_valid = FALSE)
   b1 <- check_keys(test_invalid, annots, return_valid = TRUE)
   b2 <- check_keys(test_invalid, annots, return_valid = FALSE)
+
+
   expect_equal(a1, "fileFormat")
-  expect_equal(a2, character(0))
+  expect_equal(a2$data, NA)
+  expect_true(inherits(a2, "check_pass"))
   expect_equal(b1, character(0))
-  expect_equal(b2, "not a key")
+  expect_equal(b2$data, "not a key")
+  expect_true(inherits(b2, "check_fail"))
 })
 
 test_that("check_keys falls back to get_synapse_annotations", {
   res <- check_keys("not a key", return_valid = FALSE)
-  expect_equal(res, "not a key")
+  expect_equal(res$data, "not a key")
 })
 
 test_that("check_keys checks that necessary annotation columns are present", {
@@ -113,9 +122,10 @@ test_that("check_keys allows whitelisting keys that aren't part of the annotatio
     whitelist_keys = c("foo", "bar"),
     return_valid = TRUE
   )
-  expect_equal(resa, character(0))
-  expect_equal(resb, "bar")
-  expect_equal(resc, character(0))
+  expect_true(inherits(resa, "check_pass"))
+  expect_true(inherits(resb, "check_fail"))
+  expect_equal(resb$data, "bar")
+  expect_true(inherits(resc, "check_pass"))
   expect_equal(resd, c("assay", "foo"))
   expect_equal(rese, c("assay", "foo"))
   expect_equal(resf, c("assay", "foo"))
