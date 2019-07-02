@@ -2,13 +2,9 @@
 % Please edit documentation in R/check-annotation-values.R
 \name{check_annotation_values}
 \alias{check_annotation_values}
-\alias{valid_annotation_values}
 \title{Check annotation values}
 \usage{
 check_annotation_values(x, annotations, whitelist_keys = NULL,
-  whitelist_values = NULL)
-
-valid_annotation_values(x, annotations, whitelist_keys = NULL,
   whitelist_values = NULL)
 }
 \arguments{

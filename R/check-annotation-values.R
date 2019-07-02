@@ -102,8 +102,14 @@ check_annotation_values.CsvFileTable <- function(x, annotations,
   )
 }
 
+#' Valid annotation values
+#'
+#' Checks for and returns the valid annotation valaues in a data frame, Synapse
+#' file, or Synapse file view.
+#'
+#' @inheritParams check_annotation_values
+#' @return A named list of valid annotation values.
 #' @export
-#' @rdname check_annotation_values
 valid_annotation_values <- function (x, annotations, whitelist_keys = NULL,
                                      whitelist_values = NULL) {
   UseMethod("valid_annotation_values", x)
