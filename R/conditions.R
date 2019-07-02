@@ -50,7 +50,7 @@ check_fail <- function(msg, behavior, data) {
 #' @inheritParams check_pass
 #' @param type One of "check_pass", "check_warn", "check_fail"
 #' @export
-check_condtion <- function(msg, behavior, data, type) {
+check_condition <- function(msg, behavior, data, type) {
   switch(
     type,
     check_pass = check_pass(msg, behavior, data),
