@@ -5,6 +5,8 @@ library("tibble")
 if (on_travis()) syn_travis_login() else synLogin()
 annots <- syndccutils::get_synapse_annotations()
 
+## check_annotation_values() ---------------------------------------------------
+
 test_that("check_annotation_values returns empty list when no invalid annotations present", {
   dat <- tibble(assay = "rnaSeq")
   res <- check_annotation_values(dat, annots)
@@ -58,6 +60,8 @@ test_that("check annotation values returns unique wrong values, not every single
   expect_equal(res$data, list(assay = "foo"))
 })
 
+## valid_annotation_values() ---------------------------------------------------
+
 test_that("valid_annotation_values returns valid values", {
   dat <- tibble(assay = "rnaSeq")
   res <- valid_annotation_values(dat, annots)
@@ -87,6 +91,8 @@ test_that("valid_annotation_values works for file views", {
   expect_equal(sort(res$fileFormat), c("csv", "txt"))
 })
 
+## check_value() ---------------------------------------------------------------
+
 test_that("check_value returns NULL if key is not present", {
   expect_null(check_value("notavalue", "notakey"))
 })
@@ -97,6 +103,28 @@ test_that("check_value returns valid or invalid valies", {
   expect_equal(a, "txt")
   expect_equal(b, "wrong")
 })
+
+test_that("check_value falls back to get_synapse_annotations", {
+  res <- check_value("wrong", "fileFormat", return_valid = FALSE)
+  expect_equal(res, "wrong")
+  ## Should be the same as passing in annots:
+  expect_equal(
+    res,
+    check_value("wrong", "fileFormat", annots, return_valid = FALSE)
+  )
+})
+
+test_that("check_value checks column type when enumerated values aren't defined", {
+  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
+  a <- c("a", "b")
+  expect_equal(
+    check_value(a, "x", annotations, return_valid = FALSE),
+    character(0)
+  )
+})
+
+
+## check_values() --------------------------------------------------------------
 
 test_that("check_values checks multiple values", {
   dat <- tibble(fileFormat = c("wrong", "txt", "csv", "wrong again"))
@@ -112,123 +140,10 @@ test_that("check_values checks multiple values", {
   )
 })
 
-test_that("check_value falls back to get_synapse_annotations", {
-  res <- check_value("wrong", "fileFormat", return_valid = FALSE)
-  expect_equal(res, "wrong")
-  ## Should be the same as passing in annots:
-  expect_equal(
-    res,
-    check_value("wrong", "fileFormat", annots, return_valid = FALSE)
-  )
-})
-
-test_that("check_type returns right value depending on class and `return_valid` option", {
-  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
-  a <- c("a", "b")
-  b <- c(1, 2)
-  expect_equal(
-    check_type(a, "x", annotations, return_valid = FALSE),
-    character(0)
-  )
-  expect_equal(
-    check_type(b, "x", annotations, return_valid = FALSE),
-    c(1, 2)
-  )
-  expect_equal(
-    check_type(a, "x", annotations, return_valid = TRUE),
-    c("a", "b")
-  )
-  expect_equal(
-    check_type(b, "x", annotations, return_valid = TRUE),
-    character(0)
-  )
-})
-
-test_that("check_type checks different classes", {
-  annotations <- tibble(key = "x", columnType = "BOOLEAN", value = NA)
-  a <- c("a", "b")
-  b <- c(1, 2)
-  c <- c(TRUE, FALSE)
-  d <- c(1L, 2L)
-  expect_equal(
-    check_type(a, "x", annotations, return_valid = FALSE),
-    c("a", "b")
-  )
-  expect_equal(
-    check_type(b, "x", annotations, return_valid = FALSE),
-    c(1, 2)
-  )
-  expect_equal(
-    check_type(c, "x", annotations, return_valid = FALSE),
-    character(0)
-  )
-  expect_equal(
-    check_type(d, "x", annotations, return_valid = FALSE),
-    c(1L, 2L)
-  )
-})
-
-test_that("check_value checks column type when enumerated values aren't defined", {
-  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
-  a <- c("a", "b")
-  expect_equal(
-    check_value(a, "x", annotations, return_valid = FALSE),
-    character(0)
-  )
-})
-
-test_that("check_type can handle annotations as either data frames or tibbles", {
-  a1 <- tibble(key = "x", columnType = "STRING", value = NA)
-  a2 <- data.frame(key = "x", columnType = "STRING", value = NA, stringsAsFactors = FALSE)
-  a3 <- data.frame(key = "x", columnType = "STRING", value = NA, stringsAsFactors = TRUE)
-  a <- c("a", "b")
-  expect_equal(
-    check_value(a, "x", a1, return_valid = FALSE),
-    check_value(a, "x", a2, return_valid = FALSE)
-  )
-  expect_equal(
-    check_value(a, "x", a2, return_valid = FALSE),
-    check_value(a, "x", a3, return_valid = FALSE)
-  )
-})
-
-test_that("check_type can handle factor annotation values as strings", {
-  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
-  a <- c("a", "b")
-  b <- factor(c("a", "b"))
-  expect_equal(
-    check_value(a, "x", annotations, return_valid = FALSE),
-    check_value(b, "x", annotations, return_valid = FALSE),
-  )
-})
-
 test_that("check_values checks that necessary annotation columns are present", {
   annotations <- tibble(key = "x", value = NA)
   a <- tibble(x = c("a", "b"))
   expect_error(check_values(a, annotations))
-})
-
-test_that("check_type omits NAs", {
-  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
-  a <- c("a", "b", NA)
-  b <- c(1, NA, 2)
-  expect_equal(
-    check_type(a, "x", annotations, return_valid = FALSE),
-    character(0)
-  )
-  expect_equal(
-    check_type(b, "x", annotations, return_valid = FALSE),
-    c(1, 2)
-  )
-})
-
-test_that("check_type does not return duplicates", {
-  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
-  a <- c("a", "b", NA, "b", "a")
-  expect_equal(
-    check_type(a, "x", annotations, return_valid = FALSE),
-    character(0)
-  )
 })
 
 test_that("check_values can whitelist certain keys", {
@@ -293,7 +208,7 @@ test_that("check_values can whitelist certain key/value combinations", {
   )
 })
 
-test_that("can whitelist keys and values simultaneously", {
+test_that("check_values can whitelist keys and values simultaneously", {
   dat <- tibble(
     fileFormat = c("wrong", "wronger", "wrongest", "txt"),
     assay = c("rnaSeq", "rnaSeq", "rnaSeq", "also wrong")
@@ -305,6 +220,102 @@ test_that("can whitelist keys and values simultaneously", {
     whitelist_values = list(fileFormat = c("wrong", "wronger"))
   )
   expect_equal(res$data, list(fileFormat = "wrongest"))
+})
+
+## check_type() ----------------------------------------------------------------
+
+test_that("check_type returns right value depending on class and `return_valid` option", {
+  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
+  a <- c("a", "b")
+  b <- c(1, 2)
+  expect_equal(
+    check_type(a, "x", annotations, return_valid = FALSE),
+    character(0)
+  )
+  expect_equal(
+    check_type(b, "x", annotations, return_valid = FALSE),
+    c(1, 2)
+  )
+  expect_equal(
+    check_type(a, "x", annotations, return_valid = TRUE),
+    c("a", "b")
+  )
+  expect_equal(
+    check_type(b, "x", annotations, return_valid = TRUE),
+    character(0)
+  )
+})
+
+test_that("check_type checks different classes", {
+  annotations <- tibble(key = "x", columnType = "BOOLEAN", value = NA)
+  a <- c("a", "b")
+  b <- c(1, 2)
+  c <- c(TRUE, FALSE)
+  d <- c(1L, 2L)
+  expect_equal(
+    check_type(a, "x", annotations, return_valid = FALSE),
+    c("a", "b")
+  )
+  expect_equal(
+    check_type(b, "x", annotations, return_valid = FALSE),
+    c(1, 2)
+  )
+  expect_equal(
+    check_type(c, "x", annotations, return_valid = FALSE),
+    character(0)
+  )
+  expect_equal(
+    check_type(d, "x", annotations, return_valid = FALSE),
+    c(1L, 2L)
+  )
+})
+
+test_that("check_type can handle annotations as either data frames or tibbles", {
+  a1 <- tibble(key = "x", columnType = "STRING", value = NA)
+  a2 <- data.frame(key = "x", columnType = "STRING", value = NA, stringsAsFactors = FALSE)
+  a3 <- data.frame(key = "x", columnType = "STRING", value = NA, stringsAsFactors = TRUE)
+  a <- c("a", "b")
+  expect_equal(
+    check_value(a, "x", a1, return_valid = FALSE),
+    check_value(a, "x", a2, return_valid = FALSE)
+  )
+  expect_equal(
+    check_value(a, "x", a2, return_valid = FALSE),
+    check_value(a, "x", a3, return_valid = FALSE)
+  )
+})
+
+test_that("check_type can handle factor annotation values as strings", {
+  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
+  a <- c("a", "b")
+  b <- factor(c("a", "b"))
+  expect_equal(
+    check_value(a, "x", annotations, return_valid = FALSE),
+    check_value(b, "x", annotations, return_valid = FALSE),
+  )
+})
+
+test_that("check_type omits NAs", {
+  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
+  a <- c("a", "b", NA)
+  b <- c(1, NA, 2)
+  expect_equal(
+    check_type(a, "x", annotations, return_valid = FALSE),
+    character(0)
+  )
+  expect_equal(
+    check_type(b, "x", annotations, return_valid = FALSE),
+    c(1, 2)
+  )
+})
+
+test_that("check_type does not return duplicates", {
+  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
+  a <- c("a", "b", NA, "b", "a")
+  expect_equal(
+    check_type(a, "x", annotations, return_valid = FALSE),
+    character(0)
+  )
 })
 
 test_that("whitelist_values works in check_type", {
