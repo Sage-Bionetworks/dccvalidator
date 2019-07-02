@@ -6,11 +6,11 @@
 \alias{check_fail}
 \title{Create custom conditions for reporting}
 \usage{
-check_pass(msg, behavior, data = NA)
+check_pass(msg, behavior, data = NULL)
 
-check_warn(msg, behavior, data)
+check_warn(msg, behavior, data = NULL)
 
-check_fail(msg, behavior, data)
+check_fail(msg, behavior, data = NULL)
 }
 \arguments{
 \item{msg}{Message to report}

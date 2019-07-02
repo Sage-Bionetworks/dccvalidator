@@ -12,7 +12,7 @@
 #' @param data Data to return (e.g. invalid values that need attention)
 #' @return An S3 object of class "check_pass", "check_warn", or "check_fail"
 #' @export
-check_pass <- function(msg, behavior, data = NA) {
+check_pass <- function(msg, behavior, data = NULL) {
   rlang::message_cnd(
     "check_pass",
     behavior = behavior,
@@ -24,7 +24,7 @@ check_pass <- function(msg, behavior, data = NA) {
 #' @inheritParams check_pass
 #' @export
 #' @rdname check_pass
-check_warn <- function(msg, behavior, data) {
+check_warn <- function(msg, behavior, data = NULL) {
   rlang::warning_cnd(
     "check_warn",
     behavior = behavior,
@@ -36,7 +36,7 @@ check_warn <- function(msg, behavior, data) {
 #' @inheritParams check_pass
 #' @export
 #' @rdname check_pass
-check_fail <- function(msg, behavior, data) {
+check_fail <- function(msg, behavior, data = NULL) {
   rlang::error_cnd(
     "check_fail",
     behavior = behavior,

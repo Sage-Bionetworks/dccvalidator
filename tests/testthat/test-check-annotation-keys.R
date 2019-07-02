@@ -33,7 +33,7 @@ test_that("check_annotation_keys works for File objects", {
 
   expect_true(inherits(resa, "check_pass"))
   expect_true(inherits(resb, "check_fail"))
-  expect_equal(resa$data, NA)
+  expect_equal(resa$data, NULL)
   expect_equal(resb$data, "randomAnnotation")
 })
 
@@ -85,7 +85,7 @@ test_that("check_keys", {
 
 
   expect_equal(a1, "fileFormat")
-  expect_equal(a2$data, NA)
+  expect_equal(a2$data, NULL)
   expect_true(inherits(a2, "check_pass"))
   expect_equal(b1, character(0))
   expect_equal(b2$data, "not a key")
