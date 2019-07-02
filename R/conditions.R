@@ -54,7 +54,7 @@ check_condition <- function(msg, behavior, data, type) {
   switch(
     type,
     check_pass = check_pass(msg, behavior, data),
-    check_warn = check_pass(msg, behavior, data),
-    check_fail = check_pass(msg, behavior, data)
+    check_warn = check_warn(msg, behavior, data),
+    check_fail = check_fail(msg, behavior, data)
   )
 }
