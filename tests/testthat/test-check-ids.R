@@ -116,3 +116,12 @@ test_that("check_specimen_ids catches missing specimen IDs", {
   expect_true(inherits(res, "check_fail"))
   expect_equal(res$data, expected_result)
 })
+
+test_that("Behavior message leaves out xname/yname if not provided", {
+  res <- check_ids(
+    invalid_individual,
+    invalid_biospecimen,
+    idcol = "individualID"
+  )
+  expect_equal(res$behavior, "individualID values should match.")
+})
