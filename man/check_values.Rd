@@ -39,9 +39,12 @@ vector of valid values).
 
 A character vector of valid or invalid values
 
-A named list where each element corresponds to a key that contains
-invalid values (if \code{return_valid = FLASE}), and the contents of each
-element is a vector of invalid values.
+If \code{return_valid = FALSE}: a condition object indicating whether all
+annotation values are valid. Invalid annotation values are included as data
+within the object: a named list where each element corresponds to a key
+that contains invalid values, and the contents of each element is a vector
+of invalid values. If \code{return_valid = TRUE}: a named list of the valid
+annotation keys and values.
 }
 \description{
 Check that class of value matches annotation columnType

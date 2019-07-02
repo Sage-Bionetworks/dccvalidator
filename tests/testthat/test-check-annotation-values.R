@@ -8,7 +8,7 @@ annots <- syndccutils::get_synapse_annotations()
 test_that("check_annotation_values returns empty list when no invalid annotations present", {
   dat <- tibble(assay = "rnaSeq")
   res <- check_annotation_values(dat, annots)
-  expect_equal(res, structure(list(), .Names = character(0)))
+  expect_true(inherits(res, "check_pass"))
 })
 
 test_that("check_annotation_values errors when there are no annotations to check", {
@@ -16,10 +16,16 @@ test_that("check_annotation_values errors when there are no annotations to check
   expect_error(check_annotation_values(dat, annots))
 })
 
-test_that("check_annotation_values returns invalid annotation values", {
+test_that("check_annotation_values returns check_fail when invalid annotations present", {
   dat <- tibble(assay = "foo", consortium = "bar")
   res <- check_annotation_values(dat, annots)
-  expect_equal(res, list(assay = "foo", consortium = "bar"))
+  expect_true(inherits(res, "check_fail"))
+})
+
+test_that("check_annotation_values returns invalid annotation values in $data", {
+  dat <- tibble(assay = "foo", consortium = "bar")
+  res <- check_annotation_values(dat, annots)
+  expect_equal(res$data, list(assay = "foo", consortium = "bar"))
 })
 
 test_that("check_annotation_values works for File objects", {
@@ -28,10 +34,12 @@ test_that("check_annotation_values works for File objects", {
   b <- synGet("syn17038065", downloadFile = FALSE)
   resa <- check_annotation_values(a, annots)
   resb <- check_annotation_values(b, annots)
-  expect_equal(resa, structure(list(), .Names = character(0)))
+  expect_true(inherits(resa, "check_pass"))
+  expect_true(inherits(resb, "check_fail"))
   expect_equal(
-    resb[order(names(resb))], # need to ensure these are in the right order,
-                              # sometimes they get returned in a different order
+    resb$data[order(names(resb$data))], # need to ensure these are in the right
+                                        # order, sometimes they get returned in
+                                        # a different order
     list(assay = "wrongAssay", species = "wrongSpecies")
   )
 })
@@ -40,13 +48,14 @@ test_that("check_annotation_values works for file views", {
   skip_on_cran()
   fv <- synTableQuery("SELECT * FROM syn17038067")
   res <- check_annotation_values(fv, annots)
-  expect_equal(res, list(assay = "wrongAssay", species = "wrongSpecies"))
+  expect_true(inherits(res, "check_fail"))
+  expect_equal(res$data, list(assay = "wrongAssay", species = "wrongSpecies"))
 })
 
 test_that("check annotation values returns unique wrong values, not every single one", {
   dat <- tibble(assay = c("foo", "foo", "rnaSeq"))
   res <- check_annotation_values(dat, annots)
-  expect_equal(res, list(assay = "foo"))
+  expect_equal(res$data, list(assay = "foo"))
 })
 
 test_that("valid_annotation_values returns valid values", {
@@ -68,7 +77,7 @@ test_that("valid_annotation_values works for File objects", {
   expect_equal(resa, list(fileFormat = "txt"))
 })
 
-test_that("check_annotation_values works for file views", {
+test_that("valid_annotation_values works for file views", {
   skip_on_cran()
   fv <- synTableQuery("SELECT * FROM syn17038067")
   res <- valid_annotation_values(fv, annots)
@@ -98,7 +107,7 @@ test_that("check_values checks multiple values", {
     list(fileFormat = c("txt", "csv"))
   )
   expect_equal(
-    resb,
+    resb$data,
     list(fileFormat = c("wrong", "wrong again"))
   )
 })
@@ -241,9 +250,9 @@ test_that("check_values can whitelist certain keys", {
   rese <- check_values(dat1, annots, whitelist_keys = c("fileFormat", "assay"), return_valid = TRUE)
   resf <- check_values(dat1, annots, whitelist_keys = c("fileFormat", "tissue"), return_valid = TRUE)
 
-  expect_equal(names(resa), c("assay", "organ"))
-  expect_equal(names(resb), c("organ"))
-  expect_equal(names(resc), c("assay", "organ"))
+  expect_equal(names(resa$data), c("assay", "organ"))
+  expect_equal(names(resb$data), c("organ"))
+  expect_equal(names(resc$data), c("assay", "organ"))
   expect_equal(names(resd), c("fileFormat"))
   expect_equal(names(rese), c("fileFormat", "assay"))
   expect_equal(names(resf), c("fileFormat"))
@@ -270,9 +279,18 @@ test_that("check_values can whitelist certain key/value combinations", {
     whitelist_values = list(assay = "also wrong"),
     return_valid = TRUE
   )
-  expect_equal(resa, list(fileFormat = "wrongest", assay = "also wrong"))
-  expect_equal(resb, list(fileFormat = c("wrong", "wronger", "wrongest")))
-  expect_equal(resc, list(fileFormat = "txt", assay = c("rnaSeq", "also wrong")))
+  expect_equal(
+    resa$data,
+    list(fileFormat = "wrongest", assay = "also wrong")
+  )
+  expect_equal(
+    resb$data,
+    list(fileFormat = c("wrong", "wronger", "wrongest"))
+  )
+  expect_equal(
+    resc,
+    list(fileFormat = "txt", assay = c("rnaSeq", "also wrong"))
+  )
 })
 
 test_that("can whitelist keys and values simultaneously", {
@@ -286,7 +304,7 @@ test_that("can whitelist keys and values simultaneously", {
     whitelist_keys = "assay",
     whitelist_values = list(fileFormat = c("wrong", "wronger"))
   )
-  expect_equal(res, list(fileFormat = "wrongest"))
+  expect_equal(res$data, list(fileFormat = "wrongest"))
 })
 
 test_that("whitelist_values works in check_type", {
