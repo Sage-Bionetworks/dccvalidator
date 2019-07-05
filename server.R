@@ -40,6 +40,8 @@ server <- function(input, output, session) {
       assay <- synGet(input$assay_meta)
       read.csv(assay$path)
     })
+    species_name <- reactive({input$species})
+    assay_name <- reactive({input$assay})
 
     observeEvent(input$instructions, {
       showModal(
@@ -54,147 +56,70 @@ server <- function(input, output, session) {
       )
     })
 
-    ####################
-    ####  Metadata  ####
-    ####################
+    ##############################
+    ####  Validation Results  ####
+    ##############################
 
-    ## Missing columns
-    output$missing_cols_indiv <- renderUI({
-      report_missing_cols(
-        indiv(),
-        check_cols_individual,
-        "individual",
-        input$species
-      )
+    ## Perform checks
+    missing_cols_indiv <- reactive({
+      check_cols_individual(indiv(), species_name())
+    })
+    missing_cols_biosp <- reactive({
+      check_cols_biospecimen(biosp())
+    })
+    missing_cols_assay <- reactive({
+      check_cols_assay(assay(), assay_name())
+    })
+    missing_cols_manifest <- reactive({
+      check_cols_manifest(manifest())
+    })
+    individual_ids_indiv_biosp <- reactive({
+      check_indiv_ids(indiv(), biosp(), "individual", "biospecimen")
+    })
+    specimen_ids_biosp_assay <- reactive({
+      check_specimen_ids(biosp(), assay(), "biospecimen", "assay")
+    })
+    specimen_ids_biosp_manifest <- reactive({
+      check_specimen_ids(biosp(), manifest(), "biospecimen", "manifest")
+    })
+    annotation_keys_manifest <- reactive({
+      check_annotation_keys(manifest(), whitelist_keys = c("path", "parent"))
+    })
+    annotation_values_manifest <- reactive({
+      check_annotation_values(manifest())
     })
 
-    output$missing_cols_biosp <- renderUI({
-      report_missing_cols(
-        biosp(),
-        check_cols_biospecimen,
-        "biospecimen"
-      )
-    })
-
-    output$missing_cols_assay <- renderUI({
-      report_missing_cols(
-        assay(),
-        check_cols_assay,
-        "assay",
-        input$assay
-      )
-    })
-
-    ## Individual IDs
-    output$individual_ids <- renderUI({
-      validate(
-        need(input$indiv_meta, "Enter Synapse ID of individual metadata"),
-        need(input$biosp_meta, "Enter Synapse ID of biospecimen metadata")
-      )
-      ## Check individual IDs between individual and biospecimen files
-      individual_ids <- check_indiv_ids(indiv(), biosp()) %>%
-        create_mismatched_id_message("individual", "biospecimen", "individual IDs") %>%
-        report_mismatched_ids(
-          fallback_msg = "Hooray! Individual IDs in the individual and biospecimen files match."
-        ) %>%
-        ## Look for missing data (NAs) in individualIDs
-        add_missing_ids(indiv()$individualID, "individual") %>%
-        add_missing_ids(biosp()$individualID, "biospecimen")
-      individual_ids
-    })
-
-    ## Specimen IDs
-    output$specimen_ids <- renderUI({
-      validate(
-        need(input$biosp_meta, "Enter Synapse ID of biospecimen metadata"),
-        need(input$assay_meta, "Enter Synapse ID of assay metadata")
-      )
-      ## Check specimen IDs between biospecimen and assay files
-      specimen_ids <- check_specimen_ids(biosp(), assay()) %>%
-        create_mismatched_id_message("biospecimen", "assay", "specimen IDs") %>%
-        report_mismatched_ids(
-          fallback_msg = "Hooray! Specimen IDs in the biospecimen and assay files match."
-        ) %>%
-        ## Look for missing data (NAs) in specimenIDs
-        add_missing_ids(biosp()$specimenID, "biospecimen") %>%
-        add_missing_ids(assay()$specimenID, "assay")
-      specimen_ids
-    })
-
-    ########################
-    ####  Manifest tab  ####
-    ########################
-
-    output$manifest_cols <- renderUI({
-      ## Check that manifest has path and parent columns
-      manifest_cols_results <- check_cols_manifest(manifest())
-      if (length(manifest_cols_results) == 0) {
-        manifest_cols <- p("Hooray! No columns are missing from metadata.")
-      } else {
-        manifest_cols <- p(
-          paste0(
-            "The following column(s) are missing from the manifest: ",
-            paste0(manifest_cols_results, collapse = ", ")
-          )
-        )
-      }
-      manifest_cols
-    })
-
-    output$annot_keys <- renderUI({
-      ## Check annotation keys
-      annot_keys_results <- check_annotation_keys(manifest())
-      annot_keys_results <- setdiff(annot_keys_results, c("path", "parent", "name", "used", "executed")) # remove path, parent
-      if (length(annot_keys_results) == 0) {
-        annot_keys <- p("Hooray! All annotation keys are valid")
-      } else {
-        annot_keys <- paste0(
-          "The following annotation keys are not part of our annotation dictionary: ",
-          paste0(annot_keys_results, collapse = ", ")
-        )
-      }
-      annot_keys
-    })
-
-    output$annot_values <- renderUI({
-      ## Check annotation values and convert list to table for display
-      annot_values_results <- check_annotation_values(manifest()) %>%
-        create_annotation_value_table()
-
-      if (nrow(annot_values_results) == 0) {
-        annot_values <- p("Hooray! All annotation values are valid")
-      } else {
-        annot_values <- list(
-          p("The following annotation values are not part of our annotation dictionary:"),
-          datatable(annot_values_results, fillContainer = TRUE)
-        )
-      }
-      annot_values
-    })
-
-    output$specimen_ids_manifest <- renderUI({
-      validate(
-        need(input$biosp_meta, "Enter Synapse ID of biospecimen metadata"),
-        need(input$manifest, "Please upload manifest file")
-      )
-      ## Check specimen IDs against biospecimen and assay metadata
-      specimen_ids_manifest_biosp <- check_specimen_ids(biosp(), manifest()) %>%
-        create_mismatched_id_message("biospecimen", "manifest", "specimen IDs") %>%
-        report_mismatched_ids(
-          fallback_msg = "Hooray! Specimen IDs in the biospecimen and manifest files match."
-        )
-      specimen_ids_manifest_assay <- check_specimen_ids(assay(), manifest()) %>%
-        create_mismatched_id_message("assay", "manifest", "specimen IDs") %>%
-        report_mismatched_ids(
-          fallback_msg = "Hooray! Specimen IDs in the assay and manifest files match."
-        ) %>%
-        ## Look for missing data (NAs)
-        add_missing_ids(manifest()$specimenID, "manifest")
-
+    ## List results
+    res <- reactive({
       list(
-        specimen_ids_manifest_biosp,
-        specimen_ids_manifest_assay
+        missing_cols_indiv(),
+        missing_cols_biosp(),
+        missing_cols_assay(),
+        missing_cols_manifest(),
+        individual_ids_indiv_biosp(),
+        specimen_ids_biosp_assay(),
+        specimen_ids_biosp_manifest(),
+        annotation_keys_manifest(),
+        annotation_values_manifest()
       )
+    })
+
+    ## Successes box
+    output$successes <- renderUI({
+      successes <- res()[map_lgl(res(), function(x) {inherits(x, "check_pass")})]
+      report_results(successes, emoji_prefix = "check")
+    })
+
+    ## Warnings box
+    output$warnings <- renderUI({
+      warnings <- res()[map_lgl(res(), function(x) {inherits(x, "check_warn")})]
+      report_results(warnings, emoji_prefix = "warning", verbose = TRUE)
+    })
+
+    ## Failures box
+    output$failures <- renderUI({
+      failures <- res()[map_lgl(res(), function(x) {inherits(x, "check_fail")})]
+      report_results(failures, emoji_prefix = "x", verbose = TRUE)
     })
   })
 }

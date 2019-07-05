@@ -1,3 +1,7 @@
 .placeholder {
     color: #696969;
 }
+
+details {
+    margin-left: 40px;
+}

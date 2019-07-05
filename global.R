@@ -4,8 +4,10 @@
 
 library("DT")
 library("shiny")
+library("shinydashboard")
 library("synapser")
 library("purrr")
+library("emo")
 library("dccvalidator")
 
 ## Enable bookmarking
@@ -15,74 +17,20 @@ enableBookmarking(store = "url")
 ####  Functions  ####
 #####################
 
-## Function to generate messages when some IDs are mismatched
-create_mismatched_id_message <- function(x, df1, df2, idtype) {
-  imap(x, function(x, name) {
-    new_name <- switch(
-      name,
-      "missing_from_x" = df1,
-      "missing_from_y" = df2
-    )
-    if(length(na.omit(x)) > 0) {
-      paste(
-        "The following",
-        idtype,
-        "are missing from the",
-        new_name,
-        "file but present in the",
-        setdiff(c(df1, df2), new_name),
-        "file:",
-        paste(x, collapse = ", ")
-      )
-    }
-  })
-}
-
-## Create html output of messages about missing ids
-report_mismatched_ids <- function(x, fallback_msg) {
-  if (!all(map_lgl(x, is.null))) {
-    result <- map(x, tags$p)
-  } else {
-    result <- p(fallback_msg)
-  }
-  result
-}
-
-## Report on completely missing ids
-add_missing_ids <- function(x, column, file) {
-  missing_ids <- which(is.na(column))
-  if (length(missing_ids) > 0) {
-    output <- p(
-      paste(
-        "The following rows of the",
-        file,
-        "metadata file are missing IDs:",
-        paste(missing_ids, collapse = ", ")
+report_result <- function(result, emoji_prefix = NULL, verbose = FALSE) {
+  if (isTRUE(verbose)) {
+    div(
+      p(
+        emo::ji(emoji_prefix),
+        result$message,
+        tags$details(paste0(result$data, collapse = ", "))
       )
     )
-    c(x, list(output))
   } else {
-    x
+    p(emo::ji(emoji_prefix), result$message)
   }
 }
 
-create_annotation_value_table <- function(output) {
-  map2_dfr(
-    output,
-    names(output),
-    function(x, y) {
-      tibble::tibble(Key = y, Values = paste(x, collapse = ", "))
-    }
-  )
-}
-
-## Report on missing columns
-report_missing_cols <- function(data, fun, name, ...) {
-  fun <- match.fun(fun)
-  missing_cols <- fun(data, ...)
-  if (length(missing_cols) > 0) {
-    res <- paste0("Columns missing in ", name, " metadata template: ", paste(missing_cols, collapse = ", "))
-  } else {
-    res <- paste0("Hooray! No columns missing from ", name, " metadata template!")
-  }
+report_results <- function(results, ...) {
+  map(results, report_result, ...)
 }
