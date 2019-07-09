@@ -10,9 +10,10 @@
 #' @param whitelist_keys A character vector keys to whitelist. If these keys are
 #'   present in `x` but absent from `annotations`, they will still be treated as
 #'   valid.
-#' @return A character vector of invalid (for `check_annotation_keys()`) or
-#'   valid (for `valid_annotation_keys()`) annotation keys present in `x`.
+#' @return A condition object indicating whether keys match the given annotation
+#'   dictionary. Erroneous keys are included as data within the object.
 #' @export
+#' @seealso [valid_annotation_keys()]
 #'
 #' @examples
 #' \dontrun{
@@ -81,8 +82,14 @@ check_annotation_keys.CsvFileTable <- function(x, annotations,
   check_keys(dat_annots, annotations, whitelist_keys, return_valid = FALSE)
 }
 
+#' Valid annotation keys
+#'
+#' Checks for and returns the valid annotation keys in a data framae, Synapse
+#' file, or Synapse file view.
+#'
+#' @inheritParams check_annotation_keys
+#' @return A vector of valid annotation keys present in `x`.
 #' @export
-#' @rdname check_annotation_keys
 valid_annotation_keys <- function(x, annotations, whitelist_keys = NULL) {
   UseMethod("valid_annotation_keys", x)
 }
@@ -130,12 +137,14 @@ valid_annotation_keys.CsvFileTable <- function(x, annotations,
   check_keys(dat_annots, annotations, whitelist_keys, return_valid = TRUE)
 }
 
-
+## Check that a given set of keys are all present in an annotations dictionary
 check_keys <- function(x, annotations, whitelist_keys = NULL,
                        return_valid = FALSE) {
+  ## Need to provide data to check
   if (length(x) == 0) {
     stop("No annotations present to check", call. = FALSE)
   }
+  ## Get annotations if not passed in
   if (missing(annotations)) {
     annotations <- syndccutils::get_synapse_annotations()
   }
@@ -145,11 +154,24 @@ check_keys <- function(x, annotations, whitelist_keys = NULL,
       call. = FALSE
     )
   }
+  ## If return_valid is TRUE, just return the valid keys
   if (isTRUE(return_valid)) {
     keys <- intersect(x, c(annotations$key, whitelist_keys))
-  } else {
+    return(keys)
+  } else { ## If return_valid is FALSE, return condition object
     keys <- setdiff(x, annotations$key)
     keys <- setdiff(keys, whitelist_keys)
+    if (length(keys) == 0) {
+      check_pass(
+        msg = "All annotation keys are valid",
+        behavior = "All annotation keys should conform to the vocabulary"
+      )
+    } else {
+      check_fail(
+        msg = "Some annotation keys are invalid",
+        behavior = "All annotation keys should conform to the vocabulary",
+        data = keys
+      )
+    }
   }
-  keys
 }

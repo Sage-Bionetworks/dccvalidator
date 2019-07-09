@@ -27,8 +27,8 @@ against}
 \item{...}{Additional arguments passed to \code{\link[synapser:synGet]{synapser::synGet()}}}
 }
 \value{
-A character vector containing any column names that are missing from
-the data file.
+A condition object indicating whether the required columns were
+present (\code{"check_pass"}) or absent (\code{"check_fail"}).
 }
 \description{
 Check column names against their corresponding template

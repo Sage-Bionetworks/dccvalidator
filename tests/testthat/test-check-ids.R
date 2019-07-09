@@ -43,6 +43,15 @@ test_that("check_ids throws error if column is missing", {
   expect_error(check_ids(x, y, "foo"))
 })
 
+test_that("check_ids returns check_fail if data is missing the id column", {
+  x <- data.frame(x = 1:10, y = 1:10)
+  y <- data.frame(x = 1:5, y = 1:5)
+  res1 <- check_ids(x, y, idcol = "individualID", "individual", "biospecimen")
+  res2 <- check_ids(x, y, idcol = "specimenID", "biospecimen", "assay")
+  expect_true(inherits(res1, "check_fail"))
+  expect_true(inherits(res2, "check_fail"))
+})
+
 test_that("check_ids converts factor columns to character", {
   factor_individual <- valid_individual
   factor_individual$individualID <- as.factor(factor_individual$individualID)
@@ -50,51 +59,69 @@ test_that("check_ids converts factor columns to character", {
   factor_biospecimen <- valid_biospecimen
   factor_biospecimen$individualID <- as.factor(factor_biospecimen$individualID)
 
-  char <- check_ids(valid_individual, valid_biospecimen, "individualID")
-  fact <- check_ids(factor_individual, factor_biospecimen, "individualID")
+  char <- check_ids(
+    valid_individual,
+    valid_biospecimen,
+    "individualID",
+    "individual",
+    "biospecimen"
+  )
+  fact <- check_ids(
+    factor_individual,
+    factor_biospecimen,
+    "individualID",
+    "individual",
+    "biospecimen"
+  )
   expect_equal(char, fact)
 })
 
-test_that("check_indiv_ids returns list of empty elements for valid metadata", {
-  expected_result <- list(
-    missing_from_x = character(0),
-    missing_from_y = character(0)
+test_that("check_ids passes when IDs match", {
+  res <- check_ids(
+    valid_individual,
+    valid_biospecimen,
+    "individualID",
+    "individual",
+    "biospecimen"
   )
-  expect_equal(
-    check_indiv_ids(valid_individual, valid_biospecimen),
-    expected_result
-  )
+  expect_true(inherits(res, "check_pass"))
 })
 
-test_that("check_indiv_ids returns list of missing individual IDs for invalid metadata", {
+test_that("check_indiv_ids catches missing individual IDs", {
   expected_result <- list(
     missing_from_x = "ABC",
     missing_from_y = character(0)
   )
-  expect_equal(
-    check_indiv_ids(invalid_individual, invalid_biospecimen),
-    expected_result
+  res <- check_indiv_ids(
+    invalid_individual,
+    invalid_biospecimen,
+    "individual",
+    "biospecimen"
   )
+  expect_true(inherits(res, "check_fail"))
+  expect_equal(res$data, expected_result)
 })
 
-test_that("check_specimen_ids returns list of empty elements for valid metadata", {
-  expected_result <- list(
-    missing_from_x = character(0),
-    missing_from_y = character(0)
-  )
-  expect_equal(
-    check_specimen_ids(valid_biospecimen, valid_assay),
-    expected_result
-  )
-})
-
-test_that("check_specimen_ids returns list of missing specimen IDs for invalid metadata", {
+test_that("check_specimen_ids catches missing specimen IDs", {
   expected_result <- list(
     missing_from_x = "010",
     missing_from_y = character(0)
   )
-  expect_equal(
-    check_specimen_ids(invalid_biospecimen, valid_assay),
-    expected_result
+  res <- check_specimen_ids(
+    invalid_biospecimen,
+    valid_assay,
+    "biospecimen",
+    "assay"
   )
+  expect_true(inherits(res, "check_fail"))
+  expect_equal(res$data, expected_result)
+})
+
+test_that("Behavior message leaves out xname/yname if not provided", {
+  res <- check_ids(
+    invalid_individual,
+    invalid_biospecimen,
+    idcol = "individualID"
+  )
+  expect_equal(res$behavior, "individualID values should match.")
 })

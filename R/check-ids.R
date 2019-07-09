@@ -4,16 +4,35 @@
 #'
 #' @param x,y Data frames to compare
 #' @param idcol Name of column containing ids to compare
-#' @return List of IDs missing from x (but present in y) and missing from y (but
-#'   present in x)
+#' @param xname,yname Names of x and y (to be used in resulting messages)
+#' @return A condition object indicating whether IDs match (`"check_pass"`) or
+#'   not (`"check_fail"`). Mismatched IDs are included as data within the
+#'   object.
 #' @export
-check_ids <- function(x, y, idcol = c("individualID", "specimenID")) {
+check_ids <- function(x, y, idcol = c("individualID", "specimenID"),
+                      xname = NULL, yname = NULL) {
   idcol <- match.arg(idcol)
   if (!idcol %in% colnames(x) | !idcol %in% colnames(y)) {
-    stop(
-      paste0("Both x and y must contain column ", idcol),
-      call. = FALSE
+    failure <- check_fail(
+      msg = paste0(
+        "Missing column ",
+        idcol,
+        " in ",
+        xname,
+        " or ",
+        yname,
+        " metadata."
+      ),
+      behavior = paste0(
+        xname,
+        " and ",
+        yname,
+        " metadata should both contain a column called ",
+        idcol
+      ),
+      data = list(colnames(x), colnames(y))
     )
+    return(failure)
   }
 
   ## Ensure that factor columns are coerced to character
@@ -27,10 +46,50 @@ check_ids <- function(x, y, idcol = c("individualID", "specimenID")) {
   missing_from_x <- setdiff(y[[idcol]], x[[idcol]])
   missing_from_y <- setdiff(x[[idcol]], y[[idcol]])
 
-  list(
-    missing_from_x = missing_from_x,
-    missing_from_y = missing_from_y
-  )
+  ## Message of correct behavior. Uses the names of the x and y data if present,
+  ## otherwise gives a more generic message.
+  if (is.null(xname) | is.null(yname)) {
+    behavior <- paste0(idcol, " values should match.")
+  } else {
+    behavior <- paste0(
+      idcol,
+      " values in the ",
+      xname,
+      " and ",
+      yname,
+      " metadata should match."
+    )
+  }
+
+  ## If nothing is missing, return check_pass
+  if (length(missing_from_x) == 0 & length(missing_from_y) == 0) {
+    check_pass(
+      msg = paste0(
+        "All ",
+        idcol,
+        " values match between ",
+        xname,
+        " and ",
+        yname
+      ),
+      behavior = behavior
+    )
+  } else {
+    check_fail(
+      msg = paste0(
+        idcol,
+        " values are mismatched between ",
+        xname,
+        " and ",
+        yname
+      ),
+      behavior = behavior,
+      data = list(
+        missing_from_x = missing_from_x,
+        missing_from_y = missing_from_y
+      )
+    )
+  }
 }
 
 #' Check individual IDs
@@ -40,8 +99,8 @@ check_ids <- function(x, y, idcol = c("individualID", "specimenID")) {
 #' @inheritParams check_ids
 #' @export
 #' @rdname check_ids
-check_indiv_ids <- function(x, y) {
-  check_ids(x, y, "individualID")
+check_indiv_ids <- function(x, y, xname = NULL, yname = NULL) {
+  check_ids(x, y, "individualID", xname, yname)
 }
 
 #' Check specimen IDs
@@ -51,6 +110,6 @@ check_indiv_ids <- function(x, y) {
 #' @inheritParams check_ids
 #' @export
 #' @rdname check_ids
-check_specimen_ids <- function(x, y) {
-  check_ids(x, y, "specimenID")
+check_specimen_ids <- function(x, y, xname = NULL, yname = NULL) {
+  check_ids(x, y, "specimenID", xname, yname)
 }

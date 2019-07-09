@@ -5,8 +5,10 @@
 #'
 #' @inheritParams check_annotation_keys
 #' @inheritParams check_values
-#' @return A named list of invalid annotation values.
+#' @return A condition object indicating whether all annotation values are
+#'   valid. Invalid annotation values are included as data within the object.
 #' @export
+#' @seealso [valid_annotation_values()]
 #'
 #' @examples
 #' \dontrun{
@@ -102,8 +104,14 @@ check_annotation_values.CsvFileTable <- function(x, annotations,
   )
 }
 
+#' Valid annotation values
+#'
+#' Checks for and returns the valid annotation valaues in a data frame, Synapse
+#' file, or Synapse file view.
+#'
+#' @inheritParams check_annotation_values
+#' @return A named list of valid annotation values.
 #' @export
-#' @rdname check_annotation_values
 valid_annotation_values <- function (x, annotations, whitelist_keys = NULL,
                                      whitelist_values = NULL) {
   UseMethod("valid_annotation_values", x)
@@ -257,9 +265,12 @@ check_value <- function(values, key, annotations, whitelist_keys = NULL,
 #'   vectors) to whitelist
 #' @param return_valid Should the function return valid values? Defaults to
 #'   `FALSE` (i.e. the function will return invalid values).
-#' @return A named list where each element corresponds to a key that contains
-#'   invalid values (if `return_valid = FLASE`), and the contents of each
-#'   element is a vector of invalid values.
+#' @return If `return_valid = FALSE`: a condition object indicating whether all
+#'   annotation values are valid. Invalid annotation values are included as data
+#'   within the object: a named list where each element corresponds to a key
+#'   that contains invalid values, and the contents of each element is a vector
+#'   of invalid values. If `return_valid = TRUE`: a named list of the valid
+#'   annotation keys and values.
 check_values <- function(x, annotations, whitelist_keys = NULL,
                          whitelist_values = NULL, return_valid = FALSE) {
   if (length(names(x)) == 0) {
@@ -283,5 +294,19 @@ check_values <- function(x, annotations, whitelist_keys = NULL,
     return_valid = return_valid
   )
   values <- purrr::compact(values)
-  values
+  if (isTRUE(return_valid)) {
+    return(values)
+  }
+  if (length(values) == 0) {
+    check_pass(
+      msg = "All annotation values are valid",
+      behavior = "All annotation values should conform to the vocabulary"
+    )
+  } else {
+    check_fail(
+      msg = "Some annotation values are invalid",
+      behavior = "All annotation values should conform to the vocabulary",
+      data = values
+    )
+  }
 }

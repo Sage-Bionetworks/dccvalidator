@@ -2,13 +2,9 @@
 % Please edit documentation in R/check-annotation-values.R
 \name{check_annotation_values}
 \alias{check_annotation_values}
-\alias{valid_annotation_values}
 \title{Check annotation values}
 \usage{
 check_annotation_values(x, annotations, whitelist_keys = NULL,
-  whitelist_values = NULL)
-
-valid_annotation_values(x, annotations, whitelist_keys = NULL,
   whitelist_values = NULL)
 }
 \arguments{
@@ -25,7 +21,8 @@ valid.}
 vectors) to whitelist}
 }
 \value{
-A named list of invalid annotation values.
+A condition object indicating whether all annotation values are
+valid. Invalid annotation values are included as data within the object.
 }
 \description{
 Checks that all annotation values are valid. It does not report on values for
@@ -60,4 +57,7 @@ check_annotation_values(my_file)
 check_annotation_values(dat, whitelist_keys = "assay")
 check_annotation_values(dat, whitelist_values = list(assay = c("foo")))
 }
+}
+\seealso{
+\code{\link[=valid_annotation_values]{valid_annotation_values()}}
 }

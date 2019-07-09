@@ -11,6 +11,7 @@ Depends:
 Imports:
     purrr,
     readxl,
+    rlang,
     stats,
     synapser,
     syndccutils,

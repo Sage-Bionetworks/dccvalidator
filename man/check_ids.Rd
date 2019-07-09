@@ -6,20 +6,24 @@
 \alias{check_specimen_ids}
 \title{Check ids}
 \usage{
-check_ids(x, y, idcol = c("individualID", "specimenID"))
+check_ids(x, y, idcol = c("individualID", "specimenID"), xname = NULL,
+  yname = NULL)
 
-check_indiv_ids(x, y)
+check_indiv_ids(x, y, xname = NULL, yname = NULL)
 
-check_specimen_ids(x, y)
+check_specimen_ids(x, y, xname = NULL, yname = NULL)
 }
 \arguments{
 \item{x, y}{Data frames to compare}
 
 \item{idcol}{Name of column containing ids to compare}
+
+\item{xname, yname}{Names of x and y (to be used in resulting messages)}
 }
 \value{
-List of IDs missing from x (but present in y) and missing from y (but
-present in x)
+A condition object indicating whether IDs match (\code{"check_pass"}) or
+not (\code{"check_fail"}). Mismatched IDs are included as data within the
+object.
 }
 \description{
 Compare IDs (such as individual IDs or specimen IDs) between two data frames.
