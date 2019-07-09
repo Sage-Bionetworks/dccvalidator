@@ -57,7 +57,7 @@ check_ids <- function(x, y, idcol = c("individualID", "specimenID"),
       xname,
       " and ",
       yname,
-      "metadata should match."
+      " metadata should match."
     )
   }
 
