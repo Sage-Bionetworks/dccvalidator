@@ -2,18 +2,26 @@ context("test-check-col-names.R")
 
 library("synapser")
 
-test_that("check_col_names returns empty character vector when all columns present", {
+test_that("check_col_names returns condition object when check passes", {
   template <- data.frame(x = 1, y = 1)
   dat <- data.frame(x = 5:10, y = 5:10)
-  expect_equal(check_col_names(dat, names(template)), character(0))
+  result <- check_col_names(dat, names(template))
+  expect_true(inherits(result, "check_pass"))
 })
 
-test_that("check_col_names returns vector of missing columns", {
+test_that("check_col_names returns condition object when check fails", {
   template <- data.frame(x = 1, y = 1, z = 1)
   dat <- data.frame(x = 5:10, y = 5:10)
-  expect_equal(check_col_names(dat, names(template)), "z")
+  result <- check_col_names(dat, names(template))
+  expect_true(inherits(result, "check_fail"))
 })
 
+test_that("check_col_names returns missing columns in the data", {
+  template <- data.frame(x = 1, y = 1, z = 1)
+  dat <- data.frame(x = 5:10, y = 5:10)
+  result <- check_col_names(dat, names(template))
+  expect_equal(result$data, "z")
+})
 
 test_that("get_template fails when not logged in to Synapse", {
   synLogout()
