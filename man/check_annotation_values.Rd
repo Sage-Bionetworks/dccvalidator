@@ -4,20 +4,13 @@
 \alias{check_annotation_values}
 \title{Check annotation values}
 \usage{
-check_annotation_values(x, annotations, whitelist_keys = NULL,
-  whitelist_values = NULL)
+check_annotation_values(x, annotations, ...)
 }
 \arguments{
 \item{x}{An object to check.}
 
 \item{annotations}{A data frame of annotation definitions. Must contain at
 least three columns: \code{key}, \code{value}, and \code{columnType}.}
-
-\item{whitelist_keys}{A character vector of annotation keys to whitelist. If
-provided, all values for the given keys will be treated as valid.}
-
-\item{whitelist_values}{A named list of keys (as the names) and values (as
-vectors) to whitelist}
 
 \item{...}{Additional options to \code{\link[=check_values]{check_values()}}}
 }

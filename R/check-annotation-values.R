@@ -4,7 +4,6 @@
 #' invalid _keys_; see [check_annotation_keys()].
 #'
 #' @inheritParams check_annotation_keys
-#' @inheritParams check_values
 #' @param ... Additional options to [`check_values()`]
 #' @return A condition object indicating whether all annotation values are
 #'   valid. Invalid annotation values are included as data within the object.
@@ -40,8 +39,7 @@
 #' check_annotation_values(dat, whitelist_keys = "assay")
 #' check_annotation_values(dat, whitelist_values = list(assay = c("foo")))
 #' }
-check_annotation_values <- function (x, annotations, whitelist_keys = NULL,
-                                     whitelist_values = NULL) {
+check_annotation_values <- function (x, annotations, ...) {
   UseMethod("check_annotation_values", x)
 }
 
