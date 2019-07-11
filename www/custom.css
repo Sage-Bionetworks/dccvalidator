@@ -5,3 +5,11 @@
 details {
     margin-left: 40px;
 }
+
+.result {
+    display: flex;
+}
+
+.wide {
+    flex: auto;
+}
