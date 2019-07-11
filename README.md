@@ -36,34 +36,38 @@ annots <- get_synapse_annotations()
 ## File
 my_file <- synGet("syn17038065", downloadFile = FALSE)
 check_annotation_keys(my_file, annots)
-#> Invalid keys:
-#> randomAnnotation
+#> <error>
+#> message: Some annotation keys are invalid
+#> class:   `check_fail`
 check_annotation_values(my_file, annots)
-#> Invalid values:
-#> species: "wrongSpecies"
-#> assay: "wrongAssay"
+#> <error>
+#> message: Some annotation values are invalid
+#> class:   `check_fail`
 
 ## File view
 fv <- synTableQuery("SELECT * FROM syn17038067")
 #> 
  [####################]100.00%   1/1   Done...    
-Downloading  [####################]100.00%   2.7kB/2.7kB (941.0kB/s) Job-80532951533726281596216641.csv Done...
+Downloading  [####################]100.00%   3.2kB/3.2kB (1.2MB/s) Job-93684968662996957301085939.csv Done...
 check_annotation_keys(fv, annots)
-#> Invalid keys:
-#> randomAnnotation
+#> <error>
+#> message: Some annotation keys are invalid
+#> class:   `check_fail`
 check_annotation_values(fv, annots)
-#> Invalid values:
-#> assay: "wrongAssay"
-#> species: "wrongSpecies"
+#> <error>
+#> message: Some annotation values are invalid
+#> class:   `check_fail`
 
 ## Data frame
 dat <- data.frame(assay = "foo", b = 2)
 check_annotation_keys(dat, annots)
-#> Invalid keys:
-#> b
+#> <error>
+#> message: Some annotation keys are invalid
+#> class:   `check_fail`
 check_annotation_values(dat, annots)
-#> Invalid values:
-#> assay: "foo"
+#> <error>
+#> message: Some annotation values are invalid
+#> class:   `check_fail`
 ```
 
 If you do not provide the annotations data frame to check against, the
@@ -73,16 +77,63 @@ functions will download the data automatically with
 ``` r
 my_file <- synGet("syn17038065", downloadFile = FALSE)
 check_annotation_keys(my_file)
-#> Invalid keys:
-#> randomAnnotation
+#> <error>
+#> message: Some annotation keys are invalid
+#> class:   `check_fail`
 check_annotation_values(my_file)
-#> Invalid values:
-#> species: "wrongSpecies"
-#> assay: "wrongAssay"
+#> <error>
+#> message: Some annotation values are invalid
+#> class:   `check_fail`
+```
+
+The result of the `check_*()` functions is a custom condition object.
+When the check returns an invalid result, the problematic data is
+included.
+
+``` r
+dat <- data.frame(assay = "foo", b = 2)
+res <- check_annotation_keys(dat)
+res$data
+#> [1] "b"
 ```
 
 If you instead wish to view which annotations *are* valid, you can use
 `valid_annotation_keys()` and `valid_annotation_values()`.
+
+## Check template columns
+
+You can check that the columns in your (meta)data conform to metadata
+templates.
+
+``` r
+dat <- data.frame(specimenId = "a", assay = "rnaSeq")
+check_cols_assay(dat, template = "rnaSeq")
+#> <error>
+#> message: Missing columns in the assay metadata file
+#> class:   `check_fail`
+```
+
+## Check specimen and individual IDs
+
+To make sure the specimen IDs or individual IDs match between files
+(e.g. that the specimens described in a biospecimen file match those in
+an assay metadata file), `check_specimen_ids()` and `check_indiv_ids()`.
+
+``` r
+## Two data frames with different specimen IDs
+a <- data.frame(specimenID = LETTERS[1:3])
+b <- data.frame(specimenID = LETTERS[1:4])
+(result <- check_specimen_ids(a, b, "biospecimen", "assay"))
+#> <error>
+#> message: specimenID values are mismatched between biospecimen and assay
+#> class:   `check_fail`
+result$data
+#> $missing_from_x
+#> [1] "D"
+#> 
+#> $missing_from_y
+#> character(0)
+```
 
 -----
 

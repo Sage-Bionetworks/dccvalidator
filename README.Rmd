@@ -69,8 +69,40 @@ check_annotation_keys(my_file)
 check_annotation_values(my_file)
 ```
 
+The result of the `check_*()` functions is a custom condition object. When the
+check returns an invalid result, the problematic data is included.
+
+```{r check-object}
+dat <- data.frame(assay = "foo", b = 2)
+res <- check_annotation_keys(dat)
+res$data
+```
+
 If you instead wish to view which annotations _are_ valid, you can use
 `valid_annotation_keys()` and `valid_annotation_values()`.
+
+## Check template columns
+
+You can check that the columns in your (meta)data conform to metadata templates.
+
+```{r check-cols-assay}
+dat <- data.frame(specimenId = "a", assay = "rnaSeq")
+check_cols_assay(dat, template = "rnaSeq")
+```
+
+## Check specimen and individual IDs
+
+To make sure the specimen IDs or individual IDs match between files (e.g. that
+the specimens described in a biospecimen file match those in an assay metadata
+file), `check_specimen_ids()` and `check_indiv_ids()`.
+
+```{r check-ids}
+## Two data frames with different specimen IDs
+a <- data.frame(specimenID = LETTERS[1:3])
+b <- data.frame(specimenID = LETTERS[1:4])
+(result <- check_specimen_ids(a, b, "biospecimen", "assay"))
+result$data
+```
 
 ---
 

@@ -99,6 +99,10 @@ check_ids <- function(x, y, idcol = c("individualID", "specimenID"),
 #' @inheritParams check_ids
 #' @export
 #' @rdname check_ids
+#' @examples
+#' a <- data.frame(individualID = LETTERS[1:3])
+#' b <- data.frame(individualID = LETTERS[1:4])
+#' check_specimen_ids(a, b, "individual", "biospecimen")
 check_indiv_ids <- function(x, y, xname = NULL, yname = NULL) {
   check_ids(x, y, "individualID", xname, yname)
 }
@@ -110,6 +114,10 @@ check_indiv_ids <- function(x, y, xname = NULL, yname = NULL) {
 #' @inheritParams check_ids
 #' @export
 #' @rdname check_ids
+#' @examples
+#' a <- data.frame(specimenID = LETTERS[1:3])
+#' b <- data.frame(specimenID = LETTERS[1:4])
+#' check_specimen_ids(a, b, "biospecimen", "assay")
 check_specimen_ids <- function(x, y, xname = NULL, yname = NULL) {
   check_ids(x, y, "specimenID", xname, yname)
 }
