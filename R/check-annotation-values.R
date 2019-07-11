@@ -5,6 +5,7 @@
 #'
 #' @inheritParams check_annotation_keys
 #' @inheritParams check_values
+#' @param ... Additional options to [`check_values()`]
 #' @return A condition object indicating whether all annotation values are
 #'   valid. Invalid annotation values are included as data within the object.
 #' @export
@@ -45,36 +46,28 @@ check_annotation_values <- function (x, annotations, whitelist_keys = NULL,
 }
 
 #' @export
-check_annotation_values.File <- function(x, annotations,
-                                         whitelist_keys = NULL,
-                                         whitelist_values = NULL) {
+check_annotation_values.File <- function(x, annotations, ...) {
   annots <- synapser::synGetAnnotations(x)
   check_values(
     annots,
     annotations,
-    whitelist_keys,
-    whitelist_values,
+    ...,
     return_valid = FALSE
   )
 }
 
 #' @export
-check_annotation_values.data.frame <- function(x, annotations,
-                                               whitelist_keys = NULL,
-                                               whitelist_values = NULL) {
+check_annotation_values.data.frame <- function(x, annotations, ...) {
   check_values(
     x,
     annotations,
-    whitelist_keys,
-    whitelist_values,
+    ...,
     return_valid = FALSE
   )
 }
 
 #' @export
-check_annotation_values.CsvFileTable <- function(x, annotations,
-                                                 whitelist_keys = NULL,
-                                                 whitelist_values = NULL) {
+check_annotation_values.CsvFileTable <- function(x, annotations, ...) {
   dat <- synapser::as.data.frame(x)
   fv_synapse_cols <- c(
     "ROW_ID",
@@ -98,8 +91,7 @@ check_annotation_values.CsvFileTable <- function(x, annotations,
   check_values(
     dat_annots,
     annotations,
-    whitelist_keys,
-    whitelist_values,
+    ...,
     return_valid = FALSE
   )
 }
@@ -112,42 +104,33 @@ check_annotation_values.CsvFileTable <- function(x, annotations,
 #' @inheritParams check_annotation_values
 #' @return A named list of valid annotation values.
 #' @export
-valid_annotation_values <- function (x, annotations, whitelist_keys = NULL,
-                                     whitelist_values = NULL) {
+valid_annotation_values <- function (x, annotations, ...) {
   UseMethod("valid_annotation_values", x)
 }
 
 #' @export
-valid_annotation_values.File <- function(x, annotations,
-                                         whitelist_keys = NULL,
-                                         whitelist_values = NULL) {
+valid_annotation_values.File <- function(x, annotations, ...) {
   annots <- synapser::synGetAnnotations(x)
   check_values(
     annots,
     annotations,
-    whitelist_keys,
-    whitelist_values,
+    ...,
     return_valid = TRUE
   )
 }
 
 #' @export
-valid_annotation_values.data.frame <- function(x, annotations,
-                                               whitelist_keys = NULL,
-                                               whitelist_values = NULL) {
+valid_annotation_values.data.frame <- function(x, annotations, ...) {
   check_values(
     x,
     annotations,
-    whitelist_keys,
-    whitelist_values,
+    ...,
     return_valid = TRUE
   )
 }
 
 #' @export
-valid_annotation_values.CsvFileTable <- function(x, annotations,
-                                                 whitelist_keys = NULL,
-                                                 whitelist_values = NULL) {
+valid_annotation_values.CsvFileTable <- function(x, annotations, ...) {
   dat <- synapser::as.data.frame(x)
   fv_synapse_cols <- c(
     "ROW_ID",
@@ -171,8 +154,7 @@ valid_annotation_values.CsvFileTable <- function(x, annotations,
   check_values(
     dat_annots,
     annotations,
-    whitelist_keys,
-    whitelist_values,
+    ...,
     return_valid = TRUE
   )
 }
@@ -263,6 +245,8 @@ check_value <- function(values, key, annotations, whitelist_keys = NULL,
 #'   provided, all values for the given keys will be treated as valid.
 #' @param whitelist_values A named list of keys (as the names) and values (as
 #'   vectors) to whitelist
+#' @param success_msg Message indicating the check succeeded.
+#' @param fail_msg Message indicating the check failed.
 #' @param return_valid Should the function return valid values? Defaults to
 #'   `FALSE` (i.e. the function will return invalid values).
 #' @return If `return_valid = FALSE`: a condition object indicating whether all
@@ -272,7 +256,10 @@ check_value <- function(values, key, annotations, whitelist_keys = NULL,
 #'   of invalid values. If `return_valid = TRUE`: a named list of the valid
 #'   annotation keys and values.
 check_values <- function(x, annotations, whitelist_keys = NULL,
-                         whitelist_values = NULL, return_valid = FALSE) {
+                         whitelist_values = NULL,
+                         success_msg = "All annotation values are valid",
+                         fail_msg = "Some annotation values are invalid",
+                         return_valid = FALSE) {
   if (length(names(x)) == 0) {
     stop("No annotations present to check", call. = FALSE)
   }
@@ -299,12 +286,12 @@ check_values <- function(x, annotations, whitelist_keys = NULL,
   }
   if (length(values) == 0) {
     check_pass(
-      msg = "All annotation values are valid",
+      msg = success_msg,
       behavior = "All annotation values should conform to the vocabulary"
     )
   } else {
     check_fail(
-      msg = "Some annotation values are invalid",
+      msg = fail_msg,
       behavior = "All annotation values should conform to the vocabulary",
       data = values
     )

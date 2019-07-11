@@ -4,8 +4,7 @@
 \alias{valid_annotation_values}
 \title{Valid annotation values}
 \usage{
-valid_annotation_values(x, annotations, whitelist_keys = NULL,
-  whitelist_values = NULL)
+valid_annotation_values(x, annotations, ...)
 }
 \arguments{
 \item{x}{An object to check.}
@@ -13,12 +12,7 @@ valid_annotation_values(x, annotations, whitelist_keys = NULL,
 \item{annotations}{A data frame of annotation definitions. Must contain at
 least three columns: \code{key}, \code{value}, and \code{columnType}.}
 
-\item{whitelist_keys}{A character vector keys to whitelist. If these keys are
-present in \code{x} but absent from \code{annotations}, they will still be treated as
-valid.}
-
-\item{whitelist_values}{A named list of keys (as the names) and values (as
-vectors) to whitelist}
+\item{...}{Additional options to \code{\link[=check_values]{check_values()}}}
 }
 \value{
 A named list of valid annotation values.
