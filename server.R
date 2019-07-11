@@ -88,6 +88,30 @@ server <- function(input, output, session) {
     annotation_values_manifest <- reactive({
       check_annotation_values(manifest())
     })
+    annotation_values_indiv <- reactive({
+      check_annotation_values(
+        indiv(),
+        whitelist_keys = c("individualID"),
+        success_msg = "All values in the individual metadata are valid",
+        fail_msg = "Some values in the individual metadata are invalid"
+      )
+    })
+    annotation_values_biosp <- reactive({
+      check_annotation_values(
+        biosp(),
+        whitelist_keys = c("specimenID", "individualID"),
+        success_msg = "All values in the biospecimen metadata are valid",
+        fail_msg = "Some values in the biospecimen metadata are invalid"
+      )
+    })
+    annotation_values_assay <- reactive({
+      check_annotation_values(
+        assay(),
+        whitelist_keys = c("specimenID"),
+        success_msg = "All values in the assay metadata are valid",
+        fail_msg = "Some values in the assay metadata are invalid"
+      )
+    })
 
     ## List results
     res <- reactive({
@@ -100,7 +124,10 @@ server <- function(input, output, session) {
         specimen_ids_biosp_assay(),
         specimen_ids_biosp_manifest(),
         annotation_keys_manifest(),
-        annotation_values_manifest()
+        annotation_values_manifest(),
+        annotation_values_indiv(),
+        annotation_values_biosp(),
+        annotation_values_assay()
       )
     })
 
