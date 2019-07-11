@@ -8,21 +8,35 @@
 \alias{check_cols_biospecimen}
 \title{Check column names against their corresponding template}
 \usage{
-check_col_names(data, template)
+check_col_names(data, template, success_msg = NULL, fail_msg = NULL,
+  behavior = NULL)
 
-check_cols_manifest(data)
+check_cols_manifest(data, success_msg = "All manifest columns present",
+  fail_msg = "Missing columns in the manifest", ...)
 
-check_cols_individual(data, template, ...)
+check_cols_individual(data, template,
+  success_msg = "All individual metadata columns present",
+  fail_msg = "Missing columns in the individual metadatafile", ...)
 
-check_cols_assay(data, template, ...)
+check_cols_assay(data, template,
+  success_msg = "All assay metadata columns present",
+  fail_msg = "Missing columns in the assay metadata file", ...)
 
-check_cols_biospecimen(data, ...)
+check_cols_biospecimen(data,
+  success_msg = "All biospecimen columns present",
+  fail_msg = "Missing columns in the biospecimen metadata file", ...)
 }
 \arguments{
 \item{data}{Data file (manifest, individual metadata, or assay metadata)}
 
 \item{template}{Character vector of column names from the template to check
 against}
+
+\item{success_msg}{Message indicating the check succeeded.}
+
+\item{fail_msg}{Message indicating the check failed.}
+
+\item{behavior}{The intended behavior of the test}
 
 \item{...}{Additional arguments passed to \code{\link[synapser:synGet]{synapser::synGet()}}}
 }
