@@ -84,8 +84,7 @@ ui <- function(request) {
                 collapsible = TRUE,
                 title = "Successes",
                 status = "success",
-                width = 12,
-                collapsed = TRUE
+                width = 12
               ),
               box(
                 uiOutput("warnings"),
@@ -93,8 +92,7 @@ ui <- function(request) {
                 collapsible = TRUE,
                 title = "Warnings",
                 status = "warning",
-                width = 12,
-                collapsed = TRUE
+                width = 12
               ),
               box(
                 uiOutput("failures"),
