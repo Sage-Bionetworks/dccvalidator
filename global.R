@@ -11,9 +11,6 @@ library("emo")
 library("dccvalidator")
 library("shinyBS")
 
-## Enable bookmarking
-enableBookmarking(store = "url")
-
 #####################
 ####  Functions  ####
 #####################

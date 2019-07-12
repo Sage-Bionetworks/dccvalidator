@@ -1,7 +1,6 @@
 server <- function(input, output, session) {
 
   session$sendCustomMessage(type = "readCookie", message = list())
-  setBookmarkExclude(c("cookie", "authorized"))
 
   ## Show message if user is not logged in to synapse
   unauthorized <- observeEvent(input$authorized, {
@@ -26,19 +25,16 @@ server <- function(input, output, session) {
       )
     })
     indiv <- reactive({
-      validate(need(input$indiv_meta, "Enter Synapse ID of individual metadata"))
-      indiv <- synGet(input$indiv_meta)
-      read.csv(indiv$path)
+      validate(need(input$indiv_meta, "Upload individual metadata"))
+      indiv <- read.csv(input$indiv_meta$datapath)
     })
     biosp <- reactive({
-      validate(need(input$biosp_meta, "Enter Synapse ID of biospecimen metadata"))
-      biosp <- synGet(input$biosp_meta)
-      read.csv(biosp$path)
+      validate(need(input$biosp_meta, "Upload biospecimen metadata"))
+      biosp <- read.csv(input$biosp_meta$datapath)
     })
     assay <- reactive({
-      validate(need(input$assay_meta, "Enter Synapse ID of assay metadata"))
-      assay <- synGet(input$assay_meta)
-      read.csv(assay$path)
+      validate(need(input$assay_meta, "Upload assay metadata"))
+      assay <- read.csv(input$assay_meta$datapath)
     })
     species_name <- reactive({input$species})
     assay_name <- reactive({input$assay})
@@ -47,8 +43,8 @@ server <- function(input, output, session) {
       showModal(
         modalDialog(
           title = "Instructions",
-          p("Input the Synapse IDs (e.g. syn12345) for the individual, biospecimen, and assay metadata you have uploaded. The app will check your data for common errors."),
-          p("Then, upload your completed manifest. The app will check the metadata annotations in the manifest and ensure that there are no missing specimen IDs between the data files and metadata. To read more about the correct format of a manifest, see this",
+          p("Upload .csv files of your individual, biospecimen, and assay metadata, and upload your manifest as a .tsv or .txt file. The app will check your data for common errors in the metadata and ensure that there are no missing specimen IDs between the metadata and the data files listed in the manifest."),
+          p("To read more about the correct format of a manifest, see this",
             HTML("<a href=\"https://docs.synapse.org/articles/uploading_in_bulk.html\">documentation</a>.")),
           p("Note you must be logged in to Synapse for this application to work."),
           easyClose = TRUE

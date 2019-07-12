@@ -26,28 +26,37 @@ ui <- function(request) {
           br(),
 
           # Files to be validated
-          textInput(
+          fileInput(
             "indiv_meta",
-            "Individual metadata file",
-            value = "",
+            "Individual metadata file (.csv)",
             width = NULL,
-            placeholder = "syn123456"
+            accept = c(
+              "text/csv",
+              "text/comma-separated-values,text/plain",
+              ".csv"
+            )
           ),
 
-          textInput(
+          fileInput(
             "biosp_meta",
-            "Biospecimen metadata file",
-            value = "",
+            "Biospecimen metadata file (.csv)",
             width = NULL,
-            placeholder = "syn123456"
+            accept = c(
+              "text/csv",
+              "text/comma-separated-values,text/plain",
+              ".csv"
+            )
           ),
 
-          textInput(
+          fileInput(
             "assay_meta",
-            "Assay metadata file",
-            value = "",
+            "Assay metadata file (.csv)",
             width = NULL,
-            placeholder = "syn123456"
+            accept = c(
+              "text/csv",
+              "text/comma-separated-values,text/plain",
+              ".csv"
+            )
           ),
 
           radioButtons("species", "Species", c("animal", "human")),
@@ -56,20 +65,14 @@ ui <- function(request) {
 
           fileInput(
             "manifest",
-            "Upload Manifest File",
+            "Upload Manifest File (.tsv or .txt)",
             multiple = FALSE,
             accept = c(
               "text/tsv",
               "text/tab-separated-values,text/plain",
               ".tsv"
             )
-          ),
-
-          # Bookmark
-          bookmarkButton(),
-
-          p("This will bookmark the results from checking metadata files so you can share the results. It will not store results from checking the uploaded manifest file.")
-
+          )
         ),
 
         # Main panel
