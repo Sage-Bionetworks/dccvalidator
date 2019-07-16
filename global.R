@@ -83,3 +83,13 @@ show_details.list <- function(x) {
   })
   renderTable(dat, colnames = FALSE)
 }
+
+## Save uploaded files to Synapse
+save_to_synapse <- function(input_file, parent, name = NULL) {
+  file_to_upload <- File(
+    input_file$datapath,
+    parent = parent,
+    name = name
+  )
+  synStore(file_to_upload)
+}

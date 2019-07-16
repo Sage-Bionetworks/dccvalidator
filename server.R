@@ -17,7 +17,46 @@ server <- function(input, output, session) {
     ## Download annotation definitions
     annots <- get_synapse_annotations()
 
-    # Load data files
+    ## Create folder for upload
+    user <- synGetUserProfile()
+    new_folder <- Folder(name = user$get("userName"), parent = "syn20506363")
+    created_folder <- synStore(new_folder)
+
+    ## Upload files to Synapse (after renaming them so they keep their original
+    ## names)
+    observeEvent(input$manifest, {
+      save_to_synapse(
+        input$manifest,
+        parent = created_folder,
+        name = input$manifest$name
+      )
+    })
+
+    observeEvent(input$indiv_meta, {
+      save_to_synapse(
+        input$indiv_meta,
+        parent = created_folder,
+        name = input$indiv_meta$name
+      )
+    })
+
+    observeEvent(input$biosp_meta, {
+      save_to_synapse(
+        input$biosp_meta,
+        parent = created_folder,
+        name = input$biosp_meta$name
+      )
+    })
+
+    observeEvent(input$assay_meta, {
+      save_to_synapse(
+        input$assay_meta,
+        parent = created_folder,
+        name = input$assay_meta$name
+      )
+    })
+
+    ## Load metadata files into session
     manifest <- reactive({
       validate(need(input$manifest, "Please upload manifest file"))
       read.table(
@@ -29,15 +68,15 @@ server <- function(input, output, session) {
     })
     indiv <- reactive({
       validate(need(input$indiv_meta, "Upload individual metadata"))
-      indiv <- read.csv(input$indiv_meta$datapath)
+      read.csv(input$indiv_meta$datapath)
     })
     biosp <- reactive({
       validate(need(input$biosp_meta, "Upload biospecimen metadata"))
-      biosp <- read.csv(input$biosp_meta$datapath)
+      read.csv(input$biosp_meta$datapath)
     })
     assay <- reactive({
       validate(need(input$assay_meta, "Upload assay metadata"))
-      assay <- read.csv(input$assay_meta$datapath)
+      read.csv(input$assay_meta$datapath)
     })
     species_name <- reactive({input$species})
     assay_name <- reactive({input$assay})
