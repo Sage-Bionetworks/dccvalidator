@@ -16,6 +16,12 @@ library("tibble")
 ####  Functions  ####
 #####################
 
+## Function to report results of a check. Shows an emoji (green check, yellow
+## warning, or red X), followed by the check message. If verbose == TRUE,
+## includes a details draw that shows the invalid data. Each result has an
+## informational button to the right that users can click to learn more about
+## what the check was looking for (in the check object this message is stored in
+## "behavior").
 report_result <- function(result, emoji_prefix = NULL, verbose = FALSE) {
   if (isTRUE(verbose)) {
     div(
@@ -54,6 +60,7 @@ report_result <- function(result, emoji_prefix = NULL, verbose = FALSE) {
   }
 }
 
+## Wrapper to report_results() that reports a list of results
 report_results <- function(results, ...) {
   map(results, report_result, ...)
 }
