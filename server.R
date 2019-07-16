@@ -14,6 +14,9 @@ server <- function(input, output, session) {
 
     synLogin(sessionToken = input$cookie)
 
+    ## Download annotation definitions
+    annots <- get_synapse_annotations()
+
     # Load data files
     manifest <- reactive({
       validate(need(input$manifest, "Please upload manifest file"))
@@ -79,14 +82,19 @@ server <- function(input, output, session) {
       check_specimen_ids(biosp(), manifest(), "biospecimen", "manifest")
     })
     annotation_keys_manifest <- reactive({
-      check_annotation_keys(manifest(), whitelist_keys = c("path", "parent"))
+      check_annotation_keys(
+        manifest(),
+        annots,
+        whitelist_keys = c("path", "parent")
+      )
     })
     annotation_values_manifest <- reactive({
-      check_annotation_values(manifest())
+      check_annotation_values(manifest(), annots)
     })
     annotation_values_indiv <- reactive({
       check_annotation_values(
         indiv(),
+        annots,
         whitelist_keys = c("individualID"),
         success_msg = "All values in the individual metadata are valid",
         fail_msg = "Some values in the individual metadata are invalid"
@@ -95,6 +103,7 @@ server <- function(input, output, session) {
     annotation_values_biosp <- reactive({
       check_annotation_values(
         biosp(),
+        annots,
         whitelist_keys = c("specimenID", "individualID"),
         success_msg = "All values in the biospecimen metadata are valid",
         fail_msg = "Some values in the biospecimen metadata are invalid"
@@ -103,6 +112,7 @@ server <- function(input, output, session) {
     annotation_values_assay <- reactive({
       check_annotation_values(
         assay(),
+        annots,
         whitelist_keys = c("specimenID"),
         success_msg = "All values in the assay metadata are valid",
         fail_msg = "Some values in the assay metadata are invalid"
