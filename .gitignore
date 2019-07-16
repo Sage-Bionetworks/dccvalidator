@@ -5,3 +5,4 @@
 .DS_Store
 lib/*
 restart.txt
+scratch.R
