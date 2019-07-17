@@ -79,7 +79,7 @@ report("The individual and/or biospecimen metadata file is missing an `individua
 ```
 
 ```{r compare-individual-ids, eval = eval_individual}
-indiv_comparison <- check_indiv_ids(params$individual, params$biospecimen)
+indiv_comparison <- check_indiv_ids_match(params$individual, params$biospecimen)
 
 report_if(
   length(indiv_comparison$missing_from_x) > 0,
@@ -114,7 +114,7 @@ report("The individual and/or biospecimen metadata file is missing a `specimenID
 ```
 
 ```{r compare-specimen-ids, eval = eval_individual}
-specimen_comparison <- check_specimen_ids(params$biospecimen, params$assay)
+specimen_comparison <- check_specimen_ids_match(params$biospecimen, params$assay)
 
 report_if(
   length(specimen_comparison$missing_from_x) > 0,

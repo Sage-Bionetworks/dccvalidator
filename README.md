@@ -117,13 +117,13 @@ check_cols_assay(dat, template = "rnaSeq")
 
 To make sure the specimen IDs or individual IDs match between files
 (e.g. that the specimens described in a biospecimen file match those in
-an assay metadata file), `check_specimen_ids()` and `check_indiv_ids()`.
+an assay metadata file), `check_specimen_ids_match()` and `check_indiv_ids_match()`.
 
 ``` r
 ## Two data frames with different specimen IDs
 a <- data.frame(specimenID = LETTERS[1:3])
 b <- data.frame(specimenID = LETTERS[1:4])
-(result <- check_specimen_ids(a, b, "biospecimen", "assay"))
+(result <- check_specimen_ids_match(a, b, "biospecimen", "assay"))
 #> <error>
 #> message: specimenID values are mismatched between biospecimen and assay
 #> class:   `check_fail`

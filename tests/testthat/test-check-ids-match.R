@@ -1,4 +1,4 @@
-context("test-check-ids.R")
+context("test-check-ids-match.R")
 
 #######################
 ####  Create data  ####
@@ -87,12 +87,12 @@ test_that("check_ids_match passes when IDs match", {
   expect_true(inherits(res, "check_pass"))
 })
 
-test_that("check_indiv_ids catches missing individual IDs", {
+test_that("check_indiv_ids_match catches missing individual IDs", {
   expected_result <- list(
     missing_from_x = "ABC",
     missing_from_y = character(0)
   )
-  res <- check_indiv_ids(
+  res <- check_indiv_ids_match(
     invalid_individual,
     invalid_biospecimen,
     "individual",
@@ -102,12 +102,12 @@ test_that("check_indiv_ids catches missing individual IDs", {
   expect_equal(res$data, expected_result)
 })
 
-test_that("check_specimen_ids catches missing specimen IDs", {
+test_that("check_specimen_ids_match catches missing specimen IDs", {
   expected_result <- list(
     missing_from_x = "010",
     missing_from_y = character(0)
   )
-  res <- check_specimen_ids(
+  res <- check_specimen_ids_match(
     invalid_biospecimen,
     valid_assay,
     "biospecimen",

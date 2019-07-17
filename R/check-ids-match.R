@@ -102,8 +102,8 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
 #' @examples
 #' a <- data.frame(individualID = LETTERS[1:3])
 #' b <- data.frame(individualID = LETTERS[1:4])
-#' check_specimen_ids(a, b, "individual", "biospecimen")
-check_indiv_ids <- function(x, y, xname = NULL, yname = NULL) {
+#' check_specimen_ids_match(a, b, "individual", "biospecimen")
+check_indiv_ids_match <- function(x, y, xname = NULL, yname = NULL) {
   check_ids_match(x, y, "individualID", xname, yname)
 }
 
@@ -117,7 +117,7 @@ check_indiv_ids <- function(x, y, xname = NULL, yname = NULL) {
 #' @examples
 #' a <- data.frame(specimenID = LETTERS[1:3])
 #' b <- data.frame(specimenID = LETTERS[1:4])
-#' check_specimen_ids(a, b, "biospecimen", "assay")
-check_specimen_ids <- function(x, y, xname = NULL, yname = NULL) {
+#' check_specimen_ids_match(a, b, "biospecimen", "assay")
+check_specimen_ids_match <- function(x, y, xname = NULL, yname = NULL) {
   check_ids_match(x, y, "specimenID", xname, yname)
 }
