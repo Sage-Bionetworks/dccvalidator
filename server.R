@@ -112,13 +112,13 @@ server <- function(input, output, session) {
       check_cols_manifest(manifest())
     })
     individual_ids_indiv_biosp <- reactive({
-      check_indiv_ids(indiv(), biosp(), "individual", "biospecimen")
+      check_indiv_ids_match(indiv(), biosp(), "individual", "biospecimen")
     })
     specimen_ids_biosp_assay <- reactive({
-      check_specimen_ids(biosp(), assay(), "biospecimen", "assay")
+      check_specimen_ids_match(biosp(), assay(), "biospecimen", "assay")
     })
     specimen_ids_biosp_manifest <- reactive({
-      check_specimen_ids(biosp(), manifest(), "biospecimen", "manifest")
+      check_specimen_ids_match(biosp(), manifest(), "biospecimen", "manifest")
     })
     annotation_keys_manifest <- reactive({
       check_annotation_keys(
@@ -157,6 +157,12 @@ server <- function(input, output, session) {
         fail_msg = "Some values in the assay metadata are invalid"
       )
     })
+    duplicate_indiv_ids <- reactive({
+      check_indiv_ids_dup(indiv())
+    })
+    duplicate_specimen_ids <- reactive({
+      check_specimen_ids_dup(biosp())
+    })
 
     ## List results
     res <- reactive({
@@ -172,7 +178,9 @@ server <- function(input, output, session) {
         annotation_values_manifest(),
         annotation_values_indiv(),
         annotation_values_biosp(),
-        annotation_values_assay()
+        annotation_values_assay(),
+        duplicate_indiv_ids(),
+        duplicate_specimen_ids()
       )
     })
 
