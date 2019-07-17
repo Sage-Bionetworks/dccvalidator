@@ -3,6 +3,7 @@
 #########################
 
 library("DT")
+library("ggplot2")
 library("shiny")
 library("shinydashboard")
 library("skimr")

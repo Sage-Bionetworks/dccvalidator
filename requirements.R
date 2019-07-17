@@ -17,6 +17,7 @@ source(".Rprofile")
 ## Install packages
 to_install <- c(
   "DT",
+  "ggplot2",
   "purrr",
   "remotes",
   "shinyBS",
