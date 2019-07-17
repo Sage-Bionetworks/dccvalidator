@@ -21,8 +21,10 @@ to_install <- c(
   "remotes",
   "shinyBS",
   "shinydashboard",
+  "skimr",
   "synapser",
-  "tibble"
+  "tibble",
+  "visdat"
 )
 install.packages(to_install)
 

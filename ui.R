@@ -108,7 +108,35 @@ ui <- function(request) {
             ),
             tabPanel(
               "Data summary",
-              h2("Coming soon...")
+              fluidRow(
+                box(
+                  title = "Dataset summary",
+                  valueBoxOutput("nindividuals"),
+                  valueBoxOutput("nspecimens"),
+                  valueBoxOutput("ndatafiles"),
+                  width = 12
+                )
+              ),
+              fluidRow(
+                box(
+                  title = "File-level summary",
+                  selectInput(
+                    "file_to_summarize",
+                    label = "Choose file to view",
+                    choices = list(
+                      "Individual metadata" = "indiv",
+                      "Biospecimen metadata" = "biosp",
+                      "Assay metadata" = "assay",
+                      "Manifest file" = "manifest"
+                      ),
+                    selected = "indiv"
+                  ),
+                  hr(),
+                  verbatimTextOutput("datafileskim"),
+                  plotOutput("datafilevisdat"),
+                  width = 12
+                )
+              )
             )
           )
         )

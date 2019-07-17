@@ -68,15 +68,15 @@ server <- function(input, output, session) {
     })
     indiv <- reactive({
       validate(need(input$indiv_meta, "Upload individual metadata"))
-      read.csv(input$indiv_meta$datapath)
+      read.csv(input$indiv_meta$datapath, na.strings = "")
     })
     biosp <- reactive({
       validate(need(input$biosp_meta, "Upload biospecimen metadata"))
-      read.csv(input$biosp_meta$datapath)
+      read.csv(input$biosp_meta$datapath, na.strings = "")
     })
     assay <- reactive({
       validate(need(input$assay_meta, "Upload assay metadata"))
-      read.csv(input$assay_meta$datapath)
+      read.csv(input$assay_meta$datapath, na.strings = "")
     })
     species_name <- reactive({input$species})
     assay_name <- reactive({input$assay})
@@ -192,6 +192,81 @@ server <- function(input, output, session) {
     output$failures <- renderUI({
       failures <- res()[map_lgl(res(), function(x) {inherits(x, "check_fail")})]
       report_results(failures, emoji_prefix = "x", verbose = TRUE)
+    })
+
+    ## Counts of individuals, specimens, and files
+    output$nindividuals <- renderValueBox({
+      valueBox(
+        length(
+          unique(
+            c(indiv()$individualID, biosp()$individualID)
+          )
+        ),
+        "Individuals",
+        icon = icon("users")
+      )
+    })
+
+    output$nspecimens <- renderValueBox({
+      valueBox(
+        length(
+          unique(
+            c(biosp()$specimenID, assay()$specimenID, manifest()$specimenID)
+          )
+        ),
+        "Specimens",
+        icon = icon("vial")
+      )
+    })
+
+    output$ndatafiles <- renderValueBox({
+      valueBox(
+        length(
+          unique(
+            manifest()$path
+          )
+        ),
+        "Data files in manifest",
+        icon = icon("file")
+      )
+    })
+
+    output$datafileskim <- renderPrint({
+      dat <- switch(
+        input$file_to_summarize,
+        "indiv" = indiv(),
+        "biosp" = biosp(),
+        "assay" = assay(),
+        "manifest" = manifest()
+      )
+      skim_with(
+        numeric = list(
+          p0 = NULL,
+          p25 = NULL,
+          p50 = NULL,
+          p75 = NULL,
+          p100 = NULL
+        ),
+        integer = list(
+          p0 = NULL,
+          p25 = NULL,
+          p50 = NULL,
+          p75 = NULL,
+          p100 = NULL
+        )
+      )
+      skim(dat)
+    })
+    output$datafilevisdat <- renderPlot({
+      dat <- switch(
+        input$file_to_summarize,
+        "indiv" = indiv(),
+        "biosp" = biosp(),
+        "assay" = assay(),
+        "manifest" = manifest()
+      )
+      vis_dat(dat) +
+        theme(text = element_text(size = 16))
     })
   })
 }
