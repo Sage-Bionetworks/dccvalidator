@@ -36,37 +36,37 @@ invalid_individual <- valid_individual[-1, ]
 ## they repeat 2x and only one row is missing)
 invalid_biospecimen <- valid_biospecimen[-10, ]
 
-test_that("check_ids throws error if column is missing", {
+test_that("check_ids_match throws error if column is missing", {
   x <- data.frame(x = 1:10, y = 1:10)
   y <- data.frame(x = 1:5, y = 1:5)
 
-  expect_error(check_ids(x, y, "foo"))
+  expect_error(check_ids_match(x, y, "foo"))
 })
 
-test_that("check_ids returns check_fail if data is missing the id column", {
+test_that("check_ids_match returns check_fail if data is missing the id column", {
   x <- data.frame(x = 1:10, y = 1:10)
   y <- data.frame(x = 1:5, y = 1:5)
-  res1 <- check_ids(x, y, idcol = "individualID", "individual", "biospecimen")
-  res2 <- check_ids(x, y, idcol = "specimenID", "biospecimen", "assay")
+  res1 <- check_ids_match(x, y, idcol = "individualID", "individual", "biospecimen")
+  res2 <- check_ids_match(x, y, idcol = "specimenID", "biospecimen", "assay")
   expect_true(inherits(res1, "check_fail"))
   expect_true(inherits(res2, "check_fail"))
 })
 
-test_that("check_ids converts factor columns to character", {
+test_that("check_ids_match converts factor columns to character", {
   factor_individual <- valid_individual
   factor_individual$individualID <- as.factor(factor_individual$individualID)
 
   factor_biospecimen <- valid_biospecimen
   factor_biospecimen$individualID <- as.factor(factor_biospecimen$individualID)
 
-  char <- check_ids(
+  char <- check_ids_match(
     valid_individual,
     valid_biospecimen,
     "individualID",
     "individual",
     "biospecimen"
   )
-  fact <- check_ids(
+  fact <- check_ids_match(
     factor_individual,
     factor_biospecimen,
     "individualID",
@@ -76,8 +76,8 @@ test_that("check_ids converts factor columns to character", {
   expect_equal(char, fact)
 })
 
-test_that("check_ids passes when IDs match", {
-  res <- check_ids(
+test_that("check_ids_match passes when IDs match", {
+  res <- check_ids_match(
     valid_individual,
     valid_biospecimen,
     "individualID",
@@ -118,7 +118,7 @@ test_that("check_specimen_ids catches missing specimen IDs", {
 })
 
 test_that("Behavior message leaves out xname/yname if not provided", {
-  res <- check_ids(
+  res <- check_ids_match(
     invalid_individual,
     invalid_biospecimen,
     idcol = "individualID"

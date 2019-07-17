@@ -9,7 +9,7 @@
 #'   not (`"check_fail"`). Mismatched IDs are included as data within the
 #'   object.
 #' @export
-check_ids <- function(x, y, idcol = c("individualID", "specimenID"),
+check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
                       xname = NULL, yname = NULL) {
   idcol <- match.arg(idcol)
   if (!idcol %in% colnames(x) | !idcol %in% colnames(y)) {
@@ -96,28 +96,28 @@ check_ids <- function(x, y, idcol = c("individualID", "specimenID"),
 #'
 #' Ensure that all individual IDs in two data frames match.
 #'
-#' @inheritParams check_ids
+#' @inheritParams check_ids_match
 #' @export
-#' @rdname check_ids
+#' @rdname check_ids_match
 #' @examples
 #' a <- data.frame(individualID = LETTERS[1:3])
 #' b <- data.frame(individualID = LETTERS[1:4])
 #' check_specimen_ids(a, b, "individual", "biospecimen")
 check_indiv_ids <- function(x, y, xname = NULL, yname = NULL) {
-  check_ids(x, y, "individualID", xname, yname)
+  check_ids_match(x, y, "individualID", xname, yname)
 }
 
 #' Check specimen IDs
 #'
 #' Ensure that all specimen IDS in two data frames match
 #'
-#' @inheritParams check_ids
+#' @inheritParams check_ids_match
 #' @export
-#' @rdname check_ids
+#' @rdname check_ids_match
 #' @examples
 #' a <- data.frame(specimenID = LETTERS[1:3])
 #' b <- data.frame(specimenID = LETTERS[1:4])
 #' check_specimen_ids(a, b, "biospecimen", "assay")
 check_specimen_ids <- function(x, y, xname = NULL, yname = NULL) {
-  check_ids(x, y, "specimenID", xname, yname)
+  check_ids_match(x, y, "specimenID", xname, yname)
 }
