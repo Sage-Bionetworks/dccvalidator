@@ -132,8 +132,8 @@ ui <- function(request) {
                     selected = "indiv"
                   ),
                   hr(),
-                  verbatimTextOutput("datafileskim"),
                   plotOutput("datafilevisdat"),
+                  verbatimTextOutput("datafileskim"),
                   width = 12
                 )
               )
