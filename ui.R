@@ -1,7 +1,7 @@
 ui <- function(request) {
   dashboardPage(
 
-    dashboardHeader(disable = TRUE),
+    dashboardHeader(title = "Metadata Validation"),
     dashboardSidebar(disable = TRUE),
     dashboardBody(
 
@@ -12,9 +12,6 @@ ui <- function(request) {
           includeScript("www/readCookie.js")
         )
       ),
-
-      # Application title
-      titlePanel("Metadata Validation"),
 
       # Sidebar
       sidebarLayout(
