@@ -20,6 +20,7 @@ to_install <- c(
   "ggplot2",
   "purrr",
   "remotes",
+  "shiny",
   "shinyBS",
   "shinydashboard",
   "skimr",
