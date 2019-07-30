@@ -16,6 +16,7 @@
 #' check_specimen_ids_dup(dat2)
 check_indiv_ids_dup <- function(data, success_msg = "Individual IDs are unique",
                                 fail_msg = "Duplicate individual IDs found") {
+  if (is.null(data)) return(NULL)
   if (!"individualID" %in% colnames(data)) {
     failure <- check_fail(
       msg = "Can't check for duplicate individual IDs; individualID column missing from data",
@@ -44,6 +45,7 @@ check_indiv_ids_dup <- function(data, success_msg = "Individual IDs are unique",
 #' @export
 check_specimen_ids_dup <- function(data, success_msg = "Specimen IDs are unique",
                                    fail_msg = "Duplicate specimen IDs found") {
+  if (is.null(data)) return(NULL)
   if (!"specimenID" %in% colnames(data)) {
     failure <- check_fail(
       msg = "Can't check for duplicate specimen IDs; specimenID column missing from data",

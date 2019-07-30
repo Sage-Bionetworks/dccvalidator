@@ -38,6 +38,11 @@ check_annotation_keys <- function (x, annotations, ...) {
 }
 
 #' @export
+check_annotation_keys.NULL <- function(x, annotations, ...) {
+  return(NULL)
+}
+
+#' @export
 check_annotation_keys.File <- function(x, annotations, ...) {
   file_annots <- synapser::synGetAnnotations(x)
   check_keys(
@@ -88,6 +93,11 @@ check_annotation_keys.CsvFileTable <- function(x, annotations, ...) {
 #' @export
 valid_annotation_keys <- function(x, annotations, ...) {
   UseMethod("valid_annotation_keys", x)
+}
+
+#' @export
+valid_annotation_keys.NULL <- function(x, annotations, ...) {
+  return(NULL)
 }
 
 #' @export

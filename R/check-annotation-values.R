@@ -44,6 +44,11 @@ check_annotation_values <- function (x, annotations, ...) {
 }
 
 #' @export
+check_annotation_values.NULL <- function(x, annotations, ...) {
+  return(NULL)
+}
+
+#' @export
 check_annotation_values.File <- function(x, annotations, ...) {
   annots <- synapser::synGetAnnotations(x)
   check_values(
@@ -104,6 +109,11 @@ check_annotation_values.CsvFileTable <- function(x, annotations, ...) {
 #' @export
 valid_annotation_values <- function (x, annotations, ...) {
   UseMethod("valid_annotation_values", x)
+}
+
+#' @export
+valid_annotation_values.NULL <- function(x, annotations, ...) {
+  return(NULL)
 }
 
 #' @export

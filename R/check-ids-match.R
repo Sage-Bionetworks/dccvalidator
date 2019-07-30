@@ -10,7 +10,8 @@
 #'   object.
 #' @export
 check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
-                      xname = NULL, yname = NULL) {
+                            xname = NULL, yname = NULL) {
+  if (is.null(x) | is.null(y)) return(NULL)
   idcol <- match.arg(idcol)
   if (!idcol %in% colnames(x) | !idcol %in% colnames(y)) {
     failure <- check_fail(

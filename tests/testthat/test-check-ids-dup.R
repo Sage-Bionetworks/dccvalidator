@@ -27,6 +27,10 @@ test_that("check_indiv_ids_dup succeeds when all IDs are unique", {
   expect_true(inherits(res2, "check_pass"))
 })
 
+test_that("check_indiv_ids_dup handles NULL input", {
+  expect_null(check_indiv_ids_dup(NULL))
+})
+
 test_that("check_specimen_ids_dup fails when column missing", {
   dat <- data.frame(x = 1:5)
   res <- check_specimen_ids_dup(dat)
@@ -52,4 +56,8 @@ test_that("check_specimen_ids_dup succeeds when all IDs are unique", {
   res2 <- check_specimen_ids_dup(dat2)
   expect_true(inherits(res1, "check_pass"))
   expect_true(inherits(res2, "check_pass"))
+})
+
+test_that("check_specimen_ids_dup handles NULL input", {
+  expect_null(check_specimen_ids_dup(NULL))
 })

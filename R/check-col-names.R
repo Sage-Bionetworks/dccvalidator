@@ -11,6 +11,7 @@
 #' @seealso [dccvalidator::get_template()]
 check_col_names <- function(data, template, success_msg = NULL, fail_msg = NULL,
                             behavior = NULL) {
+  if (is.null(data)) return(NULL)
   missing <- setdiff(template, names(data))
   if (length(missing) > 0) {
     check_fail(msg = fail_msg, behavior = behavior, data = missing)
@@ -34,6 +35,7 @@ check_cols_manifest <- function(data,
                                 success_msg = "All manifest columns present",
                                 fail_msg = "Missing columns in the manifest",
                                 ...) {
+  if (is.null(data)) return(NULL)
   required <- c("path", "parent")
   behavior <- paste0(
     "Manifest should contain columns: ",
@@ -56,6 +58,7 @@ check_cols_individual <- function(data, template,
                                   success_msg = "All individual metadata columns present",
                                   fail_msg = "Missing columns in the individual metadatafile",
                                   ...) {
+  if (is.null(data)) return(NULL)
   template <- match.arg(template, c("human", "animal"))
   id <- switch(
     template,
@@ -84,6 +87,7 @@ check_cols_assay <- function(data, template,
                              success_msg = "All assay metadata columns present",
                              fail_msg = "Missing columns in the assay metadata file",
                              ...) {
+  if (is.null(data)) return(NULL)
   template <- match.arg(template, c("rnaSeq", "proteomics"))
   id <- switch(
     template,
@@ -112,6 +116,7 @@ check_cols_biospecimen <- function(data,
                                    success_msg = "All biospecimen columns present",
                                    fail_msg = "Missing columns in the biospecimen metadata file",
                                    ...) {
+  if (is.null(data)) return(NULL)
   required <- get_template("syn12973252", ...)
   behavior <- paste0(
     "Biospecimen file should contain columns: ",

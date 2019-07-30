@@ -125,3 +125,10 @@ test_that("Behavior message leaves out xname/yname if not provided", {
   )
   expect_equal(res$behavior, "individualID values should match.")
 })
+
+test_that("check_ids_match handles NULL input", {
+  dat <- data.frame(individualID = 1:3)
+  expect_null(check_ids_match(NULL, dat, "individualID"))
+  expect_null(check_ids_match(dat, NULL, "individualID"))
+  expect_null(check_ids_match(NULL, NULL, "individualID"))
+})

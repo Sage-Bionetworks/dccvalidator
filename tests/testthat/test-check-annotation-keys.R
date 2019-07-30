@@ -46,6 +46,10 @@ test_that("check_annotation_keys works for file views", {
   expect_equal(res$data, "randomAnnotation")
 })
 
+test_that("check_annotation_keys handles NULL input", {
+  expect_null(check_annotation_keys(NULL, annots))
+})
+
 test_that("valid_annotation_keys returns valid annotation keys", {
   dat1 <- tibble(assay = "rnaSeq")
   dat2 <- tibble(assay = "rnaSeq", fileFormat = "fastq")
@@ -73,6 +77,10 @@ test_that("valid_annotation_keys works for file views", {
   res <- valid_annotation_keys(fv, annots)
   ## Sort because I think Synapse doesn't always return the same order
   expect_equal(sort(res), c("assay", "fileFormat", "species"))
+})
+
+test_that("valid_annotation_keys handles NULL input", {
+  expect_null(valid_annotation_keys(NULL, annots))
 })
 
 test_that("check_keys", {

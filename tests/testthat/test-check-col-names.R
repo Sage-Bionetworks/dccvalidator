@@ -169,3 +169,10 @@ test_that("wrapper functions for specific template gets the correct version", {
     c("samplingDate", "sampleStatus", "tissueVolume", "fastingState")
   )
 })
+
+test_that("check_cols functions handle NULL input", {
+  expect_null(check_cols_manifest(NULL))
+  expect_null(check_cols_individual(NULL))
+  expect_null(check_cols_biospecimen(NULL))
+  expect_null(check_cols_assay(NULL))
+})

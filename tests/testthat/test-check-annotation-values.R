@@ -60,6 +60,10 @@ test_that("check annotation values returns unique wrong values, not every single
   expect_equal(res$data, list(assay = "foo"))
 })
 
+test_that("check_annotation_values handles NULL input", {
+  expect_null(check_annotation_values(NULL, annots))
+})
+
 ## valid_annotation_values() ---------------------------------------------------
 
 test_that("valid_annotation_values returns valid values", {
@@ -89,6 +93,10 @@ test_that("valid_annotation_values works for file views", {
   ## different orders sometimes
   expect_equal(names(res), "fileFormat")
   expect_equal(sort(res$fileFormat), c("csv", "txt"))
+})
+
+test_that("valid_annotation_values handles NULL input", {
+  expect_null(valid_annotation_values(NULL, annots))
 })
 
 ## check_value() ---------------------------------------------------------------
