@@ -120,13 +120,7 @@ ui <- function(request) {
                   selectInput(
                     "file_to_summarize",
                     label = "Choose file to view",
-                    choices = list(
-                      "Individual metadata" = "indiv",
-                      "Biospecimen metadata" = "biosp",
-                      "Assay metadata" = "assay",
-                      "Manifest file" = "manifest"
-                      ),
-                    selected = "indiv"
+                    choices = c("")
                   ),
                   hr(),
                   plotOutput("datafilevisdat"),
