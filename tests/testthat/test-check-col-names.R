@@ -171,6 +171,7 @@ test_that("wrapper functions for specific template gets the correct version", {
 })
 
 test_that("check_cols functions handle NULL input", {
+  expect_null(check_col_names(NULL))
   expect_null(check_cols_manifest(NULL))
   expect_null(check_cols_individual(NULL))
   expect_null(check_cols_biospecimen(NULL))

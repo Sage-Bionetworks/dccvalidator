@@ -230,6 +230,16 @@ test_that("check_values can whitelist keys and values simultaneously", {
   expect_equal(res$data, list(fileFormat = "wrongest"))
 })
 
+test_that("check_values false back to get_synapse_annotations()", {
+  dat <- tibble(
+    fileFormat = c("wrong", "wronger", "wrongest", "txt"),
+    assay = c("rnaSeq", "rnaSeq", "rnaSeq", "also wrong")
+  )
+  res1 <- check_values(dat, annots)
+  res2 <- check_values(dat)
+  expect_identical(res1, res2)
+})
+
 ## check_type() ----------------------------------------------------------------
 
 test_that("check_type returns right value depending on class and `return_valid` option", {
