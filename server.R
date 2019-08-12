@@ -6,7 +6,7 @@ server <- function(input, output, session) {
   unauthorized <- observeEvent(input$authorized, {
     showModal(modalDialog(
       title = "Not logged in",
-      HTML("You must log in to <a href=\"https://www.synapse.org/\">Synapse</a> to use this application. Please log in, and then refresh this page.")
+      HTML("You must log in to <a href=\"https://www.synapse.org/\">Synapse</a> and be a member of the AMP-AD Consortium team to use this application. Please log in, and then refresh this page. If you are not a member of the AMP-AD Consortium team, you can request to be added at <a href=\"https://www.synapse.org/#!Team:3320424\"></a>.")
     ))
   })
 
