@@ -39,9 +39,9 @@ test_that("check_annotation_values works for File objects", {
   expect_true(inherits(resa, "check_pass"))
   expect_true(inherits(resb, "check_fail"))
   expect_equal(
-    resb$data[order(names(resb$data))], # need to ensure these are in the right
-                                        # order, sometimes they get returned in
-                                        # a different order
+    # need to ensure these are in the right order, sometimes they get returned
+    # in a different order
+    resb$data[order(names(resb$data))],
     list(assay = "wrongAssay", species = "wrongSpecies")
   )
 })
