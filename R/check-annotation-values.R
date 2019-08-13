@@ -39,7 +39,7 @@
 #' check_annotation_values(dat, whitelist_keys = "assay")
 #' check_annotation_values(dat, whitelist_values = list(assay = c("foo")))
 #' }
-check_annotation_values <- function (x, annotations, ...) {
+check_annotation_values <- function(x, annotations, ...) {
   UseMethod("check_annotation_values", x)
 }
 
@@ -107,7 +107,7 @@ check_annotation_values.CsvFileTable <- function(x, annotations, ...) {
 #' @inheritParams check_annotation_values
 #' @return A named list of valid annotation values.
 #' @export
-valid_annotation_values <- function (x, annotations, ...) {
+valid_annotation_values <- function(x, annotations, ...) {
   UseMethod("valid_annotation_values", x)
 }
 

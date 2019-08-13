@@ -33,7 +33,7 @@
 #' my_file <- synGet("syn11931757", downloadFile = FALSE)
 #' check_annotation_keys(my_file)
 #' }
-check_annotation_keys <- function (x, annotations, ...) {
+check_annotation_keys <- function(x, annotations, ...) {
   UseMethod("check_annotation_keys", x)
 }
 
