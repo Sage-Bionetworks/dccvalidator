@@ -7,7 +7,7 @@ context("test-check-ids-match.R")
 library("tibble")
 set.seed(8572)
 
-indIDs    <- c("ABC", "DEF", "GHI", "JKL", "MNO")
+indIDs <- c("ABC", "DEF", "GHI", "JKL", "MNO")
 specimenIDs <- sprintf("%03d", seq_len(length(indIDs) * 2))
 
 ## Valid data
@@ -46,8 +46,20 @@ test_that("check_ids_match throws error if column is missing", {
 test_that("check_ids_match returns check_fail if data is missing the id column", {
   x <- data.frame(x = 1:10, y = 1:10)
   y <- data.frame(x = 1:5, y = 1:5)
-  res1 <- check_ids_match(x, y, idcol = "individualID", "individual", "biospecimen")
-  res2 <- check_ids_match(x, y, idcol = "specimenID", "biospecimen", "assay")
+  res1 <- check_ids_match(
+    x,
+    y,
+    idcol = "individualID",
+    "individual",
+    "biospecimen"
+  )
+  res2 <- check_ids_match(
+    x,
+    y,
+    idcol = "specimenID",
+    "biospecimen",
+    "assay"
+  )
   expect_true(inherits(res1, "check_fail"))
   expect_true(inherits(res2, "check_fail"))
 })

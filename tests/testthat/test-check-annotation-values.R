@@ -169,9 +169,24 @@ test_that("check_values can whitelist certain keys", {
     assay = "rnaSeq",
     organ = "brain"
   )
-  resd <- check_values(dat1, annots, whitelist_keys = "fileFormat", return_valid = TRUE)
-  rese <- check_values(dat1, annots, whitelist_keys = c("fileFormat", "assay"), return_valid = TRUE)
-  resf <- check_values(dat1, annots, whitelist_keys = c("fileFormat", "tissue"), return_valid = TRUE)
+  resd <- check_values(
+    dat1,
+    annots,
+    whitelist_keys = "fileFormat",
+    return_valid = TRUE
+  )
+  rese <- check_values(
+    dat1,
+    annots,
+    whitelist_keys = c("fileFormat", "assay"),
+    return_valid = TRUE
+  )
+  resf <- check_values(
+    dat1,
+    annots,
+    whitelist_keys = c("fileFormat", "tissue"),
+    return_valid = TRUE
+  )
 
   expect_equal(names(resa$data), c("assay", "organ"))
   expect_equal(names(resb$data), c("organ"))
@@ -290,8 +305,18 @@ test_that("check_type checks different classes", {
 
 test_that("check_type can handle annotations as either data frames or tibbles", {
   a1 <- tibble(key = "x", columnType = "STRING", value = NA)
-  a2 <- data.frame(key = "x", columnType = "STRING", value = NA, stringsAsFactors = FALSE)
-  a3 <- data.frame(key = "x", columnType = "STRING", value = NA, stringsAsFactors = TRUE)
+  a2 <- data.frame(
+    key = "x",
+    columnType = "STRING",
+    value = NA,
+    stringsAsFactors = FALSE
+  )
+  a3 <- data.frame(
+    key = "x",
+    columnType = "STRING",
+    value = NA,
+    stringsAsFactors = TRUE
+  )
   a <- c("a", "b")
   expect_equal(
     check_value(a, "x", a1, return_valid = FALSE),
