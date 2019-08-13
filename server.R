@@ -4,23 +4,43 @@ server <- function(input, output, session) {
 
   ## Show message if user is not logged in to synapse
   unauthorized <- observeEvent(input$authorized, {
-    showModal(modalDialog(
-      title = "Not logged in",
-      HTML("You must log in to <a href=\"https://www.synapse.org/\">Synapse</a> and be a member of the AMP-AD Consortium team to use this application. Please log in, and then refresh this page. If you are not a member of the AMP-AD Consortium team, you can request to be added at <a href=\"https://www.synapse.org/#!Team:3320424\"></a>.")
-    ))
+    showModal(
+      modalDialog(
+        title = "Not logged in",
+        HTML("You must log in to <a href=\"https://www.synapse.org/\">Synapse</a> and be a member of the AMP-AD Consortium team to use this application. Please log in, and then refresh this page. If you are not a member of the AMP-AD Consortium team, you can request to be added at <a href=\"https://www.synapse.org/#!Team:3320424\">https://www.synapse.org/#!Team:3320424</a>.")
+      )
+    )
   })
 
   foo <- observeEvent(input$cookie, {
 
     synLogin(sessionToken = input$cookie)
 
-    ## Download annotation definitions
-    annots <- get_synapse_annotations()
+    ## Check if user is in AMP-AD Consortium team (needed in order to create
+    ## folder at the next step)
+    user <- synGetUserProfile()
+    user_teams <- synRestGET(paste0(
+      '/user/',
+      user$ownerId,
+      '/team?limit=10000'
+    ))$results
+    user_teams_ids <- map_chr(user_teams, function(x) x$id)
+
+    if (!"3320424" %in% user_teams_ids) {
+      showModal(
+        modalDialog(
+          title = "Not in AMP-AD Consortium team",
+          HTML("You must be a member of the AMP-AD Consortium team on Synapse to use this tool. If you are not a member of the AMP-AD Consortium team, you can request to be added at <a href=\"https://www.synapse.org/#!Team:3320424\">https://www.synapse.org/#!Team:3320424</a>.")
+        )
+      )
+    }
 
     ## Create folder for upload
-    user <- synGetUserProfile()
-    new_folder <- Folder(name = user$get("userName"), parent = "syn20506363")
+    new_folder <- Folder(name = user$userName, parent = "syn20506363")
     created_folder <- synStore(new_folder)
+
+    ## Download annotation definitions
+    annots <- get_synapse_annotations()
 
     ## Upload files to Synapse (after renaming them so they keep their original
     ## names)
