@@ -22,7 +22,7 @@ Suggests:
     tibble,
     covr
 Additional_repositories:
-    https://sage-bionetworks.github.io/ran
+    http://ran.synapse.org
 Remotes:
     Sage-Bionetworks/syndccutils/R
 License: MIT + file LICENSE
