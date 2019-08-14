@@ -119,14 +119,20 @@ check_cols_assay <- function(data, template,
 #' @inheritParams get_template
 #' @export
 #' @rdname check_col_names
-check_cols_biospecimen <- function(data,
+check_cols_biospecimen <- function(data, template,
                                    success_msg = "All biospecimen columns present",
                                    fail_msg = "Missing columns in the biospecimen metadata file",
                                    ...) {
   if (is.null(data)) {
     return(NULL)
   }
-  required <- get_template("syn12973252", ...)
+  template <- match.arg(template, c("general", "drosophila"))
+  id <- switch(
+    template,
+    general = "syn12973252",
+    drosophila = "syn20673251"
+  )
+  required <- get_template(id, ...)
   behavior <- paste0(
     "Biospecimen file should contain columns: ",
     paste(required, collapse = ", ")

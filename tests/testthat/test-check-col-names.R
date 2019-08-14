@@ -70,10 +70,16 @@ test_that("check_cols_biospecimen works for biospecimen columns", {
   incomplete_col_biosp <- full_col_biosp[, !names(full_col_biosp) == "organ"]
 
   expect_true(
-    inherits(check_cols_biospecimen(full_col_biosp), "check_pass")
+    inherits(
+      check_cols_biospecimen(full_col_biosp, "general"),
+      "check_pass"
+    )
   )
   expect_true(
-    inherits(check_cols_biospecimen(incomplete_col_biosp), "check_fail")
+    inherits(
+      check_cols_biospecimen(incomplete_col_biosp, "general"),
+      "check_fail"
+    )
   )
 })
 
@@ -87,8 +93,27 @@ test_that("check_cols_biospecimen returns invalid columns within condition objec
   incomplete_col_biosp <- full_col_biosp[, !names(full_col_biosp) == "organ"]
 
   expect_equal(
-    check_cols_biospecimen(incomplete_col_biosp)$data,
+    check_cols_biospecimen(incomplete_col_biosp, "general")$data,
     "organ"
+  )
+})
+
+test_that("check_cols_biospecimen can get drosophila template", {
+  drosophila_names <- get_template("syn20673251", version = 1)
+  drosophila_data <- data.frame(matrix(ncol = length(drosophila_names)))
+  colnames(drosophila_data) <- drosophila_names
+
+  expect_true(
+    inherits(
+      check_cols_biospecimen(drosophila_data, "drosophila"),
+      "check_pass"
+    )
+  )
+  expect_true(
+    inherits(
+      check_cols_biospecimen(drosophila_data, "general"),
+      "check_fail"
+    )
   )
 })
 
@@ -109,7 +134,7 @@ test_that("check_cols_assay works for assay columns", {
   )
 })
 
-test_that("check_cols_biospecimen returns invalid columns within condition object", {
+test_that("check_cols_assay returns invalid columns within condition object", {
   skip_on_cran()
 
   rnaseq_names <- get_template("syn12973256", version = 2)
@@ -163,9 +188,14 @@ test_that("wrapper functions for specific template gets the correct version", {
     nucleicAcidSource = 1,
     cellType = 1
   )
-  expect_true(inherits(check_cols_biospecimen(dat, version = 2), "check_pass"))
+  expect_true(
+    inherits(
+      check_cols_biospecimen(dat, "general", version = 2),
+      "check_pass"
+    )
+  )
   expect_equal(
-    check_cols_biospecimen(dat, version = 3)$data,
+    check_cols_biospecimen(dat, "general", version = 3)$data,
     c("samplingDate", "sampleStatus", "tissueVolume", "fastingState")
   )
 })

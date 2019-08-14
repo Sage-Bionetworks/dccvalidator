@@ -16,13 +16,13 @@ check_cols_manifest(data, success_msg = "All manifest columns present",
 
 check_cols_individual(data, template,
   success_msg = "All individual metadata columns present",
-  fail_msg = "Missing columns in the individual metadatafile", ...)
+  fail_msg = "Missing columns in the individual metadata file", ...)
 
 check_cols_assay(data, template,
   success_msg = "All assay metadata columns present",
   fail_msg = "Missing columns in the assay metadata file", ...)
 
-check_cols_biospecimen(data,
+check_cols_biospecimen(data, template,
   success_msg = "All biospecimen columns present",
   fail_msg = "Missing columns in the biospecimen metadata file", ...)
 }
@@ -54,7 +54,6 @@ check_cols_manifest(a)
 
 b <- data.frame(assay = "rnaSeq")
 check_cols_manifest(b)
-
 }
 \seealso{
 \code{\link[dccvalidator:get_template]{dccvalidator::get_template()}}
