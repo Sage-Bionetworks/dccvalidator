@@ -1,10 +1,8 @@
 ui <- function(request) {
   dashboardPage(
-
     dashboardHeader(title = "Metadata Validation"),
     dashboardSidebar(disable = TRUE),
     dashboardBody(
-
       includeCSS("www/custom.css"),
 
       tags$head(
@@ -15,9 +13,7 @@ ui <- function(request) {
 
       # Sidebar
       sidebarLayout(
-
         sidebarPanel(
-
           actionButton("instructions", "Show instructions"),
           br(),
           br(),

@@ -1,5 +1,4 @@
 server <- function(input, output, session) {
-
   session$sendCustomMessage(type = "readCookie", message = list())
 
   ## Show message if user is not logged in to synapse
@@ -13,16 +12,15 @@ server <- function(input, output, session) {
   })
 
   foo <- observeEvent(input$cookie, {
-
     synLogin(sessionToken = input$cookie)
 
     ## Check if user is in AMP-AD Consortium team (needed in order to create
     ## folder at the next step)
     user <- synGetUserProfile()
     user_teams <- synRestGET(paste0(
-      '/user/',
+      "/user/",
       user$ownerId,
-      '/team?limit=10000'
+      "/team?limit=10000"
     ))$results
     user_teams_ids <- map_chr(user_teams, function(x) x$id)
 
@@ -98,16 +96,22 @@ server <- function(input, output, session) {
       if (is.null(input$assay_meta)) return(NULL)
       read.csv(input$assay_meta$datapath, na.strings = "")
     })
-    species_name <- reactive({input$species})
-    assay_name <- reactive({input$assay})
+    species_name <- reactive({
+      input$species
+    })
+    assay_name <- reactive({
+      input$assay
+    })
 
     observeEvent(input$instructions, {
       showModal(
         modalDialog(
           title = "Instructions",
           p("Upload .csv files of your individual, biospecimen, and assay metadata, and upload your manifest as a .tsv or .txt file. The app will check your data for common errors in the metadata and ensure that there are no missing specimen IDs between the metadata and the data files listed in the manifest."),
-          p("To read more about the correct format of a manifest, see this",
-            HTML("<a href=\"https://docs.synapse.org/articles/uploading_in_bulk.html\">documentation</a>.")),
+          p(
+            "To read more about the correct format of a manifest, see this",
+            HTML("<a href=\"https://docs.synapse.org/articles/uploading_in_bulk.html\">documentation</a>.")
+          ),
           p("Note you must be logged in to Synapse for this application to work."),
           easyClose = TRUE
         )
