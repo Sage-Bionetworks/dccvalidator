@@ -59,7 +59,7 @@ check_cols_manifest <- function(data,
 #' @rdname check_col_names
 check_cols_individual <- function(data, template,
                                   success_msg = "All individual metadata columns present",
-                                  fail_msg = "Missing columns in the individual metadatafile",
+                                  fail_msg = "Missing columns in the individual metadata file",
                                   ...) {
   if (is.null(data)) {
     return(NULL)
