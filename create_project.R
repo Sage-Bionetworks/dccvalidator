@@ -2,6 +2,9 @@
 ####  Create project to log files  ####
 #######################################
 
+## This is not run by the app, but was run once to create the project that
+## stores logged data.
+
 library("synapser")
 synLogin()
 new_proj <- Project("AMP-AD validation")
