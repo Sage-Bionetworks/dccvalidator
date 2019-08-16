@@ -1,6 +1,7 @@
 #' Check column names against their corresponding template
 #'
-#' @param data Data file (manifest, individual metadata, or assay metadata)
+#' @param data Data frame to check against template (manifest, individual
+#'   metadata, or assay metadata)
 #' @param template Character vector of column names from the template to check
 #'   against
 #' @inheritParams check_values

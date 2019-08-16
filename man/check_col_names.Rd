@@ -27,7 +27,8 @@ check_cols_biospecimen(data, template,
   fail_msg = "Missing columns in the biospecimen metadata file", ...)
 }
 \arguments{
-\item{data}{Data file (manifest, individual metadata, or assay metadata)}
+\item{data}{Data frame to check against template (manifest, individual
+metadata, or assay metadata)}
 
 \item{template}{Character vector of column names from the template to check
 against}
