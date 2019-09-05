@@ -101,8 +101,8 @@ test_that("check_ids_match passes when IDs match", {
 
 test_that("check_indiv_ids_match catches missing individual IDs", {
   expected_result <- list(
-    missing_from_x = "ABC",
-    missing_from_y = character(0)
+    `Missing from individual` = "ABC",
+    `Missing from biospecimen` = character(0)
   )
   res <- check_indiv_ids_match(
     invalid_individual,
@@ -116,8 +116,8 @@ test_that("check_indiv_ids_match catches missing individual IDs", {
 
 test_that("check_specimen_ids_match catches missing specimen IDs", {
   expected_result <- list(
-    missing_from_x = "010",
-    missing_from_y = character(0)
+    `Missing from biospecimen` = "010",
+    `Missing from assay` = character(0)
   )
   res <- check_specimen_ids_match(
     invalid_biospecimen,

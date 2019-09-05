@@ -87,9 +87,9 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
         yname
       ),
       behavior = behavior,
-      data = list(
-        missing_from_x = missing_from_x,
-        missing_from_y = missing_from_y
+      data = setNames(
+        list(missing_from_x, missing_from_y),
+        paste("Missing from", c(xname, yname))
       )
     )
   }
