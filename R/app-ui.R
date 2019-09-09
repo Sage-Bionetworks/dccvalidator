@@ -132,17 +132,12 @@ app_ui <- function(request) {
 
 #' @import shiny
 golem_add_external_resources <- function(){
-
-  addResourcePath(
-    "www", system.file("app/www", package = "dccvalidator")
-  )
-
   tags$head(
     golem::activate_js(),
     golem::favicon(),
-    includeCSS("www/custom.css"),
+    includeCSS("inst/app/www/custom.css"),
     singleton(
-      includeScript("www/readCookie.js")
+      includeScript("inst/app/www/readCookie.js")
     )
   )
 }
