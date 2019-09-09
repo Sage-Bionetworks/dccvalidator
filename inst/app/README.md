@@ -13,7 +13,7 @@ contributor on errors that need to be fixed. The reporting UI is heavily inspire
 
 ## Deployment
 
-The app is deployed on our shiny pro server through the following steps:
+The app is deployed on the Sage Bionetworks' Shiny Pro server through the following steps:
 
 1. ssh into the shiny pro server and navigate to `/home/kwoo/ShinyApps/dccvalidator-app`
 1. `git pull` changes from GitHub
