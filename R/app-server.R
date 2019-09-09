@@ -129,7 +129,7 @@ app_server <- function(input, output, session) {
       check_cols_individual(indiv(), species_name())
     })
     missing_cols_biosp <- reactive({
-      check_cols_biospecimen(biosp())
+      check_cols_biospecimen(biosp(), "general")
     })
     missing_cols_assay <- reactive({
       check_cols_assay(assay(), assay_name())
