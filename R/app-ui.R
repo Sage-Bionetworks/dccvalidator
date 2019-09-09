@@ -6,6 +6,9 @@ app_ui <- function(request) {
     dashboardSidebar(disable = TRUE),
     dashboardBody(
 
+      # Add resources in www
+      golem_add_external_resources(),
+
       # Sidebar
       sidebarLayout(
         sidebarPanel(
