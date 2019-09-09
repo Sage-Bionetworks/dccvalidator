@@ -15,7 +15,7 @@ contributor on errors that need to be fixed. The reporting UI is heavily inspire
 
 The app is deployed on the Sage Bionetworks' Shiny Pro server through the following steps:
 
-1. ssh into the shiny pro server and navigate to `/home/kwoo/ShinyApps/dccvalidator-app`
+1. ssh into the Shiny Pro server and navigate to `/home/kwoo/ShinyApps/dccvalidator-app`
 1. `git pull` changes from GitHub
 1. To ensure packages are up-to-date, run `Rscript -e "renv::restore()"`
 
