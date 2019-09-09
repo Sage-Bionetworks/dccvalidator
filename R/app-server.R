@@ -1,4 +1,6 @@
-server <- function(input, output, session) {
+#' @import shiny
+#' @import shinydashboard
+app_server <- function(input, output, session) {
   session$sendCustomMessage(type = "readCookie", message = list())
 
   ## Show message if user is not logged in to synapse
@@ -12,17 +14,17 @@ server <- function(input, output, session) {
   })
 
   foo <- observeEvent(input$cookie, {
-    synLogin(sessionToken = input$cookie)
+    synapser::synLogin(sessionToken = input$cookie)
 
     ## Check if user is in AMP-AD Consortium team (needed in order to create
     ## folder at the next step)
-    user <- synGetUserProfile()
-    user_teams <- synRestGET(paste0(
+    user <- synapser::synGetUserProfile()
+    user_teams <- synapser::synRestGET(paste0(
       "/user/",
       user$ownerId,
       "/team?limit=10000"
     ))$results
-    user_teams_ids <- map_chr(user_teams, function(x) x$id)
+    user_teams_ids <- purrr::map_chr(user_teams, function(x) x$id)
 
     if (!"3320424" %in% user_teams_ids) {
       showModal(
@@ -34,8 +36,8 @@ server <- function(input, output, session) {
     }
 
     ## Create folder for upload
-    new_folder <- Folder(name = user$userName, parent = "syn20506363")
-    created_folder <- synStore(new_folder)
+    new_folder <- synapser::Folder(name = user$userName, parent = "syn20506363")
+    created_folder <- synapser::synStore(new_folder)
 
     ## Download annotation definitions
     annots <- get_synapse_annotations()
@@ -77,7 +79,7 @@ server <- function(input, output, session) {
     ## Load metadata files into session
     manifest <- reactive({
       if (is.null(input$manifest)) return(NULL)
-      read.table(
+      utils::read.table(
         input$manifest$datapath,
         sep = "\t",
         header = TRUE,
@@ -86,15 +88,15 @@ server <- function(input, output, session) {
     })
     indiv <- reactive({
       if (is.null(input$indiv_meta)) return(NULL)
-      read.csv(input$indiv_meta$datapath, na.strings = "")
+      utils::read.csv(input$indiv_meta$datapath, na.strings = "")
     })
     biosp <- reactive({
       if (is.null(input$biosp_meta)) return(NULL)
-      read.csv(input$biosp_meta$datapath, na.strings = "")
+      utils::read.csv(input$biosp_meta$datapath, na.strings = "")
     })
     assay <- reactive({
       if (is.null(input$assay_meta)) return(NULL)
-      read.csv(input$assay_meta$datapath, na.strings = "")
+      utils::read.csv(input$assay_meta$datapath, na.strings = "")
     })
     species_name <- reactive({
       input$species
@@ -210,19 +212,19 @@ server <- function(input, output, session) {
 
     ## Successes box
     output$successes <- renderUI({
-      successes <- res()[map_lgl(res(), function(x) {inherits(x, "check_pass")})]
+      successes <- res()[purrr::map_lgl(res(), function(x) {inherits(x, "check_pass")})]
       report_results(successes, emoji_prefix = "check")
     })
 
     ## Warnings box
     output$warnings <- renderUI({
-      warnings <- res()[map_lgl(res(), function(x) {inherits(x, "check_warn")})]
+      warnings <- res()[purrr::map_lgl(res(), function(x) {inherits(x, "check_warn")})]
       report_results(warnings, emoji_prefix = "warning", verbose = TRUE)
     })
 
     ## Failures box
     output$failures <- renderUI({
-      failures <- res()[map_lgl(res(), function(x) {inherits(x, "check_fail")})]
+      failures <- res()[purrr::map_lgl(res(), function(x) {inherits(x, "check_fail")})]
       report_results(failures, emoji_prefix = "x", verbose = TRUE)
     })
 
@@ -308,7 +310,7 @@ server <- function(input, output, session) {
 
     ## skimr summary of data
     output$datafileskim <- renderPrint({
-      skim_with(
+      skimr::skim_with(
         numeric = list(
           p0 = NULL,
           p25 = NULL,
@@ -332,7 +334,7 @@ server <- function(input, output, session) {
           message = FALSE
         )
       )
-      skim(vals()[[input$file_to_summarize]])
+      skimr::skim(vals()[[input$file_to_summarize]])
     })
 
     ## visdat summary figure
@@ -345,8 +347,8 @@ server <- function(input, output, session) {
           message = FALSE
         )
       )
-      vis_dat(vals()[[input$file_to_summarize]]) +
-        theme(text = element_text(size = 16))
+      visdat::vis_dat(vals()[[input$file_to_summarize]]) +
+        ggplot2::theme(text = ggplot2::element_text(size = 16))
     })
   })
 }

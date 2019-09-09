@@ -1,15 +1,10 @@
-ui <- function(request) {
+#' @import shiny
+#' @import shinydashboard
+app_ui <- function(request) {
   dashboardPage(
     dashboardHeader(title = "Metadata Validation"),
     dashboardSidebar(disable = TRUE),
     dashboardBody(
-      includeCSS("www/custom.css"),
-
-      tags$head(
-        singleton(
-          includeScript("www/readCookie.js")
-        )
-      ),
 
       # Sidebar
       sidebarLayout(
@@ -74,7 +69,7 @@ ui <- function(request) {
             tabPanel(
               "Validation Results",
               br(),
-              box(
+              shinydashboard::box(
                 uiOutput("successes"),
                 solidHeader = TRUE,
                 collapsible = TRUE,
@@ -82,7 +77,7 @@ ui <- function(request) {
                 status = "success",
                 width = 12
               ),
-              box(
+              shinydashboard::box(
                 uiOutput("warnings"),
                 solidHeader = TRUE,
                 collapsible = TRUE,
@@ -90,7 +85,7 @@ ui <- function(request) {
                 status = "warning",
                 width = 12
               ),
-              box(
+              shinydashboard::box(
                 uiOutput("failures"),
                 solidHeader = TRUE,
                 collapsible = TRUE,
@@ -102,7 +97,7 @@ ui <- function(request) {
             tabPanel(
               "Data summary",
               fluidRow(
-                box(
+                shinydashboard::box(
                   title = "Dataset summary",
                   valueBoxOutput("nindividuals"),
                   valueBoxOutput("nspecimens"),
@@ -111,7 +106,7 @@ ui <- function(request) {
                 )
               ),
               fluidRow(
-                box(
+                shinydashboard::box(
                   title = "File-level summary",
                   selectInput(
                     "file_to_summarize",
@@ -128,6 +123,23 @@ ui <- function(request) {
           )
         )
       )
+    )
+  )
+}
+
+#' @import shiny
+golem_add_external_resources <- function(){
+
+  addResourcePath(
+    "www", system.file("app/www", package = "dccvalidator")
+  )
+
+  tags$head(
+    golem::activate_js(),
+    golem::favicon(),
+    includeCSS("www/custom.css"),
+    singleton(
+      includeScript("www/readCookie.js")
     )
   )
 }
