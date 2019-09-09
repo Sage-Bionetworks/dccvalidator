@@ -34,7 +34,7 @@ Suggests:
 Additional_repositories:
     http://ran.synapse.org
 Remotes:
-    hadley/emo
+    hadley/emo,
     Sage-Bionetworks/syndccutils/R
 License: MIT + file LICENSE
 Encoding: UTF-8
