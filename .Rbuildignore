@@ -6,3 +6,5 @@
 ^codecov\.yml$
 ^data-raw/
 ^app\.R$
+^renv$
+^renv\.lock$
