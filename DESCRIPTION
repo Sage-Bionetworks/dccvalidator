@@ -7,7 +7,8 @@ Authors@R: c(
     person("Sage Bionetworks", role = c("cph"))
     )
 Depends:
-    R (>= 3.4)
+    R (>= 3.4),
+    shinyBS
 Imports:
     emo,
     DT,
@@ -18,7 +19,6 @@ Imports:
     readxl,
     rlang,
     shiny,
-    shinyBS,
     shinydashboard,
     skimr,
     stats,
