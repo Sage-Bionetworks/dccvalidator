@@ -8,3 +8,5 @@
 ^app\.R$
 ^renv$
 ^renv\.lock$
+^.*\.Rproj$
+^\.Rproj\.user$
