@@ -5,3 +5,5 @@
 ^\.travis\.yml$
 ^codecov\.yml$
 ^data-raw/
+^.*\.Rproj$
+^\.Rproj\.user$
