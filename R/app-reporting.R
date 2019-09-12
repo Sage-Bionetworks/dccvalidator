@@ -11,7 +11,8 @@
 #' @param emoji_prefix Emoji prefix to accompany reported result
 #' @param verbose If `TRUE`, provides additional data about the check result
 #'   (accessed from the `$data` slot of the check object)
-#' @return An
+#' @return A set of HTML elements showing the result of the check
+#' @importFrom shinyBS popify
 report_result <- function(result, emoji_prefix = NULL, verbose = FALSE) {
   if (isTRUE(verbose)) {
     div(
@@ -23,7 +24,7 @@ report_result <- function(result, emoji_prefix = NULL, verbose = FALSE) {
         ## Include details drawer for verbose == TRUE
         tags$details(show_details(result$data))
       ),
-      shinyBS::popify(
+      popify(
         tags$a(icon(name = "question-circle"), href = "#"),
         "Information",
         result$behavior,
@@ -39,7 +40,7 @@ report_result <- function(result, emoji_prefix = NULL, verbose = FALSE) {
         emo::ji(emoji_prefix),
         result$message
       ),
-      shinyBS::popify(
+      popify(
         tags$a(icon(name = "question-circle"), href = "#"),
         "Information",
         result$behavior,
