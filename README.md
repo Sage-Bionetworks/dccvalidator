@@ -48,7 +48,7 @@ check_annotation_values(my_file, annots)
 fv <- synTableQuery("SELECT * FROM syn17038067")
 #> 
  [####################]100.00%   1/1   Done...    
-Downloading  [####################]100.00%   3.2kB/3.2kB (1.9MB/s) Job-96628047720169821347303104.csv Done...
+Downloading  [####################]100.00%   3.2kB/3.2kB (1.1MB/s) Job-96833558741870820474626635.csv Done...
 check_annotation_keys(fv, annots)
 #> <error>
 #> message: Some annotation keys are invalid
@@ -139,17 +139,20 @@ result$data
 # Data submission validation
 
 This package contains a Shiny app to validate manifests and metadata for
-AMP-AD studies. It uses the
-[dccvalidator](https://github.com/Sage-Bionetworks/dccvalidator) package
-to check for common data quality issues and gives realtime feedback to
-the data contributor on errors that need to be fixed. The reporting UI
-is heavily inspired by the [MetaDIG project’s metadata quality
+AMP-AD studies. It uses the dccvalidator package to check for common
+data quality issues and gives realtime feedback to the data contributor
+on errors that need to be fixed. The reporting UI is heavily inspired by
+the [MetaDIG project’s metadata quality
 reports](https://knb.ecoinformatics.org/quality/s=knb.suite.1/doi%3A10.5063%2FF12V2D1V).
 
 ## Deployment
 
-The app is deployed on the Sage Bionetworks’ Shiny Pro server through
-the following steps:
+This section is applicable to Sage employees who are deploying the
+application on our Shiny Pro server. To learn about the server and how
+to get credentials, please read the [Confluence
+documentation](https://sagebionetworks.jira.com/wiki/spaces/SageShinyServer/pages/75497489/Shiny+Server).
+
+The app is deployed on the server through the following steps:
 
 1.  ssh into the Shiny Pro server and navigate to
     `/home/kwoo/ShinyApps/dccvalidator-app`
@@ -158,6 +161,21 @@ the following steps:
     "renv::restore()"`
 
 You may need to run `touch restart.txt` afterward to ensure the
+application is restarted.
+
+If you want to deploy the app in a different location (e.g. because you
+want to stand up a new version that is customized for a different
+community):
+
+1.  ssh into the Shiny Pro server
+2.  Create a folder under `/home/yourusername/ShinyApps`
+3.  `git clone` the repository into the folder you’ve created
+4.  If needed, fake any changes to the application’s behavior by editing
+    the files, or check out a branch that contains your changes
+5.  To ensure packages are up-to-date, run `Rscript -e
+    "renv::restore()"`
+
+Again, you may need to run `touch restart.txt` afterward to ensure the
 application is restarted.
 
 -----
