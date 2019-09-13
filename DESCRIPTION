@@ -1,5 +1,5 @@
 Package: dccvalidator
-Version: 0.0.0.9001
+Version: 0.0.0.9002
 Title: Validate CNS Data and Metadata
 Description: Performs automatic checks for common data/metadata quality issues.
 Authors@R: c(
@@ -7,23 +7,34 @@ Authors@R: c(
     person("Sage Bionetworks", role = c("cph"))
     )
 Depends:
-    R (>= 3.4)
+    R (>= 3.4),
+    shinyBS
 Imports:
+    emo,
+    DT,
+    golem,
+    ggplot2,
+    pkgload,
     purrr,
     readxl,
     rlang,
+    shiny,
+    shinydashboard,
+    skimr,
     stats,
     synapser,
     syndccutils,
+    tibble,
     tools,
-    utils
+    utils,
+    visdat
 Suggests:
     testthat,
-    tibble,
     covr
 Additional_repositories:
     http://ran.synapse.org
 Remotes:
+    hadley/emo,
     Sage-Bionetworks/syndccutils/R
 License: MIT + file LICENSE
 Encoding: UTF-8

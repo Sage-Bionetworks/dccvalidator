@@ -24,3 +24,13 @@ get_annotation <- function(ids, key) {
   annots <- purrr::map(ids, function(x) synapser::synGetAnnotations(x)[[key]])
   unlist(annots)
 }
+
+## Save uploaded files to Synapse
+save_to_synapse <- function(input_file, parent, name = NULL) {
+  file_to_upload <- synapser::File(
+    input_file$datapath,
+    parent = parent,
+    name = name
+  )
+  synapser::synStore(file_to_upload)
+}

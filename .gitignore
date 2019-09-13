@@ -1,5 +1,9 @@
 .Rproj.user
 .Rhistory
 .RData
-.DS_Store
 .Renviron
+.Ruserdata
+.DS_Store
+lib/*
+restart.txt
+scratch.R

@@ -48,7 +48,7 @@ check_annotation_values(my_file, annots)
 fv <- synTableQuery("SELECT * FROM syn17038067")
 #> 
  [####################]100.00%   1/1   Done...    
-Downloading  [####################]100.00%   3.2kB/3.2kB (1.2MB/s) Job-93684968662996957301085939.csv Done...
+Downloading  [####################]100.00%   3.2kB/3.2kB (1.1MB/s) Job-96833558741870820474626635.csv Done...
 check_annotation_keys(fv, annots)
 #> <error>
 #> message: Some annotation keys are invalid
@@ -117,7 +117,8 @@ check_cols_assay(dat, template = "rnaSeq")
 
 To make sure the specimen IDs or individual IDs match between files
 (e.g. that the specimens described in a biospecimen file match those in
-an assay metadata file), `check_specimen_ids_match()` and `check_indiv_ids_match()`.
+an assay metadata file), `check_specimen_ids_match()` and
+`check_indiv_ids_match()`.
 
 ``` r
 ## Two data frames with different specimen IDs
@@ -128,12 +129,54 @@ b <- data.frame(specimenID = LETTERS[1:4])
 #> message: specimenID values are mismatched between biospecimen and assay
 #> class:   `check_fail`
 result$data
-#> $missing_from_x
+#> $`Missing from biospecimen`
 #> [1] "D"
 #> 
-#> $missing_from_y
+#> $`Missing from assay`
 #> character(0)
 ```
+
+# Data submission validation
+
+This package contains a Shiny app to validate manifests and metadata for
+AMP-AD studies. It uses the dccvalidator package to check for common
+data quality issues and gives realtime feedback to the data contributor
+on errors that need to be fixed. The reporting UI is heavily inspired by
+the [MetaDIG project’s metadata quality
+reports](https://knb.ecoinformatics.org/quality/s=knb.suite.1/doi%3A10.5063%2FF12V2D1V).
+
+## Deployment
+
+This section is applicable to Sage employees who are deploying the
+application on our Shiny Pro server. To learn about the server and how
+to get credentials, please read the [Confluence
+documentation](https://sagebionetworks.jira.com/wiki/spaces/SageShinyServer/pages/75497489/Shiny+Server).
+
+The app is deployed on the server through the following steps:
+
+1.  ssh into the Shiny Pro server and navigate to
+    `/home/kwoo/ShinyApps/dccvalidator-app`
+2.  `git pull` changes from GitHub
+3.  To ensure packages are up-to-date, run `Rscript -e
+    "renv::restore()"`
+
+You may need to run `touch restart.txt` afterward to ensure the
+application is restarted.
+
+If you want to deploy the app in a different location (e.g. because you
+want to stand up a new version that is customized for a different
+community):
+
+1.  ssh into the Shiny Pro server
+2.  Create a folder under `/home/yourusername/ShinyApps`
+3.  `git clone` the repository into the folder you’ve created
+4.  If needed, fake any changes to the application’s behavior by editing
+    the files, or check out a branch that contains your changes
+5.  To ensure packages are up-to-date, run `Rscript -e
+    "renv::restore()"`
+
+Again, you may need to run `touch restart.txt` afterward to ensure the
+application is restarted.
 
 -----
 
