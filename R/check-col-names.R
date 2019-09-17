@@ -167,7 +167,10 @@ get_template <- function(synID, ...) {
   ext <- tools::file_ext(filepath)
 
   if (!ext %in% c("xlsx", "csv")) {
-    stop("Error loading template: file format must be .csv or .xlsx", call. = FALSE)
+    stop(
+      "Error loading template: file format must be .csv or .xlsx",
+      call. = FALSE
+    )
   }
 
   if (ext == "xlsx") {
