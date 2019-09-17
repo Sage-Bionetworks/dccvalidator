@@ -166,7 +166,8 @@ check_keys <- function(x, annotations, whitelist_keys = NULL,
   if (isTRUE(return_valid)) {
     keys <- intersect(x, c(annotations$key, whitelist_keys))
     return(keys)
-  } else { ## If return_valid is FALSE, return condition object
+  } else {
+    ## If return_valid is FALSE, return condition object
     keys <- setdiff(x, annotations$key)
     keys <- setdiff(keys, whitelist_keys)
     if (length(keys) == 0) {
