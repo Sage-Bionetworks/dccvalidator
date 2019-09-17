@@ -34,15 +34,15 @@ test_that("check_cols_individual works for individual columns", {
   skip_on_cran()
 
   cols <- get_template("syn12973254", version = 1)
-  full_col_indiv <- data.frame(matrix(ncol = length(cols)))
-  colnames(full_col_indiv) <- cols
-  incomplete_col_indiv <- full_col_indiv[, !names(full_col_indiv) %in% "yearsEducation"]
+  full_col <- data.frame(matrix(ncol = length(cols)))
+  colnames(full_col) <- cols
+  incomplete_col <- full_col[, !names(full_col) %in% "yearsEducation"]
 
   expect_true(
-    inherits(check_cols_individual(full_col_indiv, "human"), "check_pass")
+    inherits(check_cols_individual(full_col, "human"), "check_pass")
   )
   expect_true(
-    inherits(check_cols_individual(incomplete_col_indiv, "human"), "check_fail")
+    inherits(check_cols_individual(incomplete_col, "human"), "check_fail")
   )
 })
 
@@ -50,12 +50,12 @@ test_that("check_cols_individual returns invalid columns within condition object
   skip_on_cran()
 
   cols <- get_template("syn12973254", version = 1)
-  full_col_indiv <- data.frame(matrix(ncol = length(cols)))
-  colnames(full_col_indiv) <- cols
-  incomplete_col_indiv <- full_col_indiv[, !names(full_col_indiv) %in% "yearsEducation"]
+  full_col <- data.frame(matrix(ncol = length(cols)))
+  colnames(full_col) <- cols
+  incomplete_col <- full_col[, !names(full_col) %in% "yearsEducation"]
 
   expect_equal(
-    check_cols_individual(incomplete_col_indiv, "human")$data,
+    check_cols_individual(incomplete_col, "human")$data,
     "yearsEducation"
   )
 })
