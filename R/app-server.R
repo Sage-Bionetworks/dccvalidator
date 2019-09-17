@@ -212,20 +212,26 @@ app_server <- function(input, output, session) {
 
     ## Successes box
     output$successes <- renderUI({
-      successes <- res()[purrr::map_lgl(res(), function(x) {inherits(x, "check_pass")})]
-      report_results(successes, emoji_prefix = "check")
+      successes <- purrr::map_lgl(res(), function(x) {
+        inherits(x, "check_pass")
+      })
+      report_results(res()[successes], emoji_prefix = "check")
     })
 
     ## Warnings box
     output$warnings <- renderUI({
-      warnings <- res()[purrr::map_lgl(res(), function(x) {inherits(x, "check_warn")})]
-      report_results(warnings, emoji_prefix = "warning", verbose = TRUE)
+      warnings <- purrr::map_lgl(res(), function(x) {
+        inherits(x, "check_warn")
+      })
+      report_results(res()[warnings], emoji_prefix = "warning", verbose = TRUE)
     })
 
     ## Failures box
     output$failures <- renderUI({
-      failures <- res()[purrr::map_lgl(res(), function(x) {inherits(x, "check_fail")})]
-      report_results(failures, emoji_prefix = "x", verbose = TRUE)
+      failures <- purrr::map_lgl(res(), function(x) {
+        inherits(x, "check_fail")
+      })
+      report_results(res()[failures], emoji_prefix = "x", verbose = TRUE)
     })
 
     ## Counts of individuals, specimens, and files
