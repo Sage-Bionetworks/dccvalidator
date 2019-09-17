@@ -8,7 +8,9 @@ app_server <- function(input, output, session) {
     showModal(
       modalDialog(
         title = "Not logged in",
+        # nolint start
         HTML("You must log in to <a href=\"https://www.synapse.org/\">Synapse</a> and be a member of the AMP-AD Consortium team to use this application. Please log in, and then refresh this page. If you are not a member of the AMP-AD Consortium team, you can request to be added at <a href=\"https://www.synapse.org/#!Team:3320424\">https://www.synapse.org/#!Team:3320424</a>.")
+        # nolint end
       )
     )
   })
@@ -30,7 +32,9 @@ app_server <- function(input, output, session) {
       showModal(
         modalDialog(
           title = "Not in AMP-AD Consortium team",
+          # nolint start
           HTML("You must be a member of the AMP-AD Consortium team on Synapse to use this tool. If you are not a member of the AMP-AD Consortium team, you can request to be added at <a href=\"https://www.synapse.org/#!Team:3320424\">https://www.synapse.org/#!Team:3320424</a>.")
+          # nolint end
         )
       )
     }
@@ -109,12 +113,14 @@ app_server <- function(input, output, session) {
       showModal(
         modalDialog(
           title = "Instructions",
+          # nolint start
           p("Upload .csv files of your individual, biospecimen, and assay metadata, and upload your manifest as a .tsv or .txt file. The app will check your data for common errors in the metadata and ensure that there are no missing specimen IDs between the metadata and the data files listed in the manifest."),
           p(
             "To read more about the correct format of a manifest, see this",
             HTML("<a href=\"https://docs.synapse.org/articles/uploading_in_bulk.html\">documentation</a>.")
           ),
           p("Note you must be logged in to Synapse for this application to work."),
+          # nolint end
           easyClose = TRUE
         )
       )

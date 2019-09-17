@@ -158,7 +158,7 @@ check_keys <- function(x, annotations, whitelist_keys = NULL,
   }
   if (!all(c("key", "value", "columnType") %in% names(annotations))) {
     stop(
-      "Annotations must have the following columns: 'key', 'value', and 'columnType'",
+      "Annotations must have the following columns: 'key', 'value', and 'columnType'", # nolint
       call. = FALSE
     )
   }

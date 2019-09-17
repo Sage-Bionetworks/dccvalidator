@@ -21,7 +21,7 @@ check_indiv_ids_dup <- function(data, success_msg = "Individual IDs are unique",
   }
   if (!"individualID" %in% colnames(data)) {
     failure <- check_fail(
-      msg = "Can't check for duplicate individual IDs; individualID column missing from data",
+      msg = "Can't check for duplicate individual IDs; individualID column missing from data", # nolint
       behavior = "Individual metadata should contain individualID column",
       data = colnames(data)
     )
@@ -45,14 +45,15 @@ check_indiv_ids_dup <- function(data, success_msg = "Individual IDs are unique",
 #' @inheritParams check_indiv_ids_dup
 #' @rdname check_indiv_ids_dup
 #' @export
-check_specimen_ids_dup <- function(data, success_msg = "Specimen IDs are unique",
+check_specimen_ids_dup <- function(data,
+                                   success_msg = "Specimen IDs are unique",
                                    fail_msg = "Duplicate specimen IDs found") {
   if (is.null(data)) {
     return(NULL)
   }
   if (!"specimenID" %in% colnames(data)) {
     failure <- check_fail(
-      msg = "Can't check for duplicate specimen IDs; specimenID column missing from data",
+      msg = "Can't check for duplicate specimen IDs; specimenID column missing from data", # nolint
       behavior = "Biospecimen metadata should contain specimenID column",
       data = colnames(data)
     )
