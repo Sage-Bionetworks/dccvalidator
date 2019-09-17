@@ -10,6 +10,9 @@ r:
 - release
 - devel
 
+r_github_packages:
+  - jimhester/lintr
+
 env:
   global:
     - R_REMOTES_NO_ERRORS_FROM_WARNINGS=true
@@ -17,4 +20,6 @@ env:
     - secure: IzgB3ykXOwU+swYXR8Ftex9F7XeI0zhYo7MQgCcvNj+yiUJO9iMvkOBzQxu8yW00aqNOetk1kGnsPBRqTffqlFjCCmchIisFsy0OdhPielBn2089w/B4Vm8SKfS8ElXpo+qCU7lL69EIARft2miG7i8DNQ2vRNPIzeUqIYAhWupXgkfHGS9HuZoSGsX+DIQQ3Df/6LPgmSc90p1WcrxRLIKtyNcV+WRdOkKnY+iNkWsWzTcwnxAlb8SQyuUZomyfs8/GZnzJmJO3q6cr1/25j0MjQmlit6hq6FN7Ed34/qUttPJhmObZKlL03Tyw/vDcauN4XyXKaOgrhC9rPjKqHY3ZrXM3ETnzQ2ZDjhKTzt1ujGCr7ZJ+FI5xHwaIYQ83JYDX1dlqxTL6h9n/GIA+ZpmSn7eHNWUh+f4NgEXdE2GidIxv/egzge7RbOAfdr2jVZmRwXQMpAXZ/kUsBzjJovkju5UTbuJBzq9mVKl+S8VTbRAOB7Kx2vYeDVxxaEtMgf/qZZMF1IGwmPbLtjL12mOuYYkK5Av/6mStUELO7GIWLxH5LgDOSDT8t17ssRFxuXTDZndQuUh329y9LK/SyKiMT0aayZ2mgME/I7cEKk/CphTwsmTndL1Y94uqDAhJgqCUNytzv6cwQW31YRqnkjFKyc9vzj1Kh+DIXQlKdX0=
 
 after_success:
+  - R CMD INSTALL $PKG_TARBALL
+  - Rscript -e 'lintr::lint_package()'
   - Rscript -e 'covr::codecov()'
