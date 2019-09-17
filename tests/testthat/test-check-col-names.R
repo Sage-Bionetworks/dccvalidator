@@ -46,7 +46,7 @@ test_that("check_cols_individual works for individual columns", {
   )
 })
 
-test_that("check_cols_individual returns invalid columns within condition object", {
+test_that("check_cols_individual returns invalid columns in condition object", {
   skip_on_cran()
 
   cols <- get_template("syn12973254", version = 1)
@@ -83,7 +83,7 @@ test_that("check_cols_biospecimen works for biospecimen columns", {
   )
 })
 
-test_that("check_cols_biospecimen returns invalid columns within condition object", {
+test_that("check_cols_biospecimen returns invalid columns in condition obj.", {
   skip_on_cran()
 
   biosp_names <- get_template("syn12973252", version = 4)

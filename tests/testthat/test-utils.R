@@ -21,7 +21,7 @@ test_that("get_annotation fails if no key provided", {
   expect_error(get_annotation("syn12345"))
 })
 
-test_that("get_annotation gets the value of an annotation on a Synapse entity", {
+test_that("get_annotation gets value of an annotation on a Synapse entity", {
   annot <- get_annotation("syn17038064", "fileFormat")
   expect_equal(annot, c(syn17038064 = "txt"))
 })

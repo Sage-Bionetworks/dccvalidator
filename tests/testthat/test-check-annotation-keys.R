@@ -5,7 +5,7 @@ library("tibble")
 if (on_travis()) syn_travis_login() else synLogin()
 annots <- syndccutils::get_synapse_annotations()
 
-test_that("check_annotation_keys returns check_pass when no invalid annotations present", {
+test_that("check_annotation_keys returns check_pass when all are valid", {
   dat <- tibble(assay = "rnaSeq")
   res <- check_annotation_keys(dat, annots)
   expect_true(inherits(res, "check_pass"))
@@ -105,13 +105,13 @@ test_that("check_keys falls back to get_synapse_annotations", {
   expect_equal(res$data, "not a key")
 })
 
-test_that("check_keys checks that necessary annotation columns are present", {
+test_that("check_keys checks necessary annotation columns are present", {
   annotations <- tibble(key = "x", value = NA)
   a <- tibble(x = c("a", "b"))
   expect_error(check_keys(a, annotations))
 })
 
-test_that("check_keys allows whitelisting keys that aren't part of the annotations", {
+test_that("check_keys allows whitelisting keys", {
   resa <- check_keys(c("assay", "foo"), whitelist_keys = "foo")
   resb <- check_keys(c("assay", "foo", "bar"), whitelist_keys = "foo")
   resc <- check_keys(c("assay", "foo"), whitelist_keys = c("foo", "bar"))

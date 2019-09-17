@@ -7,24 +7,24 @@ annots <- syndccutils::get_synapse_annotations()
 
 ## check_annotation_values() ---------------------------------------------------
 
-test_that("check_annotation_values returns empty list when no invalid annotations present", {
+test_that("check_annotation_values returns check_pass when values are valid", {
   dat <- tibble(assay = "rnaSeq")
   res <- check_annotation_values(dat, annots)
   expect_true(inherits(res, "check_pass"))
 })
 
-test_that("check_annotation_values errors when there are no annotations to check", {
+test_that("check_annotation_values errors when data frame is empty", {
   dat <- tibble()
   expect_error(check_annotation_values(dat, annots))
 })
 
-test_that("check_annotation_values returns check_fail when invalid annotations present", {
+test_that("check_annotation_values returns check_fail for invalid annots.", {
   dat <- tibble(assay = "foo", consortium = "bar")
   res <- check_annotation_values(dat, annots)
   expect_true(inherits(res, "check_fail"))
 })
 
-test_that("check_annotation_values returns invalid annotation values in $data", {
+test_that("check_annotation_values returns invalid values in $data", {
   dat <- tibble(assay = "foo", consortium = "bar")
   res <- check_annotation_values(dat, annots)
   expect_equal(res$data, list(assay = "foo", consortium = "bar"))
@@ -54,7 +54,7 @@ test_that("check_annotation_values works for file views", {
   expect_equal(res$data, list(assay = "wrongAssay", species = "wrongSpecies"))
 })
 
-test_that("check annotation values returns unique wrong values, not every single one", {
+test_that("check annotation values returns *unique* wrong values", {
   dat <- tibble(assay = c("foo", "foo", "rnaSeq"))
   res <- check_annotation_values(dat, annots)
   expect_equal(res$data, list(assay = "foo"))
@@ -122,7 +122,7 @@ test_that("check_value falls back to get_synapse_annotations", {
   )
 })
 
-test_that("check_value checks column type when enumerated values aren't defined", {
+test_that("check_value checks column type when no enumerated values", {
   annotations <- tibble(key = "x", columnType = "STRING", value = NA)
   a <- c("a", "b")
   expect_equal(
@@ -257,7 +257,7 @@ test_that("check_values false back to get_synapse_annotations()", {
 
 ## check_type() ----------------------------------------------------------------
 
-test_that("check_type returns right value depending on class and `return_valid` option", {
+test_that("check_type returns right value depending on class/`return_valid`", {
   annotations <- tibble(key = "x", columnType = "STRING", value = NA)
   a <- c("a", "b")
   b <- c(1, 2)
@@ -303,7 +303,7 @@ test_that("check_type checks different classes", {
   )
 })
 
-test_that("check_type can handle annotations as either data frames or tibbles", {
+test_that("check_type can handle annotations as data frames OR tibbles", {
   a1 <- tibble(key = "x", columnType = "STRING", value = NA)
   a2 <- data.frame(
     key = "x",

@@ -43,7 +43,7 @@ test_that("check_ids_match throws error if column is missing", {
   expect_error(check_ids_match(x, y, "foo"))
 })
 
-test_that("check_ids_match returns check_fail if data is missing the id column", {
+test_that("check_ids_match returns check_fail if data is missing id column", {
   x <- data.frame(x = 1:10, y = 1:10)
   y <- data.frame(x = 1:5, y = 1:5)
   res1 <- check_ids_match(
