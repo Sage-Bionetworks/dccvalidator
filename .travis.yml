@@ -11,7 +11,8 @@ r:
 - devel
 jobs:
   include:
-    - stage: lint
+    - if: type = pull_request
+      stage: lint
       r: release
       script: bash ./linting_and_coverage.sh
 
