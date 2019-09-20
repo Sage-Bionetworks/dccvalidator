@@ -8,7 +8,10 @@ test_that("check_indiv_ids_dup fails when column missing", {
 })
 
 test_that("check_indiv_ids_dup catches duplicate individual IDs", {
-  dat1 <- data.frame(individualID = c("foo", "bar", "bar"), stringsAsFactors = FALSE)
+  dat1 <- data.frame(
+    individualID = c("foo", "bar", "bar"),
+    stringsAsFactors = FALSE
+  )
   dat2 <- data.frame(individualID = c(1, 1, 2))
   res1 <- check_indiv_ids_dup(dat1)
   res2 <- check_indiv_ids_dup(dat2)
@@ -19,7 +22,10 @@ test_that("check_indiv_ids_dup catches duplicate individual IDs", {
 })
 
 test_that("check_indiv_ids_dup succeeds when all IDs are unique", {
-  dat1 <- data.frame(individualID = c("foo", "bar", "baz"), stringsAsFactors = FALSE)
+  dat1 <- data.frame(
+    individualID = c("foo", "bar", "baz"),
+    stringsAsFactors = FALSE
+  )
   dat2 <- data.frame(individualID = c(1, 2, 3))
   res1 <- check_indiv_ids_dup(dat1)
   res2 <- check_indiv_ids_dup(dat2)
@@ -39,7 +45,10 @@ test_that("check_specimen_ids_dup fails when column missing", {
 })
 
 test_that("check_specimen_ids_dup catches duplicate specimen IDs", {
-  dat1 <- data.frame(specimenID = c("foo", "bar", "bar"), stringsAsFactors = FALSE)
+  dat1 <- data.frame(
+    specimenID = c("foo", "bar", "bar"),
+    stringsAsFactors = FALSE
+  )
   dat2 <- data.frame(specimenID = c(1, 1, 2))
   res1 <- check_specimen_ids_dup(dat1)
   res2 <- check_specimen_ids_dup(dat2)
@@ -50,7 +59,10 @@ test_that("check_specimen_ids_dup catches duplicate specimen IDs", {
 })
 
 test_that("check_specimen_ids_dup succeeds when all IDs are unique", {
-  dat1 <- data.frame(specimenID = c("foo", "bar", "baz"), stringsAsFactors = FALSE)
+  dat1 <- data.frame(
+    specimenID = c("foo", "bar", "baz"),
+    stringsAsFactors = FALSE
+  )
   dat2 <- data.frame(specimenID = c(1, 2, 3))
   res1 <- check_specimen_ids_dup(dat1)
   res2 <- check_specimen_ids_dup(dat2)

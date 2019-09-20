@@ -10,9 +10,11 @@ syn_travis_login <- function() {
 on_travis <- function() {
   if (identical(Sys.getenv("TRAVIS"), "true")) {
     return(TRUE)
-  } else {         # nocov start
+    # nocov start
+  } else {
     return(FALSE)
-  }                # nocov end
+  }
+  # nocov end
 }
 
 ## Get the value of an annotation on object(s) x

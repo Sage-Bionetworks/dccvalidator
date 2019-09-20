@@ -10,7 +10,7 @@ test_that("check_cols_empty returns check_pass if all columns have data", {
   expect_true(inherits(res, "check_pass"))
 })
 
-test_that("check_cols_empty returns check_warn if some columns are lacking data", {
+test_that("check_cols_empty returns check_warn if some columns lack data", {
   dat1 <- data.frame(x = NA)
   dat2 <- data.frame(x = "")
   dat3 <- data.frame(x = 1, y = NA, z = "")

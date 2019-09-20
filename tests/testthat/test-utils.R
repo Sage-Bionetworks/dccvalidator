@@ -10,7 +10,7 @@ test_that("on_travis() returns TRUE on Travis", {
 test_that("login works on travis", {
   ## Lots of other things will fail too if it doesn't, but doesn't hurt to have
   ## a dedicated test
-  if (!on_travis()) { # only run on travis
+  if (!on_travis()) {
     skip("This test should run on Travis only")
   }
   login <- try(syn_travis_login(), silent = TRUE)
@@ -21,7 +21,7 @@ test_that("get_annotation fails if no key provided", {
   expect_error(get_annotation("syn12345"))
 })
 
-test_that("get_annotation gets the value of an annotation on a Synapse entity", {
+test_that("get_annotation gets value of an annotation on a Synapse entity", {
   annot <- get_annotation("syn17038064", "fileFormat")
   expect_equal(annot, c(syn17038064 = "txt"))
 })

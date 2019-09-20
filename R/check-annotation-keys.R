@@ -158,7 +158,7 @@ check_keys <- function(x, annotations, whitelist_keys = NULL,
   }
   if (!all(c("key", "value", "columnType") %in% names(annotations))) {
     stop(
-      "Annotations must have the following columns: 'key', 'value', and 'columnType'",
+      "Annotations must have the following columns: 'key', 'value', and 'columnType'", # nolint
       call. = FALSE
     )
   }
@@ -166,7 +166,8 @@ check_keys <- function(x, annotations, whitelist_keys = NULL,
   if (isTRUE(return_valid)) {
     keys <- intersect(x, c(annotations$key, whitelist_keys))
     return(keys)
-  } else { ## If return_valid is FALSE, return condition object
+  } else {
+    ## If return_valid is FALSE, return condition object
     keys <- setdiff(x, annotations$key)
     keys <- setdiff(keys, whitelist_keys)
     if (length(keys) == 0) {

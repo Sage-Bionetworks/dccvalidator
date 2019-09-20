@@ -22,7 +22,8 @@ check_cols_empty <- function(data, empty_values = c(NA, ""), strict = FALSE,
   }
   ## Check if all columns have data
   results <- purrr::map_lgl(data, function(x) all(x %in% empty_values))
-  behavior <- "Completely empty columns might be an accidental omission. If the columns are empty because the data does not exist, then this check can be ignored."
+  behavior <- "Completely empty columns might be an accidental omission. If the columns are empty because the data does not exist, then this check can be ignored." # nolint
+
 
   ## Return success if all columns have some data. Otherwise return warn or fail
   ## depending on `strict` argument

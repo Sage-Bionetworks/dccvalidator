@@ -7,8 +7,8 @@ context("test-check-ids-match.R")
 library("tibble")
 set.seed(8572)
 
-indIDs <- c("ABC", "DEF", "GHI", "JKL", "MNO")
-specimenIDs <- sprintf("%03d", seq_len(length(indIDs) * 2))
+indIDs <- c("ABC", "DEF", "GHI", "JKL", "MNO") # nolint
+specimenIDs <- sprintf("%03d", seq_len(length(indIDs) * 2)) # nolint
 
 ## Valid data
 
@@ -43,7 +43,7 @@ test_that("check_ids_match throws error if column is missing", {
   expect_error(check_ids_match(x, y, "foo"))
 })
 
-test_that("check_ids_match returns check_fail if data is missing the id column", {
+test_that("check_ids_match returns check_fail if data is missing id column", {
   x <- data.frame(x = 1:10, y = 1:10)
   y <- data.frame(x = 1:5, y = 1:5)
   res1 <- check_ids_match(
@@ -66,10 +66,10 @@ test_that("check_ids_match returns check_fail if data is missing the id column",
 
 test_that("check_ids_match converts factor columns to character", {
   factor_individual <- valid_individual
-  factor_individual$individualID <- as.factor(factor_individual$individualID)
+  factor_individual$individualID <- as.factor(factor_individual$individualID) # nolint
 
   factor_biospecimen <- valid_biospecimen
-  factor_biospecimen$individualID <- as.factor(factor_biospecimen$individualID)
+  factor_biospecimen$individualID <- as.factor(factor_biospecimen$individualID) # nolint
 
   char <- check_ids_match(
     valid_individual,

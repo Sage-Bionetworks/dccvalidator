@@ -34,28 +34,28 @@ test_that("check_cols_individual works for individual columns", {
   skip_on_cran()
 
   cols <- get_template("syn12973254", version = 1)
-  full_col_indiv <- data.frame(matrix(ncol = length(cols)))
-  colnames(full_col_indiv) <- cols
-  incomplete_col_indiv <- full_col_indiv[, !names(full_col_indiv) %in% "yearsEducation"]
+  full_col <- data.frame(matrix(ncol = length(cols)))
+  colnames(full_col) <- cols
+  incomplete_col <- full_col[, !names(full_col) %in% "yearsEducation"]
 
   expect_true(
-    inherits(check_cols_individual(full_col_indiv, "human"), "check_pass")
+    inherits(check_cols_individual(full_col, "human"), "check_pass")
   )
   expect_true(
-    inherits(check_cols_individual(incomplete_col_indiv, "human"), "check_fail")
+    inherits(check_cols_individual(incomplete_col, "human"), "check_fail")
   )
 })
 
-test_that("check_cols_individual returns invalid columns within condition object", {
+test_that("check_cols_individual returns invalid columns in condition object", {
   skip_on_cran()
 
   cols <- get_template("syn12973254", version = 1)
-  full_col_indiv <- data.frame(matrix(ncol = length(cols)))
-  colnames(full_col_indiv) <- cols
-  incomplete_col_indiv <- full_col_indiv[, !names(full_col_indiv) %in% "yearsEducation"]
+  full_col <- data.frame(matrix(ncol = length(cols)))
+  colnames(full_col) <- cols
+  incomplete_col <- full_col[, !names(full_col) %in% "yearsEducation"]
 
   expect_equal(
-    check_cols_individual(incomplete_col_indiv, "human")$data,
+    check_cols_individual(incomplete_col, "human")$data,
     "yearsEducation"
   )
 })
@@ -83,7 +83,7 @@ test_that("check_cols_biospecimen works for biospecimen columns", {
   )
 })
 
-test_that("check_cols_biospecimen returns invalid columns within condition object", {
+test_that("check_cols_biospecimen returns invalid columns in condition obj.", {
   skip_on_cran()
 
   biosp_names <- get_template("syn12973252", version = 4)
@@ -153,7 +153,7 @@ test_that("check_cols_manifest works for manifest columns", {
   cols <- c("path", "parent", "name")
   dat <- data.frame(matrix(ncol = length(cols)))
   names(dat) <- cols
-  incomplete <- data.frame(path = "/home/file.txt")
+  incomplete <- data.frame(path = "/home/file.txt") # nolint
 
   expect_true(inherits(check_cols_manifest(dat), "check_pass"))
   expect_equal(check_cols_manifest(incomplete)$data, "parent")
