@@ -130,7 +130,7 @@ app_server <- function(input, output, session) {
 
     ## Perform checks
 
-    # Missing columns --------------------------------------------------------------
+    # Missing columns ----------------------------------------------------------
     missing_cols_indiv <- reactive({
       check_cols_individual(indiv(), species_name())
     })
@@ -144,7 +144,7 @@ app_server <- function(input, output, session) {
       check_cols_manifest(manifest())
     })
 
-    # Individual and specimen IDs match --------------------------------------------
+    # Individual and specimen IDs match ----------------------------------------
     individual_ids_indiv_biosp <- reactive({
       check_indiv_ids_match(indiv(), biosp(), "individual", "biospecimen")
     })
@@ -155,7 +155,7 @@ app_server <- function(input, output, session) {
       check_specimen_ids_match(biosp(), manifest(), "biospecimen", "manifest")
     })
 
-    # Annotation keys in manifest are valid ----------------------------------------
+    # Annotation keys in manifest are valid ------------------------------------
     annotation_keys_manifest <- reactive({
       check_annotation_keys(
         manifest(),
@@ -164,7 +164,7 @@ app_server <- function(input, output, session) {
       )
     })
 
-    # Annotation values in manifest and metadata are valid -------------------------
+    # Annotation values in manifest and metadata are valid ---------------------
     annotation_values_manifest <- reactive({
       check_annotation_values(manifest(), annots)
     })
@@ -196,7 +196,7 @@ app_server <- function(input, output, session) {
       )
     })
 
-    # Individual and specimen IDs are not duplicated -------------------------------
+    # Individual and specimen IDs are not duplicated ---------------------------
     duplicate_indiv_ids <- reactive({
       check_indiv_ids_dup(indiv())
     })
@@ -204,7 +204,7 @@ app_server <- function(input, output, session) {
       check_specimen_ids_dup(biosp())
     })
 
-    # Empty columns produce warnings -----------------------------------------------
+    # Empty columns produce warnings -------------------------------------------
     empty_cols_manifest <- reactive({
       check_cols_empty(
         manifest(),
