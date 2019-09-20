@@ -10,3 +10,5 @@
 ^renv\.lock$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.lintr$
+^linting_and_coverage.sh$
