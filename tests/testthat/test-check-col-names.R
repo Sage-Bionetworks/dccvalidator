@@ -153,7 +153,7 @@ test_that("check_cols_manifest works for manifest columns", {
   cols <- c("path", "parent", "name")
   dat <- data.frame(matrix(ncol = length(cols)))
   names(dat) <- cols
-  incomplete <- data.frame(path = "/home/file.txt")
+  incomplete <- data.frame(path = "/home/file.txt") # nolint
 
   expect_true(inherits(check_cols_manifest(dat), "check_pass"))
   expect_equal(check_cols_manifest(incomplete)$data, "parent")
