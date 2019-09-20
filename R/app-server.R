@@ -129,6 +129,8 @@ app_server <- function(input, output, session) {
     ##############################
 
     ## Perform checks
+
+    # Missing columns --------------------------------------------------------------
     missing_cols_indiv <- reactive({
       check_cols_individual(indiv(), species_name())
     })
@@ -141,6 +143,8 @@ app_server <- function(input, output, session) {
     missing_cols_manifest <- reactive({
       check_cols_manifest(manifest())
     })
+
+    # Individual and specimen IDs match --------------------------------------------
     individual_ids_indiv_biosp <- reactive({
       check_indiv_ids_match(indiv(), biosp(), "individual", "biospecimen")
     })
@@ -150,6 +154,8 @@ app_server <- function(input, output, session) {
     specimen_ids_biosp_manifest <- reactive({
       check_specimen_ids_match(biosp(), manifest(), "biospecimen", "manifest")
     })
+
+    # Annotation keys in manifest are valid ----------------------------------------
     annotation_keys_manifest <- reactive({
       check_annotation_keys(
         manifest(),
@@ -157,6 +163,8 @@ app_server <- function(input, output, session) {
         whitelist_keys = c("path", "parent")
       )
     })
+
+    # Annotation values in manifest and metadata are valid -------------------------
     annotation_values_manifest <- reactive({
       check_annotation_values(manifest(), annots)
     })
@@ -187,6 +195,8 @@ app_server <- function(input, output, session) {
         fail_msg = "Some values in the assay metadata are invalid"
       )
     })
+
+    # Individual and specimen IDs are not duplicated -------------------------------
     duplicate_indiv_ids <- reactive({
       check_indiv_ids_dup(indiv())
     })
