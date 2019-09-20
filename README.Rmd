@@ -34,6 +34,10 @@ You can check whether a Synapse file has valid annotation keys and values. You
 can also check file views and data frames to see if their columns correspond to
 valid annotations, and if the values in the columns are valid.
 
+```{r load, echo = FALSE}
+pkgload::load_all()
+```
+
 ```{r login, message = FALSE, results = "hide"}
 library("synapser")
 library("dccvalidator")
@@ -140,6 +144,24 @@ stand up a new version that is customized for a different community):
 
 Again, you may need to run `touch restart.txt` afterward to ensure the
 application is restarted.
+
+## Local development
+
+`dccvalidator` uses pre-commit hooks to check for common issues, such as code
+style (which should conform to [tidyverse style](https://style.tidyverse.org/)),
+code parsability, and up-to-date .Rd documentation. To use, you will need to
+install [pre-commit](https://pre-commit.com/#intro). If on a Mac, I recommend
+using [homebrew](https://brew.sh/):
+
+```
+brew install pre-commit
+```
+
+Then, within this git repo, run:
+
+```
+pre-commit install
+```
 
 ---
 
