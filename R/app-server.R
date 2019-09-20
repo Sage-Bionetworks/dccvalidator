@@ -342,7 +342,7 @@ app_server <- function(input, output, session) {
       ## error will flash briefly
       validate(
         need(
-          !is.null((vals()[[input$file_to_summarize]])),
+          !is.null(vals()[[input$file_to_summarize]]),
           message = FALSE
         )
       )
