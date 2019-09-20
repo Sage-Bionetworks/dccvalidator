@@ -204,6 +204,37 @@ app_server <- function(input, output, session) {
       check_specimen_ids_dup(biosp())
     })
 
+    # Empty columns produce warnings -----------------------------------------------
+    empty_cols_manifest <- reactive({
+      check_cols_empty(
+        manifest(),
+        success_msg = "No columns are empty in the manifest",
+        fail_msg = "Some columns are empty in the manifest"
+      )
+    })
+    empty_cols_indiv <- reactive({
+      check_cols_empty(
+        indiv(),
+        success_msg = "No columns are empty in the individual metadata",
+        fail_msg = "Some columns are empty in the individual metadata"
+      )
+    })
+    empty_cols_biosp <- reactive({
+      check_cols_empty(
+        biosp(),
+        success_msg = "No columns are empty in the biospecimen metadata",
+        fail_msg = "Some columns are empty in the biospecimen metadata"
+      )
+    })
+    empty_cols_assay <- reactive({
+      check_cols_empty(
+        assay(),
+        success_msg = "No columns are empty in the assay metadata",
+        fail_msg = "Some columns are empty in the assay metadata"
+      )
+    })
+
+
     ## List results
     res <- reactive({
       list(
@@ -220,7 +251,11 @@ app_server <- function(input, output, session) {
         annotation_values_biosp(),
         annotation_values_assay(),
         duplicate_indiv_ids(),
-        duplicate_specimen_ids()
+        duplicate_specimen_ids(),
+        empty_cols_manifest(),
+        empty_cols_indiv(),
+        empty_cols_biosp(),
+        empty_cols_assay()
       )
     })
 
