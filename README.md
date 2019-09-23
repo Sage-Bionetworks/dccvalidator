@@ -23,6 +23,9 @@ values. You can also check file views and data frames to see if their
 columns correspond to valid annotations, and if the values in the
 columns are valid.
 
+    #> Loading dccvalidator
+    #> Loading required package: shinyBS
+
 ``` r
 library("synapser")
 library("dccvalidator")
@@ -48,7 +51,7 @@ check_annotation_values(my_file, annots)
 fv <- synTableQuery("SELECT * FROM syn17038067")
 #> 
  [####################]100.00%   1/1   Done...    
-Downloading  [####################]100.00%   3.2kB/3.2kB (1.1MB/s) Job-96833558741870820474626635.csv Done...
+Downloading  [####################]100.00%   3.2kB/3.2kB (1.2MB/s) Job-97181474099481724820214930.csv Done...
 check_annotation_keys(fv, annots)
 #> <error>
 #> message: Some annotation keys are invalid
@@ -177,6 +180,21 @@ community):
 
 Again, you may need to run `touch restart.txt` afterward to ensure the
 application is restarted.
+
+## Local development
+
+`dccvalidator` uses pre-commit hooks to check for common issues, such as
+code style (which should conform to [tidyverse
+style](https://style.tidyverse.org/)), code parsability, and up-to-date
+.Rd documentation. To use, you will need to install
+[pre-commit](https://pre-commit.com/#intro). If on a Mac, I recommend
+using [homebrew](https://brew.sh/):
+
+    brew install pre-commit
+
+Then, within this git repo, run:
+
+    pre-commit install
 
 -----
 
