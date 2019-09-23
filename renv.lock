@@ -268,10 +268,10 @@
     },
     "digest": {
       "Package": "digest",
-      "Version": "0.6.20",
+      "Version": "0.6.21",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "e90f6670040b5aec92425051fc13ac1c"
+      "Hash": "5082df7219d58e35b4613c9c687216de"
     },
     "dockerfiler": {
       "Package": "dockerfiler",
