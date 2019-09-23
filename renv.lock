@@ -1,7 +1,4 @@
 {
-  "renv": {
-    "Version": "0.7.0-94"
-  },
   "R": {
     "Version": "3.6.0",
     "Repositories": [
@@ -243,6 +240,18 @@
       "Repository": "CRAN",
       "Hash": "f2f76b5c5394350c4d4ee77dab51d35c"
     },
+    "dccvalidator": {
+      "Package": "dccvalidator",
+      "Version": "0.0.0.9002",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "Sage-Bionetworks",
+      "RemoteRepo": "dccvalidator",
+      "RemoteRef": "master",
+      "RemoteSha": "4c0c5b3948df8fc3a3375c8cf98c4068f612c73a",
+      "Hash": "85bf0a309e2fface7b5564035cfebd45"
+    },
     "desc": {
       "Package": "desc",
       "Version": "1.2.0",
@@ -294,14 +303,13 @@
       "Package": "emo",
       "Version": "0.0.0.9000",
       "Source": "GitHub",
-      "Remotes": "tidyverse/glue",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteRepo": "emo",
       "RemoteUsername": "hadley",
+      "RemoteRepo": "emo",
       "RemoteRef": "master",
       "RemoteSha": "02a520689861c3354f7c6b575e309280b2a3a172",
-      "Hash": "5651e69c9f4e329e5df642ffa47a1176"
+      "Hash": "674c73406c5d875e8a841bb2f0a2c851"
     },
     "evaluate": {
       "Package": "evaluate",
@@ -373,8 +381,8 @@
       "RemoteRepo": "glue",
       "RemoteUsername": "tidyverse",
       "RemoteRef": "master",
-      "RemoteSha": "423b7e55cfd7494185088da0b4746a7c73fba290",
-      "Hash": "96877ebf71793786c194addcc839d2b1"
+      "RemoteSha": "71eeddfa43763880ccc6afd9021553fd728b1821",
+      "Hash": "6e2845c5f2b1399a0a080f6b2ce66ad9"
     },
     "golem": {
       "Package": "golem",
@@ -619,10 +627,15 @@
     },
     "plotly": {
       "Package": "plotly",
-      "Version": "4.9.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "d4f8ca9fa024657598c3698df2e12cfb"
+      "Version": "4.9.0.9000",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "ropensci",
+      "RemoteRepo": "plotly",
+      "RemoteRef": "master",
+      "RemoteSha": "972a4cb91fbf864bb5a8fc26eefc7114e375c3bc",
+      "Hash": "4bfdbe1c082f547cf54bffd777526d70"
     },
     "plyr": {
       "Package": "plyr",
@@ -722,15 +735,15 @@
     },
     "renv": {
       "Package": "renv",
-      "Version": "0.7.0-94",
+      "Version": "0.7.0-99",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "rstudio",
       "RemoteRepo": "renv",
       "RemoteRef": "master",
-      "RemoteSha": "dfde0ebb7688fe9da46d9e12f564383660eef891",
-      "Hash": "a04da2100843bfa9822bc28a877a45b4"
+      "RemoteSha": "052dfbda3d02f71fc73fa76057abcccf2c082525",
+      "Hash": "c771fa5f0d25c31baa3f21a846a96f17"
     },
     "reshape2": {
       "Package": "reshape2",
@@ -886,15 +899,14 @@
       "Package": "syndccutils",
       "Version": "0.0.0.9000",
       "Source": "GitHub",
-      "Remotes": "ropensci/plotly",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteRepo": "syndccutils",
       "RemoteUsername": "Sage-Bionetworks",
-      "RemoteRef": "master",
-      "RemoteSha": "8ebbb462d3bd502e00d83b5f274ace1f8c18c2d8",
+      "RemoteRepo": "syndccutils",
       "RemoteSubdir": "R",
-      "Hash": "491a9aced7edcf7d751b55110e764e05"
+      "RemoteRef": "master",
+      "RemoteSha": "0c536f6b6ead86f376c735e3dffeeda5ff6e932c",
+      "Hash": "7a87b3619651d97ecb6b6b8b98190420"
     },
     "sys": {
       "Package": "sys",
