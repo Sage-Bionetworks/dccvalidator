@@ -8,7 +8,7 @@ get_user_teams(user)
 }
 \arguments{
 \item{user}{Synapser user object (e.g. output from
-\link[synapser:synGetUserProfile]{synapser::synGetUserProfile})}
+\code{\link[synapser:synGetUserProfile]{synapser::synGetUserProfile()}})}
 }
 \value{
 Character vector of team IDs the user belongs to

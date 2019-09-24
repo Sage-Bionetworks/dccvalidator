@@ -5,7 +5,7 @@
 #' function.
 #'
 #' @param user Synapser user object (e.g. output from
-#'   [synapser::synGetUserProfile])
+#'   [synapser::synGetUserProfile()])
 #' @return Character vector of team IDs the user belongs to
 #' @examples
 #' \dontrun{
