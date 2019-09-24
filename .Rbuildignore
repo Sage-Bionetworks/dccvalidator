@@ -12,3 +12,4 @@
 ^\.Rproj\.user$
 ^\.lintr$
 ^\.pre-commit-config\.yaml$
+^\.Rprofile$
