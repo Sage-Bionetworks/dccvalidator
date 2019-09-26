@@ -5,8 +5,7 @@ if (on_travis()) syn_travis_login() else synLogin()
 
 test_that("check_team_membership() does nothing if user is in the team", {
   user <- synapser::synGetUserProfile("dcctravistest")
-  user_teams <- get_user_teams(user)
-  result <- check_team_membership(team = "3396691", user_teams = user_teams)
+  result <- check_team_membership(team = "3396691", user = user)
   expect_null(result)
 })
 
