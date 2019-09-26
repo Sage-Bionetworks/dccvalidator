@@ -292,7 +292,7 @@ check_values <- function(x, annotations, whitelist_keys = NULL,
   if (isTRUE(return_valid)) {
     return(values)
   }
-  behavior <- "All annotation keys should conform to the vocabulary. Refer to the annotation application for accepted keys." # nolint
+  behavior <- "All annotation values should conform to the vocabulary. Refer to the annotation application for accepted values." # nolint
   if (length(values) == 0) {
     check_pass(
       msg = success_msg,
