@@ -19,14 +19,7 @@ app_server <- function(input, output, session) {
     ## Check if user is in AMP-AD Consortium team (needed in order to create
     ## folder at the next step)
     user <- synapser::synGetUserProfile()
-    user_teams <- get_user_teams(user)
-
-    callModule(
-      check_team_membership,
-      "check_team_membership",
-      team = "3320424",
-      user_teams = user_teams
-    )
+    check_team_membership(team = "3320424", user = user)
 
     ## Create folder for upload
     created_folder <- create_folder(

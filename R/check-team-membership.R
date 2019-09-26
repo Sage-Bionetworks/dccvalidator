@@ -1,13 +1,11 @@
 #' Check team membership
 #'
-#' Shiny module to create a modal dialog.
+#' Show a modal dialog if a user isn't a member of a given team.
 #'
-#' @param input Shiny input
-#' @param output Shiny output
-#' @param session Shiny session
 #' @param team Team ID to check membership in
-#' @param user_teams Teams the user is a member of
-check_team_membership <- function(input, output, session, team, user_teams) {
+#' @inheritParams get_user_teams
+check_team_membership <- function(team, user) {
+  user_teams <- get_user_teams(user)
   team_name <- synapser::synGetTeam(team)$name
   if (!team %in% user_teams) {
     showModal(
