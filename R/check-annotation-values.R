@@ -292,7 +292,7 @@ check_values <- function(x, annotations, whitelist_keys = NULL,
   if (isTRUE(return_valid)) {
     return(values)
   }
-  behavior <- "All annotation values should conform to the vocabulary. Refer to the <a target=\"_blank\" href=\"https://shinypro.synapse.org/users/nsanati/annotationUI/\">annotation application</a> for accepted values." # nolint
+  behavior <- "All annotation values should conform to the vocabulary. Refer to the <a target=\"_blank\" href=\"https://shinypro.synapse.org/users/nsanati/annotationUI/\">annotation dictionary</a> for accepted values." # nolint
   if (length(values) == 0) {
     check_pass(
       msg = success_msg,
