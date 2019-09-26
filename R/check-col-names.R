@@ -40,7 +40,8 @@ check_cols_manifest <- function(data,
   if (is.null(data)) {
     return(NULL)
   }
-  required <- c("path", "parent")
+  id <- "syn20820080"
+  required <- get_template(id, ...)
   behavior <- paste0(
     "Manifest should contain columns: ",
     paste(required, collapse = ", ")
