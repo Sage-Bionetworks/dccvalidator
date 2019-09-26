@@ -119,7 +119,7 @@ app_server <- function(input, output, session) {
           ),
           p(
             "To explore accepted annotation keys and values, refer to the",
-            HTML("<a href=\"https://shinypro.synapse.org/users/nsanati/annotationUI/\">annoation application</a>.")
+            HTML("<a href=\"https://shinypro.synapse.org/users/nsanati/annotationUI/\">annotation application</a>.")
           ),
           p("Note you must be logged in to Synapse for this application to work."),
           # nolint end
