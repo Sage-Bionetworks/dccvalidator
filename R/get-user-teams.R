@@ -9,8 +9,8 @@
 #' @return Character vector of team IDs the user belongs to
 #' @examples
 #' \dontrun{
-#' get_user_teams()
-#' get_user_teams("karawoo")
+#' user <- synapser::synGetUserProfile()
+#' get_user_teams(user)
 #' }
 get_user_teams <- function(user) {
   user_teams <- synapser::synRestGET(
