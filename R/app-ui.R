@@ -131,7 +131,7 @@ app_ui <- function(request) {
 }
 
 #' @import shiny
-golem_add_external_resources <- function(){
+golem_add_external_resources <- function() {
   tags$head(
     golem::activate_js(),
     golem::favicon(),
