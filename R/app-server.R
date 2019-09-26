@@ -117,6 +117,10 @@ app_server <- function(input, output, session) {
             "To read more about the correct format of a manifest, see this",
             HTML("<a href=\"https://docs.synapse.org/articles/uploading_in_bulk.html\">documentation</a>.")
           ),
+          p(
+            "To explore accepted annotation keys and values, refer to the",
+            HTML("<a href=\"https://shinypro.synapse.org/users/nsanati/annotationUI/\">annoation application</a>.")
+          ),
           p("Note you must be logged in to Synapse for this application to work."),
           # nolint end
           easyClose = TRUE
