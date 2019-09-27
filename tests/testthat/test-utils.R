@@ -7,17 +7,25 @@ test_that("on_travis() returns TRUE on Travis", {
   expect_equal(on_travis(), isTRUE(as.logical(Sys.getenv("TRAVIS"))))
 })
 
-test_that("on_fork() returns TRUE on fork, FALSE otherwise", {
+test_that("on_fork_pr() returns TRUE on fork PRs, FALSE on local PRs", {
   res1 <- withr::with_envvar(
-    c("TRAVIS_REPO_SLUG" = "Not-Sage/dccvalidator"),
-    on_fork()
+    c("TRAVIS_PULL_REQUEST_SLUG" = "Not-Sage/dccvalidator"),
+    on_fork_pr()
   )
   res2 <- withr::with_envvar(
-    c("TRAVIS_REPO_SLUG" = "Sage-Bionetworks/dccvalidator"),
-    on_fork()
+    c("TRAVIS_PULL_REQUEST_SLUG" = "Sage-Bionetworks/dccvalidator"),
+    on_fork_pr()
   )
   expect_true(res1)
   expect_false(res2)
+})
+
+test_that("on_fork_pr() returns FALSE on push builds", {
+  res <- withr::with_envvar(
+    c("TRAVIS_PULL_REQUEST_SLUG" = ""),
+    on_fork_pr()
+  )
+  expect_false(res)
 })
 
 test_that("login works on travis", {
@@ -82,7 +90,10 @@ was_skipped_with_env <- function(var, skip_fun) {
 test_that("skip_on_fork skips when owner isn't Sage-Bionetworks", {
   expect_true(
     was_skipped_with_env(
-      c("TRAVIS" = "true", "TRAVIS_REPO_SLUG" = "Not-Sage/dccvalidator"),
+      c(
+        "TRAVIS" = "true",
+        "TRAVIS_PULL_REQUEST_SLUG" = "Not-Sage/dccvalidator"
+      ),
       skip_on_fork
     )
   )
@@ -93,7 +104,19 @@ test_that("skip_on_fork doesn't skip when owner is Sage-Bionetworks", {
     was_skipped_with_env(
       c(
         "TRAVIS" = "true",
-        "TRAVIS_REPO_SLUG" = "Sage-Bionetworks/dccvalidator"
+        "TRAVIS_PULL_REQUEST_SLUG" = "Sage-Bionetworks/dccvalidator"
+      ),
+      skip_on_fork
+    )
+  )
+})
+
+test_that("skip_on_fork doesn't skip on non-PR builds", {
+  expect_false(
+    was_skipped_with_env(
+      c(
+        "TRAVIS" = "true",
+        "TRAVIS_PULL_REQUEST_SLUG" = ""
       ),
       skip_on_fork
     )

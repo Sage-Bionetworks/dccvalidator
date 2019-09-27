@@ -31,8 +31,11 @@ on_travis <- function() {
 }
 
 ## Check if we're on a fork
-on_fork <- function() {
-  slug <- Sys.getenv("TRAVIS_REPO_SLUG")
+on_fork_pr <- function() {
+  slug <- Sys.getenv("TRAVIS_PULL_REQUEST_SLUG")
+  if (slug == "") {
+    return(FALSE)
+  }
   owner <- gsub("(^[^/]+)(.+)", "\\1", slug)
   if (owner != "Sage-Bionetworks") {
     return(TRUE)
@@ -74,7 +77,7 @@ skip_on_fork <- function() {
   if (!on_travis()) {
     return(invisible(TRUE))
   }
-  if (!on_fork()) {
+  if (!on_fork_pr()) {
     return(invisible(TRUE))
   }
   testthat::skip("On a fork without access to encryped travis variables")
