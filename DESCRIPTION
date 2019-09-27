@@ -18,6 +18,7 @@ Imports:
     DT,
     emo,
     ggplot2,
+    glue,
     golem,
     pkgload,
     purrr,

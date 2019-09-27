@@ -19,27 +19,13 @@ app_server <- function(input, output, session) {
     ## Check if user is in AMP-AD Consortium team (needed in order to create
     ## folder at the next step)
     user <- synapser::synGetUserProfile()
-    user_teams <- synapser::synRestGET(paste0(
-      "/user/",
-      user$ownerId,
-      "/team?limit=10000"
-    ))$results
-    user_teams_ids <- purrr::map_chr(user_teams, function(x) x$id)
-
-    if (!"3320424" %in% user_teams_ids) {
-      showModal(
-        modalDialog(
-          title = "Not in AMP-AD Consortium team",
-          # nolint start
-          HTML("You must be a member of the AMP-AD Consortium team on Synapse to use this tool. If you are not a member of the AMP-AD Consortium team, you can request to be added at <a href=\"https://www.synapse.org/#!Team:3320424\">https://www.synapse.org/#!Team:3320424</a>.")
-          # nolint end
-        )
-      )
-    }
+    check_team_membership(team = "3320424", user = user)
 
     ## Create folder for upload
-    new_folder <- synapser::Folder(name = user$userName, parent = "syn20506363")
-    created_folder <- synapser::synStore(new_folder)
+    created_folder <- create_folder(
+      parent = "syn20506363",
+      name = user$userName
+    )
 
     ## Download annotation definitions
     annots <- get_synapse_annotations()
