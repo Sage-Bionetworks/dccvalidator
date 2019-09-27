@@ -409,5 +409,68 @@ app_server <- function(input, output, session) {
       visdat::vis_dat(vals()[[input$file_to_summarize]]) +
         ggplot2::theme(text = ggplot2::element_text(size = 16))
     })
+    
+    #########################
+    ####  Documentation  ####
+    #########################
+    
+    ## Create folder for upload
+    docs_folder <- synapser::Folder(name = "Documentation", parent = created_folder)
+    created_docs_folder <- synapser::synStore(docs_folder)
+
+    # Get study name based on either:
+    # - existing study selection box
+    # - new name for currently non-existing study
+    study_name <- reactive({
+      input$study_name
+    })
+    study_name <- reactive({
+      input$study_choice
+    })
+
+    ## Annotation for documentation
+    doc_annots <- list(study = study_name())
+
+    ## Upload files to Synapse (after renaming them so they keep their original
+    ## names)
+    observeEvent(input$submit_docs, {
+
+      # There may be no study documentation
+      if (!is.null(input$study_doc)) {
+        save_to_synapse(
+          input$study_doc,
+          parent = created_docs_folder,
+          name = input$study_doc$name,
+          annotations = doc_annots
+        )
+      }
+
+      # There may be 0 or 1+ assay documents
+      if (!is.null(input$assay_doc)) {
+        print(typeof(input$assay_doc))
+        if (dim(input$assay_doc)[1] == 1) {
+          save_to_synapse(
+            input$assay_doc,
+            parent = created_docs_folder,
+            name = input$assay_doc$name,
+            annotations = doc_annots
+          )
+        } else {
+          for (doc in 1:dim(input$assay_doc)[1]) {
+            temp_doc <- list(datapath = input$assay_doc$datapath[doc],
+                             name = input$assay_doc$name[doc])
+            save_to_synapse(
+              temp_doc,
+              parent = created_docs_folder,
+              name = temp_doc$name,
+              annotations = doc_annots
+            )
+          }
+        }
+      }
+
+    })
+    
+    
   })
 }
