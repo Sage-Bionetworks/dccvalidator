@@ -49,12 +49,15 @@ present (\code{"check_pass"}) or absent (\code{"check_fail"}).
 Check column names against their corresponding template
 }
 \examples{
-
+\dontrun{
+library("synapser")
+synLogin()
 a <- data.frame(path = "/path/file.txt", parent = "syn123", assay = "rnaSeq")
 check_cols_manifest(a)
 
 b <- data.frame(assay = "rnaSeq")
 check_cols_manifest(b)
+}
 }
 \seealso{
 \code{\link[dccvalidator:get_template]{dccvalidator::get_template()}}
