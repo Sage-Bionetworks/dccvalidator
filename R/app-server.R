@@ -26,7 +26,7 @@ app_server <- function(input, output, session) {
     ))$results
     user_teams_ids <- purrr::map_chr(user_teams, function(x) x$id)
 
-    if (!"3320424" %in% user_teams_ids) {
+    if (!"3397129" %in% user_teams_ids) {
       showModal(
         modalDialog(
           title = "Not in AMP-AD Consortium team",
@@ -38,7 +38,7 @@ app_server <- function(input, output, session) {
     }
 
     ## Create folder for upload
-    new_folder <- synapser::Folder(name = user$userName, parent = "syn20506363")
+    new_folder <- synapser::Folder(name = user$userName, parent = "syn20818950")
     created_folder <- synapser::synStore(new_folder)
 
     ## Download annotation definitions
