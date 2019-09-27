@@ -2,8 +2,16 @@ context("test-check-annotation-keys.R")
 
 library("synapser")
 library("tibble")
-if (on_travis()) syn_travis_login() else synLogin()
-annots <- syndccutils::get_synapse_annotations()
+attempt_login()
+
+annots <- tribble(
+  ~key, ~value, ~columnType,
+  "assay", "rnaSeq", "STRING",
+  "fileFormat", "fastq", "STRING",
+  "fileFormat", "txt", "STRING",
+  "fileFormat", "csv", "STRING",
+  "species", "Human", "STRING"
+)
 
 test_that("check_annotation_keys returns check_pass when all are valid", {
   dat <- tibble(assay = "rnaSeq")
@@ -24,7 +32,7 @@ test_that("check_annotation_keys returns invalid annotation values", {
 })
 
 test_that("check_annotation_keys works for File objects", {
-  skip_on_cran()
+  skip_on_fork()
 
   a <- synGet("syn17038064", downloadFile = FALSE)
   b <- synGet("syn17038065", downloadFile = FALSE)
@@ -38,7 +46,7 @@ test_that("check_annotation_keys works for File objects", {
 })
 
 test_that("check_annotation_keys works for file views", {
-  skip_on_cran()
+  skip_on_fork()
 
   fv <- synTableQuery("SELECT * FROM syn17038067")
   res <- check_annotation_keys(fv, annots)
@@ -60,7 +68,7 @@ test_that("valid_annotation_keys returns valid annotation keys", {
 })
 
 test_that("valid_annotation_keys works for File objects", {
-  skip_on_cran()
+  skip_on_fork()
 
   a <- synGet("syn17038064", downloadFile = FALSE)
   b <- synGet("syn17038065", downloadFile = FALSE)
@@ -72,7 +80,8 @@ test_that("valid_annotation_keys works for File objects", {
 })
 
 test_that("valid_annotation_keys works for file views", {
-  skip_on_cran()
+  skip_on_fork()
+
   fv <- synTableQuery("SELECT * FROM syn17038067")
   res <- valid_annotation_keys(fv, annots)
   ## Sort because I think Synapse doesn't always return the same order
@@ -101,6 +110,8 @@ test_that("check_keys", {
 })
 
 test_that("check_keys falls back to get_synapse_annotations", {
+  skip_on_fork()
+
   res <- check_keys("not a key", return_valid = FALSE)
   expect_equal(res$data, "not a key")
 })
@@ -112,21 +123,36 @@ test_that("check_keys checks necessary annotation columns are present", {
 })
 
 test_that("check_keys allows whitelisting keys", {
-  resa <- check_keys(c("assay", "foo"), whitelist_keys = "foo")
-  resb <- check_keys(c("assay", "foo", "bar"), whitelist_keys = "foo")
-  resc <- check_keys(c("assay", "foo"), whitelist_keys = c("foo", "bar"))
+  resa <- check_keys(
+    c("assay", "foo"),
+    annotations = annots,
+    whitelist_keys = "foo"
+  )
+  resb <- check_keys(
+    c("assay", "foo", "bar"),
+    annotations = annots,
+    whitelist_keys = "foo"
+  )
+  resc <- check_keys(
+    c("assay", "foo"),
+    annotations = annots,
+    whitelist_keys = c("foo", "bar")
+  )
   resd <- check_keys(
     c("assay", "foo"),
+    annotations = annots,
     whitelist_keys = "foo",
     return_valid = TRUE
   )
   rese <- check_keys(
     c("assay", "foo", "bar"),
+    annotations = annots,
     whitelist_keys = "foo",
     return_valid = TRUE
   )
   resf <- check_keys(
     c("assay", "foo"),
+    annotations = annots,
     whitelist_keys = c("foo", "bar"),
     return_valid = TRUE
   )

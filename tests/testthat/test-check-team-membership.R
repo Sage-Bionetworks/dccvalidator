@@ -1,9 +1,11 @@
 context("test-check-team-membership.R")
 
 library("synapser")
-if (on_travis()) syn_travis_login() else synLogin()
+attempt_login()
 
 test_that("check_team_membership() returns check_pass if user is in the team", {
+  skip_on_fork()
+
   user <- synapser::synGetUserProfile("dcctravistest")
   result <- check_team_membership(teams = "3396691", user = user)
   expect_true(inherits(result, "check_pass"))

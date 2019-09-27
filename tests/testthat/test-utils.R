@@ -1,13 +1,15 @@
 context("utils.R")
 
 library("synapser")
-if (on_travis()) syn_travis_login() else synLogin()
+attempt_login()
 
 test_that("on_travis() returns TRUE on Travis", {
   expect_equal(on_travis(), isTRUE(as.logical(Sys.getenv("TRAVIS"))))
 })
 
 test_that("login works on travis", {
+  skip_on_fork()
+
   ## Lots of other things will fail too if it doesn't, but doesn't hurt to have
   ## a dedicated test
   if (!on_travis()) {
@@ -22,6 +24,8 @@ test_that("get_annotation fails if no key provided", {
 })
 
 test_that("get_annotation gets value of an annotation on a Synapse entity", {
+  skip_on_fork()
+
   annot <- get_annotation("syn17038064", "fileFormat")
   expect_equal(annot, c(syn17038064 = "txt"))
 })
