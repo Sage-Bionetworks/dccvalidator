@@ -27,12 +27,15 @@ check_col_names <- function(data, template, success_msg = NULL, fail_msg = NULL,
 #' @export
 #' @rdname check_col_names
 #' @examples
-#'
+#' \dontrun{
+#' library("synapser")
+#' synLogin()
 #' a <- data.frame(path = "/path/file.txt", parent = "syn123", assay = "rnaSeq")
 #' check_cols_manifest(a)
 #'
 #' b <- data.frame(assay = "rnaSeq")
 #' check_cols_manifest(b)
+#' }
 check_cols_manifest <- function(data,
                                 success_msg = "All manifest columns present",
                                 fail_msg = "Missing columns in the manifest",
@@ -40,7 +43,8 @@ check_cols_manifest <- function(data,
   if (is.null(data)) {
     return(NULL)
   }
-  required <- c("path", "parent")
+  id <- "syn20820080"
+  required <- get_template(id, ...)
   behavior <- paste0(
     "Manifest should contain columns: ",
     paste(required, collapse = ", ")

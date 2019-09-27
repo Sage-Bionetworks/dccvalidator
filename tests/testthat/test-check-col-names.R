@@ -150,12 +150,12 @@ test_that("check_cols_assay returns invalid columns within condition object", {
 })
 
 test_that("check_cols_manifest works for manifest columns", {
-  cols <- c("path", "parent", "name")
+  cols <- get_template("syn20820080", version = 3)
   dat <- data.frame(matrix(ncol = length(cols)))
   names(dat) <- cols
-  incomplete <- data.frame(path = "/home/file.txt") # nolint
+  incomplete <- dat[, !names(dat) %in% "parent"]
 
-  expect_true(inherits(check_cols_manifest(dat), "check_pass"))
+  expect_true(inherits(check_cols_manifest(dat, version = 3), "check_pass"))
   expect_equal(check_cols_manifest(incomplete)$data, "parent")
 })
 
