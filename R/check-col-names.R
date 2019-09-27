@@ -28,6 +28,8 @@ check_col_names <- function(data, template, success_msg = NULL, fail_msg = NULL,
 #' @rdname check_col_names
 #' @examples
 #' \dontrun{
+#' library("synapser")
+#' synLogin()
 #' a <- data.frame(path = "/path/file.txt", parent = "syn123", assay = "rnaSeq")
 #' check_cols_manifest(a)
 #'
