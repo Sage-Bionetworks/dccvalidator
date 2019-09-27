@@ -43,3 +43,48 @@ test_that("%||% gives b if a is NULL", {
   b <- NULL
   expect_null(a %||% b)
 })
+
+## Check if skip occurred with given environment variables
+was_skipped_with_env <- function(var, skip_fun) {
+  was_skipped <- function(code) {
+    tryCatch(
+      # nolint start
+      {
+        skipped <- TRUE
+        code
+        skipped <- FALSE
+      },
+      # nolint end
+      skip = function(e) NULL
+    )
+    return(skipped)
+  }
+  withr::with_envvar(var, was_skipped(skip_fun()))
+}
+
+test_that("skip_on_fork skips when owner isn't Sage-Bionetworks", {
+  expect_true(
+    was_skipped_with_env(
+      c("TRAVIS" = "true", "TRAVIS_REPO_SLUG" = "Not-Sage/dccvalidator"),
+      skip_on_fork
+    )
+  )
+})
+
+test_that("skip_on_fork doesn't skip when owner is Sage-Bionetworks", {
+  expect_false(
+    was_skipped_with_env(
+      c(
+        "TRAVIS" = "true",
+        "TRAVIS_REPO_SLUG" = "Sage-Bionetworks/dccvalidator"
+      ),
+      skip_on_fork
+    )
+  )
+})
+
+test_that("skip_on_fork doesn't skip when not on Travis", {
+  expect_false(
+    was_skipped_with_env(c("TRAVIS" = NULL), skip_on_fork)
+  )
+})

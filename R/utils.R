@@ -6,6 +6,19 @@ syn_travis_login <- function() {
   synapser::synLogin(email = user, password = pass)
 }
 
+## Attempt to log in using encrypted travis variables if on travis within Sage
+## org, or with regular synLogin() if not on travis. If on travis but not within
+## Sage, do nothing.
+attempt_login <- function(...) {
+  if (on_travis()) {
+    if (!on_fork()) {
+      syn_travis_login()
+    }
+  } else {
+    synapser::synLogin(...)
+  }
+}
+
 ## Check if we are running on travis
 on_travis <- function() {
   if (identical(Sys.getenv("TRAVIS"), "true")) {
@@ -15,6 +28,17 @@ on_travis <- function() {
     return(FALSE)
   }
   # nocov end
+}
+
+## Check if we're on a fork
+on_fork <- function() {
+  slug <- Sys.getenv("TRAVIS_REPO_SLUG")
+  owner <- gsub("(^[^/]+)(.+)", "\\1", slug)
+  if (owner != "Sage-Bionetworks") {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
 }
 
 ## Get the value of an annotation on object(s) x
@@ -39,4 +63,19 @@ save_to_synapse <- function(input_file, parent, name = NULL) {
 
 "%||%" <- function(a, b) {
   if (!is.null(a)) a else b
+}
+
+#' Skip running a test on Travis from a forked repo
+#'
+#' Forked repos don't have access to the encrypted environment variables Travis
+#' uses to run some tests. This function can be used to skip tests on builds
+#' from forks.
+skip_on_fork <- function() {
+  if (!on_travis()) {
+    return(invisible(TRUE))
+  }
+  if (!on_fork()) {
+    return(invisible(TRUE))
+  }
+  testthat::skip("On a fork without access to encryped travis variables")
 }

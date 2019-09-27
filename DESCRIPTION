@@ -37,7 +37,8 @@ Imports:
     visdat
 Suggests:
     covr,
-    testthat
+    testthat,
+    withr
 Remotes:
     hadley/emo,
     Sage-Bionetworks/syndccutils/R
