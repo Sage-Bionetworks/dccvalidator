@@ -7,6 +7,19 @@ test_that("on_travis() returns TRUE on Travis", {
   expect_equal(on_travis(), isTRUE(as.logical(Sys.getenv("TRAVIS"))))
 })
 
+test_that("on_fork() returns TRUE on fork, FALSE otherwise", {
+  res1 <- withr::with_envvar(
+    c("TRAVIS_REPO_SLUG" = "Not-Sage/dccvalidator"),
+    on_fork()
+  )
+  res2 <- withr::with_envvar(
+    c("TRAVIS_REPO_SLUG" = "Sage-Bionetworks/dccvalidator"),
+    on_fork()
+  )
+  expect_true(res1)
+  expect_false(res2)
+})
+
 test_that("login works on travis", {
   skip_on_fork()
 
