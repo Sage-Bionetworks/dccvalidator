@@ -718,8 +718,8 @@
       "RemoteRepo": "remotes",
       "RemoteUsername": "r-lib",
       "RemoteRef": "master",
-      "RemoteSha": "3e042a2ca90336739a5426eb7bbcecdc0187ae3c",
-      "Hash": "1f1b7b4cf02606b509afefef6ca6f491"
+      "RemoteSha": "2f1a0401c31e0a0576ae9e54c38aa11e023ce169",
+      "Hash": "78d6592ef867b8f700ce9dd0f7a719c7"
     },
     "renv": {
       "Package": "renv",
