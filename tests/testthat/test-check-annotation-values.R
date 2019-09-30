@@ -115,7 +115,7 @@ test_that("valid_annotation_values handles NULL input", {
 ## check_value() ---------------------------------------------------------------
 
 test_that("check_value returns NULL if key is not present", {
-  expect_null(check_value("notavalue", "notakey"))
+  expect_null(check_value("notavalue", "notakey", annots))
 })
 
 test_that("check_value returns valid or invalid valies", {
