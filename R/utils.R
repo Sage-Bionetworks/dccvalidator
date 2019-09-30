@@ -11,7 +11,7 @@ syn_travis_login <- function() {
 ## Sage, do nothing.
 attempt_login <- function(...) {
   if (on_travis()) {
-    if (!on_fork()) {
+    if (!on_fork_pr()) {
       syn_travis_login()
     }
   } else {
