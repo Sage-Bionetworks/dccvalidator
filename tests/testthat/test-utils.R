@@ -125,6 +125,6 @@ test_that("skip_on_fork doesn't skip on non-PR builds", {
 
 test_that("skip_on_fork doesn't skip when not on Travis", {
   expect_false(
-    was_skipped_with_env(c("TRAVIS" = NULL), skip_on_fork)
+    was_skipped_with_env(c("TRAVIS" = ""), skip_on_fork)
   )
 })
