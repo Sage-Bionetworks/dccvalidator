@@ -1,22 +1,29 @@
 #' Check team membership
 #'
-#' Show a modal dialog if a user isn't a member of a given team.
+#' Check if a user is a member of any of the given teams.
 #'
-#' @param team Team ID to check membership in
+#' @param teams Team IDs to check membership in
+#' @param user User to check (e.g. output from [synapser::synGetUserProfile()])
 #' @inheritParams get_user_teams
-check_team_membership <- function(team, user) {
+check_team_membership <- function(teams, user) {
   user_teams <- get_user_teams(user)
-  team_name <- synapser::synGetTeam(team)$name
-  if (!team %in% user_teams) {
-    showModal(
-      modalDialog(
-        title = glue::glue("Not in {team_name} team"),
-        # nolint start
-        HTML(
-          glue::glue("You must be a member of the {team_name} team on Synapse to use this tool. If you are not a member of the {team_name} team, you can request to be added at <a href=\"https://www.synapse.org/#!Team:{team}\">https://www.synapse.org/#!Team:{team}</a>.")
-        )
-        # nolint end
-      )
+  team_names <- glue::glue_collapse(
+    purrr::map_chr(teams, function(x) synapser::synGetTeam(x)$name),
+    sep = ", "
+  )
+  behavior <- glue::glue(
+    "You must be a member of one the following Synapse team(s) to use this application: {team_names}." # nolint
+  )
+  if (!any(teams %in% user_teams)) {
+    check_fail(
+      msg = "Not a team member",
+      behavior = behavior,
+      data = setdiff(teams, user_teams)
+    )
+  } else {
+    check_pass(
+      msg = "Team membership requirements satisfied",
+      behavior = behavior
     )
   }
 }
