@@ -66,7 +66,9 @@ app_server <- function(input, output, session) {
 
     ## Load metadata files into session
     manifest <- reactive({
-      if (is.null(input$manifest)) return(NULL)
+      if (is.null(input$manifest)) {
+        return(NULL)
+      }
       utils::read.table(
         input$manifest$datapath,
         sep = "\t",
@@ -75,15 +77,21 @@ app_server <- function(input, output, session) {
       )
     })
     indiv <- reactive({
-      if (is.null(input$indiv_meta)) return(NULL)
+      if (is.null(input$indiv_meta)) {
+        return(NULL)
+      }
       utils::read.csv(input$indiv_meta$datapath, na.strings = "")
     })
     biosp <- reactive({
-      if (is.null(input$biosp_meta)) return(NULL)
+      if (is.null(input$biosp_meta)) {
+        return(NULL)
+      }
       utils::read.csv(input$biosp_meta$datapath, na.strings = "")
     })
     assay <- reactive({
-      if (is.null(input$assay_meta)) return(NULL)
+      if (is.null(input$assay_meta)) {
+        return(NULL)
+      }
       utils::read.csv(input$assay_meta$datapath, na.strings = "")
     })
     species_name <- reactive({
