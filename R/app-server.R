@@ -1,5 +1,6 @@
 #' @import shiny
 #' @import shinydashboard
+
 app_server <- function(input, output, session) {
   session$sendCustomMessage(type = "readCookie", message = list())
 
@@ -409,68 +410,93 @@ app_server <- function(input, output, session) {
       visdat::vis_dat(vals()[[input$file_to_summarize]]) +
         ggplot2::theme(text = ggplot2::element_text(size = 16))
     })
-    
+
     #########################
     ####  Documentation  ####
     #########################
-    
+
     ## Create folder for upload
-    docs_folder <- synapser::Folder(name = "Documentation", parent = created_folder)
+    docs_folder <- synapser::Folder(name = "Documentation",
+                                    parent = created_folder)
     created_docs_folder <- synapser::synStore(docs_folder)
 
-    # Get study name based on either:
-    # - existing study selection box
-    # - new name for currently non-existing study
+    ## Get study name based on either:
+    ## - existing study selection box
+    ## - new name for currently non-existing study
     study_name <- reactive({
-      input$study_name
-    })
-    study_name <- reactive({
-      input$study_choice
+      if (input$study_exists == "Yes") {
+        input$study_choice
+      } else {
+        input$study_text
+      }
     })
 
-    ## Annotation for documentation
-    doc_annots <- list(study = study_name())
+    doc_annots <- reactive({
+      list(Study = study_name())
+      })
 
     ## Upload files to Synapse (after renaming them so they keep their original
     ## names)
     observeEvent(input$submit_docs, {
+      tryCatch({
+        ## Vector to hold returned synapse files
+        uploaded_docs <- vector()
+        ## Count the number of docs that should have been uploaded
+        total_docs <- 0
 
-      # There may be no study documentation
-      if (!is.null(input$study_doc)) {
-        save_to_synapse(
-          input$study_doc,
-          parent = created_docs_folder,
-          name = input$study_doc$name,
-          annotations = doc_annots
-        )
-      }
-
-      # There may be 0 or 1+ assay documents
-      if (!is.null(input$assay_doc)) {
-        print(typeof(input$assay_doc))
-        if (dim(input$assay_doc)[1] == 1) {
-          save_to_synapse(
-            input$assay_doc,
+        ## There may be no study documentation
+        if (!is.null(input$study_doc)) {
+          doc <- save_to_synapse(
+            input$study_doc,
             parent = created_docs_folder,
-            name = input$assay_doc$name,
-            annotations = doc_annots
+            name = input$study_doc$name,
+            annotations = doc_annots()
           )
-        } else {
-          for (doc in 1:dim(input$assay_doc)[1]) {
-            temp_doc <- list(datapath = input$assay_doc$datapath[doc],
-                             name = input$assay_doc$name[doc])
-            save_to_synapse(
-              temp_doc,
+          uploaded_docs <- c(uploaded_docs, doc)
+          total_docs <- total_docs + 1
+        }
+
+        ## There may be 0, 1, or 2+ assay documents
+        if (!is.null(input$assay_doc)) {
+          if (dim(input$assay_doc)[1] == 1) {
+            doc <- save_to_synapse(
+              input$assay_doc,
               parent = created_docs_folder,
-              name = temp_doc$name,
-              annotations = doc_annots
+              name = input$assay_doc$name,
+              annotations = doc_annots()
             )
+            uploaded_docs <- c(uploaded_docs, doc)
+            total_docs <- total_docs + 1
+          } else {
+            assay_docs <- reactive({
+              input$assay_doc
+              })
+            assay_datapaths <- assay_docs()$datapath
+            assay_names <- assay_docs()$name
+            docs <- purrr::map2(assay_datapaths, assay_names, function(x, y) {
+              save_to_synapse(
+                list(datapath = x, name = y),
+                parent = created_docs_folder,
+                name = y,
+                annotations = doc_annots()
+              )
+            })
+            uploaded_docs <- c(uploaded_docs, docs)
+            total_docs <- total_docs + dim(input$assay_doc)[1]
           }
         }
-      }
 
+        if (length(uploaded_docs) == total_docs) {
+          showNotification(paste("Files were uploaded"),
+                           duration = NULL,
+                           type = "message")
+        } # else an error should have been thrown and caught
+      },
+      error = function(e) {
+        output$doc_error <- renderText({
+          "There was a problem uploading the documents. Please try again."
+        })
+      })
     })
-    
-    
   })
 }

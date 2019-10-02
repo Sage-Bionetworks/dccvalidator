@@ -1,6 +1,14 @@
 #' @import shiny
 #' @import shinydashboard
 
+# Gather studies within consortium
+# @return list of studies
+get_studies <- function() {
+  study_table_id <- "syn11363298"
+  study_table <- syndccutils::get_table_df(study_table_id)
+  return(study_table$StudyName)
+}
+
 ui_validator <- tabItem(tabName = "validator",
                         # Sidebar
                         sidebarLayout(
@@ -8,7 +16,7 @@ ui_validator <- tabItem(tabName = "validator",
                             actionButton("instructions", "Show instructions"),
                             br(),
                             br(),
-                            
+
                             # Files to be validated
                             fileInput(
                               "indiv_meta",
@@ -20,7 +28,7 @@ ui_validator <- tabItem(tabName = "validator",
                                 ".csv"
                               )
                             ),
-                            
+
                             fileInput(
                               "biosp_meta",
                               "Biospecimen metadata file (.csv)",
@@ -31,7 +39,7 @@ ui_validator <- tabItem(tabName = "validator",
                                 ".csv"
                               )
                             ),
-                            
+
                             fileInput(
                               "assay_meta",
                               "Assay metadata file (.csv)",
@@ -42,11 +50,11 @@ ui_validator <- tabItem(tabName = "validator",
                                 ".csv"
                               )
                             ),
-                            
+
                             radioButtons("species", "Species", c("animal", "human")),
-                            
+
                             selectInput("assay_name", "Assay type", c("rnaSeq", "proteomics")),
-                            
+
                             fileInput(
                               "manifest",
                               "Upload Manifest File (.tsv or .txt)",
@@ -58,7 +66,7 @@ ui_validator <- tabItem(tabName = "validator",
                               )
                             )
                           ),
-                          
+
                           # Main panel
                           mainPanel(
                             tabsetPanel(
@@ -122,51 +130,50 @@ ui_validator <- tabItem(tabName = "validator",
 )
 
 ui_documentation <- tabItem(tabName = "documentation",
-                           
+
                            # Ability to choose to add to existing study
-                           # Start radio buttons with nothing selected
                            radioButtons("study_exists",
                                         "Does the study currently exist?",
                                         choices = c("Yes", "No"),
                                         selected = "Yes"),
                            conditionalPanel(
                              condition = "input.study_exists == 'Yes'",
-                             selectInput("study_choice", "Choose the study", c("This_one", "That_one"))
+                             selectInput("study_choice", "Choose the study", get_studies())
                            ),
                            conditionalPanel(
                              condition = "input.study_exists == 'No'",
-                             textInput("study_name", "Enter the study name")
+                             textInput("study_text", "Enter the study name")
                            ),
-                           
+
                            # File import
-                           fileInput("study_doc", 
+                           fileInput("study_doc",
                                      "Upload the study documentation file"),
                            fileInput("assay_doc",
                                      "Upload the assay documentation files",
                                      multiple = TRUE),
-                           
+
                            actionButton("submit_docs", "Submit")
 )
 
 app_ui <- function(request) {
   dashboardPage(
     dashboardHeader(title = "Metadata Validation"),
-    
+
     dashboardSidebar(
       sidebarMenu(
         menuItem("Validator", tabName = "validator"),
         menuItem("Documentation", tabName = "documentation")
       )
     ),
-    
+
     dashboardBody(
 
       # Add resources in www
       golem_add_external_resources(),
-      
+
       tabItems(
         ui_validator,
-        ui_documentation 
+        ui_documentation
       )
     )
   )
