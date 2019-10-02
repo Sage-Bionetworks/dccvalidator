@@ -92,35 +92,27 @@ show_details.list <- function(x) {
 #'
 #' @param result Output from [check_team_membership()]
 report_missing_membership <- function(result) {
-  UseMethod("report_missing_membership", result)
-}
-
-#' @rdname report_missing_membership
-report_missing_membership.default <- function(result) {
-  return(NULL)
-}
-
-#' @rdname report_missing_membership
-report_missing_membership.check_fail <- function(result) {
-  team_links <- glue::glue_collapse(
-    purrr::map_chr(
-      result$data,
-      function(x) {
-        glue::glue("<a href=\"https://www.synapse.org/#!Team:{x}\">https://www.synapse.org/#!Team:{x}</a>") # nolint
-      }
-    ),
-    sep = "<br>"
-  )
-  missing_teams <- glue::glue_collapse(
-    purrr::map_chr(result$data, function(x) synapser::synGetTeam(x)$name),
-    sep = ", "
-  )
-  showModal(
-    modalDialog(
-      title = result$message,
-      p(result$behavior),
-      p("You can request to be added at:"),
-      HTML(team_links)
+  if (inherits(result, "check_fail")) {
+    team_links <- glue::glue_collapse(
+      purrr::map_chr(
+        result$data,
+        function(x) {
+          glue::glue("<a href=\"https://www.synapse.org/#!Team:{x}\">https://www.synapse.org/#!Team:{x}</a>") # nolint
+        }
+      ),
+      sep = "<br>"
     )
-  )
+    missing_teams <- glue::glue_collapse(
+      purrr::map_chr(result$data, function(x) synapser::synGetTeam(x)$name),
+      sep = ", "
+    )
+    showModal(
+      modalDialog(
+        title = result$message,
+        p(result$behavior),
+        p("You can request to be added at:"),
+        HTML(team_links)
+      )
+    )
+  }
 }

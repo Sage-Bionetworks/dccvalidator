@@ -2,15 +2,9 @@
 % Please edit documentation in R/app-reporting.R
 \name{report_missing_membership}
 \alias{report_missing_membership}
-\alias{report_missing_membership.default}
-\alias{report_missing_membership.check_fail}
 \title{Create a modal dialog if user is not in required team(s)}
 \usage{
 report_missing_membership(result)
-
-\method{report_missing_membership}{default}(result)
-
-\method{report_missing_membership}{check_fail}(result)
 }
 \arguments{
 \item{result}{Output from \code{\link[=check_team_membership]{check_team_membership()}}}
