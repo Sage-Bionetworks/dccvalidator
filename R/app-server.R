@@ -22,15 +22,25 @@ app_server <- function(input, output, session) {
     membership <- check_team_membership(teams = c("3320424"), user = user)
     report_missing_membership(membership)
 
-    ## Create folder for upload (wrapped in try() to prevent app crashing when a
-    ## non-member of the team uses it, because otherwise the modal telling
-    ## people how to join isn't clickable)
-    created_folder <- try(
-      create_folder(
-        parent = "syn20506363",
-        name = user$userName
+    ## If user is a member of the team(s), create folder to save files and
+    ## enable inputs
+    if (inherits(membership, "check_pass")) {
+      created_folder <- try(
+        create_folder(
+          parent = "syn20506363",
+          name = user$userName
+        )
       )
-    )
+      inputs_to_enable <- c(
+        "indiv_meta",
+        "biosp_meta",
+        "assay_meta",
+        "manifest",
+        "species",
+        "assay_name"
+      )
+      purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
+    }
 
     ## Download annotation definitions
     annots <- get_synapse_annotations()

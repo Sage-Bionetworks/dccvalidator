@@ -26,6 +26,7 @@ Imports:
     rlang,
     shiny,
     shinydashboard,
+    shinyjs,
     skimr,
     stats,
     synapser,
