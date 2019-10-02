@@ -22,10 +22,14 @@ app_server <- function(input, output, session) {
     membership <- check_team_membership(teams = c("3320424"), user = user)
     report_missing_membership(membership)
 
-    ## Create folder for upload
-    created_folder <- create_folder(
-      parent = "syn20506363",
-      name = user$userName
+    ## Create folder for upload (wrapped in try() to prevent app crashing when a
+    ## non-member of the team uses it, because otherwise the modal telling
+    ## people how to join isn't clickable)
+    created_folder <- try(
+      create_folder(
+        parent = "syn20506363",
+        name = user$userName
+      )
     )
 
     ## Download annotation definitions
