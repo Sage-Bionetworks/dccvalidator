@@ -9,6 +9,9 @@ app_ui <- function(request) {
       # Add resources in www
       golem_add_external_resources(),
 
+      # Use shinyjs
+      shinyjs::useShinyjs(),
+
       # Sidebar
       sidebarLayout(
         sidebarPanel(
@@ -17,51 +20,63 @@ app_ui <- function(request) {
           br(),
 
           # Files to be validated
-          fileInput(
-            "indiv_meta",
-            "Individual metadata file (.csv)",
-            width = NULL,
-            accept = c(
-              "text/csv",
-              "text/comma-separated-values,text/plain",
-              ".csv"
+          shinyjs::disabled(
+            fileInput(
+              "indiv_meta",
+              "Individual metadata file (.csv)",
+              width = NULL,
+              accept = c(
+                "text/csv",
+                "text/comma-separated-values,text/plain",
+                ".csv"
+              )
             )
           ),
 
-          fileInput(
-            "biosp_meta",
-            "Biospecimen metadata file (.csv)",
-            width = NULL,
-            accept = c(
-              "text/csv",
-              "text/comma-separated-values,text/plain",
-              ".csv"
+          shinyjs::disabled(
+            fileInput(
+              "biosp_meta",
+              "Biospecimen metadata file (.csv)",
+              width = NULL,
+              accept = c(
+                "text/csv",
+                "text/comma-separated-values,text/plain",
+                ".csv"
+              )
             )
           ),
 
-          fileInput(
-            "assay_meta",
-            "Assay metadata file (.csv)",
-            width = NULL,
-            accept = c(
-              "text/csv",
-              "text/comma-separated-values,text/plain",
-              ".csv"
+          shinyjs::disabled(
+            fileInput(
+              "assay_meta",
+              "Assay metadata file (.csv)",
+              width = NULL,
+              accept = c(
+                "text/csv",
+                "text/comma-separated-values,text/plain",
+                ".csv"
+              )
             )
           ),
 
-          radioButtons("species", "Species", c("animal", "human")),
+          shinyjs::disabled(
+            radioButtons("species", "Species", c("animal", "human"))
+          ),
 
-          selectInput("assay_name", "Assay type", c("rnaSeq", "proteomics")),
+          shinyjs::disabled(
+            selectInput("assay_name", "Assay type", c("rnaSeq", "proteomics"))
+          ),
 
-          fileInput(
-            "manifest",
-            "Upload Manifest File (.tsv or .txt)",
-            multiple = FALSE,
-            accept = c(
-              "text/tsv",
-              "text/tab-separated-values,text/plain",
-              ".tsv"
+          shinyjs::disabled(
+            fileInput(
+              "manifest",
+              "Upload Manifest File (.tsv or .txt)",
+              multiple = FALSE,
+              accept = c(
+                "text/tsv",
+                "text/tab-separated-values,text/plain",
+                ".tsv"
+              )
             )
           )
         ),
@@ -132,7 +147,6 @@ app_ui <- function(request) {
 
 #' @import shiny
 golem_add_external_resources <- function() {
-
   addResourcePath(
     "www", system.file("app/www", package = "dccvalidator")
   )
