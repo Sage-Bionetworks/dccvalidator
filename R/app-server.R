@@ -432,71 +432,55 @@ app_server <- function(input, output, session) {
     })
 
     doc_annots <- reactive({
-      list(Study = study_name())
-      })
+      list(study = study_name())
+    })
 
-    ## Upload files to Synapse (after renaming them so they keep their original
-    ## names)
-    observeEvent(input$submit_docs, {
-      tryCatch({
-        ## Vector to hold returned synapse files
-        uploaded_docs <- vector()
-        ## Count the number of docs that should have been uploaded
-        total_docs <- 0
-
-        ## There may be no study documentation
-        if (!is.null(input$study_doc)) {
-          doc <- save_to_synapse(
-            input$study_doc,
-            parent = created_docs_folder,
-            name = input$study_doc$name,
-            annotations = doc_annots()
-          )
-          uploaded_docs <- c(uploaded_docs, doc)
-          total_docs <- total_docs + 1
-        }
-
-        ## There may be 0, 1, or 2+ assay documents
-        if (!is.null(input$assay_doc)) {
-          if (dim(input$assay_doc)[1] == 1) {
+    # Upload files to Synapse (after renaming them so they keep their original
+    # names)
+    observeEvent(input$upload_docs, {
+      if (!is.null(input$study_doc) || !is.null(input$assay_doc)) {
+        # When the button is clicked, wrap the code in the call to the 
+        # indicator server function
+        with_busy_indicator_server("upload_docs", {
+          # There may be no study documentation
+          if (!is.null(input$study_doc)) {
             doc <- save_to_synapse(
-              input$assay_doc,
+              input$study_doc,
               parent = created_docs_folder,
-              name = input$assay_doc$name,
+              name = input$study_doc$name,
               annotations = doc_annots()
             )
-            uploaded_docs <- c(uploaded_docs, doc)
-            total_docs <- total_docs + 1
-          } else {
-            assay_docs <- reactive({
-              input$assay_doc
-              })
-            assay_datapaths <- assay_docs()$datapath
-            assay_names <- assay_docs()$name
-            docs <- purrr::map2(assay_datapaths, assay_names, function(x, y) {
-              save_to_synapse(
-                list(datapath = x, name = y),
+          }
+
+          # There may be 0, 1, or 2+ assay documents
+          if (!is.null(input$assay_doc)) {
+            if (dim(input$assay_doc)[1] == 1) {
+              doc <- save_to_synapse(
+                input$assay_doc,
                 parent = created_docs_folder,
-                name = y,
+                name = input$assay_doc$name,
                 annotations = doc_annots()
               )
-            })
-            uploaded_docs <- c(uploaded_docs, docs)
-            total_docs <- total_docs + dim(input$assay_doc)[1]
+              uploaded_docs <- c(uploaded_docs, doc)
+              total_docs <- total_docs + 1
+            } else {
+              assay_docs <- reactive({
+                input$assay_doc
+              })
+              assay_datapaths <- assay_docs()$datapath
+              assay_names <- assay_docs()$name
+              docs <- purrr::map2(assay_datapaths, assay_names, function(x, y) {
+                save_to_synapse(
+                  list(datapath = x, name = y),
+                  parent = created_docs_folder,
+                  name = y,
+                  annotations = doc_annots()
+                )
+              })
+            }
           }
-        }
-
-        if (length(uploaded_docs) == total_docs) {
-          showNotification(paste("Files were uploaded"),
-                           duration = NULL,
-                           type = "message")
-        } # else an error should have been thrown and caught
-      },
-      error = function(e) {
-        output$doc_error <- renderText({
-          "There was a problem uploading the documents. Please try again."
         })
-      })
+      }
     })
   })
 }

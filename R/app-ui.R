@@ -152,7 +152,12 @@ ui_documentation <- tabItem(tabName = "documentation",
                                      "Upload the assay documentation files",
                                      multiple = TRUE),
 
-                           actionButton("submit_docs", "Submit")
+                           with_busy_indicator_ui(
+                             actionButton(
+                               "upload_docs",
+                               "Submit"
+                             )
+                           )
 )
 
 app_ui <- function(request) {
