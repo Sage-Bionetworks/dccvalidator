@@ -56,6 +56,9 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
   ## otherwise gives a more generic message.
   if (is.null(xname) | is.null(yname)) {
     behavior <- paste0(idcol, " values should match.")
+    ## Give them generic names to be included in the check_fail data if needed
+    xname <- xname %||% "x"
+    yname <- yname %||% "y"
   } else {
     behavior <- paste0(
       idcol,

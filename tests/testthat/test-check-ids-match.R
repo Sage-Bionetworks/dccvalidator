@@ -164,3 +164,10 @@ test_that("check_ids_match bidirectional arg looks only in one direction", {
   expect_true(inherits(res2, "check_fail"))
   expect_equal(res2$data[[1]], c(3, 4))
 })
+
+test_that("check_ids_match data gets default names if not provided", {
+  x <- data.frame(individualID = 1:3)
+  y <- data.frame(individualID = 4:6)
+  res <- check_ids_match(x, y, idcol = "individualID")
+  expect_equal(names(res$data), c("Missing from x", "Missing from y"))
+})
