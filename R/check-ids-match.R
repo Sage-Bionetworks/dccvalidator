@@ -5,12 +5,15 @@
 #' @param x,y Data frames to compare
 #' @param idcol Name of column containing ids to compare
 #' @param xname,yname Names of x and y (to be used in resulting messages)
+#' @param bidirectional Should mismatches from both x and y be reported?
+#'   Defaults to `TRUE`; if `FALSE`, will return only IDs in `y` that are not
+#'   present in `x` (IDs in `x` but not `y` will be ignored).
 #' @return A condition object indicating whether IDs match (`"check_pass"`) or
 #'   not (`"check_fail"`). Mismatched IDs are included as data within the
 #'   object.
 #' @export
 check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
-                            xname = NULL, yname = NULL) {
+                            xname = NULL, yname = NULL, bidirectional = TRUE) {
   if (is.null(x) | is.null(y)) {
     return(NULL)
   }
@@ -65,7 +68,8 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
   }
 
   ## If nothing is missing, return check_pass
-  if (length(missing_from_x) == 0 & length(missing_from_y) == 0) {
+  if ((length(missing_from_x) == 0 & length(missing_from_y) == 0) |
+    (bidirectional == FALSE & length(missing_from_x) == 0)) {
     check_pass(
       msg = paste0(
         "All ",

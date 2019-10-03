@@ -144,3 +144,23 @@ test_that("check_ids_match handles NULL input", {
   expect_null(check_ids_match(dat, NULL, "individualID"))
   expect_null(check_ids_match(NULL, NULL, "individualID"))
 })
+
+test_that("check_ids_match bidirectional arg looks only in one direction", {
+  meta <- data.frame(individualID = 1:4)
+  manifest <- data.frame(individualID = 1:2)
+  res1 <- check_ids_match(
+    meta,
+    manifest,
+    idcol = "individualID",
+    bidirectional = FALSE
+  )
+  res2 <- check_ids_match(
+    manifest,
+    meta,
+    idcol = "individualID",
+    bidirectional = FALSE
+  )
+  expect_true(inherits(res1, "check_pass"))
+  expect_true(inherits(res2, "check_fail"))
+  expect_equal(res2$data[[1]], c(3, 4))
+})

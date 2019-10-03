@@ -7,7 +7,7 @@
 \title{Check ids}
 \usage{
 check_ids_match(x, y, idcol = c("individualID", "specimenID"),
-  xname = NULL, yname = NULL)
+  xname = NULL, yname = NULL, bidirectional = TRUE)
 
 check_indiv_ids_match(x, y, xname = NULL, yname = NULL)
 
@@ -19,6 +19,10 @@ check_specimen_ids_match(x, y, xname = NULL, yname = NULL)
 \item{idcol}{Name of column containing ids to compare}
 
 \item{xname, yname}{Names of x and y (to be used in resulting messages)}
+
+\item{bidirectional}{Should mismatches from both x and y be reported?
+Defaults to \code{TRUE}; if \code{FALSE}, will return only IDs in \code{y} that are not
+present in \code{x} (IDs in \code{x} but not \code{y} will be ignored).}
 }
 \value{
 A condition object indicating whether IDs match (\code{"check_pass"}) or
