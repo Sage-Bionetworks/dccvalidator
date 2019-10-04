@@ -1,5 +1,11 @@
-# Author: Dean Attali
-# From https://github.com/daattali/advanced-shiny/blob/master/busy-indicator/helpers.R
+#' These functions add button feedback features including: 
+#' disabling the button while processing requested function, 
+#' showing a spinning wheel while processing requested function,
+#' displaying a green checkmark showing success upon completion,
+#' or displaying an error message if the function requested failed. 
+#' 
+#' Author: Dean Attali
+#' From https://github.com/daattali/advanced-shiny/blob/master/busy-indicator/helpers.R
 
 with_busy_indicator_css <- "
 .btn-loading-container {
@@ -15,6 +21,8 @@ color: red;
 }
 "
 
+#' Wrap the button in this function to attach visual features
+#' @param button a shiny actionButton
 with_busy_indicator_ui <- function(button) {
   id <- button[["attribs"]][["id"]]
   div(
@@ -42,8 +50,12 @@ with_busy_indicator_ui <- function(button) {
   )
 }
 
-# Call this function from the server with the button id that is clicked and the
-# expression to run when the button is clicked
+#' When a button is clicked, call this function from the server.
+#' This will execute the expression desired and signal the visual
+#' feedback for the button. If the expression fails, the error
+#' message displayed is from the error that was thrown.
+#' @param button_id id of shiny actionButton
+#' @param expr the code to run when the button is clicked
 with_busy_indicator_server <- function(button_id, expr) {
   # UX stuff: show the "busy" message, hide the other messages,
   # disable the button
@@ -75,7 +87,9 @@ with_busy_indicator_server <- function(button_id, expr) {
   })
 }
 
-# When an error happens after a button click, show the error
+#' Error message helper.
+#' @param err the error
+#' @param button_id id for the actionButton
 error_func <- function(err, button_id) {
   err_el <- sprintf("[data-for-btn=%s] .btn-err", button_id)
   err_el_msg <- sprintf("[data-for-btn=%s] .btn-err-msg", button_id)
