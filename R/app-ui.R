@@ -122,6 +122,8 @@ ui_validator <- tabItem(tabName = "validator",
 )
 
 ui_documentation <- tabItem(tabName = "documentation",
+                           # Instructions/Description
+                           h3("Upload "),
 
                            # Ability to choose to add to existing study
                            radioButtons("study_exists",
@@ -130,11 +132,14 @@ ui_documentation <- tabItem(tabName = "documentation",
                                         selected = "Yes"),
                            conditionalPanel(
                              condition = "input.study_exists == 'Yes'",
-                             selectInput("study_choice", "Choose the study", get_studies())
+                             selectInput("study_choice",
+                                         "Choose the study",
+                                         get_studies())
                            ),
                            conditionalPanel(
                              condition = "input.study_exists == 'No'",
-                             textInput("study_text", "Enter the study name")
+                             textInput("study_text",
+                                       "Enter the study name")
                            ),
 
                            # File import

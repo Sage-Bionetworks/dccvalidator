@@ -447,7 +447,7 @@ app_server <- function(input, output, session) {
             doc <- save_to_synapse(
               input$study_doc,
               parent = created_docs_folder,
-              name = input$study_doc$name,
+              name = paste0(study_name(), "_", input$study_doc$name),
               annotations = doc_annots()
             )
           }
@@ -458,7 +458,7 @@ app_server <- function(input, output, session) {
               doc <- save_to_synapse(
                 input$assay_doc,
                 parent = created_docs_folder,
-                name = input$assay_doc$name,
+                name = paste0(study_name(), "_", input$study_doc$name),
                 annotations = doc_annots()
               )
               uploaded_docs <- c(uploaded_docs, doc)
@@ -468,7 +468,7 @@ app_server <- function(input, output, session) {
                 input$assay_doc
               })
               assay_datapaths <- assay_docs()$datapath
-              assay_names <- assay_docs()$name
+              assay_names <- paste0(study_name(), "_", assay_docs()$name)
               docs <- purrr::map2(assay_datapaths, assay_names, function(x, y) {
                 save_to_synapse(
                   list(datapath = x, name = y),
