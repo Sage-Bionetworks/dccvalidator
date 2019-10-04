@@ -28,9 +28,9 @@ get_annotation <- function(ids, key) {
 }
 
 ## Save uploaded files to Synapse
-save_to_synapse <- function(input_file, 
-                            parent, 
-                            name = NULL, 
+save_to_synapse <- function(input_file,
+                            parent,
+                            name = NULL,
                             annotations = NULL) {
   file_to_upload <- synapser::File(
     input_file$datapath,

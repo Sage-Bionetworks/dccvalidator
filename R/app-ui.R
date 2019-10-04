@@ -1,14 +1,6 @@
 #' @import shiny
 #' @import shinydashboard
 
-# Gather studies within consortium
-# @return list of studies
-get_studies <- function() {
-  study_table_id <- "syn11363298"
-  study_table <- syndccutils::get_table_df(study_table_id)
-  return(study_table$StudyName)
-}
-
 ui_validator <- tabItem(tabName = "validator",
                         # Sidebar
                         sidebarLayout(
@@ -185,7 +177,7 @@ app_ui <- function(request) {
 }
 
 #' @import shiny
-golem_add_external_resources <- function(){
+golem_add_external_resources <- function() {
   tags$head(
     golem::activate_js(),
     golem::favicon(),

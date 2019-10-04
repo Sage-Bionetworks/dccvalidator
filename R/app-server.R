@@ -439,7 +439,7 @@ app_server <- function(input, output, session) {
     # names)
     observeEvent(input$upload_docs, {
       if (!is.null(input$study_doc) || !is.null(input$assay_doc)) {
-        # When the button is clicked, wrap the code in the call to the 
+        # When the button is clicked, wrap the code in the call to the
         # indicator server function
         with_busy_indicator_server("upload_docs", {
           # There may be no study documentation

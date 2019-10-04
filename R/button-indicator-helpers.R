@@ -1,5 +1,5 @@
 # Author: Dean Attali
-# From https://github.com/daattali/advanced-shiny/blob/master/busy-indicator/helpers.R 
+# From https://github.com/daattali/advanced-shiny/blob/master/busy-indicator/helpers.R
 
 with_busy_indicator_css <- "
 .btn-loading-container {
