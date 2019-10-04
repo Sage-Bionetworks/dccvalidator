@@ -1,11 +1,11 @@
-#' These functions add button feedback features including: 
-#' disabling the button while processing requested function, 
+#' These functions add button feedback features including:
+#' disabling the button while processing requested function,
 #' showing a spinning wheel while processing requested function,
 #' displaying a green checkmark showing success upon completion,
-#' or displaying an error message if the function requested failed. 
-#' 
+#' or displaying an error message if the function requested failed.
+#'
 #' Author: Dean Attali
-#' From https://github.com/daattali/advanced-shiny/blob/master/busy-indicator/helpers.R
+#' From https://github.com/daattali/advanced-shiny/blob/master/busy-indicator/helpers.R #nolint
 
 with_busy_indicator_css <- "
 .btn-loading-container {
