@@ -45,9 +45,8 @@ check_cols_manifest <- function(data,
   }
   id <- "syn20820080"
   required <- get_template(id, ...)
-  behavior <- paste0(
-    "Manifest should contain columns: ",
-    paste(required, collapse = ", ")
+  behavior <- glue::glue(
+    "Manifest should contain columns: {glue::glue_collapse(required, sep = ', ')}" # nolint
   )
   check_col_names(
     data,
@@ -78,9 +77,8 @@ check_cols_individual <- function(data, template,
     general = "syn12973253"
   )
   required <- get_template(id, ...)
-  behavior <- paste0(
-    "Individual file should contain columns: ",
-    paste(required, collapse = ", ")
+  behavior <- glue::glue(
+    "Individual file should contain columns: {glue::glue_collapse(required, sep = ', ')}" # nolint
   )
   check_col_names(
     data,
@@ -111,9 +109,8 @@ check_cols_assay <- function(data, template,
     proteomics = "syn12973255"
   )
   required <- get_template(id, ...)
-  behavior <- paste0(
-    "Assay file should contain columns: ",
-    paste(required, collapse = ", ")
+  behavior <- glue::glue(
+    "Assay file should contain columns: {glue::glue_collapse(required, sep = ', ')}" # nolint
   )
   check_col_names(
     data,
@@ -145,9 +142,8 @@ check_cols_biospecimen <- function(data, template,
     drosophila = "syn20673251"
   )
   required <- get_template(id, ...)
-  behavior <- paste0(
-    "Biospecimen file should contain columns: ",
-    paste(required, collapse = ", ")
+  behavior <- glue::glue(
+    "Biospecimen file should contain columns: {glue::glue_collapse(required, sep = ', ')}" # nolint
   )
   check_col_names(
     data,

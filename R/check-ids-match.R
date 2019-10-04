@@ -20,21 +20,9 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
   idcol <- match.arg(idcol)
   if (!idcol %in% colnames(x) | !idcol %in% colnames(y)) {
     failure <- check_fail(
-      msg = paste0(
-        "Missing column ",
-        idcol,
-        " in ",
-        xname,
-        " or ",
-        yname,
-        " metadata"
-      ),
-      behavior = paste0(
-        xname,
-        " and ",
-        yname,
-        " metadata should both contain a column called ",
-        idcol
+      msg = glue::glue("Missing column {idcol} in {xname} or {yname} metadata"),
+      behavior = glue::glue(
+        "{xname} and {yname} metadata should both contain a column called {idcol}" # nolint
       ),
       data = setNames(
         list(colnames(x), colnames(y)),
@@ -58,18 +46,13 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
   ## Message of correct behavior. Uses the names of the x and y data if present,
   ## otherwise gives a more generic message.
   if (is.null(xname) | is.null(yname)) {
-    behavior <- paste0(idcol, " values should match.")
     ## Give them generic names to be included in the check_fail data if needed
     xname <- xname %||% "x"
     yname <- yname %||% "y"
+    behavior <- glue::glue("{idcol} values should match.")
   } else {
-    behavior <- paste0(
-      idcol,
-      " values in the ",
-      xname,
-      " and ",
-      yname,
-      " metadata should match."
+    behavior <- glue::glue(
+      "{idcol} values in the {xname} and {yname} metadata should match."
     )
   }
 
@@ -77,29 +60,20 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
   if ((length(missing_from_x) == 0 & length(missing_from_y) == 0) |
     (bidirectional == FALSE & length(missing_from_x) == 0)) {
     check_pass(
-      msg = paste0(
-        "All ",
-        idcol,
-        " values match between ",
-        xname,
-        " and ",
-        yname
+      msg = glue::glue(
+        "All {idcol} values match between {xname} and {yname}.",
       ),
       behavior = behavior
     )
   } else {
     check_fail(
-      msg = paste0(
-        idcol,
-        " values are mismatched between ",
-        xname,
-        " and ",
-        yname
+      msg = glue::glue(
+        "{idcol} values are mismatched between {xname} and {yname}"
       ),
       behavior = behavior,
       data = stats::setNames(
         list(missing_from_x, missing_from_y),
-        paste("Missing from", c(xname, yname))
+        glue::glue("Missing from {c(xname, yname)}")
       )
     )
   }
