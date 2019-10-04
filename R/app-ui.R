@@ -123,8 +123,24 @@ ui_validator <- tabItem(tabName = "validator",
 
 ui_documentation <- tabItem(tabName = "documentation",
                            # Instructions/Description
-                           h3("Upload "),
-
+                           h3("Upload Unstructured Metadata"),
+                           #nolint start
+                           p("Unstructured metadata is similar to the materials and methods in a paper. These are used in the portal to give a summary of the project, assays, and other relevant information. An example of what this information should include and how it will appear in the portal can be found ", tags$a(href = "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648", "here"), "."),
+                           
+                           h4("Study Description"),
+                           
+                           p("The study description is an overview of the study and should include:"),
+                           
+                           tags$ul(
+                             tags$li("human studies", tags$ul(tags$li("how the data was obtained, as well as a summary description of the data, including study type (prospective cohort, case-control, or post-mortem), disease focus, inclusion/exclusion criteria, and number of participants or donors. For post mortem studies, include the brain bank name(s) and tissue(s) that were sampled."))),
+                             tags$li("model studies", tags$ul(tags$li("where the models were generated, as well as a summary description of the model, including common name, genetic background, and a link to the strain datasheet, or datasheets if a cross between two strains.")))
+                           ),
+                           
+                           h4("Assay Description"),
+                           
+                           p("The assay description should include a summary of sample processing, data generation, and data processing."),
+                           
+                           #nolint end
                            # Ability to choose to add to existing study
                            radioButtons("study_exists",
                                         "Does the study currently exist?",
@@ -144,9 +160,9 @@ ui_documentation <- tabItem(tabName = "documentation",
 
                            # File import
                            fileInput("study_doc",
-                                     "Upload the study documentation file"),
+                                     "Upload the study description file"),
                            fileInput("assay_doc",
-                                     "Upload the assay documentation files",
+                                     "Upload the assay description files",
                                      multiple = TRUE),
 
                            with_busy_indicator_ui(
