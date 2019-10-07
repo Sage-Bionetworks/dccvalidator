@@ -1,7 +1,10 @@
+#' UI function for the upload_documentation module
+#' @param id the module id
+#' @return html ui for the module
 upload_documents_ui <- function(id) {
   ns <- NS(id)
 
-  tabItem(tabName = "documentation",
+  tabItem(tabName = id,
           # Instructions/Description
           h3("Upload Unstructured Metadata"),
           #nolint start
@@ -42,7 +45,7 @@ upload_documents_ui <- function(id) {
   )
 }
 
-#' Server function for upload_documents section
+#' Server function for upload_documentation module
 #' @param input the input from shiny::callModule
 #' @param output the output from shiny::callModule
 #' @param session the session from shiny::callModule

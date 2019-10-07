@@ -6,7 +6,7 @@ get_study_names <- function() {
   return(sort(study_table$StudyName))
 }
 
-#' UI for the get_study panel
+#' UI for the get_study module
 #' @param id the id
 #' @return html UI for get_study panel
 get_study_ui <- function(id) {
@@ -35,6 +35,7 @@ get_study_ui <- function(id) {
   )
 }
 
+#' Server function for the get_study module
 #' Get study name based on either:
 #' - existing study selection box
 #' - new name for currently non-existing study
