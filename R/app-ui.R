@@ -22,78 +22,77 @@ app_ui <- function(request) {
         list(
           # Validator tab UI
           tabItem(tabName = "validator",
-            # Use shinyjs
-            shinyjs::useShinyjs(),
-
-            # Sidebar
-            sidebarLayout(
-              sidebarPanel(
-                actionButton("instructions", "Show instructions"),
-                br(),
-                br(),
-
-            # Files to be validated
-            shinyjs::disabled(
-              fileInput(
-                "indiv_meta",
-                "Individual metadata file (.csv)",
-                width = NULL,
-                accept = c(
-                  "text/csv",
-                  "text/comma-separated-values,text/plain",
-                  ".csv"
-                )
-              )
-            ),
-
-            shinyjs::disabled(
-              fileInput(
-                "biosp_meta",
-                "Biospecimen metadata file (.csv)",
-                width = NULL,
-                accept = c(
-                  "text/csv",
-                  "text/comma-separated-values,text/plain",
-                  ".csv"
-                )
-              )
-            ),
-
-            shinyjs::disabled(
-              fileInput(
-                "assay_meta",
-                "Assay metadata file (.csv)",
-                width = NULL,
-                accept = c(
-                  "text/csv",
-                  "text/comma-separated-values,text/plain",
-                  ".csv"
-                )
-              )
-            ),
-
-            shinyjs::disabled(
-              radioButtons("species", "Species", c("animal", "human"))
-            ),
-
-            shinyjs::disabled(
-              selectInput("assay_name", "Assay type", c("rnaSeq", "proteomics"))
-            ),
-
-            shinyjs::disabled(
-              fileInput(
-                "manifest",
-                "Upload Manifest File (.tsv or .txt)",
-                multiple = FALSE,
-                accept = c(
-                  "text/tsv",
-                  "text/tab-separated-values,text/plain",
-                  ".tsv"
-                )
-              )
-            )
-          ),
-  
+                  # Use shinyjs
+                  shinyjs::useShinyjs(),
+                  
+                  # Sidebar
+                  sidebarLayout(
+                    sidebarPanel(
+                      actionButton("instructions", "Show instructions"),
+                      br(),
+                      br(),
+                      
+                      # Files to be validated
+                      shinyjs::disabled(
+                        fileInput(
+                          "indiv_meta",
+                          "Individual metadata file (.csv)",
+                          width = NULL,
+                          accept = c(
+                            "text/csv",
+                            "text/comma-separated-values,text/plain",
+                            ".csv"
+                          )
+                        )
+                      ),
+                      
+                      shinyjs::disabled(
+                        fileInput(
+                          "biosp_meta",
+                          "Biospecimen metadata file (.csv)",
+                          width = NULL,
+                          accept = c(
+                            "text/csv",
+                            "text/comma-separated-values,text/plain",
+                            ".csv"
+                          )
+                        )
+                      ),
+                      
+                      shinyjs::disabled(
+                        fileInput(
+                          "assay_meta",
+                          "Assay metadata file (.csv)",
+                          width = NULL,
+                          accept = c(
+                            "text/csv",
+                            "text/comma-separated-values,text/plain",
+                            ".csv"
+                          )
+                        )
+                      ),
+                      
+                      shinyjs::disabled(
+                        radioButtons("species", "Species", c("animal", "human"))
+                      ),
+                      
+                      shinyjs::disabled(
+                        selectInput("assay_name", "Assay type", c("rnaSeq", "proteomics"))
+                      ),
+                      
+                      shinyjs::disabled(
+                        fileInput(
+                          "manifest",
+                          "Upload Manifest File (.tsv or .txt)",
+                          multiple = FALSE,
+                          accept = c(
+                            "text/tsv",
+                            "text/tab-separated-values,text/plain",
+                            ".tsv"
+                          )
+                        )
+                      )
+                    ),
                     # Main panel
                     mainPanel(
                       tabsetPanel(
@@ -154,7 +153,7 @@ app_ui <- function(request) {
                       )
                     )
                   )
-                ),
+          ),
 
           # Documentation tab UI          
           upload_documents_ui("documentation")),
