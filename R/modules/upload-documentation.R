@@ -21,7 +21,7 @@ upload_documents_ui <- function(id) {
 
           h4("Assay Description"),
 
-          p("The assay description should include a summary of sample processing, data generation, and data processing. A template can be found ", tags$a(href = "", "here"), "."),
+          p("The assay description should include a summary of ", tags$b("sample processing, data generation,"), " and ", tags$b("data processing.")),
 
           #nolint end
 
