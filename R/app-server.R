@@ -165,7 +165,13 @@ app_server <- function(input, output, session) {
       check_specimen_ids_match(biosp(), assay(), "biospecimen", "assay")
     })
     specimen_ids_biosp_manifest <- reactive({
-      check_specimen_ids_match(biosp(), manifest(), "biospecimen", "manifest")
+      check_specimen_ids_match(
+        biosp(),
+        manifest(),
+        "biospecimen",
+        "manifest",
+        bidirectional = FALSE
+      )
     })
 
     # Annotation keys in manifest are valid ------------------------------------

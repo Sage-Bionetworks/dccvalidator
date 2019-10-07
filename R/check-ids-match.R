@@ -5,12 +5,15 @@
 #' @param x,y Data frames to compare
 #' @param idcol Name of column containing ids to compare
 #' @param xname,yname Names of x and y (to be used in resulting messages)
+#' @param bidirectional Should mismatches from both x and y be reported?
+#'   Defaults to `TRUE`; if `FALSE`, will return only IDs in `y` that are not
+#'   present in `x` (IDs in `x` but not `y` will be ignored).
 #' @return A condition object indicating whether IDs match (`"check_pass"`) or
 #'   not (`"check_fail"`). Mismatched IDs are included as data within the
 #'   object.
 #' @export
 check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
-                            xname = NULL, yname = NULL) {
+                            xname = NULL, yname = NULL, bidirectional = TRUE) {
   if (is.null(x) | is.null(y)) {
     return(NULL)
   }
@@ -53,6 +56,9 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
   ## otherwise gives a more generic message.
   if (is.null(xname) | is.null(yname)) {
     behavior <- paste0(idcol, " values should match.")
+    ## Give them generic names to be included in the check_fail data if needed
+    xname <- xname %||% "x"
+    yname <- yname %||% "y"
   } else {
     behavior <- paste0(
       idcol,
@@ -65,7 +71,8 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
   }
 
   ## If nothing is missing, return check_pass
-  if (length(missing_from_x) == 0 & length(missing_from_y) == 0) {
+  if ((length(missing_from_x) == 0 & length(missing_from_y) == 0) |
+    (bidirectional == FALSE & length(missing_from_x) == 0)) {
     check_pass(
       msg = paste0(
         "All ",
@@ -106,8 +113,9 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
 #' a <- data.frame(individualID = LETTERS[1:3])
 #' b <- data.frame(individualID = LETTERS[1:4])
 #' check_specimen_ids_match(a, b, "individual", "biospecimen")
-check_indiv_ids_match <- function(x, y, xname = NULL, yname = NULL) {
-  check_ids_match(x, y, "individualID", xname, yname)
+check_indiv_ids_match <- function(x, y, xname = NULL, yname = NULL,
+                                  bidirectional = TRUE) {
+  check_ids_match(x, y, "individualID", xname, yname, bidirectional)
 }
 
 #' Check specimen IDs
@@ -121,6 +129,7 @@ check_indiv_ids_match <- function(x, y, xname = NULL, yname = NULL) {
 #' a <- data.frame(specimenID = LETTERS[1:3])
 #' b <- data.frame(specimenID = LETTERS[1:4])
 #' check_specimen_ids_match(a, b, "biospecimen", "assay")
-check_specimen_ids_match <- function(x, y, xname = NULL, yname = NULL) {
-  check_ids_match(x, y, "specimenID", xname, yname)
+check_specimen_ids_match <- function(x, y, xname = NULL, yname = NULL,
+                                     bidirectional = TRUE) {
+  check_ids_match(x, y, "specimenID", xname, yname, bidirectional)
 }
