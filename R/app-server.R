@@ -415,22 +415,13 @@ app_server <- function(input, output, session) {
     ####  Documentation  ####
     #########################
 
-    ## Create folder for upload
+    # Create folder for upload
     docs_folder <- synapser::Folder(name = "Documentation",
                                     parent = created_folder)
     created_docs_folder <- synapser::synStore(docs_folder)
 
-    ## Get study name based on either:
-    ## - existing study selection box
-    ## - new name for currently non-existing study
-    study_name <- reactive({
-      if (input$study_exists == "Yes") {
-        input$study_choice
-      } else {
-        input$study_text
-      }
-    })
-
+    # Get the study name
+    study_name <- callModule(get_study, "doc_study")
     doc_annots <- reactive({
       list(study = study_name())
     })
@@ -458,11 +449,9 @@ app_server <- function(input, output, session) {
               doc <- save_to_synapse(
                 input$assay_doc,
                 parent = created_docs_folder,
-                name = paste0(study_name(), "_", input$study_doc$name),
+                name = paste0(study_name(), "_", input$assay_doc$name),
                 annotations = doc_annots()
               )
-              uploaded_docs <- c(uploaded_docs, doc)
-              total_docs <- total_docs + 1
             } else {
               assay_docs <- reactive({
                 input$assay_doc
