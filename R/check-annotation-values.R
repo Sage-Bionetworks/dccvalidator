@@ -223,7 +223,7 @@ check_value <- function(values, key, annotations, whitelist_keys = NULL,
   if (!key %in% annotations$key) {
     return(NULL)
   }
-  annot_values <- annotations[annotations$key == key, "value"]
+  annot_values <- annotations[annotations$key == key, ]$value
   ## If key is being whitelisted, treat all values as valid
   if (key %in% whitelist_keys) {
     if (isTRUE(return_valid)) {

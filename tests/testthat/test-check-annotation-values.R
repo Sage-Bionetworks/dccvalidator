@@ -131,6 +131,16 @@ test_that("check_value checks column type when no enumerated values", {
   )
 })
 
+test_that("check_value works with a tibble of multiple values", {
+  annots <- tribble(
+    ~key, ~value, ~columnType,
+    "fileFormat", "txt", "STRING",
+    "fileFormat", "csv", "STRING",
+    "species", "Human", "STRING"
+  )
+  res <- check_value(values = "txt", key = "fileFormat", annotations = annots)
+  expect_equal(res, character(0))
+})
 
 ## check_values() --------------------------------------------------------------
 
