@@ -411,65 +411,9 @@ app_server <- function(input, output, session) {
         ggplot2::theme(text = ggplot2::element_text(size = 16))
     })
 
-    #########################
-    ####  Documentation  ####
-    #########################
-
-    # Create folder for upload
-    docs_folder <- synapser::Folder(name = "Documentation",
-                                    parent = created_folder)
-    created_docs_folder <- synapser::synStore(docs_folder)
-
-    # Get the study name
-    study_name <- callModule(get_study, "doc_study")
-    doc_annots <- reactive({
-      list(study = study_name())
-    })
-
-    # Upload files to Synapse (after renaming them so they keep their original
-    # names)
-    observeEvent(input$upload_docs, {
-      if (!is.null(input$study_doc) || !is.null(input$assay_doc)) {
-        # When the button is clicked, wrap the code in the call to the
-        # indicator server function
-        with_busy_indicator_server("upload_docs", {
-          # There may be no study documentation
-          if (!is.null(input$study_doc)) {
-            doc <- save_to_synapse(
-              input$study_doc,
-              parent = created_docs_folder,
-              name = paste0(study_name(), "_", input$study_doc$name),
-              annotations = doc_annots()
-            )
-          }
-
-          # There may be 0, 1, or 2+ assay documents
-          if (!is.null(input$assay_doc)) {
-            if (dim(input$assay_doc)[1] == 1) {
-              doc <- save_to_synapse(
-                input$assay_doc,
-                parent = created_docs_folder,
-                name = paste0(study_name(), "_", input$assay_doc$name),
-                annotations = doc_annots()
-              )
-            } else {
-              assay_docs <- reactive({
-                input$assay_doc
-              })
-              assay_datapaths <- assay_docs()$datapath
-              assay_names <- paste0(study_name(), "_", assay_docs()$name)
-              docs <- purrr::map2(assay_datapaths, assay_names, function(x, y) {
-                save_to_synapse(
-                  list(datapath = x, name = y),
-                  parent = created_docs_folder,
-                  name = y,
-                  annotations = doc_annots()
-                )
-              })
-            }
-          }
-        })
-      }
-    })
+    # Documentation server
+    callModule(upload_documents,
+               "documentation",
+               parent_folder = reactive(created_folder))
   })
 }

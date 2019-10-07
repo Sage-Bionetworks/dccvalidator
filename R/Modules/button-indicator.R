@@ -6,6 +6,8 @@
 #'
 #' Author: Dean Attali
 #' From https://github.com/daattali/advanced-shiny/blob/master/busy-indicator/helpers.R #nolint
+#'
+#' Hint for making this work with modules by mmoise in PR#11
 
 with_busy_indicator_css <- "
 .btn-loading-container {
@@ -59,9 +61,14 @@ with_busy_indicator_ui <- function(button) {
 with_busy_indicator_server <- function(button_id, expr) {
   # UX stuff: show the "busy" message, hide the other messages,
   # disable the button
-  loading_el <- sprintf("[data-for-btn=%s] .btn-loading-indicator", button_id)
-  done_el <- sprintf("[data-for-btn=%s] .btn-done-indicator", button_id)
-  err_el <- sprintf("[data-for-btn=%s] .btn-err", button_id)
+  # Need to get session in order for button to indicate correctly
+  session <- shinyjs:::getSession()
+  loading_el <- sprintf("[data-for-btn=%s] .btn-loading-indicator",
+                        session$ns(button_id))
+  done_el <- sprintf("[data-for-btn=%s] .btn-done-indicator",
+                     session$ns(button_id))
+  err_el <- sprintf("[data-for-btn=%s] .btn-err",
+                    session$ns(button_id))
   shinyjs::disable(button_id)
   shinyjs::show(selector = loading_el)
   shinyjs::hide(selector = done_el)
@@ -91,8 +98,12 @@ with_busy_indicator_server <- function(button_id, expr) {
 #' @param err the error
 #' @param button_id id for the actionButton
 error_func <- function(err, button_id) {
-  err_el <- sprintf("[data-for-btn=%s] .btn-err", button_id)
-  err_el_msg <- sprintf("[data-for-btn=%s] .btn-err-msg", button_id)
+  # Need to get session first
+  session <- shinyjs:::getSession()
+  err_el <- sprintf("[data-for-btn=%s] .btn-err",
+                    session$ns(button_id))
+  err_el_msg <- sprintf("[data-for-btn=%s] .btn-err-msg",
+                        session$ns(button_id))
   err_message <- gsub("^ddpcr: (.*)", "\\1", err$message)
   shinyjs::html(html = err_message, selector = err_el_msg)
   shinyjs::show(selector = err_el, anim = TRUE, animType = "fade")

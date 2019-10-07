@@ -12,7 +12,7 @@ get_study_names <- function() {
 get_study_ui <- function(id) {
   # Namespace function messes up the conditional panels
   # Need to figure out how to make that work
-  ns = NS(id)
+  ns <- NS(id)
   tagList(
     # Ability to choose to add to existing study
     radioButtons(ns("study_exists"),
@@ -43,15 +43,15 @@ get_study_ui <- function(id) {
 #' @param session the session from shiny::callModule
 #' @return name of the study
 get_study <- function(input, output, session) {
-  study_name <- reactiveVal("Steve")
-  # Even though study_name is a reactive value, 
+  study_name <- reactiveVal(NULL)
+  # Even though study_name is a reactive value,
   # need observe to make sure it updates based on input
   observe({
-  if (input$study_exists == "Yes") {
-    study_name(input$study_choice)
-  } else {
-    study_name(input$study_text)
-  }
+    if (input$study_exists == "Yes") {
+      study_name(input$study_choice)
+    } else {
+      study_name(input$study_text)
+    }
   })
   return(study_name)
 }
