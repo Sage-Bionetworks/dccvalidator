@@ -15,9 +15,6 @@ with_busy_indicator_ui <- function(button) {
   id <- button[["attribs"]][["id"]]
   div(
     shinyjs::useShinyjs(),
-    singleton(tags$head(
-      tags$link(rel = "stylesheet", type = "text/css", href = "www/custom.css")
-    )),
     `data-for-btn` = id,
     button,
     span(
