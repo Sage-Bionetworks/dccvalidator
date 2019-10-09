@@ -33,10 +33,6 @@ app_server <- function(input, output, session) {
       )
     }
 
-    ## Create folder for upload
-    new_folder <- synapser::Folder(name = user$userName, parent = "syn20818950")
-    created_folder <- synapser::synStore(new_folder)
-
     ## Download annotation definitions
     annots <- get_synapse_annotations()
 
