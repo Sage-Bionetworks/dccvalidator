@@ -10,25 +10,25 @@ test_that("check_cols_complete returns check_pass if required columns are comple
   expect_true(inherits(res, "check_pass"))
 })
 
-test_that("check_cols_complete returns check_warn if any required column lacks data", { #nolint
+test_that("check_cols_complete returns check_fail if any required column lacks data", { #nolint
   dat1 <- data.frame(x = NA)
   dat2 <- data.frame(x = "")
   dat3 <- data.frame(x = 1, y = NA, z = "")
   res1 <- check_cols_complete(dat1, "x")
   res2 <- check_cols_complete(dat2, "x")
   res3 <- check_cols_complete(dat3, c("x", "y", "z"))
-  expect_true(inherits(res1, "check_warn"))
-  expect_true(inherits(res2, "check_warn"))
-  expect_true(inherits(res3, "check_warn"))
+  expect_true(inherits(res1, "check_fail"))
+  expect_true(inherits(res2, "check_fail"))
+  expect_true(inherits(res3, "check_fail"))
   expect_equal(res1$data, "x")
   expect_equal(res2$data, "x")
   expect_equal(res3$data, c("y", "z"))
 })
 
-test_that("`strict` argument causes check_fail instead of check_warn", {
+test_that("`strict` argument causes check_warn instead of check_fail", {
   dat <- data.frame(x = NA)
-  res <- check_cols_complete(dat, "x", strict = TRUE)
-  expect_true(inherits(res, "check_fail"))
+  res <- check_cols_complete(dat, "x", strict = FALSE)
+  expect_true(inherits(res, "check_warn"))
 })
 
 test_that("can customize empty values", {
