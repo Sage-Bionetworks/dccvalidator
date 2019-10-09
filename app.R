@@ -3,5 +3,5 @@
 # Or use the blue button on top of this file
 
 pkgload::load_all()
-options( "golem.app.prod" = TRUE)
+options("golem.app.prod" = TRUE)
 dccvalidator::run_app() # add parameters here (if any)

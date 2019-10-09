@@ -16,20 +16,20 @@
 #' dat <- data.frame(specimenID = c("x", "y"), organ = c(NA, NA))
 #' check_cols_complete(dat, c("specimenID", "organ"))
 check_cols_complete <- function(data, required_cols,
-                             empty_values = c(NA, ""), strict = FALSE,
-                             success_msg = "Required columns are complete",
-                             fail_msg = "Some required columns are not complete") {
+                                empty_values = c(NA, ""), strict = FALSE,
+                                success_msg = "Required columns are complete",
+                                fail_msg = "Some required columns are not complete") { #nolint
   if (is.null(data)) {
     return(NULL)
   }
   ## Check if all columns have data
   results <- purrr::map_lgl(
-    data[, required_cols, drop = FALSE], 
+    data[, required_cols, drop = FALSE],
     function(x) any(x %in% empty_values)
   )
   behavior <- paste0("Columns ", required_cols, " should be complete.") # nolint
 
-  ## Return success if all required columns have complete data. 
+  ## Return success if all required columns have complete data.
   ## Otherwise return warn or fail depending on `strict` argument
   if (!any(results)) {
     check_pass(

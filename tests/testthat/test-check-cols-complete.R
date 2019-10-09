@@ -4,13 +4,13 @@ test_that("check_cols_complete returns NULL if given NULL input", {
   expect_null(check_cols_complete(NULL))
 })
 
-test_that("check_cols_complete returns check_pass if required columns have complete data", {
+test_that("check_cols_complete returns check_pass if required columns are complete", { #nolint
   dat <- data.frame(x = 1:2, y = c("a", "b"), z = c(TRUE, FALSE))
   res <- check_cols_complete(dat, c("x", "y", "z"))
   expect_true(inherits(res, "check_pass"))
 })
 
-test_that("check_cols_complete returns check_warn if some required columns lack data", {
+test_that("check_cols_complete returns check_warn if any required column lacks data", { #nolint
   dat1 <- data.frame(x = NA)
   dat2 <- data.frame(x = "")
   dat3 <- data.frame(x = 1, y = NA, z = "")
