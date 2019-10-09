@@ -21,8 +21,8 @@ app_ui <- function(request) {
 
           shinyjs::disabled(
             radioButtons(
-              "species", 
-              "Species", 
+              "species",
+              "Species",
               c("human", "drosophila", "mouse or other animal model" = "mouse"),
               selected = "mouse")
           ),
@@ -32,15 +32,18 @@ app_ui <- function(request) {
           ),
 
           # Files to be validated
-          shinyjs::disabled(
-            fileInput(
-              "indiv_meta",
-              "Individual metadata file (.csv)",
-              width = NULL,
-              accept = c(
-                "text/csv",
-                "text/comma-separated-values,text/plain",
-                ".csv"
+          conditionalPanel(
+            condition = "input.species != 'drosophila'",
+            shinyjs::disabled(
+              fileInput(
+                "indiv_meta",
+                "Individual metadata file (.csv)",
+                width = NULL,
+                accept = c(
+                  "text/csv",
+                  "text/comma-separated-values,text/plain",
+                  ".csv"
+                )
               )
             )
           ),
