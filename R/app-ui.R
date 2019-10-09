@@ -165,7 +165,10 @@ app_ui <- function(request) {
           ),
 
           # Documentation tab UI
-          upload_documents_ui("documentation")
+          # Customize for specific studies
+          upload_documents_ui(
+            "documentation",
+            study_table_id = "syn11363298")
         ),
         class = "tab-content"
       )

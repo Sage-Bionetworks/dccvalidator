@@ -1,17 +1,17 @@
 #' Gather studies within consortium
+#' @param study_table_id synapse Id for the consortium study table
 #' @return list of studies
-get_study_names <- function() {
-  study_table_id <- "syn11363298"
-  study_table <- syndccutils::get_table_df(study_table_id)
+get_study_names <- function(study_table_id) {
+  table_id <- study_table_id
+  study_table <- syndccutils::get_table_df(table_id)
   return(sort(study_table$StudyName))
 }
 
 #' UI for the get_study module
 #' @param id the id
+#' @param study_table_id synapse Id for the consortium study table
 #' @return html UI for get_study panel
-get_study_ui <- function(id) {
-  # Namespace function messes up the conditional panels
-  # Need to figure out how to make that work
+get_study_ui <- function(id, study_table_id) {
   ns <- NS(id)
   tagList(
     # Ability to choose to add to existing study
@@ -27,7 +27,7 @@ get_study_ui <- function(id) {
       selectInput(
         ns("study_choice"),
         "Choose the study",
-        get_study_names()
+        get_study_names(study_table_id)
       )
     ),
     conditionalPanel(
@@ -49,7 +49,7 @@ get_study_ui <- function(id) {
 #' @param output the output variables from [shiny::callModule()]
 #' @param session the session from [shiny::callModule()]
 #' @return name of the study
-get_study <- function(input, output, session) {
+get_study_server <- function(input, output, session) {
   study_name <- reactiveVal(NULL)
   # Even though study_name is a reactive value,
   # need observe to make sure it updates based on input

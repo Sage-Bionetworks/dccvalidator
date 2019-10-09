@@ -1,7 +1,8 @@
 #' UI function for the upload_documentation module
 #' @param id the module id
+#' @param study_table_id synapse Id for the consortium study table
 #' @return html ui for the module
-upload_documents_ui <- function(id) {
+upload_documents_ui <- function(id, study_table_id) {
   ns <- NS(id)
 
   tabItem(
@@ -26,7 +27,7 @@ upload_documents_ui <- function(id) {
     # nolint end
 
     # UI for getting the study name
-    get_study_ui(ns("doc_study")),
+    get_study_ui(ns("doc_study"), study_table_id),
 
     # File import
     fileInput(
@@ -53,6 +54,7 @@ upload_documents_ui <- function(id) {
 #' @param input the input from [shiny::callModule()]
 #' @param output the output from [shiny::callModule()]
 #' @param session the session from [shiny::callModule()]
+upload_documents_server <- function(input, output, session, parent_folder) {
   # Create folder for upload
   docs_folder <- synapser::Folder(
     name = "Documentation",
@@ -61,7 +63,7 @@ upload_documents_ui <- function(id) {
   created_docs_folder <- synapser::synStore(docs_folder)
 
   # Get the study name
-  study_name <- callModule(get_study, "doc_study")
+  study_name <- callModule(get_study_server, "doc_study")
   doc_annots <- reactive({
     list(study = study_name())
   })
