@@ -14,7 +14,7 @@
 #' @export
 #' @examples
 #' dat <- data.frame(specimenID = c("x", "y"), organ = c(NA, NA))
-#' check_cols_complete(dat, "specimenID")
+#' check_cols_complete(dat, c("specimenID", "organ"))
 check_cols_complete <- function(data, required_cols,
                              empty_values = c(NA, ""), strict = FALSE,
                              success_msg = "Required columns are complete",
