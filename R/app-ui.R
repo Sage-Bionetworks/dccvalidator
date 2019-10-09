@@ -20,7 +20,11 @@ app_ui <- function(request) {
           br(),
 
           shinyjs::disabled(
-            radioButtons("species", "Species", c("animal", "human"))
+            radioButtons(
+              "species", 
+              "Species", 
+              c("human", "drosophila", "mouse or other animal model" = "mouse"),
+              selected = "mouse")
           ),
 
           shinyjs::disabled(
