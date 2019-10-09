@@ -622,8 +622,8 @@
       "RemoteUsername": "ropensci",
       "RemoteRepo": "plotly",
       "RemoteRef": "master",
-      "RemoteSha": "972a4cb91fbf864bb5a8fc26eefc7114e375c3bc",
-      "Hash": "4bfdbe1c082f547cf54bffd777526d70"
+      "RemoteSha": "4c0c7d80d65cd55e6bc1f93fad1eae7767968474",
+      "Hash": "294ede82d777813ed3c27e01979d5bab"
     },
     "plyr": {
       "Package": "plyr",
@@ -899,7 +899,7 @@
     },
     "syndccutils": {
       "Package": "syndccutils",
-      "Version": "0.0.0.9000",
+      "Version": "0.0.0.9001",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
@@ -907,8 +907,8 @@
       "RemoteRepo": "syndccutils",
       "RemoteSubdir": "R",
       "RemoteRef": "master",
-      "RemoteSha": "0c536f6b6ead86f376c735e3dffeeda5ff6e932c",
-      "Hash": "7a87b3619651d97ecb6b6b8b98190420"
+      "RemoteSha": "3bce8bbd5e3e58ba910dd62ac8074f8506b25e93",
+      "Hash": "e48d3b9244348320e1895704ab89ff42"
     },
     "sys": {
       "Package": "sys",
