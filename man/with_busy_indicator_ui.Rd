@@ -2,7 +2,11 @@
 % Please edit documentation in R/mod-button-indicator.R
 \name{with_busy_indicator_ui}
 \alias{with_busy_indicator_ui}
-\title{Wrap the button in this function to attach visual features}
+\title{These functions add button feedback features including:
+disabling the button while processing requested function,
+showing a spinning wheel while processing requested function,
+displaying a green checkmark showing success upon completion,
+or displaying an error message if the function requested failed.}
 \usage{
 with_busy_indicator_ui(button)
 }
@@ -10,5 +14,10 @@ with_busy_indicator_ui(button)
 \item{button}{a shiny actionButton}
 }
 \description{
+Author: Dean Attali
+From https://github.com/daattali/advanced-shiny/blob/master/busy-indicator/helpers.R #nolint
+}
+\details{
+Hint for making this work with modules by mmoise in PR#11
 Wrap the button in this function to attach visual features
 }

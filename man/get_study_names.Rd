@@ -4,7 +4,10 @@
 \alias{get_study_names}
 \title{Gather studies within consortium}
 \usage{
-get_study_names()
+get_study_names(study_table_id)
+}
+\arguments{
+\item{study_table_id}{synapse Id for the consortium study table}
 }
 \value{
 list of studies

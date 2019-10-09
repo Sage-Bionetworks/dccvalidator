@@ -4,10 +4,12 @@
 \alias{upload_documents_ui}
 \title{UI function for the upload_documentation module}
 \usage{
-upload_documents_ui(id)
+upload_documents_ui(id, study_table_id)
 }
 \arguments{
 \item{id}{the module id}
+
+\item{study_table_id}{synapse Id for the consortium study table}
 }
 \value{
 html ui for the module
