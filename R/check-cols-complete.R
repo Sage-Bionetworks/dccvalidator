@@ -27,7 +27,10 @@ check_cols_complete <- function(data, required_cols,
     data[, required_cols, drop = FALSE],
     function(x) any(x %in% empty_values)
   )
-  behavior <- paste0("Columns ", required_cols, " should be complete.") # nolint
+  behavior <- paste0(
+    "Columns ",
+    paste(required_cols, collapse = ", "),
+    " should be complete.")
 
   ## Return success if all required columns have complete data.
   ## Otherwise return warn or fail depending on `strict` argument
