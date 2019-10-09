@@ -16,21 +16,26 @@ get_study_ui <- function(id) {
   tagList(
     # Ability to choose to add to existing study
     radioButtons(ns("study_exists"),
-                 "Does the study currently exist?",
-                 choices = c("Yes", "No"),
-                 selected = "Yes"),
+      "Does the study currently exist?",
+      choices = c("Yes", "No"),
+      selected = "Yes"
+    ),
     conditionalPanel(
       condition = "input.study_exists == 'Yes'",
       ns = ns,
-      selectInput(ns("study_choice"),
-                  "Choose the study",
-                  get_study_names())
+      selectInput(
+        ns("study_choice"),
+        "Choose the study",
+        get_study_names()
+      )
     ),
     conditionalPanel(
       condition = "input.study_exists == 'No'",
       ns = ns,
-      textInput(ns("study_text"),
-                "Enter the study name")
+      textInput(
+        ns("study_text"),
+        "Enter the study name"
+      )
     )
   )
 }

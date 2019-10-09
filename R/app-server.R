@@ -428,7 +428,8 @@ app_server <- function(input, output, session) {
 
     # Documentation server
     callModule(upload_documents,
-               "documentation",
-               parent_folder = reactive(created_folder))
+      "documentation",
+      parent_folder = reactive(created_folder)
+    )
   })
 }

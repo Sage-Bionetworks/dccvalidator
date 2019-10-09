@@ -42,11 +42,13 @@ with_busy_indicator_ui <- function(button) {
       )
     ),
     shinyjs::hidden(
-      div(class = "btn-err",
-          div(icon("exclamation-circle"),
-              tags$b("Error: "),
-              span(class = "btn-err-msg")
-          )
+      div(
+        class = "btn-err",
+        div(
+          icon("exclamation-circle"),
+          tags$b("Error: "),
+          span(class = "btn-err-msg")
+        )
       )
     )
   )
@@ -63,12 +65,18 @@ with_busy_indicator_server <- function(button_id, expr) {
   # disable the button
   # Need to get session in order for button to indicate correctly
   session <- shinyjs:::getSession()
-  loading_el <- sprintf("[data-for-btn=%s] .btn-loading-indicator",
-                        session$ns(button_id))
-  done_el <- sprintf("[data-for-btn=%s] .btn-done-indicator",
-                     session$ns(button_id))
-  err_el <- sprintf("[data-for-btn=%s] .btn-err",
-                    session$ns(button_id))
+  loading_el <- sprintf(
+    "[data-for-btn=%s] .btn-loading-indicator",
+    session$ns(button_id)
+  )
+  done_el <- sprintf(
+    "[data-for-btn=%s] .btn-done-indicator",
+    session$ns(button_id)
+  )
+  err_el <- sprintf(
+    "[data-for-btn=%s] .btn-err",
+    session$ns(button_id)
+  )
   shinyjs::disable(button_id)
   shinyjs::show(selector = loading_el)
   shinyjs::hide(selector = done_el)
@@ -83,15 +91,18 @@ with_busy_indicator_server <- function(button_id, expr) {
   tryCatch({
     value <- expr
     shinyjs::show(selector = done_el)
-    shinyjs::delay(2000, shinyjs::hide(selector = done_el,
-                                       anim = TRUE,
-                                       animType = "fade",
-                                       time = 0.5))
+    shinyjs::delay(2000, shinyjs::hide(
+      selector = done_el,
+      anim = TRUE,
+      animType = "fade",
+      time = 0.5
+    ))
     value
   },
   error = function(err) {
     error_func(err, button_id)
-  })
+  }
+  )
 }
 
 #' Error message helper.
@@ -100,10 +111,14 @@ with_busy_indicator_server <- function(button_id, expr) {
 error_func <- function(err, button_id) {
   # Need to get session first
   session <- shinyjs:::getSession()
-  err_el <- sprintf("[data-for-btn=%s] .btn-err",
-                    session$ns(button_id))
-  err_el_msg <- sprintf("[data-for-btn=%s] .btn-err-msg",
-                        session$ns(button_id))
+  err_el <- sprintf(
+    "[data-for-btn=%s] .btn-err",
+    session$ns(button_id)
+  )
+  err_el_msg <- sprintf(
+    "[data-for-btn=%s] .btn-err-msg",
+    session$ns(button_id)
+  )
   err_message <- gsub("^ddpcr: (.*)", "\\1", err$message)
   shinyjs::html(html = err_message, selector = err_el_msg)
   shinyjs::show(selector = err_el, anim = TRUE, animType = "fade")
