@@ -138,7 +138,7 @@ stand up a new version that is customized for a different community):
 1. ssh into the Shiny Pro server
 1. Create a folder under `/home/yourusername/ShinyApps`
 1. `git clone` the repository into the folder you've created
-1. If needed, fake any changes to the application's behavior by editing the
+1. If needed, make any changes to the application's behavior by editing the
    files, or check out a branch that contains your changes
 1. To ensure packages are up-to-date, run `Rscript -e "renv::restore()"`
 

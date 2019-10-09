@@ -156,7 +156,7 @@ test_that("check_cols_manifest works for manifest columns", {
   incomplete <- dat[, !names(dat) %in% "parent"]
 
   expect_true(inherits(check_cols_manifest(dat, version = 3), "check_pass"))
-  expect_equal(check_cols_manifest(incomplete)$data, "parent")
+  expect_equal(check_cols_manifest(incomplete, version = 3)$data, "parent")
 })
 
 test_that("get_template errors for files that are not xlsx or csv", {

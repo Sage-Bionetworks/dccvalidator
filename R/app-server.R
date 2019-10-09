@@ -19,27 +19,28 @@ app_server <- function(input, output, session) {
     ## Check if user is in AMP-AD Consortium team (needed in order to create
     ## folder at the next step)
     user <- synapser::synGetUserProfile()
-    user_teams <- synapser::synRestGET(paste0(
-      "/user/",
-      user$ownerId,
-      "/team?limit=10000"
-    ))$results
-    user_teams_ids <- purrr::map_chr(user_teams, function(x) x$id)
+    membership <- check_team_membership(teams = c("3320424"), user = user)
+    report_missing_membership(membership)
 
-    if (!"3397129" %in% user_teams_ids) {
-      showModal(
-        modalDialog(
-          title = "Not in AMP-AD Consortium team",
-          # nolint start
-          HTML("You must be a member of the AMP-AD Consortium team on Synapse to use this tool. If you are not a member of the AMP-AD Consortium team, you can request to be added at <a href=\"https://www.synapse.org/#!Team:3320424\">https://www.synapse.org/#!Team:3320424</a>.")
-          # nolint end
+    ## If user is a member of the team(s), create folder to save files and
+    ## enable inputs
+    if (inherits(membership, "check_pass")) {
+      created_folder <- try(
+        create_folder(
+          parent = "syn20506363",
+          name = user$userName
         )
       )
+      inputs_to_enable <- c(
+        "indiv_meta",
+        "biosp_meta",
+        "assay_meta",
+        "manifest",
+        "species",
+        "assay_name"
+      )
+      purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
     }
-
-    ## Create folder for upload
-    new_folder <- synapser::Folder(name = user$userName, parent = "syn20818950")
-    created_folder <- synapser::synStore(new_folder)
 
     ## Download annotation definitions
     annots <- get_synapse_annotations()
@@ -80,7 +81,9 @@ app_server <- function(input, output, session) {
 
     ## Load metadata files into session
     manifest <- reactive({
-      if (is.null(input$manifest)) return(NULL)
+      if (is.null(input$manifest)) {
+        return(NULL)
+      }
       utils::read.table(
         input$manifest$datapath,
         sep = "\t",
@@ -89,15 +92,21 @@ app_server <- function(input, output, session) {
       )
     })
     indiv <- reactive({
-      if (is.null(input$indiv_meta)) return(NULL)
+      if (is.null(input$indiv_meta)) {
+        return(NULL)
+      }
       utils::read.csv(input$indiv_meta$datapath, na.strings = "")
     })
     biosp <- reactive({
-      if (is.null(input$biosp_meta)) return(NULL)
+      if (is.null(input$biosp_meta)) {
+        return(NULL)
+      }
       utils::read.csv(input$biosp_meta$datapath, na.strings = "")
     })
     assay <- reactive({
-      if (is.null(input$assay_meta)) return(NULL)
+      if (is.null(input$assay_meta)) {
+        return(NULL)
+      }
       utils::read.csv(input$assay_meta$datapath, na.strings = "")
     })
     species_name <- reactive({
@@ -156,7 +165,13 @@ app_server <- function(input, output, session) {
       check_specimen_ids_match(biosp(), assay(), "biospecimen", "assay")
     })
     specimen_ids_biosp_manifest <- reactive({
-      check_specimen_ids_match(biosp(), manifest(), "biospecimen", "manifest")
+      check_specimen_ids_match(
+        biosp(),
+        manifest(),
+        "biospecimen",
+        "manifest",
+        bidirectional = FALSE
+      )
     })
 
     # Annotation keys in manifest are valid ------------------------------------
