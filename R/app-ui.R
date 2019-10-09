@@ -19,6 +19,14 @@ app_ui <- function(request) {
           br(),
           br(),
 
+          shinyjs::disabled(
+            radioButtons("species", "Species", c("animal", "human"))
+          ),
+
+          shinyjs::disabled(
+            selectInput("assay_name", "Assay type", c("rnaSeq", "proteomics"))
+          ),
+
           # Files to be validated
           shinyjs::disabled(
             fileInput(
@@ -57,14 +65,6 @@ app_ui <- function(request) {
                 ".csv"
               )
             )
-          ),
-
-          shinyjs::disabled(
-            radioButtons("species", "Species", c("animal", "human"))
-          ),
-
-          shinyjs::disabled(
-            selectInput("assay_name", "Assay type", c("rnaSeq", "proteomics"))
           ),
 
           shinyjs::disabled(
