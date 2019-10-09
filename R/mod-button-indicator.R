@@ -9,20 +9,6 @@
 #'
 #' Hint for making this work with modules by mmoise in PR#11
 
-with_busy_indicator_css <- "
-.btn-loading-container {
-margin-left: 10px;
-font-size: 1.2em;
-}
-.btn-done-indicator {
-color: green;
-}
-.btn-err {
-margin-top: 10px;
-color: red;
-}
-"
-
 #' Wrap the button in this function to attach visual features
 #' @param button a shiny actionButton
 with_busy_indicator_ui <- function(button) {
@@ -30,7 +16,7 @@ with_busy_indicator_ui <- function(button) {
   div(
     shinyjs::useShinyjs(),
     singleton(tags$head(
-      tags$style(with_busy_indicator_css)
+      tags$link(rel = "stylesheet", type = "text/css", href = "www/custom.css")
     )),
     `data-for-btn` = id,
     button,
