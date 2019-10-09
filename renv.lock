@@ -622,8 +622,8 @@
       "RemoteUsername": "ropensci",
       "RemoteRepo": "plotly",
       "RemoteRef": "master",
-      "RemoteSha": "972a4cb91fbf864bb5a8fc26eefc7114e375c3bc",
-      "Hash": "4bfdbe1c082f547cf54bffd777526d70"
+      "RemoteSha": "4c0c7d80d65cd55e6bc1f93fad1eae7767968474",
+      "Hash": "294ede82d777813ed3c27e01979d5bab"
     },
     "plyr": {
       "Package": "plyr",
@@ -718,20 +718,20 @@
       "RemoteRepo": "remotes",
       "RemoteUsername": "r-lib",
       "RemoteRef": "master",
-      "RemoteSha": "3e042a2ca90336739a5426eb7bbcecdc0187ae3c",
-      "Hash": "1f1b7b4cf02606b509afefef6ca6f491"
+      "RemoteSha": "2f1a0401c31e0a0576ae9e54c38aa11e023ce169",
+      "Hash": "78d6592ef867b8f700ce9dd0f7a719c7"
     },
     "renv": {
       "Package": "renv",
-      "Version": "0.7.0-107",
+      "Version": "0.7.0-125",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "rstudio",
       "RemoteRepo": "renv",
       "RemoteRef": "master",
-      "RemoteSha": "2fe326156043b6ec5a303c9273e93c01856aa63e",
-      "Hash": "e4b3eac13fb228091e79628283f66485"
+      "RemoteSha": "c6b89be02de6371dad6f778250ce230dc776eaf1",
+      "Hash": "95a465dc04f509349cd22a63c3e45344"
     },
     "reshape2": {
       "Package": "reshape2",
@@ -852,6 +852,13 @@
       "Repository": "CRAN",
       "Hash": "12f87658587a6ea64a67e7d559d6491d"
     },
+    "shinyjs": {
+      "Package": "shinyjs",
+      "Version": "1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "f80ba8b88aa5cd27157e8cd3bbd7cc35"
+    },
     "skimr": {
       "Package": "skimr",
       "Version": "1.0.7",
@@ -892,7 +899,7 @@
     },
     "syndccutils": {
       "Package": "syndccutils",
-      "Version": "0.0.0.9000",
+      "Version": "0.0.0.9001",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
@@ -900,8 +907,8 @@
       "RemoteRepo": "syndccutils",
       "RemoteSubdir": "R",
       "RemoteRef": "master",
-      "RemoteSha": "0c536f6b6ead86f376c735e3dffeeda5ff6e932c",
-      "Hash": "7a87b3619651d97ecb6b6b8b98190420"
+      "RemoteSha": "3bce8bbd5e3e58ba910dd62ac8074f8506b25e93",
+      "Hash": "e48d3b9244348320e1895704ab89ff42"
     },
     "sys": {
       "Package": "sys",

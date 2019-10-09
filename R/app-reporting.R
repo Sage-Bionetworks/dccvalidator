@@ -82,3 +82,37 @@ show_details.list <- function(x) {
   })
   renderTable(dat, colnames = FALSE)
 }
+
+
+#' Create a modal dialog if user is not in required team(s)
+#'
+#' Takes the output from [check_team_membership()] and, if the user is not in
+#' the required teams, creates a modal dialog indicating which teams they need
+#' to belong to and how to request access.
+#'
+#' @param result Output from [check_team_membership()]
+report_missing_membership <- function(result) {
+  if (inherits(result, "check_fail")) {
+    team_links <- glue::glue_collapse(
+      purrr::map_chr(
+        result$data,
+        function(x) {
+          glue::glue("<a href=\"https://www.synapse.org/#!Team:{x}\">https://www.synapse.org/#!Team:{x}</a>") # nolint
+        }
+      ),
+      sep = "<br>"
+    )
+    missing_teams <- glue::glue_collapse(
+      purrr::map_chr(result$data, function(x) synapser::synGetTeam(x)$name),
+      sep = ", "
+    )
+    showModal(
+      modalDialog(
+        title = result$message,
+        p(result$behavior),
+        p("You can request to be added at:"),
+        HTML(team_links)
+      )
+    )
+  }
+}
