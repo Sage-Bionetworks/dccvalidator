@@ -45,9 +45,9 @@ get_study_ui <- function(id) {
 #' Get study name based on either:
 #' - existing study selection box
 #' - new name for currently non-existing study
-#' @param input the input variables from shiny::callModule
-#' @param output the output variables from shiny::callModule
-#' @param session the session from shiny::callModule
+#' @param input the input variables from [shiny::callModule()]
+#' @param output the output variables from [shiny::callModule()]
+#' @param session the session from [shiny::callModule()]
 #' @return name of the study
 get_study <- function(input, output, session) {
   study_name <- reactiveVal(NULL)

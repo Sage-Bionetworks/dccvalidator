@@ -23,7 +23,6 @@ upload_documents_ui <- function(id) {
     h4("Assay Description"),
 
     p("The assay description should include a summary of ", tags$b("sample processing, data generation,"), " and ", tags$b("data processing.")),
-
     # nolint end
 
     # UI for getting the study name
@@ -51,10 +50,9 @@ upload_documents_ui <- function(id) {
 }
 
 #' Server function for upload_documentation module
-#' @param input the input from shiny::callModule
-#' @param output the output from shiny::callModule
-#' @param session the session from shiny::callModule
-upload_documents <- function(input, output, session, parent_folder) {
+#' @param input the input from [shiny::callModule()]
+#' @param output the output from [shiny::callModule()]
+#' @param session the session from [shiny::callModule()]
   # Create folder for upload
   docs_folder <- synapser::Folder(
     name = "Documentation",
