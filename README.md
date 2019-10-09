@@ -51,7 +51,7 @@ check_annotation_values(my_file, annots)
 fv <- synTableQuery("SELECT * FROM syn17038067")
 #> 
  [####################]100.00%   1/1   Done...    
-Downloading  [####################]100.00%   3.2kB/3.2kB (1.2MB/s) Job-97181474099481724820214930.csv Done...
+Downloading  [####################]100.00%   3.2kB/3.2kB (1.9MB/s) Job-97816206749552689336072275.csv Done...
 check_annotation_keys(fv, annots)
 #> <error>
 #> message: Some annotation keys are invalid
@@ -173,7 +173,7 @@ community):
 1.  ssh into the Shiny Pro server
 2.  Create a folder under `/home/yourusername/ShinyApps`
 3.  `git clone` the repository into the folder you’ve created
-4.  If needed, fake any changes to the application’s behavior by editing
+4.  If needed, make any changes to the application’s behavior by editing
     the files, or check out a branch that contains your changes
 5.  To ensure packages are up-to-date, run `Rscript -e
     "renv::restore()"`

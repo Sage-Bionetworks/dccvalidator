@@ -25,3 +25,21 @@ test_that("get_annotation gets value of an annotation on a Synapse entity", {
   annot <- get_annotation("syn17038064", "fileFormat")
   expect_equal(annot, c(syn17038064 = "txt"))
 })
+
+test_that("%||% gives b if a is NULL", {
+  a <- NULL
+  b <- "foo"
+  expect_equal(a %||% b, "foo")
+
+  a <- "bar"
+  b <- "baz"
+  expect_equal(a %||% b, "bar")
+
+  a <- NA
+  b <- "foo"
+  expect_equal(a %||% b, NA)
+
+  a <- NULL
+  b <- NULL
+  expect_null(a %||% b)
+})

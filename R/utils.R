@@ -36,3 +36,7 @@ save_to_synapse <- function(input_file, parent, name = NULL) {
   )
   synapser::synStore(file_to_upload)
 }
+
+"%||%" <- function(a, b) {
+  if (!is.null(a)) a else b
+}
