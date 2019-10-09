@@ -34,7 +34,8 @@ upload_documents_ui <- function(id) {
       ns("study_doc"),
       "Upload the study description file"
     ),
-    fileInput(ns("assay_doc"),
+    fileInput(
+      ns("assay_doc"),
       "Upload the assay description files",
       multiple = TRUE
     ),

@@ -15,7 +15,8 @@ get_study_ui <- function(id) {
   ns <- NS(id)
   tagList(
     # Ability to choose to add to existing study
-    radioButtons(ns("study_exists"),
+    radioButtons(
+      ns("study_exists"),
       "Does the study currently exist?",
       choices = c("Yes", "No"),
       selected = "Yes"
