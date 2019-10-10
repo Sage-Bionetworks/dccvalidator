@@ -1,3 +1,14 @@
+## Check if we are running on travis
+on_travis <- function() {
+  if (identical(Sys.getenv("TRAVIS"), "true")) {
+    return(TRUE)
+    # nocov start
+  } else {
+    return(FALSE)
+  }
+  # nocov end
+}
+
 ## Look up env vars and log in to Synapse
 syn_travis_login <- function() {
   ## Credentials are encrypted on travis
@@ -17,17 +28,6 @@ attempt_login <- function(...) {
   } else {
     synapser::synLogin(...)
   }
-}
-
-## Check if we are running on travis
-on_travis <- function() {
-  if (identical(Sys.getenv("TRAVIS"), "true")) {
-    return(TRUE)
-    # nocov start
-  } else {
-    return(FALSE)
-  }
-  # nocov end
 }
 
 ## Check if we're on a fork
