@@ -4,12 +4,10 @@
 \alias{get_study_ui}
 \title{UI for the get_study module}
 \usage{
-get_study_ui(id, study_table_id)
+get_study_ui(id)
 }
 \arguments{
 \item{id}{the id}
-
-\item{study_table_id}{synapse Id for the consortium study table}
 }
 \value{
 html UI for get_study panel

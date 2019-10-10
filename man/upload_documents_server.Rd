@@ -4,7 +4,8 @@
 \alias{upload_documents_server}
 \title{Server function for upload_documentation module}
 \usage{
-upload_documents_server(input, output, session, parent_folder)
+upload_documents_server(input, output, session, parent_folder,
+  study_table_id)
 }
 \arguments{
 \item{input}{the input from \code{\link[shiny:callModule]{shiny::callModule()}}}
@@ -14,6 +15,8 @@ upload_documents_server(input, output, session, parent_folder)
 \item{session}{the session from \code{\link[shiny:callModule]{shiny::callModule()}}}
 
 \item{parent_folder}{the Synapse folder to put a Documentation folder in}
+
+\item{study_table_id}{synapse Id for the consortium study table}
 }
 \description{
 Server function for upload_documentation module

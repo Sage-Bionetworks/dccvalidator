@@ -2,14 +2,15 @@
 % Please edit documentation in R/mod-get-study-names.R
 \name{get_study_server}
 \alias{get_study_server}
-\title{Server function for the get_study module
+\title{Server function for the get_study module that gives the study
+name given by the user
 Get study name based on either:
 \itemize{
 \item existing study selection box
 \item new name for currently non-existing study
 }}
 \usage{
-get_study_server(input, output, session)
+get_study_server(input, output, session, study_table_id)
 }
 \arguments{
 \item{input}{the input variables from \code{\link[shiny:callModule]{shiny::callModule()}}}
@@ -17,12 +18,15 @@ get_study_server(input, output, session)
 \item{output}{the output variables from \code{\link[shiny:callModule]{shiny::callModule()}}}
 
 \item{session}{the session from \code{\link[shiny:callModule]{shiny::callModule()}}}
+
+\item{study_table_id}{synapse Id for the consortium study table}
 }
 \value{
 name of the study
 }
 \description{
-Server function for the get_study module
+Server function for the get_study module that gives the study
+name given by the user
 Get study name based on either:
 \itemize{
 \item existing study selection box
