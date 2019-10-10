@@ -22,7 +22,7 @@ check_cols_complete <- function(data, required_cols,
   if (is.null(data)) {
     return(NULL)
   }
-  ## Check if all columns have data
+  ## Check if columns in `required_cols` contain missing data
   results <- purrr::map_lgl(
     data[, required_cols, drop = FALSE],
     function(x) any(x %in% empty_values)
