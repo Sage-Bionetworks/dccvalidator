@@ -54,6 +54,7 @@ upload_documents_ui <- function(id, study_table_id) {
 #' @param input the input from [shiny::callModule()]
 #' @param output the output from [shiny::callModule()]
 #' @param session the session from [shiny::callModule()]
+#' @param parent_folder the Synapse folder to put a Documentation folder in
 upload_documents_server <- function(input, output, session, parent_folder) {
   # Create folder for upload
   docs_folder <- synapser::Folder(

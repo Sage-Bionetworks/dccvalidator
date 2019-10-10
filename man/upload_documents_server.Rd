@@ -12,6 +12,8 @@ upload_documents_server(input, output, session, parent_folder)
 \item{output}{the output from \code{\link[shiny:callModule]{shiny::callModule()}}}
 
 \item{session}{the session from \code{\link[shiny:callModule]{shiny::callModule()}}}
+
+\item{parent_folder}{the Synapse folder to put a Documentation folder in}
 }
 \description{
 Server function for upload_documentation module
