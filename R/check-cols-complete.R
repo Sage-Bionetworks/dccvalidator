@@ -3,7 +3,8 @@
 #' Check for complete columns in the data and warn (or fail) if present.
 #'
 #' @param data Data to check
-#' @param required_cols The required columns to check for completeness.
+#' @param required_cols A character vector of the required columns to check 
+#'   for completeness.
 #' @param empty_values Values that are considered empty. Defaults to `NA` and
 #'   `""`.
 #' @param strict If `FALSE`, return a `"check_warn"` object; if `TRUE`, return a
