@@ -47,7 +47,7 @@ with_busy_indicator_server <- function(button_id, expr) {
   # UX stuff: show the "busy" message, hide the other messages,
   # disable the button
   # Need to get session in order for button to indicate correctly
-  session <- shinyjs:::getSession()
+  session <- getDefaultReactiveDomain()
   loading_el <- sprintf(
     "[data-for-btn=%s] .btn-loading-indicator",
     session$ns(button_id)
@@ -93,7 +93,7 @@ with_busy_indicator_server <- function(button_id, expr) {
 #' @param button_id id for the actionButton
 error_func <- function(err, button_id) {
   # Need to get session first
-  session <- shinyjs:::getSession()
+  session <- getDefaultReactiveDomain()
   err_el <- sprintf(
     "[data-for-btn=%s] .btn-err",
     session$ns(button_id)
