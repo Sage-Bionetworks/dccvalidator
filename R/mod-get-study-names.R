@@ -13,7 +13,7 @@ get_study_ui <- function(id) {
   ns <- NS(id)
   # Use shinyjs
   shinyjs::useShinyjs()
-  
+
   tagList(
     # Ability to choose to add to existing study
     shinyjs::disabled(
@@ -66,7 +66,8 @@ get_study_server <- function(input, output, session, study_table_id) {
   updateSelectInput(
     session,
     inputId = "study_choice",
-    choices = all_studies)
+    choices = all_studies
+  )
 
   # Enable the inputs
   inputs_to_enable <- c(

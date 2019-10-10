@@ -8,7 +8,7 @@ upload_documents_ui <- function(id) {
     tabName = id,
     # Use shinyjs
     shinyjs::useShinyjs(),
-    
+
     # Instructions/Description
     h3("Upload Unstructured Metadata"),
     # nolint start
@@ -84,7 +84,8 @@ upload_documents_server <- function(input, output, session, parent_folder, study
   study_name <- callModule(
     get_study_server,
     "doc_study",
-    study_table_id = study_table_id)
+    study_table_id = study_table_id
+  )
   doc_annots <- reactive({
     list(study = study_name())
   })
