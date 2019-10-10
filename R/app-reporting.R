@@ -84,18 +84,21 @@ show_details.list <- function(x) {
 }
 
 
-#' Create a modal dialog if user is not in required team(s)
+#' Create a modal dialog if user is not in required team(s) or certified
 #'
-#' Takes the output from [check_team_membership()] and, if the user is not in
-#' the required teams, creates a modal dialog indicating which teams they need
-#' to belong to and how to request access.
+#' Takes the output from [check_team_membership()] and [check_certified_user()].
+#' If the user is not in the required teams or certified, creates a modal dialog
+#' indicating which teams they need to belong to and how to request access.
 #'
-#' @param result Output from [check_team_membership()]
-report_missing_membership <- function(result) {
-  if (inherits(result, "check_fail")) {
+#' @param membership Output from [check_team_membership()]
+#' @param certified Output from [check_certified_user()]
+report_unsatisfied_requirements <- function(membership, certified) {
+  member_message <- tagList()
+  certified_message <- tagList()
+  if (inherits(membership, "check_fail")) {
     team_links <- glue::glue_collapse(
       purrr::map_chr(
-        result$data,
+        membership$data,
         function(x) {
           glue::glue("<a href=\"https://www.synapse.org/#!Team:{x}\">https://www.synapse.org/#!Team:{x}</a>") # nolint
         }
@@ -103,15 +106,31 @@ report_missing_membership <- function(result) {
       sep = "<br>"
     )
     missing_teams <- glue::glue_collapse(
-      purrr::map_chr(result$data, function(x) synapser::synGetTeam(x)$name),
+      purrr::map_chr(membership$data, function(x) synapser::synGetTeam(x)$name),
       sep = ", "
     )
+    member_message <- tagList(
+      p(tags$b(membership$message)),
+      p(membership$behavior),
+      p("You can request to be added at:"),
+      HTML(team_links)
+    )
+  }
+  if (inherits(certified, "check_fail")) {
+    certified_message <- tagList(
+      p(tags$b(certified$message)),
+      HTML(certified$behavior)
+    )
+  }
+
+  if (inherits(membership, "check_fail") | inherits(certified, "check_fail")) {
     showModal(
       modalDialog(
-        title = result$message,
-        p(result$behavior),
-        p("You can request to be added at:"),
-        HTML(team_links)
+        title = "Synapse requirements not met",
+        member_message,
+        br(),
+        br(),
+        certified_message
       )
     )
   }
