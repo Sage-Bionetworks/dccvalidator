@@ -23,6 +23,7 @@ app_ui <- function(request) {
           # Validator tab UI
           tabItem(
             tabName = "validator",
+
             # Use shinyjs
             shinyjs::useShinyjs(),
 
@@ -165,11 +166,7 @@ app_ui <- function(request) {
           ),
 
           # Documentation tab UI
-          # Customize for specific studies
-          upload_documents_ui(
-            "documentation",
-            study_table_id = "syn11363298"
-          )
+          upload_documents_ui("documentation")
         ),
         class = "tab-content"
       )

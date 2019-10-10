@@ -1,12 +1,14 @@
 #' UI function for the upload_documentation module
 #' @param id the module id
-#' @param study_table_id synapse Id for the consortium study table
 #' @return html ui for the module
-upload_documents_ui <- function(id, study_table_id) {
+upload_documents_ui <- function(id) {
   ns <- NS(id)
 
   tabItem(
     tabName = id,
+    # Use shinyjs
+    shinyjs::useShinyjs(),
+    
     # Instructions/Description
     h3("Upload Unstructured Metadata"),
     # nolint start
@@ -27,24 +29,30 @@ upload_documents_ui <- function(id, study_table_id) {
     # nolint end
 
     # UI for getting the study name
-    get_study_ui(ns("doc_study"), study_table_id),
+    get_study_ui(ns("doc_study")),
 
     # File import
-    fileInput(
-      ns("study_doc"),
-      "Upload the study description file"
+    shinyjs::disabled(
+      fileInput(
+        ns("study_doc"),
+        "Upload the study description file"
+      )
     ),
-    fileInput(
-      ns("assay_doc"),
-      "Upload the assay description files",
-      multiple = TRUE
+    shinyjs::disabled(
+      fileInput(
+        ns("assay_doc"),
+        "Upload the assay description files",
+        multiple = TRUE
+      )
     ),
 
     # Add an indicator feature to submit button
     with_busy_indicator_ui(
-      actionButton(
-        ns("upload_docs"),
-        "Submit"
+      shinyjs::disabled(
+        actionButton(
+          ns("upload_docs"),
+          "Submit"
+        )
       )
     )
   )
@@ -55,7 +63,16 @@ upload_documents_ui <- function(id, study_table_id) {
 #' @param output the output from [shiny::callModule()]
 #' @param session the session from [shiny::callModule()]
 #' @param parent_folder the Synapse folder to put a Documentation folder in
-upload_documents_server <- function(input, output, session, parent_folder) {
+#' @param study_table_id synapse Id for the consortium study table
+upload_documents_server <- function(input, output, session, parent_folder, study_table_id) {
+  inputs_to_enable <- c(
+    "doc_study",
+    "study_doc",
+    "assay_doc",
+    "upload_docs"
+  )
+  purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
+
   # Create folder for upload
   docs_folder <- synapser::Folder(
     name = "Documentation",
@@ -64,7 +81,10 @@ upload_documents_server <- function(input, output, session, parent_folder) {
   created_docs_folder <- synapser::synStore(docs_folder)
 
   # Get the study name
-  study_name <- callModule(get_study_server, "doc_study")
+  study_name <- callModule(
+    get_study_server,
+    "doc_study",
+    study_table_id = study_table_id)
   doc_annots <- reactive({
     list(study = study_name())
   })

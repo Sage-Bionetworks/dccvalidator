@@ -41,6 +41,14 @@ app_server <- function(input, output, session) {
         "assay_name"
       )
       purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
+
+      # Documentation server needs created_folder to run correctly
+      callModule(
+        upload_documents_server,
+        "documentation",
+        parent_folder = reactive(created_folder),
+        study_table_id = reactive("syn11363298")
+      )
     }
 
     ## Download annotation definitions
@@ -254,7 +262,6 @@ app_server <- function(input, output, session) {
       )
     })
 
-
     ## List results
     res <- reactive({
       list(
@@ -425,12 +432,5 @@ app_server <- function(input, output, session) {
       visdat::vis_dat(vals()[[input$file_to_summarize]]) +
         ggplot2::theme(text = ggplot2::element_text(size = 16))
     })
-
-    # Documentation server
-    callModule(
-      upload_documents_server,
-      "documentation",
-      parent_folder = reactive(created_folder)
-    )
   })
 }
