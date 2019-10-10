@@ -7,35 +7,19 @@ test_that("on_travis() returns TRUE on Travis", {
   expect_equal(on_travis(), isTRUE(as.logical(Sys.getenv("TRAVIS"))))
 })
 
-test_that("on_fork_pr() returns TRUE on fork PRs, FALSE on local PRs", {
-  res1 <- withr::with_envvar(
-    c("TRAVIS_PULL_REQUEST_SLUG" = "Not-Sage/dccvalidator"),
-    on_fork_pr()
-  )
-  res2 <- withr::with_envvar(
-    c("TRAVIS_PULL_REQUEST_SLUG" = "Sage-Bionetworks/dccvalidator"),
-    on_fork_pr()
-  )
-  expect_true(res1)
-  expect_false(res2)
-})
-
-test_that("on_fork_pr() returns FALSE on push builds", {
-  res <- withr::with_envvar(
-    c("TRAVIS_PULL_REQUEST_SLUG" = ""),
-    on_fork_pr()
-  )
-  expect_false(res)
-})
-
-test_that("login works on travis", {
-  skip_on_fork()
-
+test_that("login works on travis in main repo", {
   ## Lots of other things will fail too if it doesn't, but doesn't hurt to have
   ## a dedicated test
-  if (!on_travis()) {
-    skip("This test should run on Travis only")
-  }
+  skip_if_not(on_travis())
+
+  ## In this one we do need to ensure it only runs for builds on upstream repo,
+  ## not forks
+  owner <- gsub(
+    "(^[^/]+)(.+)", "\\1",
+    Sys.getenv("TRAVIS_PULL_REQUEST_SLUG")
+  )
+  skip_if_not(owner == "Sage-Bionetworks", "Testing on upstream repo")
+
   login <- try(syn_travis_login(), silent = TRUE)
   expect_false(inherits(login, "try-error"))
 })
@@ -45,7 +29,7 @@ test_that("get_annotation fails if no key provided", {
 })
 
 test_that("get_annotation gets value of an annotation on a Synapse entity", {
-  skip_on_fork()
+  skip_if_not(logged_in())
 
   annot <- get_annotation("syn17038064", "fileFormat")
   expect_equal(annot, c(syn17038064 = "txt"))
@@ -67,64 +51,4 @@ test_that("%||% gives b if a is NULL", {
   a <- NULL
   b <- NULL
   expect_null(a %||% b)
-})
-
-## Check if skip occurred with given environment variables
-was_skipped_with_env <- function(var, skip_fun) {
-  was_skipped <- function(code) {
-    tryCatch(
-      # nolint start
-      {
-        skipped <- TRUE
-        code
-        skipped <- FALSE
-      },
-      # nolint end
-      skip = function(e) NULL
-    )
-    return(skipped)
-  }
-  withr::with_envvar(var, was_skipped(skip_fun()))
-}
-
-test_that("skip_on_fork skips when owner isn't Sage-Bionetworks", {
-  expect_true(
-    was_skipped_with_env(
-      c(
-        "TRAVIS" = "true",
-        "TRAVIS_PULL_REQUEST_SLUG" = "Not-Sage/dccvalidator"
-      ),
-      skip_on_fork
-    )
-  )
-})
-
-test_that("skip_on_fork doesn't skip when owner is Sage-Bionetworks", {
-  expect_false(
-    was_skipped_with_env(
-      c(
-        "TRAVIS" = "true",
-        "TRAVIS_PULL_REQUEST_SLUG" = "Sage-Bionetworks/dccvalidator"
-      ),
-      skip_on_fork
-    )
-  )
-})
-
-test_that("skip_on_fork doesn't skip on non-PR builds", {
-  expect_false(
-    was_skipped_with_env(
-      c(
-        "TRAVIS" = "true",
-        "TRAVIS_PULL_REQUEST_SLUG" = ""
-      ),
-      skip_on_fork
-    )
-  )
-})
-
-test_that("skip_on_fork doesn't skip when not on Travis", {
-  expect_false(
-    was_skipped_with_env(c("TRAVIS" = ""), skip_on_fork)
-  )
 })

@@ -4,7 +4,7 @@ library("synapser")
 attempt_login()
 
 test_that("create_folder() creates a folder", {
-  skip_on_fork()
+  skip_if_not(logged_in())
 
   created_folder <- create_folder(
     parent = "syn17038062",

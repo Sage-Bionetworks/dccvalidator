@@ -31,7 +31,7 @@ test_that("get_template fails when not logged in to Synapse", {
 attempt_login()
 
 test_that("check_cols_individual works for individual columns", {
-  skip_on_fork()
+  skip_if_not(logged_in())
 
   cols <- get_template("syn12973254", version = 1)
   full_col <- data.frame(matrix(ncol = length(cols)))
@@ -47,7 +47,7 @@ test_that("check_cols_individual works for individual columns", {
 })
 
 test_that("check_cols_individual returns invalid columns in condition object", {
-  skip_on_fork()
+  skip_if_not(logged_in())
 
   cols <- get_template("syn12973254", version = 1)
   full_col <- data.frame(matrix(ncol = length(cols)))
@@ -61,7 +61,7 @@ test_that("check_cols_individual returns invalid columns in condition object", {
 })
 
 test_that("check_cols_biospecimen works for biospecimen columns", {
-  skip_on_fork()
+  skip_if_not(logged_in())
 
   biosp_names <- get_template("syn12973252", version = 4)
 
@@ -84,7 +84,7 @@ test_that("check_cols_biospecimen works for biospecimen columns", {
 })
 
 test_that("check_cols_biospecimen returns invalid columns in condition obj.", {
-  skip_on_fork()
+  skip_if_not(logged_in())
 
   biosp_names <- get_template("syn12973252", version = 4)
 
@@ -99,7 +99,7 @@ test_that("check_cols_biospecimen returns invalid columns in condition obj.", {
 })
 
 test_that("check_cols_biospecimen can get drosophila template", {
-  skip_on_fork()
+  skip_if_not(logged_in())
 
   drosophila_names <- get_template("syn20673251", version = 1)
   drosophila_data <- data.frame(matrix(ncol = length(drosophila_names)))
@@ -120,7 +120,7 @@ test_that("check_cols_biospecimen can get drosophila template", {
 })
 
 test_that("check_cols_assay works for assay columns", {
-  skip_on_fork()
+  skip_if_not(logged_in())
 
   rnaseq_names <- get_template("syn12973256", version = 2)
 
@@ -137,7 +137,7 @@ test_that("check_cols_assay works for assay columns", {
 })
 
 test_that("check_cols_assay returns invalid columns within condition object", {
-  skip_on_fork()
+  skip_if_not(logged_in())
 
   rnaseq_names <- get_template("syn12973256", version = 2)
 
@@ -152,7 +152,7 @@ test_that("check_cols_assay returns invalid columns within condition object", {
 })
 
 test_that("check_cols_manifest works for manifest columns", {
-  skip_on_fork()
+  skip_if_not(logged_in())
 
   cols <- get_template("syn20820080", version = 3)
   dat <- data.frame(matrix(ncol = length(cols)))
@@ -164,13 +164,13 @@ test_that("check_cols_manifest works for manifest columns", {
 })
 
 test_that("get_template errors for files that are not xlsx or csv", {
-  skip_on_fork()
+  skip_if_not(logged_in())
 
   expect_error(get_template("syn17039045"))
 })
 
 test_that("get_template can read in excel and csv templates", {
-  skip_on_fork()
+  skip_if_not(logged_in())
 
   csv <- get_template("syn18384877", version = 1)
   xlsx <- get_template("syn18384878", version = 1)
@@ -179,7 +179,7 @@ test_that("get_template can read in excel and csv templates", {
 })
 
 test_that("get_template can get different version of a template", {
-  skip_on_fork()
+  skip_if_not(logged_in())
 
   xlsx1 <- get_template("syn18384878", version = 1)
   xlsx2 <- get_template("syn18384878", version = 2)
@@ -188,7 +188,7 @@ test_that("get_template can get different version of a template", {
 })
 
 test_that("wrapper functions for specific template gets the correct version", {
-  skip_on_fork()
+  skip_if_not(logged_in())
 
   dat <- data.frame(
     individualID = 1,

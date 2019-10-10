@@ -40,7 +40,7 @@ test_that("check_annotation_values returns invalid values in $data", {
 })
 
 test_that("check_annotation_values works for File objects", {
-  skip_on_fork()
+  skip_if_not(logged_in())
 
   a <- synGet("syn17038064", downloadFile = FALSE)
   b <- synGet("syn17038065", downloadFile = FALSE)
@@ -57,7 +57,7 @@ test_that("check_annotation_values works for File objects", {
 })
 
 test_that("check_annotation_values works for file views", {
-  skip_on_fork()
+  skip_if_not(logged_in())
 
   fv <- synTableQuery("SELECT * FROM syn17038067")
   res <- check_annotation_values(fv, annots)
@@ -90,7 +90,7 @@ test_that("valid_annotation_values fails when no annotations present", {
 })
 
 test_that("valid_annotation_values works for File objects", {
-  skip_on_fork()
+  skip_if_not(logged_in())
 
   a <- synGet("syn17038064", downloadFile = FALSE)
   resa <- valid_annotation_values(a, annots)
@@ -98,7 +98,7 @@ test_that("valid_annotation_values works for File objects", {
 })
 
 test_that("valid_annotation_values works for file views", {
-  skip_on_fork()
+  skip_if_not(logged_in())
 
   fv <- synTableQuery("SELECT * FROM syn17038067")
   res <- valid_annotation_values(fv, annots)
@@ -126,7 +126,7 @@ test_that("check_value returns valid or invalid valies", {
 })
 
 test_that("check_value falls back to get_synapse_annotations", {
-  skip_on_fork()
+  skip_if_not(logged_in())
 
   res <- check_value("wrong", "fileFormat", return_valid = FALSE)
   expect_equal(res, "wrong")
@@ -271,7 +271,8 @@ test_that("check_values can whitelist keys and values simultaneously", {
 })
 
 test_that("check_values false back to get_synapse_annotations()", {
-  skip_on_fork()
+  skip_if_not(logged_in())
+
 
   dat <- tibble(
     fileFormat = c("wrong", "wronger", "wrongest", "txt"),

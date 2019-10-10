@@ -22,6 +22,7 @@ Imports:
     golem,
     pkgload,
     purrr,
+    PythonEmbedInR,
     readxl,
     rlang,
     shiny,
