@@ -64,7 +64,8 @@ upload_documents_ui <- function(id) {
 #' @param session the session from [shiny::callModule()]
 #' @param parent_folder the Synapse folder to put a Documentation folder in
 #' @param study_table_id synapse Id for the consortium study table
-upload_documents_server <- function(input, output, session, parent_folder, study_table_id) {
+upload_documents_server <- function(input, output, session,
+                                    parent_folder, study_table_id) {
   inputs_to_enable <- c(
     "doc_study",
     "study_doc",
