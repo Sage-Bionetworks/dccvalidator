@@ -71,12 +71,11 @@ check_cols_individual <- function(data, template,
   if (is.null(data)) {
     return(NULL)
   }
-  template <- match.arg(template, c("human", "drosophila", "general"))
+  template <- match.arg(template, c("human", "general"))
   id <- switch(
     template,
     human = "syn12973254",
     general = "syn12973253",
-    drosophila = "syn12973253"
   )
   required <- get_template(id, ...)
   behavior <- paste0(
