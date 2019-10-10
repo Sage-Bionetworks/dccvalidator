@@ -1,9 +1,11 @@
 context("test-create-folder.R")
 
 library("synapser")
-if (on_travis()) syn_travis_login() else synLogin()
+attempt_login()
 
 test_that("create_folder() creates a folder", {
+  skip_if_not(logged_in())
+
   created_folder <- create_folder(
     parent = "syn17038062",
     name = "my_test_folder"

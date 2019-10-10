@@ -22,6 +22,7 @@ Imports:
     golem,
     pkgload,
     purrr,
+    PythonEmbedInR,
     readxl,
     rlang,
     shiny,
@@ -37,7 +38,8 @@ Imports:
     visdat
 Suggests:
     covr,
-    testthat
+    testthat,
+    withr
 Remotes:
     hadley/emo,
     Sage-Bionetworks/syndccutils/R
