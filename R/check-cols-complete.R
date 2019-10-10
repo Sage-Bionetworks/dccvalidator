@@ -3,8 +3,8 @@
 #' Check for complete columns in the data and warn (or fail) if present.
 #'
 #' @param data Data to check
-#' @param required_cols A character vector of the required columns to check 
-#'   for completeness.
+#' @param required_cols A character vector of the required columns to check for
+#'   completeness.
 #' @param empty_values Values that are considered empty. Defaults to `NA` and
 #'   `""`.
 #' @param strict If `FALSE`, return a `"check_warn"` object; if `TRUE`, return a
@@ -19,7 +19,7 @@
 check_cols_complete <- function(data, required_cols,
                                 empty_values = c(NA, ""), strict = TRUE,
                                 success_msg = "Required columns are complete",
-                                fail_msg = "Some required columns are not complete") { #nolint
+                                fail_msg = "Some required columns are not complete") { # nolint
   if (is.null(data)) {
     return(NULL)
   }
@@ -31,7 +31,8 @@ check_cols_complete <- function(data, required_cols,
   behavior <- paste0(
     "Columns ",
     paste(required_cols, collapse = ", "),
-    " should be complete.")
+    " should be complete."
+  )
 
   ## Return success if all required columns have complete data.
   ## Otherwise return warn or fail depending on `strict` argument
