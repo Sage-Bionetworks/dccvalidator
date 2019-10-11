@@ -1,0 +1,42 @@
+---
+title: "Deploying dccvalidator"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{deploying-dccvalidator}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette is applicable to Sage employees who are deploying the application
+on our Shiny Pro server. To learn about the server and how to get credentials,
+please read the
+[Confluence documentation](https://sagebionetworks.jira.com/wiki/spaces/SageShinyServer/pages/75497489/Shiny+Server).
+
+The app is deployed on the server through the following steps:
+
+1. ssh into the Shiny Pro server and navigate to `/home/kwoo/ShinyApps/dccvalidator-app`
+1. `git pull` changes from GitHub
+1. To ensure packages are up-to-date, open an R session and run `renv::restore()`
+
+You may need to run `touch restart.txt` afterward to ensure the application is
+restarted.
+
+If you want to deploy the app in a different location (e.g. because you want to
+stand up a new version that is customized for a different community):
+
+1. ssh into the Shiny Pro server
+1. Create a folder under `/home/yourusername/ShinyApps`
+1. `git clone` the repository into the folder you've created
+1. If needed, make any changes to the application's behavior by editing the
+   files, or check out a branch that contains your changes
+1. To ensure packages are up-to-date, open an R session and run `renv::restore()`
+
+Again, you may need to run `touch restart.txt` afterward to ensure the
+application is restarted.
