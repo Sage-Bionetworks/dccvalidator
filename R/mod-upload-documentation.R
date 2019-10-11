@@ -38,6 +38,7 @@ upload_documents_ui <- function(id) {
           )
         )
       ),
+
       mainPanel(
         # Instructions/Description
         h3("Upload Unstructured Metadata"),
@@ -55,7 +56,7 @@ upload_documents_ui <- function(id) {
 
         h4("Assay Description"),
 
-        p("The assay description should include a summary of ", tags$b("sample processing, data generation,"), " and ", tags$b("data processing.")),
+        p("The assay description should include a summary of ", tags$b("sample processing, data generation,"), " and ", tags$b("data processing."))
         # nolint end
       )
     )
