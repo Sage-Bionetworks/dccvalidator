@@ -75,7 +75,7 @@ check_cols_individual <- function(data, template,
   id <- switch(
     template,
     human = "syn12973254",
-    general = "syn12973253",
+    general = "syn12973253"
   )
   required <- get_template(id, ...)
   behavior <- paste0(
