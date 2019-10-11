@@ -8,7 +8,7 @@
 #'   project
 #' @return A div containin instructions
 #' @import shiny
-instructions <- function(annots_link) {
+instructions <- function(annots_link, templates_link) {
   # nolint start
   div(
     p("Download relevant",
