@@ -137,9 +137,10 @@ check_cols_biospecimen <- function(data, template,
   if (is.null(data)) {
     return(NULL)
   }
-  template <- match.arg(template, c("general", "drosophila"))
+  template <- match.arg(template, c("human", "general", "drosophila"))
   id <- switch(
     template,
+    human = "syn12973252",
     general = "syn12973252",
     drosophila = "syn20673251"
   )
