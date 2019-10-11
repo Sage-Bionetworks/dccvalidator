@@ -20,7 +20,7 @@ app_server <- function(input, output, session) {
     ## Check if user is in AMP-AD Consortium team (needed in order to create
     ## folder at the next step)
     user <- synapser::synGetUserProfile()
-    membership <- check_team_membership(teams = c("3397129"), user = user)
+    membership <- check_team_membership(teams = c("3320424"), user = user)
     report_missing_membership(membership)
 
     ## If user is a member of the team(s), create folder to save files and
@@ -28,7 +28,7 @@ app_server <- function(input, output, session) {
     if (inherits(membership, "check_pass")) {
       created_folder <- try(
         create_folder(
-          parent = "syn20818950",
+          parent = "syn20506363",
           name = user$userName
         )
       )
