@@ -8,52 +8,56 @@ upload_documents_ui <- function(id) {
     tabName = id,
     # Use shinyjs
     shinyjs::useShinyjs(),
+    sidebarLayout(
+      sidebarPanel(
+        # UI for getting the study name
+        get_study_ui(ns("doc_study")),
 
-    # Instructions/Description
-    h3("Upload Unstructured Metadata"),
-    # nolint start
-    p("Unstructured metadata is similar to the materials and methods in a paper. These are used in the portal to give a summary of the project, assays, and other relevant information. An example of what this information should include and how it will appear in the portal can be found ", tags$a(href = "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648", "here"), "."),
+        # File import
+        shinyjs::disabled(
+          fileInput(
+            ns("study_doc"),
+            "Upload the study description file"
+          )
+        ),
+        shinyjs::disabled(
+          fileInput(
+            ns("assay_doc"),
+            "Upload the assay description files",
+            multiple = TRUE
+          )
+        ),
 
-    h4("Study Description"),
-
-    p("The study description is an overview of the study and should include:"),
-
-    tags$ul(
-      tags$li("human studies", tags$ul(tags$li("how the data was obtained, as well as a summary description of the data, including study type (prospective cohort, case-control, or post-mortem), disease focus, inclusion/exclusion criteria, and number of participants or donors. For post mortem studies, include the brain bank name(s) and tissue(s) that were sampled."))),
-      tags$li("model studies", tags$ul(tags$li("where the models were generated, as well as a summary description of the model, including common name, genetic background, and a link to the strain datasheet, or datasheets if a cross between two strains.")))
-    ),
-
-    h4("Assay Description"),
-
-    p("The assay description should include a summary of ", tags$b("sample processing, data generation,"), " and ", tags$b("data processing.")),
-    # nolint end
-
-    # UI for getting the study name
-    get_study_ui(ns("doc_study")),
-
-    # File import
-    shinyjs::disabled(
-      fileInput(
-        ns("study_doc"),
-        "Upload the study description file"
-      )
-    ),
-    shinyjs::disabled(
-      fileInput(
-        ns("assay_doc"),
-        "Upload the assay description files",
-        multiple = TRUE
-      )
-    ),
-
-    # Add an indicator feature to submit button
-    with_busy_indicator_ui(
-      shinyjs::disabled(
-        actionButton(
-          ns("upload_docs"),
-          "Submit"
+        # Add an indicator feature to submit button
+        with_busy_indicator_ui(
+          shinyjs::disabled(
+            actionButton(
+              ns("upload_docs"),
+              "Submit"
+            )
+          )
         )
-      )
+      ),
+      mainPanel(
+        # Instructions/Description
+        h3("Upload Unstructured Metadata"),
+        # nolint start
+        p("Unstructured metadata is similar to the materials and methods in a paper. These are used in the portal to give a summary of the project, assays, and other relevant information. An example of what this information should include and how it will appear in the portal can be found ", tags$a(href = "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648", "here"), "."),
+
+        h4("Study Description"),
+
+        p("The study description is an overview of the study and should include:"),
+
+        tags$ul(
+          tags$li("human studies", tags$ul(tags$li("how the data was obtained, as well as a summary description of the data, including study type (prospective cohort, case-control, or post-mortem), disease focus, inclusion/exclusion criteria, and number of participants or donors. For post mortem studies, include the brain bank name(s) and tissue(s) that were sampled."))),
+          tags$li("model studies", tags$ul(tags$li("where the models were generated, as well as a summary description of the model, including common name, genetic background, and a link to the strain datasheet, or datasheets if a cross between two strains.")))
+        ),
+
+        h4("Assay Description"),
+
+        p("The assay description should include a summary of ", tags$b("sample processing, data generation,"), " and ", tags$b("data processing.")),
+        # nolint end
+      ),
     )
   )
 }
