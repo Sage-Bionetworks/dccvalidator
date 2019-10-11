@@ -47,9 +47,17 @@ app_server <- function(input, output, session) {
     ## Download annotation definitions
     annots <- get_synapse_annotations()
 
+    ## Store files in separate variable to be able to reset inputs to NULL
+    files <- reactiveValues(
+      indiv = NULL,
+      manifest = NULL,
+      biosp = NULL,
+      assay = NULL
+    )
     ## Upload files to Synapse (after renaming them so they keep their original
     ## names)
     observeEvent(input$manifest, {
+      files$manifest <- input$manifest
       save_to_synapse(
         input$manifest,
         parent = created_folder,
@@ -58,6 +66,7 @@ app_server <- function(input, output, session) {
     })
 
     observeEvent(input$indiv_meta, {
+      files$indiv <- input$indiv_meta
       save_to_synapse(
         input$indiv_meta,
         parent = created_folder,
@@ -66,6 +75,7 @@ app_server <- function(input, output, session) {
     })
 
     observeEvent(input$biosp_meta, {
+      files$biosp <- input$biosp_meta
       save_to_synapse(
         input$biosp_meta,
         parent = created_folder,
@@ -74,6 +84,7 @@ app_server <- function(input, output, session) {
     })
 
     observeEvent(input$assay_meta, {
+      files$assay <- input$assay_meta
       save_to_synapse(
         input$assay_meta,
         parent = created_folder,
@@ -83,33 +94,33 @@ app_server <- function(input, output, session) {
 
     ## Load metadata files into session
     manifest <- reactive({
-      if (is.null(input$manifest)) {
+      if (is.null(files$manifest)) {
         return(NULL)
       }
       utils::read.table(
-        input$manifest$datapath,
+        files$manifest$datapath,
         sep = "\t",
         header = TRUE,
         na.strings = ""
       )
     })
     indiv <- reactive({
-      if (is.null(input$indiv_meta)) {
+      if (is.null(files$indiv)) {
         return(NULL)
       }
-      utils::read.csv(input$indiv_meta$datapath, na.strings = "")
+      utils::read.csv(files$indiv$datapath, na.strings = "")
     })
     biosp <- reactive({
-      if (is.null(input$biosp_meta)) {
+      if (is.null(files$biosp)) {
         return(NULL)
       }
-      utils::read.csv(input$biosp_meta$datapath, na.strings = "")
+      utils::read.csv(files$biosp$datapath, na.strings = "")
     })
     assay <- reactive({
-      if (is.null(input$assay_meta)) {
+      if (is.null(files$assay)) {
         return(NULL)
       }
-      utils::read.csv(input$assay_meta$datapath, na.strings = "")
+      utils::read.csv(files$assay$datapath, na.strings = "")
     })
     species_name <- reactive({
       input$species
