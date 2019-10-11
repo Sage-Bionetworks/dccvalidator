@@ -6,13 +6,16 @@
 #'
 #' @param annots_link Link to a definition of the annotations being used in the
 #'   project
+#' @param templates_link Link to the templates used for validation
 #' @return A div containin instructions
 #' @import shiny
 instructions <- function(annots_link, templates_link) {
   # nolint start
   div(
-    p("Download relevant",
-    HTML("<a target =\"_blank\" href=\"{templates_link}\">metadata templates</a> from the portal."))
+    p(
+      "Download relevant",
+      HTML(glue::glue("<a target =\"_blank\" href=\"{templates_link}\">metadata templates</a> from the portal."))
+    ),
     p("Upload .csv files of your metadata, and upload your manifest as a .tsv or .txt file. The app will check your data for common errors in the metadata and ensure that there are no missing specimen IDs between the metadata and the data files listed in the manifest."),
     p(
       "To read more about the correct format of a manifest, see this",

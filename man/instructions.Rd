@@ -4,11 +4,13 @@
 \alias{instructions}
 \title{Create instructions modal text}
 \usage{
-instructions(annots_link)
+instructions(annots_link, templates_link)
 }
 \arguments{
 \item{annots_link}{Link to a definition of the annotations being used in the
 project}
+
+\item{templates_link}{Link to the templates used for validation}
 }
 \value{
 A div containin instructions
