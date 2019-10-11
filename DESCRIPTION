@@ -26,6 +26,7 @@ Imports:
     golem,
     pkgload,
     purrr,
+    PythonEmbedInR,
     readxl,
     rlang,
     shiny,
@@ -34,14 +35,15 @@ Imports:
     skimr,
     stats,
     synapser,
-    syndccutils,
+    syndccutils (>= 0.0.0.9001),
     tibble,
     tools,
     utils,
     visdat
 Suggests:
     covr,
-    testthat
+    testthat,
+    withr
 Remotes:
     hadley/emo,
     Sage-Bionetworks/syndccutils/R

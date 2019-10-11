@@ -9,7 +9,7 @@ app_server <- function(input, output, session) {
     showModal(
       modalDialog(
         title = "Not logged in",
-        HTML("You must log in to <a href=\"https://www.synapse.org/\">Synapse</a> and be a member of the AMP-AD Consortium team to use this application. Please log in, and then refresh this page. If you are not a member of the AMP-AD Consortium team, you can request to be added at <a href=\"https://www.synapse.org/#!Team:3320424\">https://www.synapse.org/#!Team:3320424</a>.") # nolint
+        HTML("You must log in to <a href=\"https://www.synapse.org/\">Synapse</a> to use this application. Please log in, and then refresh this page.") # nolint
       )
     )
   })
@@ -18,14 +18,16 @@ app_server <- function(input, output, session) {
     synapser::synLogin(sessionToken = input$cookie)
 
     ## Check if user is in AMP-AD Consortium team (needed in order to create
-    ## folder at the next step)
+    ## folder at the next step), and if they are a certified user.
     user <- synapser::synGetUserProfile()
     membership <- check_team_membership(teams = c("3320424"), user = user)
-    report_missing_membership(membership)
+    certified <- check_certified_user(user$ownerId)
+    report_unsatisfied_requirements(membership, certified)
 
     ## If user is a member of the team(s), create folder to save files and
     ## enable inputs
-    if (inherits(membership, "check_pass")) {
+    if (inherits(membership, "check_pass") &
+      inherits(certified, "check_pass")) {
       created_folder <- try(
         create_folder(
           parent = "syn20506363",
