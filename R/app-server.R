@@ -44,6 +44,14 @@ app_server <- function(input, output, session) {
       purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
     }
 
+    ## If drosophila species checked, reset fileInput
+    observeEvent(input$species, {
+      if (input$species == "drosophila") {
+        shinyjs::reset("indiv_meta")
+        files$indiv <- NULL
+      }
+    })
+
     ## Download annotation definitions
     annots <- get_synapse_annotations()
 
