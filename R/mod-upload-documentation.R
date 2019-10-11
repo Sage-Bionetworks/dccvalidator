@@ -57,7 +57,7 @@ upload_documents_ui <- function(id) {
 
         p("The assay description should include a summary of ", tags$b("sample processing, data generation,"), " and ", tags$b("data processing.")),
         # nolint end
-      ),
+      )
     )
   )
 }
