@@ -7,3 +7,4 @@
 lib/*
 restart.txt
 scratch.R
+inst/doc
