@@ -54,9 +54,8 @@ of invalid values. If \code{return_valid = TRUE}: a named list of the valid
 annotation keys and values.
 }
 \description{
-Check that class of value matches annotation columnType
-
-Check values for one key
-
-Check a set of keys and their values
+Given a vector of values, checks that they match the columnType as defined in
+the annotations dictionary. This check is somewhat permissive in that values
+that are coercible to the type are also treated as valid (see
+\code{\link[=can_coerce]{can_coerce()}}).
 }

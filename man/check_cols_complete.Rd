@@ -11,8 +11,8 @@ check_cols_complete(data, required_cols, empty_values = c(NA, ""),
 \arguments{
 \item{data}{Data to check}
 
-\item{required_cols}{A character vector of the required columns to check
-for completeness.}
+\item{required_cols}{A character vector of the required columns to check for
+completeness.}
 
 \item{empty_values}{Values that are considered empty. Defaults to \code{NA} and
 \code{""}.}
