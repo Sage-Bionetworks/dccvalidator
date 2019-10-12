@@ -11,7 +11,8 @@ annots <- tribble(
   "fileFormat", "csv", "STRING",
   "species", "Human", "STRING",
   "organ", "brain", "STRING",
-  "BrodmannArea", NA, "STRING"
+  "BrodmannArea", NA, "STRING",
+  "compoundDose", NA, "INTEGER"
 )
 
 ## check_annotation_values() ---------------------------------------------------
