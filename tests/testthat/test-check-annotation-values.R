@@ -363,7 +363,7 @@ test_that("check_type can handle factor annotation values as strings", {
   b <- factor(c("a", "b"))
   expect_equal(
     check_value(a, "x", annotations, return_valid = FALSE),
-    check_value(b, "x", annotations, return_valid = FALSE),
+    check_value(b, "x", annotations, return_valid = FALSE)
   )
 })
 
