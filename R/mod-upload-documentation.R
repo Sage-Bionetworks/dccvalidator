@@ -41,22 +41,58 @@ upload_documents_ui <- function(id) {
 
       mainPanel(
         # Instructions/Description
-        h3("Upload Unstructured Metadata"),
+        h3("Upload Study Documentation"),
         # nolint start
-        p("Unstructured metadata is similar to the materials and methods in a paper. These are used in the portal to give a summary of the project, assays, and other relevant information. An example of what this information should include and how it will appear in the portal can be found ", tags$a(href = "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648", "here"), "."),
+        p(
+          "Study documentation gives data users an understanding of the cohort, model system, or other unit based on experimental design through which the data has been generated, and the methods used for the assays and/or assessments. This should be similar to a materials and methods section in a paper. An example of what this information should include can be found ",
+          tags$a(href = "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648", "here"),
+          " for an animal model study and ",
+          tags$a(href = "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn3159438", "here"),
+          " for a human study."
+        ),
 
         h4("Study Description"),
 
         p("The study description is an overview of the study and should include:"),
 
         tags$ul(
-          tags$li("human studies", tags$ul(tags$li("how the data was obtained, as well as a summary description of the data, including study type (prospective cohort, case-control, or post-mortem), disease focus, inclusion/exclusion criteria, and number of participants or donors. For post mortem studies, include the brain bank name(s) and tissue(s) that were sampled."))),
-          tags$li("model studies", tags$ul(tags$li("where the models were generated, as well as a summary description of the model, including common name, genetic background, and a link to the strain datasheet, or datasheets if a cross between two strains.")))
+          tags$li(
+            "human studies",
+            tags$ul(
+              tags$li(
+                "study type (randomized controlled study, prospective observational study, case-control study, or post-mortem study), disease focus, diagnostic criteria and inclusion/exclusion criteria of study participants. For post mortem studies, include the brain bank name(s) and links to website(s)."
+              )
+            )
+          ),
+          tags$li(
+            "animal model studies",
+            tags$ul(
+              tags$li(
+                "species, treatments, and if genetically modified-genotype and genetic background. Provide a link to the strain datasheet(s) if a commercial model, or a description of how it was created if not."
+              )
+            )
+          ),
+          tags$li(
+            "in-vitro cell culture studies",
+            tags$ul(
+              tags$li(
+                "species, cell type, and cell culture information such as primary or immortalized cell line, passage, treatments and other relevant information. If a commercial cell line provide a link."
+              )
+            )
+          )
         ),
+
+        p("Include references for more study information of available. Each study should be given both a descriptive and an abbreviated name. The abbreviation will be used to annotate all content associated with the study."),
 
         h4("Assay Description"),
 
-        p("The assay description should include a summary of ", tags$b("sample processing, data generation,"), " and ", tags$b("data processing."))
+        p(
+          "For each assay, provide a summary of ",
+          tags$b("sample processing, data generation,"),
+          " and ",
+          tags$b("data processing,"),
+          " including which organs and tissues the samples came from. For other tests (such as cognitive assessments), include a description of how the test was done."
+        )
         # nolint end
       )
     )
