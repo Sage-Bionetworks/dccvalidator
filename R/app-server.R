@@ -300,9 +300,7 @@ app_server <- function(input, output, session) {
       output$successes <- renderUI({
         report_results(res()[successes], emoji_prefix = "check")
       })
-      reporting_titles$success <- paste0("Successes (",
-                                         as.character(sum(successes)),
-                                         ")")
+      reporting_titles$success <- glue::glue("Successes ({sum(successes)})")
     })
 
     ## Warnings box
@@ -317,9 +315,7 @@ app_server <- function(input, output, session) {
           verbose = TRUE
         )
       })
-      reporting_titles$warn <- paste0("Warnings (",
-                                      as.character(sum(warnings)),
-                                      ")")
+      reporting_titles$warn <- glue::glue("Warnings ({sum(warnings)})")
     })
 
     ## Failures box
@@ -334,9 +330,7 @@ app_server <- function(input, output, session) {
           verbose = TRUE
         )
       })
-      reporting_titles$fail <- paste0("Failures (",
-                                      as.character(sum(failures)),
-                                      ")")
+      reporting_titles$fail <- glue::glue("Failures ({sum(failures)})")
     })
 
     ## Counts of individuals, specimens, and files
