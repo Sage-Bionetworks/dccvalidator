@@ -122,8 +122,12 @@ app_server <- function(input, output, session) {
       showModal(
         modalDialog(
           title = "Instructions",
-          instructions(annots_link = "https://shinypro.synapse.org/users/nsanati/annotationUI/", 
-          templates_link = "https://www.synapse.org/#!Synapse:syn18512044"), # nolint
+          # nolint start
+          instructions(
+            annots_link = "https://shinypro.synapse.org/users/nsanati/annotationUI/",
+            templates_link = "https://www.synapse.org/#!Synapse:syn18512044"
+          ),
+          # nolint end
           easyClose = TRUE
         )
       )
