@@ -281,27 +281,46 @@ app_server <- function(input, output, session) {
     })
 
     ## Successes box
-    output$successes <- renderUI({
+    observe({
       successes <- purrr::map_lgl(res(), function(x) {
         inherits(x, "check_pass")
       })
-      report_results(res()[successes], emoji_prefix = "check")
+      output$successes <- renderUI({
+        report_results(res()[successes], emoji_prefix = "check")
+      })
+      output$num_success <- renderText({
+        paste0("Successes (", as.character(sum(successes)), ")")
+      })
     })
 
     ## Warnings box
-    output$warnings <- renderUI({
+    observe({
       warnings <- purrr::map_lgl(res(), function(x) {
         inherits(x, "check_warn")
       })
-      report_results(res()[warnings], emoji_prefix = "warning", verbose = TRUE)
+      output$warnings <- renderUI({
+        report_results(res()[warnings],
+                       emoji_prefix = "warning",
+                       verbose = TRUE)
+      })
+      output$num_warn <- renderText({
+        paste0("Warnings (", as.character(sum(warnings)), ")")
+      })
     })
 
     ## Failures box
-    output$failures <- renderUI({
+    observe({
       failures <- purrr::map_lgl(res(), function(x) {
         inherits(x, "check_fail")
       })
-      report_results(res()[failures], emoji_prefix = "x", verbose = TRUE)
+      output$failures <- renderUI({
+        report_results(res()[failures],
+                       emoji_prefix = "x",
+                       verbose = TRUE)
+      })
+      output$num_fail <- renderText({
+        paste("Failures (", as.character(sum(failures)), ")")
+      })
     })
 
     ## Counts of individuals, specimens, and files
