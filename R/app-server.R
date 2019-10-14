@@ -319,7 +319,7 @@ app_server <- function(input, output, session) {
                        verbose = TRUE)
       })
       output$num_fail <- renderText({
-        paste("Failures (", as.character(sum(failures)), ")")
+        paste0("Failures (", as.character(sum(failures)), ")")
       })
     })
 
