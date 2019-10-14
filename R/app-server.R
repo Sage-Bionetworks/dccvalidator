@@ -1,5 +1,6 @@
 #' @import shiny
 #' @import shinydashboard
+
 app_server <- function(input, output, session) {
   session$sendCustomMessage(type = "readCookie", message = list())
 
@@ -42,6 +43,14 @@ app_server <- function(input, output, session) {
         "assay_name"
       )
       purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
+
+      # Documentation server needs created_folder to run correctly
+      callModule(
+        upload_documents_server,
+        "documentation",
+        parent_folder = reactive(created_folder),
+        study_table_id = reactive("syn11363298")
+      )
     }
 
     ## Download annotation definitions
@@ -254,7 +263,6 @@ app_server <- function(input, output, session) {
         fail_msg = "Some columns are empty in the assay metadata"
       )
     })
-
 
     ## List results
     res <- reactive({

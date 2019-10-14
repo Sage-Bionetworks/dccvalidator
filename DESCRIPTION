@@ -1,13 +1,17 @@
 Package: dccvalidator
 Title: Validate CNS Data and Metadata
-Version: 0.0.0.9003
+Version: 0.0.0.9004
 Authors@R: 
     c(person(given = "Kara",
              family = "Woo",
              role = c("aut", "cre"),
              email = "kara.woo@sagebase.org"),
       person(given = "Sage Bionetworks",
-             role = "cph"))
+             role = "cph"),
+      person(given = "Nicole",
+             family = "Kauer",
+             role = "aut",
+             email = "nicole.kauer@sagebase.org"))
 Description: Performs automatic checks for common data/metadata quality
     issues.
 License: MIT + file LICENSE
