@@ -1,6 +1,7 @@
 #' @import shiny
 #' @import shinydashboard
 app_server <- function(input, output, session) {
+  ## Initial titles for report boxes
   reporting_titles <- reactiveValues(
     success = "Successes (0)",
     warn = "Warnings (0)",
@@ -8,6 +9,8 @@ app_server <- function(input, output, session) {
   )
   output$num_success <- renderText(reporting_titles$success)
   output$num_warn <- renderText(reporting_titles$warn)
+  output$num_fail <- renderText(reporting_titles$fail)
+
   session$sendCustomMessage(type = "readCookie", message = list())
 
   ## Show message if user is not logged in to synapse
