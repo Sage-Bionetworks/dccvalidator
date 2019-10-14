@@ -1,5 +1,6 @@
 #' @import shiny
 #' @import shinydashboard
+
 app_server <- function(input, output, session) {
   ## Initial titles for report boxes
   reporting_titles <- reactiveValues(
@@ -52,6 +53,14 @@ app_server <- function(input, output, session) {
         "assay_name"
       )
       purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
+
+      # Documentation server needs created_folder to run correctly
+      callModule(
+        upload_documents_server,
+        "documentation",
+        parent_folder = reactive(created_folder),
+        study_table_id = reactive("syn11363298")
+      )
     }
 
     ## Download annotation definitions
@@ -133,16 +142,10 @@ app_server <- function(input, output, session) {
         modalDialog(
           title = "Instructions",
           # nolint start
-          p("Upload .csv files of your individual, biospecimen, and assay metadata, and upload your manifest as a .tsv or .txt file. The app will check your data for common errors in the metadata and ensure that there are no missing specimen IDs between the metadata and the data files listed in the manifest."),
-          p(
-            "To read more about the correct format of a manifest, see this",
-            HTML("<a target=\"_blank\" href=\"https://docs.synapse.org/articles/uploading_in_bulk.html\">documentation</a>.")
+          instructions(
+            annots_link = "https://shinypro.synapse.org/users/nsanati/annotationUI/",
+            templates_link = "https://www.synapse.org/#!Synapse:syn18512044"
           ),
-          p(
-            "To explore accepted annotation keys and values, refer to the",
-            HTML("<a target=\"_blank\" href=\"https://shinypro.synapse.org/users/nsanati/annotationUI/\">annotation dictionary</a>.")
-          ),
-          p("Note you must be logged in to Synapse for this application to work."),
           # nolint end
           easyClose = TRUE
         )
@@ -264,7 +267,6 @@ app_server <- function(input, output, session) {
         fail_msg = "Some columns are empty in the assay metadata"
       )
     })
-
 
     ## List results
     res <- reactive({
