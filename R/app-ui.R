@@ -26,7 +26,7 @@ app_ui <- function(request) {
 
             # Use shinyjs
             shinyjs::useShinyjs(),
-            
+
             # Sidebar
             sidebarLayout(
               sidebarPanel(
@@ -38,18 +38,22 @@ app_ui <- function(request) {
                   radioButtons(
                     "species",
                     "Species",
-                    c("human",
+                    c(
+                      "human",
                       "drosophila",
                       "mouse or other animal model" = "general"
                     ),
                     selected = "general"
                   )
                 ),
-                
+
                 shinyjs::disabled(
-                  selectInput("assay_name", "Assay type", c("rnaSeq", "proteomics"))
+                  selectInput(
+                    "assay_name",
+                    "Assay type",
+                    c("rnaSeq", "proteomics"))
                 ),
-                
+
                 # Files to be validated
                 conditionalPanel(
                   condition = "input.species != 'drosophila'",
@@ -92,8 +96,7 @@ app_ui <- function(request) {
                     )
                   )
                 ),
-                
-                
+
                 shinyjs::disabled(
                   fileInput(
                     "manifest",
