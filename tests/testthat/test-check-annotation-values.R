@@ -2,8 +2,18 @@ context("test-check-annotation-values.R")
 
 library("synapser")
 library("tibble")
-if (on_travis()) syn_travis_login() else synLogin()
-annots <- syndccutils::get_synapse_annotations()
+attempt_login()
+annots <- tribble(
+  ~key, ~value, ~columnType,
+  "assay", "rnaSeq", "STRING",
+  "fileFormat", "fastq", "STRING",
+  "fileFormat", "txt", "STRING",
+  "fileFormat", "csv", "STRING",
+  "species", "Human", "STRING",
+  "organ", "brain", "STRING",
+  "BrodmannArea", NA, "STRING",
+  "compoundDose", NA, "INTEGER"
+)
 
 ## check_annotation_values() ---------------------------------------------------
 
@@ -25,13 +35,14 @@ test_that("check_annotation_values returns check_fail for invalid annots.", {
 })
 
 test_that("check_annotation_values returns invalid values in $data", {
-  dat <- tibble(assay = "foo", consortium = "bar")
+  dat <- tibble(assay = "foo", species = "bar")
   res <- check_annotation_values(dat, annots)
-  expect_equal(res$data, list(assay = "foo", consortium = "bar"))
+  expect_equal(res$data, list(assay = "foo", species = "bar"))
 })
 
 test_that("check_annotation_values works for File objects", {
-  skip_on_cran()
+  skip_if_not(logged_in())
+
   a <- synGet("syn17038064", downloadFile = FALSE)
   b <- synGet("syn17038065", downloadFile = FALSE)
   resa <- check_annotation_values(a, annots)
@@ -47,7 +58,8 @@ test_that("check_annotation_values works for File objects", {
 })
 
 test_that("check_annotation_values works for file views", {
-  skip_on_cran()
+  skip_if_not(logged_in())
+
   fv <- synTableQuery("SELECT * FROM syn17038067")
   res <- check_annotation_values(fv, annots)
   expect_true(inherits(res, "check_fail"))
@@ -79,14 +91,16 @@ test_that("valid_annotation_values fails when no annotations present", {
 })
 
 test_that("valid_annotation_values works for File objects", {
-  skip_on_cran()
+  skip_if_not(logged_in())
+
   a <- synGet("syn17038064", downloadFile = FALSE)
   resa <- valid_annotation_values(a, annots)
   expect_equal(resa, list(fileFormat = "txt"))
 })
 
 test_that("valid_annotation_values works for file views", {
-  skip_on_cran()
+  skip_if_not(logged_in())
+
   fv <- synTableQuery("SELECT * FROM syn17038067")
   res <- valid_annotation_values(fv, annots)
   ## Slightly awkward test because synapse seems to return the values in
@@ -102,7 +116,7 @@ test_that("valid_annotation_values handles NULL input", {
 ## check_value() ---------------------------------------------------------------
 
 test_that("check_value returns NULL if key is not present", {
-  expect_null(check_value("notavalue", "notakey"))
+  expect_null(check_value("notavalue", "notakey", annots))
 })
 
 test_that("check_value returns valid or invalid valies", {
@@ -113,6 +127,8 @@ test_that("check_value returns valid or invalid valies", {
 })
 
 test_that("check_value falls back to get_synapse_annotations", {
+  skip_if_not(logged_in())
+
   res <- check_value("wrong", "fileFormat", return_valid = FALSE)
   expect_equal(res, "wrong")
   ## Should be the same as passing in annots:
@@ -256,6 +272,9 @@ test_that("check_values can whitelist keys and values simultaneously", {
 })
 
 test_that("check_values false back to get_synapse_annotations()", {
+  skip_if_not(logged_in())
+
+
   dat <- tibble(
     fileFormat = c("wrong", "wronger", "wrongest", "txt"),
     assay = c("rnaSeq", "rnaSeq", "rnaSeq", "also wrong")
@@ -277,7 +296,7 @@ test_that("check_type returns right value depending on class/`return_valid`", {
   )
   expect_equal(
     check_type(b, "x", annotations, return_valid = FALSE),
-    c(1, 2)
+    character(0) # values in b are coercible to string
   )
   expect_equal(
     check_type(a, "x", annotations, return_valid = TRUE),
@@ -285,7 +304,7 @@ test_that("check_type returns right value depending on class/`return_valid`", {
   )
   expect_equal(
     check_type(b, "x", annotations, return_valid = TRUE),
-    character(0)
+    c(1, 2)
   )
 })
 
@@ -344,21 +363,21 @@ test_that("check_type can handle factor annotation values as strings", {
   b <- factor(c("a", "b"))
   expect_equal(
     check_value(a, "x", annotations, return_valid = FALSE),
-    check_value(b, "x", annotations, return_valid = FALSE),
+    check_value(b, "x", annotations, return_valid = FALSE)
   )
 })
 
 test_that("check_type omits NAs", {
-  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
+  annotations <- tibble(key = "x", columnType = "DOUBLE", value = NA)
   a <- c("a", "b", NA)
   b <- c(1, NA, 2)
   expect_equal(
     check_type(a, "x", annotations, return_valid = FALSE),
-    character(0)
+    c("a", "b")
   )
   expect_equal(
     check_type(b, "x", annotations, return_valid = FALSE),
-    c(1, 2)
+    character(0)
   )
 })
 
@@ -374,11 +393,24 @@ test_that("check_type does not return duplicates", {
 test_that("whitelist_values works in check_type", {
   expect_equal(
     check_type(
-      1:3,
-      "BrodmannArea",
+      c("a", "b"),
+      "compoundDose",
       annots,
-      whitelist_values = list(BrodmannArea = 1:2)
+      whitelist_values = list(compoundDose = "a")
     ),
-    3
+    "b"
   )
+})
+
+## can_coerce() ----------------------------------------------------------------
+
+test_that("can_coerce() returns TRUE for numeric/integer/boolean->character", {
+  expect_true(can_coerce(1, "character"))
+  expect_true(can_coerce(1L, "character"))
+  expect_true(can_coerce(TRUE, "character"))
+})
+
+test_that("can_coerce() returns FALSE if values aren't coercible", {
+  expect_false(can_coerce("a", "numeric"))
+  expect_false(can_coerce("a", "logical"))
 })

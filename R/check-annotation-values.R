@@ -169,6 +169,11 @@ valid_annotation_values.CsvFileTable <- function(x, annotations, ...) {
 
 #' Check that class of value matches annotation columnType
 #'
+#' Given a vector of values, checks that they match the columnType as defined in
+#' the annotations dictionary. This check is somewhat permissive in that values
+#' that are coercible to the type are also treated as valid (see
+#' [can_coerce()]).
+#'
 #' @inheritParams check_value
 #' @return A vector of invalid values (if `return_valid = FALSE`; otherwise a
 #'   vector of valid values).
@@ -193,13 +198,48 @@ check_type <- function(values, key, annotations, whitelist_values = NULL,
   ## Get whitelisted values for key, if any
   whitelist <- unique(whitelist_values[[key]])
 
+  ## Check if all values are coercible to the correct type. If so, then we can
+  ## treat it as valid. One example use case is the readLength annotation, which
+  ## is defined as a string but should except numeric values as well.
+  coercible <- can_coerce(values, correct_class)
+
   ## Check if class matches
-  matches <- class(values) == correct_class
+  matches <- (class(values) == correct_class) | coercible
   if (return_valid & matches | !return_valid & !matches) {
     ## Return valid or invalid values, minus whitelisted values
     return(setdiff(unique(stats::na.omit(values)), whitelist))
   } else {
     return(character(0))
+  }
+}
+
+#' Check coercibility
+#'
+#' Checks if values are coercible to a given class. Because of inconsistencies
+#' in R's built-in coercion functions (e.g. `as.numeric()` warns when it
+#' introduces NAs but `as.logical()` doesn't; `as.integer()` will silently
+#' remove decimal places from numeric inputs) we check only for the specific
+#' coercions we want to allow, currently: numeric, integer, or logical to string
+#'
+#' This function is mainly in place so that we can automatically allow numeric
+#' read lengths, pH values, etc., which are defined as strings in our annotation
+#' vocabulary but can reasonably be numbers.
+#'
+#' This function will *not* affect validation of enumerated values, regardless
+#' of their class. It is only used by the [check_type()] function, which
+#' validates annotations that have a required type but no enumerated values.
+#'
+#' @param values Vector of values to check
+#' @param class Class of interest
+#' @return Boolean value; TRUE if `values` are coercible to `class`, `FALSE`
+#'   otherwise.
+can_coerce <- function(values, class) {
+  if (class == "character" &
+    (inherits(values, "numeric") | inherits(values, "integer") |
+      inherits(values, "logical"))) {
+    return(TRUE)
+  } else {
+    return(FALSE)
   }
 }
 
