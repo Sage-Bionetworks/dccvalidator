@@ -11,7 +11,8 @@ annots <- tribble(
   "fileFormat", "csv", "STRING",
   "species", "Human", "STRING",
   "organ", "brain", "STRING",
-  "BrodmannArea", NA, "STRING"
+  "BrodmannArea", NA, "STRING",
+  "compoundDose", NA, "INTEGER"
 )
 
 ## check_annotation_values() ---------------------------------------------------
@@ -295,7 +296,7 @@ test_that("check_type returns right value depending on class/`return_valid`", {
   )
   expect_equal(
     check_type(b, "x", annotations, return_valid = FALSE),
-    c(1, 2)
+    character(0) # values in b are coercible to string
   )
   expect_equal(
     check_type(a, "x", annotations, return_valid = TRUE),
@@ -303,7 +304,7 @@ test_that("check_type returns right value depending on class/`return_valid`", {
   )
   expect_equal(
     check_type(b, "x", annotations, return_valid = TRUE),
-    character(0)
+    c(1, 2)
   )
 })
 
@@ -362,21 +363,21 @@ test_that("check_type can handle factor annotation values as strings", {
   b <- factor(c("a", "b"))
   expect_equal(
     check_value(a, "x", annotations, return_valid = FALSE),
-    check_value(b, "x", annotations, return_valid = FALSE),
+    check_value(b, "x", annotations, return_valid = FALSE)
   )
 })
 
 test_that("check_type omits NAs", {
-  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
+  annotations <- tibble(key = "x", columnType = "DOUBLE", value = NA)
   a <- c("a", "b", NA)
   b <- c(1, NA, 2)
   expect_equal(
     check_type(a, "x", annotations, return_valid = FALSE),
-    character(0)
+    c("a", "b")
   )
   expect_equal(
     check_type(b, "x", annotations, return_valid = FALSE),
-    c(1, 2)
+    character(0)
   )
 })
 
@@ -392,11 +393,24 @@ test_that("check_type does not return duplicates", {
 test_that("whitelist_values works in check_type", {
   expect_equal(
     check_type(
-      1:3,
-      "BrodmannArea",
+      c("a", "b"),
+      "compoundDose",
       annots,
-      whitelist_values = list(BrodmannArea = 1:2)
+      whitelist_values = list(compoundDose = "a")
     ),
-    3
+    "b"
   )
+})
+
+## can_coerce() ----------------------------------------------------------------
+
+test_that("can_coerce() returns TRUE for numeric/integer/boolean->character", {
+  expect_true(can_coerce(1, "character"))
+  expect_true(can_coerce(1L, "character"))
+  expect_true(can_coerce(TRUE, "character"))
+})
+
+test_that("can_coerce() returns FALSE if values aren't coercible", {
+  expect_false(can_coerce("a", "numeric"))
+  expect_false(can_coerce("a", "logical"))
 })
