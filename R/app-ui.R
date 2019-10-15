@@ -113,7 +113,7 @@ app_ui <- function(request) {
                       uiOutput("successes"),
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      title = "Successes",
+                      title = textOutput("num_success"),
                       status = "success",
                       width = 12
                     ),
@@ -121,7 +121,7 @@ app_ui <- function(request) {
                       uiOutput("warnings"),
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      title = "Warnings",
+                      title = textOutput("num_warn"),
                       status = "warning",
                       width = 12
                     ),
@@ -129,7 +129,7 @@ app_ui <- function(request) {
                       uiOutput("failures"),
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      title = "Failures",
+                      title = textOutput("num_fail"),
                       status = "danger",
                       width = 12
                     )

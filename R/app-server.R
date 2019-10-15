@@ -2,6 +2,16 @@
 #' @import shinydashboard
 
 app_server <- function(input, output, session) {
+  ## Initial titles for report boxes
+  reporting_titles <- reactiveValues(
+    success = "Successes (0)",
+    warn = "Warnings (0)",
+    fail = "Failures (0)"
+  )
+  output$num_success <- renderText(reporting_titles$success)
+  output$num_warn <- renderText(reporting_titles$warn)
+  output$num_fail <- renderText(reporting_titles$fail)
+
   session$sendCustomMessage(type = "readCookie", message = list())
 
   ## Show message if user is not logged in to synapse
@@ -283,27 +293,44 @@ app_server <- function(input, output, session) {
     })
 
     ## Successes box
-    output$successes <- renderUI({
+    observe({
       successes <- purrr::map_lgl(res(), function(x) {
         inherits(x, "check_pass")
       })
-      report_results(res()[successes], emoji_prefix = "check")
+      output$successes <- renderUI({
+        report_results(res()[successes], emoji_prefix = "check")
+      })
+      reporting_titles$success <- glue::glue("Successes ({sum(successes)})")
     })
 
     ## Warnings box
-    output$warnings <- renderUI({
+    observe({
       warnings <- purrr::map_lgl(res(), function(x) {
         inherits(x, "check_warn")
       })
-      report_results(res()[warnings], emoji_prefix = "warning", verbose = TRUE)
+      output$warnings <- renderUI({
+        report_results(
+          res()[warnings],
+          emoji_prefix = "warning",
+          verbose = TRUE
+        )
+      })
+      reporting_titles$warn <- glue::glue("Warnings ({sum(warnings)})")
     })
 
     ## Failures box
-    output$failures <- renderUI({
+    observe({
       failures <- purrr::map_lgl(res(), function(x) {
         inherits(x, "check_fail")
       })
-      report_results(res()[failures], emoji_prefix = "x", verbose = TRUE)
+      output$failures <- renderUI({
+        report_results(
+          res()[failures],
+          emoji_prefix = "x",
+          verbose = TRUE
+        )
+      })
+      reporting_titles$fail <- glue::glue("Failures ({sum(failures)})")
     })
 
     ## Counts of individuals, specimens, and files
