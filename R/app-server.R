@@ -128,32 +128,42 @@ app_server <- function(input, output, session) {
         files$manifest$datapath,
         sep = "\t",
         header = TRUE,
-        na.strings = ""
+        na.strings = "",
+        stringsAsFactors = FALSE
       )
     })
     indiv <- reactive({
       if (is.null(files$indiv)) {
         return(NULL)
       }
-      utils::read.csv(files$indiv$datapath, na.strings = "")
+      utils::read.csv(
+        files$indiv$datapath,
+        na.strings = "",
+        stringsAsFactors = FALSE)
     })
     biosp <- reactive({
       if (is.null(files$biosp)) {
         return(NULL)
       }
-      utils::read.csv(files$biosp$datapath, na.strings = "")
+      utils::read.csv(
+        files$biosp$datapath,
+        na.strings = "",
+        stringsAsFactors = FALSE)
     })
     assay <- reactive({
       if (is.null(files$assay)) {
         return(NULL)
       }
-      utils::read.csv(files$assay$datapath, na.strings = "")
+      utils::read.csv(
+        files$assay$datapath,
+        na.strings = "",
+        stringsAsFactors = FALSE)
     })
     species_name <- reactive({
       input$species
     })
     assay_name <- reactive({
-      input$assay
+      input$assay_name
     })
 
     observeEvent(input$instructions, {
