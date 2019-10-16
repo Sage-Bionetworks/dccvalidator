@@ -34,16 +34,39 @@ app_ui <- function(request) {
                 br(),
                 br(),
 
-                # Files to be validated
                 shinyjs::disabled(
-                  fileInput(
-                    "indiv_meta",
-                    "Individual metadata file (.csv)",
-                    width = NULL,
-                    accept = c(
-                      "text/csv",
-                      "text/comma-separated-values,text/plain",
-                      ".csv"
+                  radioButtons(
+                    "species",
+                    "Species",
+                    c(
+                      "human",
+                      "drosophila",
+                      "mouse or other animal model" = "general"
+                    ),
+                    selected = "general"
+                  )
+                ),
+
+                shinyjs::disabled(
+                  selectInput(
+                    "assay_name",
+                    "Assay type",
+                    c("rnaSeq", "proteomics"))
+                ),
+
+                # Files to be validated
+                conditionalPanel(
+                  condition = "input.species != 'drosophila'",
+                  shinyjs::disabled(
+                    fileInput(
+                      "indiv_meta",
+                      "Individual metadata file (.csv)",
+                      width = NULL,
+                      accept = c(
+                        "text/csv",
+                        "text/comma-separated-values,text/plain",
+                        ".csv"
+                      )
                     )
                   )
                 ),
@@ -75,22 +98,6 @@ app_ui <- function(request) {
                 ),
 
                 shinyjs::disabled(
-                  radioButtons(
-                    "species",
-                    "Species",
-                    c("animal", "human")
-                  )
-                ),
-
-                shinyjs::disabled(
-                  selectInput(
-                    "assay_name",
-                    "Assay type",
-                    c("rnaSeq", "proteomics")
-                  )
-                ),
-
-                shinyjs::disabled(
                   fileInput(
                     "manifest",
                     "Upload Manifest File (.tsv or .txt)",
@@ -103,6 +110,7 @@ app_ui <- function(request) {
                   )
                 )
               ),
+
               # Main panel
               mainPanel(
                 tabsetPanel(
