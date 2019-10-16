@@ -153,7 +153,7 @@ app_server <- function(input, output, session) {
       input$species
     })
     assay_name <- reactive({
-      input$assay_name
+      input$assay
     })
 
     observeEvent(input$instructions, {
