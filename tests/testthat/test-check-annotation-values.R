@@ -11,7 +11,8 @@ annots <- tribble(
   "fileFormat", "csv", "STRING",
   "species", "Human", "STRING",
   "organ", "brain", "STRING",
-  "BrodmannArea", NA, "STRING"
+  "BrodmannArea", NA, "STRING",
+  "compoundDose", NA, "INTEGER"
 )
 
 ## check_annotation_values() ---------------------------------------------------
@@ -362,7 +363,7 @@ test_that("check_type can handle factor annotation values as strings", {
   b <- factor(c("a", "b"))
   expect_equal(
     check_value(a, "x", annotations, return_valid = FALSE),
-    check_value(b, "x", annotations, return_valid = FALSE),
+    check_value(b, "x", annotations, return_valid = FALSE)
   )
 })
 
