@@ -311,7 +311,7 @@ app_server <- function(input, output, session) {
           "fileFormat",
           "parent"
         ),
-        success_msg = "No required columns are incomplete in the manifest",
+        success_msg = "All required columns are complete in the manifest",
         fail_msg = "Some required columns are incomplete in the manifest"
       )
     })
@@ -319,7 +319,7 @@ app_server <- function(input, output, session) {
       check_cols_complete(
         indiv(),
         required_cols = c("individualID"),
-        success_msg = "No required columns are incomplete in the individual metadata", # nolint
+        success_msg = "All required columns are complete in the individual metadata", # nolint
         fail_msg = "Some required columns are incomplete in the individual metadata" # nolint
       )
     })
@@ -327,7 +327,7 @@ app_server <- function(input, output, session) {
       check_cols_complete(
         biosp(),
         required_cols = c("individualID", "specimenID"),
-        success_msg = "No required columns are incomplete in the biospecimen metadata", # nolint
+        success_msg = "All required columns are complete in the biospecimen metadata", # nolint
         fail_msg = "Some required columns are incomplete in the biospecimen metadata" # nolint
       )
     })
@@ -335,7 +335,7 @@ app_server <- function(input, output, session) {
       check_cols_complete(
         assay(),
         required_cols = c("specimenID"),
-        success_msg = "No required columns are incomplete in the assay metadata", # nolint
+        success_msg = "All required columns are complete in the assay metadata", # nolint
         fail_msg = "Some required columns are incomplete in the assay metadata" # nolint
       )
     })
