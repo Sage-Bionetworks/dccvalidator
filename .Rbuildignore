@@ -13,3 +13,4 @@
 ^\.lintr$
 ^\.pre-commit-config\.yaml$
 ^\.Rprofile$
+^config\.yml$

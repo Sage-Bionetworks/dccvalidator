@@ -19,6 +19,7 @@ Depends:
     R (>= 3.4),
     shinyBS
 Imports:
+    config,
     DT,
     emo,
     ggplot2,

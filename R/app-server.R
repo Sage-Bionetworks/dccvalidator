@@ -30,7 +30,10 @@ app_server <- function(input, output, session) {
     ## Check if user is in AMP-AD Consortium team (needed in order to create
     ## folder at the next step), and if they are a certified user.
     user <- synapser::synGetUserProfile()
-    membership <- check_team_membership(teams = c("3320424"), user = user)
+    membership <- check_team_membership(
+      teams = config::get("teams"),
+      user = user
+    )
     certified <- check_certified_user(user$ownerId)
     report_unsatisfied_requirements(membership, certified)
 
@@ -40,7 +43,7 @@ app_server <- function(input, output, session) {
       inherits(certified, "check_pass")) {
       created_folder <- try(
         create_folder(
-          parent = "syn20506363",
+          parent = config::get("storage_location"),
           name = user$userName
         )
       )
@@ -59,7 +62,7 @@ app_server <- function(input, output, session) {
         upload_documents_server,
         "documentation",
         parent_folder = reactive(created_folder),
-        study_table_id = reactive("syn11363298")
+        study_table_id = reactive(config::get("study_table"))
       )
     }
 
@@ -72,7 +75,7 @@ app_server <- function(input, output, session) {
     })
 
     ## Download annotation definitions
-    annots <- get_synapse_annotations()
+    annots <- get_synapse_annotations(synID = config::get("annotations_table"))
 
     ## Store files in separate variable to be able to reset inputs to NULL
     files <- reactiveValues(
@@ -139,7 +142,8 @@ app_server <- function(input, output, session) {
       utils::read.csv(
         files$indiv$datapath,
         na.strings = "",
-        stringsAsFactors = FALSE)
+        stringsAsFactors = FALSE
+      )
     })
     biosp <- reactive({
       if (is.null(files$biosp)) {
@@ -148,7 +152,8 @@ app_server <- function(input, output, session) {
       utils::read.csv(
         files$biosp$datapath,
         na.strings = "",
-        stringsAsFactors = FALSE)
+        stringsAsFactors = FALSE
+      )
     })
     assay <- reactive({
       if (is.null(files$assay)) {
@@ -157,7 +162,8 @@ app_server <- function(input, output, session) {
       utils::read.csv(
         files$assay$datapath,
         na.strings = "",
-        stringsAsFactors = FALSE)
+        stringsAsFactors = FALSE
+      )
     })
     species_name <- reactive({
       input$species
@@ -172,8 +178,8 @@ app_server <- function(input, output, session) {
           title = "Instructions",
           # nolint start
           instructions(
-            annots_link = "https://shinypro.synapse.org/users/nsanati/annotationUI/",
-            templates_link = "https://www.synapse.org/#!Synapse:syn18512044"
+            annots_link = config::get("annotations_link"),
+            templates_link = config::get("templates_link")
           ),
           # nolint end
           easyClose = TRUE
