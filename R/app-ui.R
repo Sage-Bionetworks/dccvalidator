@@ -34,6 +34,9 @@ app_ui <- function(request) {
                 br(),
                 br(),
 
+                # UI for getting the study name
+                get_study_ui("study"),
+
                 shinyjs::disabled(
                   radioButtons(
                     "species",
