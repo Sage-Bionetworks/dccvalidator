@@ -9,12 +9,6 @@ default:
 
 amp-ad:
   storage_location: "syn20506363"
-  study_table: "syn11363298"
-  annotations_table: "syn10242922"
-  annotations_link: "https://shinypro.synapse.org/users/nsanati/annotationUI/"
-  templates_link: "https://www.synapse.org/#!Synapse:syn18512044"
-  teams:
-    - "3320424"
 
 pec:
   storage_location: "syn20825282"
