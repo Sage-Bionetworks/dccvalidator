@@ -107,13 +107,6 @@ upload_documents_ui <- function(id) {
 #' @param study_table_id synapse Id for the consortium study table
 upload_documents_server <- function(input, output, session,
                                     parent_folder, study_table_id) {
-  inputs_to_enable <- c(
-    "doc_study",
-    "study_doc",
-    "assay_doc",
-    "upload_docs"
-  )
-  purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
 
   # Create folder for upload
   docs_folder <- synapser::Folder(
@@ -121,6 +114,10 @@ upload_documents_server <- function(input, output, session,
     parent = parent_folder()
   )
   created_docs_folder <- synapser::synStore(docs_folder)
+
+  # If called, then user must be logged in and able to contribute
+  # Enable UI to get study name
+  shinyjs::enable("doc_study")
 
   # Get the study name
   study_name <- callModule(
@@ -130,6 +127,26 @@ upload_documents_server <- function(input, output, session,
   )
   doc_annots <- reactive({
     list(study = study_name())
+  })
+
+  # Only enable other ui elements if study given
+  inputs_to_enable <- c(
+    "study_doc",
+    "assay_doc",
+    "upload_docs"
+  )
+  observe({
+    validate(
+      need(study_name() != "", "Provide study name")
+    )
+    purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
+  })
+  # Disable ui elements if study name removed
+  observe({
+    validate(
+      need(study_name() == "", "Provide study name")
+    )
+    purrr::walk(inputs_to_enable, function(x) shinyjs::disable(x))
   })
 
   # Upload files to Synapse (after renaming them so they keep their original
