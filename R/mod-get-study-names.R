@@ -3,7 +3,7 @@
 #' @return list of studies
 get_study_names <- function(study_table_id) {
   study_table <- syndccutils::get_table_df(study_table_id())
-  return(sort(study_table$StudyName))
+  return(c("", sort(study_table$StudyName)))
 }
 
 #' UI for the get_study module
