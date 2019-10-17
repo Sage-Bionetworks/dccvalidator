@@ -71,11 +71,11 @@ check_cols_individual <- function(data, template,
   if (is.null(data)) {
     return(NULL)
   }
-  template <- match.arg(template, c("human", "animal"))
+  template <- match.arg(template, c("human", "general"))
   id <- switch(
     template,
     human = "syn12973254",
-    animal = "syn12973253"
+    general = "syn12973253"
   )
   required <- get_template(id, ...)
   behavior <- paste0(
@@ -137,9 +137,10 @@ check_cols_biospecimen <- function(data, template,
   if (is.null(data)) {
     return(NULL)
   }
-  template <- match.arg(template, c("general", "drosophila"))
+  template <- match.arg(template, c("human", "general", "drosophila"))
   id <- switch(
     template,
+    human = "syn12973252",
     general = "syn12973252",
     drosophila = "syn20673251"
   )

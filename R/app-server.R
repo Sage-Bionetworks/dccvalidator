@@ -1,6 +1,17 @@
 #' @import shiny
 #' @import shinydashboard
+
 app_server <- function(input, output, session) {
+  ## Initial titles for report boxes
+  reporting_titles <- reactiveValues(
+    success = "Successes (0)",
+    warn = "Warnings (0)",
+    fail = "Failures (0)"
+  )
+  output$num_success <- renderText(reporting_titles$success)
+  output$num_warn <- renderText(reporting_titles$warn)
+  output$num_fail <- renderText(reporting_titles$fail)
+
   session$sendCustomMessage(type = "readCookie", message = list())
 
   ## Show message if user is not logged in to synapse
@@ -42,14 +53,38 @@ app_server <- function(input, output, session) {
         "assay_name"
       )
       purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
+
+      # Documentation server needs created_folder to run correctly
+      callModule(
+        upload_documents_server,
+        "documentation",
+        parent_folder = reactive(created_folder),
+        study_table_id = reactive("syn11363298")
+      )
     }
+
+    ## If drosophila species checked, reset fileInput
+    observeEvent(input$species, {
+      if (input$species == "drosophila") {
+        shinyjs::reset("indiv_meta")
+        files$indiv <- NULL
+      }
+    })
 
     ## Download annotation definitions
     annots <- get_synapse_annotations()
 
+    ## Store files in separate variable to be able to reset inputs to NULL
+    files <- reactiveValues(
+      indiv = NULL,
+      manifest = NULL,
+      biosp = NULL,
+      assay = NULL
+    )
     ## Upload files to Synapse (after renaming them so they keep their original
     ## names)
     observeEvent(input$manifest, {
+      files$manifest <- input$manifest
       save_to_synapse(
         input$manifest,
         parent = created_folder,
@@ -58,6 +93,7 @@ app_server <- function(input, output, session) {
     })
 
     observeEvent(input$indiv_meta, {
+      files$indiv <- input$indiv_meta
       save_to_synapse(
         input$indiv_meta,
         parent = created_folder,
@@ -66,6 +102,7 @@ app_server <- function(input, output, session) {
     })
 
     observeEvent(input$biosp_meta, {
+      files$biosp <- input$biosp_meta
       save_to_synapse(
         input$biosp_meta,
         parent = created_folder,
@@ -74,6 +111,7 @@ app_server <- function(input, output, session) {
     })
 
     observeEvent(input$assay_meta, {
+      files$assay <- input$assay_meta
       save_to_synapse(
         input$assay_meta,
         parent = created_folder,
@@ -83,39 +121,49 @@ app_server <- function(input, output, session) {
 
     ## Load metadata files into session
     manifest <- reactive({
-      if (is.null(input$manifest)) {
+      if (is.null(files$manifest)) {
         return(NULL)
       }
       utils::read.table(
-        input$manifest$datapath,
+        files$manifest$datapath,
         sep = "\t",
         header = TRUE,
-        na.strings = ""
+        na.strings = "",
+        stringsAsFactors = FALSE
       )
     })
     indiv <- reactive({
-      if (is.null(input$indiv_meta)) {
+      if (is.null(files$indiv)) {
         return(NULL)
       }
-      utils::read.csv(input$indiv_meta$datapath, na.strings = "")
+      utils::read.csv(
+        files$indiv$datapath,
+        na.strings = "",
+        stringsAsFactors = FALSE)
     })
     biosp <- reactive({
-      if (is.null(input$biosp_meta)) {
+      if (is.null(files$biosp)) {
         return(NULL)
       }
-      utils::read.csv(input$biosp_meta$datapath, na.strings = "")
+      utils::read.csv(
+        files$biosp$datapath,
+        na.strings = "",
+        stringsAsFactors = FALSE)
     })
     assay <- reactive({
-      if (is.null(input$assay_meta)) {
+      if (is.null(files$assay)) {
         return(NULL)
       }
-      utils::read.csv(input$assay_meta$datapath, na.strings = "")
+      utils::read.csv(
+        files$assay$datapath,
+        na.strings = "",
+        stringsAsFactors = FALSE)
     })
     species_name <- reactive({
       input$species
     })
     assay_name <- reactive({
-      input$assay
+      input$assay_name
     })
 
     observeEvent(input$instructions, {
@@ -123,16 +171,10 @@ app_server <- function(input, output, session) {
         modalDialog(
           title = "Instructions",
           # nolint start
-          p("Upload .csv files of your individual, biospecimen, and assay metadata, and upload your manifest as a .tsv or .txt file. The app will check your data for common errors in the metadata and ensure that there are no missing specimen IDs between the metadata and the data files listed in the manifest."),
-          p(
-            "To read more about the correct format of a manifest, see this",
-            HTML("<a target=\"_blank\" href=\"https://docs.synapse.org/articles/uploading_in_bulk.html\">documentation</a>.")
+          instructions(
+            annots_link = "https://shinypro.synapse.org/users/nsanati/annotationUI/",
+            templates_link = "https://www.synapse.org/#!Synapse:syn18512044"
           ),
-          p(
-            "To explore accepted annotation keys and values, refer to the",
-            HTML("<a target=\"_blank\" href=\"https://shinypro.synapse.org/users/nsanati/annotationUI/\">annotation dictionary</a>.")
-          ),
-          p("Note you must be logged in to Synapse for this application to work."),
           # nolint end
           easyClose = TRUE
         )
@@ -150,7 +192,7 @@ app_server <- function(input, output, session) {
       check_cols_individual(indiv(), species_name())
     })
     missing_cols_biosp <- reactive({
-      check_cols_biospecimen(biosp(), "general")
+      check_cols_biospecimen(biosp(), species_name())
     })
     missing_cols_assay <- reactive({
       check_cols_assay(assay(), assay_name())
@@ -318,27 +360,44 @@ app_server <- function(input, output, session) {
     })
 
     ## Successes box
-    output$successes <- renderUI({
+    observe({
       successes <- purrr::map_lgl(res(), function(x) {
         inherits(x, "check_pass")
       })
-      report_results(res()[successes], emoji_prefix = "check")
+      output$successes <- renderUI({
+        report_results(res()[successes], emoji_prefix = "check")
+      })
+      reporting_titles$success <- glue::glue("Successes ({sum(successes)})")
     })
 
     ## Warnings box
-    output$warnings <- renderUI({
+    observe({
       warnings <- purrr::map_lgl(res(), function(x) {
         inherits(x, "check_warn")
       })
-      report_results(res()[warnings], emoji_prefix = "warning", verbose = TRUE)
+      output$warnings <- renderUI({
+        report_results(
+          res()[warnings],
+          emoji_prefix = "warning",
+          verbose = TRUE
+        )
+      })
+      reporting_titles$warn <- glue::glue("Warnings ({sum(warnings)})")
     })
 
     ## Failures box
-    output$failures <- renderUI({
+    observe({
       failures <- purrr::map_lgl(res(), function(x) {
         inherits(x, "check_fail")
       })
-      report_results(res()[failures], emoji_prefix = "x", verbose = TRUE)
+      output$failures <- renderUI({
+        report_results(
+          res()[failures],
+          emoji_prefix = "x",
+          verbose = TRUE
+        )
+      })
+      reporting_titles$fail <- glue::glue("Failures ({sum(failures)})")
     })
 
     ## Counts of individuals, specimens, and files

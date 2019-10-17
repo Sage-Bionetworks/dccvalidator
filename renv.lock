@@ -306,6 +306,13 @@
       "Repository": "CRAN",
       "Hash": "cd87b0162287f0da225edfaa2fd3a20c"
     },
+    "fastmap": {
+      "Package": "fastmap",
+      "Version": "1.0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7a0d4ec0aa0299e3907f8f4f982e33b4"
+    },
     "feather": {
       "Package": "feather",
       "Version": "0.3.5",
@@ -402,17 +409,17 @@
     },
     "htmltools": {
       "Package": "htmltools",
-      "Version": "0.3.6",
+      "Version": "0.4.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "5132526e7fb28a2c20d1ef443d5c4644"
+      "Hash": "639ced211d4574cb149a7906b22e110f"
     },
     "htmlwidgets": {
       "Package": "htmlwidgets",
-      "Version": "1.3",
+      "Version": "1.5.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "8aa0ed21f14fc9645367e8bc305415f5"
+      "Hash": "f2ea129162a975cc3828d56d5270616d"
     },
     "httpuv": {
       "Package": "httpuv",
@@ -458,10 +465,10 @@
     },
     "later": {
       "Package": "later",
-      "Version": "0.8.0",
+      "Version": "1.0.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "4d5b806a328e0da75f0f0d4653676552"
+      "Hash": "19ddb614c1423400e9ea7bf6bfd34a36"
     },
     "lattice": {
       "Package": "lattice",
@@ -587,10 +594,10 @@
     },
     "pkgbuild": {
       "Package": "pkgbuild",
-      "Version": "1.0.5",
+      "Version": "1.0.6",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "00ec4a14a879c7fda96b2228cff1c5cc"
+      "Hash": "0514428b15e609740155a0a0a3e182c5"
     },
     "pkgconfig": {
       "Package": "pkgconfig",
@@ -662,10 +669,10 @@
     },
     "promises": {
       "Package": "promises",
-      "Version": "1.0.1",
+      "Version": "1.1.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "f80d162b7cef7e36a0134d1f1084e36d"
+      "Hash": "58abc43e83bbc8231c416a812743ab98"
     },
     "ps": {
       "Package": "ps",
@@ -723,15 +730,14 @@
     },
     "renv": {
       "Package": "renv",
-      "Version": "0.7.0-125",
+      "Version": "0.7.1-16",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "rstudio",
       "RemoteRepo": "renv",
       "RemoteRef": "master",
-      "RemoteSha": "c6b89be02de6371dad6f778250ce230dc776eaf1",
-      "Hash": "95a465dc04f509349cd22a63c3e45344"
+      "RemoteSha": "5d0c0def33d07b04b95f1134ecbbbf7cd551c7f8"
     },
     "reshape2": {
       "Package": "reshape2",
@@ -763,10 +769,10 @@
     },
     "rmarkdown": {
       "Package": "rmarkdown",
-      "Version": "1.15",
+      "Version": "1.16",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "7009ca49bab0c053098ae99b595bbacb"
+      "Hash": "74352997ea70389458e7a8b7059dfb95"
     },
     "roxygen2": {
       "Package": "roxygen2",
@@ -833,10 +839,10 @@
     },
     "shiny": {
       "Package": "shiny",
-      "Version": "1.3.2",
+      "Version": "1.4.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "3f96ad878877e005bcf6093c5c7efd9e"
+      "Hash": "25dd339c951981444081a370b4afad40"
     },
     "shinyBS": {
       "Package": "shinyBS",
@@ -854,10 +860,15 @@
     },
     "shinyjs": {
       "Package": "shinyjs",
-      "Version": "1.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "f80ba8b88aa5cd27157e8cd3bbd7cc35"
+      "Version": "1.0.1.9006",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "shinyjs",
+      "RemoteUsername": "daattali",
+      "RemoteRef": "master",
+      "RemoteSha": "35b3efd9136fa7d1ecbde9d7629eb6abf69f275a",
+      "Hash": "e0bccbc792de429165365179d4924e52"
     },
     "skimr": {
       "Package": "skimr",
@@ -907,8 +918,8 @@
       "RemoteRepo": "syndccutils",
       "RemoteSubdir": "R",
       "RemoteRef": "master",
-      "RemoteSha": "3bce8bbd5e3e58ba910dd62ac8074f8506b25e93",
-      "Hash": "e48d3b9244348320e1895704ab89ff42"
+      "RemoteSha": "550b4c0839457e3a48ff72636e028a9611065e5c",
+      "Hash": "f4e28acb9d9f64e241d5acad0c6df35f"
     },
     "sys": {
       "Package": "sys",
@@ -1013,10 +1024,10 @@
     },
     "xfun": {
       "Package": "xfun",
-      "Version": "0.9",
+      "Version": "0.10",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "f577b2b637a64f3b5662430ccc6fa1b7"
+      "Hash": "b22f06440a75a69aa0c6c04cf5278d83"
     },
     "xml2": {
       "Package": "xml2",
