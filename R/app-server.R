@@ -304,7 +304,13 @@ app_server <- function(input, output, session) {
     complete_cols_manifest <- reactive({
       check_cols_complete(
         manifest(),
-        required_cols = c(""),
+        required_cols = c(
+          "consortium",
+          "study",
+          "grant",
+          "fileFormat",
+          "parent"
+        ),
         success_msg = "No required columns are incomplete in the manifest",
         fail_msg = "Some required columns are incomplete in the manifest"
       )
@@ -312,25 +318,25 @@ app_server <- function(input, output, session) {
     complete_cols_indiv <- reactive({
       check_cols_complete(
         indiv(),
-        required_cols = c(""),
-        success_msg = "No required columns are incomplete in the individual metadata",
-        fail_msg = "Some required columns are incomplete in the individual metadata"
+        required_cols = c("individualID"),
+        success_msg = "No required columns are incomplete in the individual metadata", # nolint
+        fail_msg = "Some required columns are incomplete in the individual metadata" # nolint
       )
     })
     complete_cols_biosp <- reactive({
       check_cols_complete(
         biosp(),
-        required_cols = c(""),
-        success_msg = "No required columns are incomplete in the biospecimen metadata",
-        fail_msg = "Some required columns are incomplete in the biospecimen metadata"
+        required_cols = c("individualID", "specimenID"),
+        success_msg = "No required columns are incomplete in the biospecimen metadata", # nolint
+        fail_msg = "Some required columns are incomplete in the biospecimen metadata" # nolint
       )
     })
     complete_cols_assay <- reactive({
       check_cols_complete(
         assay(),
-        required_cols = c(""),
-        success_msg = "No required columns are incomplete in the assay metadata",
-        fail_msg = "Some required columns are incomplete in the assay metadata"
+        required_cols = c("specimenID"),
+        success_msg = "No required columns are incomplete in the assay metadata", # nolint
+        fail_msg = "Some required columns are incomplete in the assay metadata" # nolint
       )
     })
 
