@@ -87,5 +87,10 @@ get_study_server <- function(input, output, session, study_table_id) {
       study_name(input$study_text)
     }
   })
+  observeEvent(input$study_exists, {
+    if (input$study_exists == "No") {
+      study_name("")
+    }
+  })
   return(study_name)
 }
