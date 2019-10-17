@@ -11,18 +11,19 @@
 check_col_names(data, template, success_msg = NULL, fail_msg = NULL,
   behavior = NULL)
 
-check_cols_manifest(data, success_msg = "All manifest columns present",
+check_cols_manifest(data, id,
+  success_msg = "All manifest columns present",
   fail_msg = "Missing columns in the manifest", ...)
 
-check_cols_individual(data, template,
+check_cols_individual(data, id,
   success_msg = "All individual metadata columns present",
   fail_msg = "Missing columns in the individual metadata file", ...)
 
-check_cols_assay(data, template,
+check_cols_assay(data, id,
   success_msg = "All assay metadata columns present",
   fail_msg = "Missing columns in the assay metadata file", ...)
 
-check_cols_biospecimen(data, template,
+check_cols_biospecimen(data, id,
   success_msg = "All biospecimen columns present",
   fail_msg = "Missing columns in the biospecimen metadata file", ...)
 }
@@ -38,6 +39,8 @@ against}
 \item{fail_msg}{Message indicating the check failed.}
 
 \item{behavior}{The intended behavior of the test}
+
+\item{id}{Synapse ID of the template to check against}
 
 \item{...}{Additional arguments passed to \code{\link[synapser:synGet]{synapser::synGet()}}}
 }

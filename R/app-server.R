@@ -165,11 +165,24 @@ app_server <- function(input, output, session) {
         stringsAsFactors = FALSE
       )
     })
-    species_name <- reactive({
-      input$species
+
+    # Location of templates
+    indiv_template <- reactive({
+      if (input$species == "human") {
+        config::get("templates")$individual_templates[["human"]]
+      } else {
+        config::get("templates")$individual_templates[["animal"]]
+      }
     })
-    assay_name <- reactive({
-      input$assay_name
+    biosp_template <- reactive({
+      if (input$species == "drosophila") {
+        config::get("templates")$biospecimen_templates[["drosophila"]]
+      } else {
+        config::get("templates")$biospecimen_templates[["general"]]
+      }
+    })
+    assay_template <- reactive({
+      config::get("templates")$assay_templates[[input$assay_name]]
     })
 
     observeEvent(input$instructions, {
@@ -195,16 +208,19 @@ app_server <- function(input, output, session) {
 
     # Missing columns ----------------------------------------------------------
     missing_cols_indiv <- reactive({
-      check_cols_individual(indiv(), species_name())
+      check_cols_individual(indiv(), indiv_template())
     })
     missing_cols_biosp <- reactive({
-      check_cols_biospecimen(biosp(), species_name())
+      check_cols_biospecimen(biosp(), biosp_template())
     })
     missing_cols_assay <- reactive({
-      check_cols_assay(assay(), assay_name())
+      check_cols_assay(assay(), assay_template())
     })
     missing_cols_manifest <- reactive({
-      check_cols_manifest(manifest())
+      check_cols_manifest(
+        manifest(),
+        config::get("templates")$manifest_template
+      )
     })
 
     # Individual and specimen IDs match ----------------------------------------

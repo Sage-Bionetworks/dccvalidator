@@ -24,6 +24,7 @@ check_col_names <- function(data, template, success_msg = NULL, fail_msg = NULL,
 }
 
 #' @inheritParams check_col_names
+#' @param id Synapse ID of the template to check against
 #' @export
 #' @rdname check_col_names
 #' @examples
@@ -36,14 +37,13 @@ check_col_names <- function(data, template, success_msg = NULL, fail_msg = NULL,
 #' b <- data.frame(assay = "rnaSeq")
 #' check_cols_manifest(b)
 #' }
-check_cols_manifest <- function(data,
+check_cols_manifest <- function(data, id,
                                 success_msg = "All manifest columns present",
                                 fail_msg = "Missing columns in the manifest",
                                 ...) {
   if (is.null(data)) {
     return(NULL)
   }
-  id <- "syn20820080"
   required <- get_template(id, ...)
   behavior <- paste0(
     "Manifest should contain columns: ",
@@ -58,11 +58,11 @@ check_cols_manifest <- function(data,
   )
 }
 
-#' @inheritParams check_col_names
+#' @inheritParams check_cols_manifest
 #' @inheritParams get_template
 #' @export
 #' @rdname check_col_names
-check_cols_individual <- function(data, template,
+check_cols_individual <- function(data, id,
                                   # nolint start
                                   success_msg = "All individual metadata columns present",
                                   fail_msg = "Missing columns in the individual metadata file",
@@ -71,12 +71,6 @@ check_cols_individual <- function(data, template,
   if (is.null(data)) {
     return(NULL)
   }
-  template <- match.arg(template, c("human", "general"))
-  id <- switch(
-    template,
-    human = "syn12973254",
-    general = "syn12973253"
-  )
   required <- get_template(id, ...)
   behavior <- paste0(
     "Individual file should contain columns: ",
@@ -91,11 +85,11 @@ check_cols_individual <- function(data, template,
   )
 }
 
-#' @inheritParams check_col_names
+#' @inheritParams check_cols_manifest
 #' @inheritParams get_template
 #' @export
 #' @rdname check_col_names
-check_cols_assay <- function(data, template,
+check_cols_assay <- function(data, id,
                              # nolint start
                              success_msg = "All assay metadata columns present",
                              fail_msg = "Missing columns in the assay metadata file",
@@ -104,12 +98,6 @@ check_cols_assay <- function(data, template,
   if (is.null(data)) {
     return(NULL)
   }
-  template <- match.arg(template, c("rnaSeq", "proteomics"))
-  id <- switch(
-    template,
-    rnaSeq = "syn12973256",
-    proteomics = "syn12973255"
-  )
   required <- get_template(id, ...)
   behavior <- paste0(
     "Assay file should contain columns: ",
@@ -124,11 +112,11 @@ check_cols_assay <- function(data, template,
   )
 }
 
-#' @inheritParams check_col_names
+#' @inheritParams check_cols_manifest
 #' @inheritParams get_template
 #' @export
 #' @rdname check_col_names
-check_cols_biospecimen <- function(data, template,
+check_cols_biospecimen <- function(data, id,
                                    # nolint start
                                    success_msg = "All biospecimen columns present",
                                    fail_msg = "Missing columns in the biospecimen metadata file",
@@ -137,13 +125,6 @@ check_cols_biospecimen <- function(data, template,
   if (is.null(data)) {
     return(NULL)
   }
-  template <- match.arg(template, c("human", "general", "drosophila"))
-  id <- switch(
-    template,
-    human = "syn12973252",
-    general = "syn12973252",
-    drosophila = "syn20673251"
-  )
   required <- get_template(id, ...)
   behavior <- paste0(
     "Biospecimen file should contain columns: ",
