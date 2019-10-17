@@ -100,7 +100,8 @@ app_server <- function(input, output, session) {
       save_to_synapse(
         input$manifest,
         parent = created_folder,
-        name = input$manifest$name
+        name = input$manifest$name,
+        annotations = list(study = study_name())
       )
     })
 
@@ -109,7 +110,11 @@ app_server <- function(input, output, session) {
       save_to_synapse(
         input$indiv_meta,
         parent = created_folder,
-        name = input$indiv_meta$name
+        name = input$indiv_meta$name,
+        annotations = list(
+          study = study_name(),
+          metadataType = "individual"
+        )
       )
     })
 
@@ -118,7 +123,11 @@ app_server <- function(input, output, session) {
       save_to_synapse(
         input$biosp_meta,
         parent = created_folder,
-        name = input$biosp_meta$name
+        name = input$biosp_meta$name,
+        annotations = list(
+          study = study_name(),
+          metadataType = "biospecimen"
+        )
       )
     })
 
@@ -127,7 +136,12 @@ app_server <- function(input, output, session) {
       save_to_synapse(
         input$assay_meta,
         parent = created_folder,
-        name = input$assay_meta$name
+        name = input$assay_meta$name,
+        annotations = list(
+          study = study_name(),
+          metadataType = "assay",
+          assay = assay_name()
+        )
       )
     })
 
