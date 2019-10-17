@@ -71,20 +71,21 @@ with_busy_indicator_server <- function(button_id, expr) {
 
   # Try to run the code when the button is clicked and show an error message if
   # an error occurs or a success message if it completes
-  tryCatch({
-    value <- expr
-    shinyjs::show(selector = done_el)
-    shinyjs::delay(2000, shinyjs::hide(
-      selector = done_el,
-      anim = TRUE,
-      animType = "fade",
-      time = 0.5
-    ))
-    value
-  },
-  error = function(err) {
-    error_func(err, button_id)
-  }
+  tryCatch(
+    {
+      value <- expr
+      shinyjs::show(selector = done_el)
+      shinyjs::delay(2000, shinyjs::hide(
+        selector = done_el,
+        anim = TRUE,
+        animType = "fade",
+        time = 0.5
+      ))
+      value
+    },
+    error = function(err) {
+      error_func(err, button_id)
+    }
   )
 }
 
