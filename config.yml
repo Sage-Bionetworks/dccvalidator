@@ -17,6 +17,10 @@ default:
     assay_templates:
       rnaSeq: "syn12973256"
       proteomics: "syn12973255"
+  species_list:
+    - "mouse or other animal model"
+    - "human"
+    - "drosophila"
 
 amp-ad:
   storage_location: "syn20506363"
@@ -39,3 +43,5 @@ pec:
       wholeGenomeSeq: "syn20980993"
       rnaSeq: "syn20768650"
       ATACSeq: "syn20768526"
+  species_list:
+    - "human"
