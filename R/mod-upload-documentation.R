@@ -1,4 +1,8 @@
-#' UI function for the upload_documentation module
+#' Upload documentation to Synapse
+#'
+#' This module creates a page that explains what documentation is needed to
+#' describe the study and assay(s) that make up the study. It allows the user to
+#' indicate the name of their study and upload documentation files.
 #'
 #' @keywords internal
 #' @param id the module id

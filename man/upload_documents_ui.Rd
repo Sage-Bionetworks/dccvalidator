@@ -3,7 +3,7 @@
 \name{upload_documents_ui}
 \alias{upload_documents_ui}
 \alias{upload_documents_server}
-\title{UI function for the upload_documentation module}
+\title{Upload documentation to Synapse}
 \usage{
 upload_documents_ui(id)
 
@@ -27,8 +27,8 @@ upload_documents_server(input, output, session, parent_folder,
 html ui for the module
 }
 \description{
-UI function for the upload_documentation module
-
-Server function for upload_documentation module
+This module creates a page that explains what documentation is needed to
+describe the study and assay(s) that make up the study. It allows the user to
+indicate the name of their study and upload documentation files.
 }
 \keyword{internal}
