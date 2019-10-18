@@ -112,6 +112,16 @@ app_ui <- function(request) {
                       ".tsv"
                     )
                   )
+                ),
+
+                # Add an indicator feature to validate button
+                with_busy_indicator_ui(
+                  shinyjs::disabled(
+                    actionButton(
+                      "validate_btn",
+                      "Validate"
+                    )
+                  )
                 )
               ),
 
