@@ -346,45 +346,62 @@ app_server <- function(input, output, session) {
       )
     })
 
-    ## Successes box
-    observe({
-      successes <- purrr::map_lgl(res(), function(x) {
-        inherits(x, "check_pass")
-      })
-      output$successes <- renderUI({
-        report_results(res()[successes], emoji_prefix = "check")
-      })
-      reporting_titles$success <- glue::glue("Successes ({sum(successes)})")
-    })
-
-    ## Warnings box
-    observe({
-      warnings <- purrr::map_lgl(res(), function(x) {
-        inherits(x, "check_warn")
-      })
-      output$warnings <- renderUI({
-        report_results(
-          res()[warnings],
-          emoji_prefix = "warning",
-          verbose = TRUE
+    ## Show validation results on clicking "validate"
+    ## Require that the study name is given; give error if not
+    observeEvent(input$"validate_btn", {
+      with_busy_indicator_server("validate_btn", {
+        if (study_name() == "") {
+          stop("Please enter study name.")
+        }
+        ## Require at least one file input
+        validate(
+          need(
+            any(
+              !is.null(indiv()),
+              !is.null(biosp()),
+              !is.null(assay()),
+              !is.null(manifest())
+            ),
+            message = "Please upload some data to view a summary"
+          )
         )
-      })
-      reporting_titles$warn <- glue::glue("Warnings ({sum(warnings)})")
-    })
 
-    ## Failures box
-    observe({
-      failures <- purrr::map_lgl(res(), function(x) {
-        inherits(x, "check_fail")
+        ## Populate validation report
+        ## Successes box
+        successes <- purrr::map_lgl(res(), function(x) {
+          inherits(x, "check_pass")
+        })
+        output$successes <- renderUI({
+          report_results(res()[successes], emoji_prefix = "check")
+        })
+        reporting_titles$success <- glue::glue("Successes ({sum(successes)})")
+
+        ## Warnings box
+        warnings <- purrr::map_lgl(res(), function(x) {
+          inherits(x, "check_warn")
+        })
+        output$warnings <- renderUI({
+          report_results(
+            res()[warnings],
+            emoji_prefix = "warning",
+            verbose = TRUE
+          )
+        })
+        reporting_titles$warn <- glue::glue("Warnings ({sum(warnings)})")
+
+        ## Failures box
+        failures <- purrr::map_lgl(res(), function(x) {
+          inherits(x, "check_fail")
+        })
+        output$failures <- renderUI({
+          report_results(
+            res()[failures],
+            emoji_prefix = "x",
+            verbose = TRUE
+          )
+        })
+        reporting_titles$fail <- glue::glue("Failures ({sum(failures)})")
       })
-      output$failures <- renderUI({
-        report_results(
-          res()[failures],
-          emoji_prefix = "x",
-          verbose = TRUE
-        )
-      })
-      reporting_titles$fail <- glue::glue("Failures ({sum(failures)})")
     })
 
     ## Counts of individuals, specimens, and files
