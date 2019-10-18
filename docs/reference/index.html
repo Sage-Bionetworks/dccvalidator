@@ -127,23 +127,11 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-data-validation-functions" class="hasAnchor"><a href="#section-data-validation-functions" class="anchor"></a>Data validation functions</h2>
+          <p class="section-desc"><p>Functions to perform data validation and QA/QC checks, and report results as successes, warnings, or failures.</p></p>
         </th>
       </tr>
       <tr>
-        
-        <td>
-          <p><code><a href="app_server.html">app_server()</a></code> </p>
-        </td>
-        <td><p>App server</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="app_ui.html">app_ui()</a></code> </p>
-        </td>
-        <td><p>App UI</p></td>
-      </tr><tr>
         
         <td>
           <p><code><a href="check_annotation_keys.html">check_annotation_keys()</a></code> </p>
@@ -155,12 +143,6 @@
           <p><code><a href="check_annotation_values.html">check_annotation_values()</a></code> </p>
         </td>
         <td><p>Check annotation values</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="check_certified_user.html">check_certified_user()</a></code> </p>
-        </td>
-        <td><p>Check if user is certified</p></td>
       </tr><tr>
         
         <td>
@@ -182,12 +164,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="check_condition.html">check_condition()</a></code> </p>
-        </td>
-        <td><p>Create a condition of the given type</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="check_ids_match.html">check_ids_match()</a></code> <code><a href="check_ids_match.html">check_indiv_ids_match()</a></code> <code><a href="check_ids_match.html">check_specimen_ids_match()</a></code> </p>
         </td>
         <td><p>Check ids</p></td>
@@ -206,24 +182,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="check_pass.html">check_pass()</a></code> <code><a href="check_pass.html">check_warn()</a></code> <code><a href="check_pass.html">check_fail()</a></code> </p>
-        </td>
-        <td><p>Create custom conditions for reporting</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_template.html">get_template()</a></code> </p>
-        </td>
-        <td><p>Get a template</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="run_app.html">run_app()</a></code> </p>
-        </td>
-        <td><p>Run the Shiny application</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="valid_annotation_keys.html">valid_annotation_keys()</a></code> </p>
         </td>
         <td><p>Valid annotation keys</p></td>
@@ -233,6 +191,102 @@
           <p><code><a href="valid_annotation_values.html">valid_annotation_values()</a></code> </p>
         </td>
         <td><p>Valid annotation values</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_template.html">get_template()</a></code> </p>
+        </td>
+        <td><p>Get a template</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-shiny-app-functions" class="hasAnchor"><a href="#section-shiny-app-functions" class="anchor"></a>Shiny app functions</h2>
+          <p class="section-desc"><p>Functions to generate and run the dccvalidator Shiny application. Also includes modules that make up the app.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="app_server.html">app_server()</a></code> </p>
+        </td>
+        <td><p>App server</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="app_ui.html">app_ui()</a></code> </p>
+        </td>
+        <td><p>App UI</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="run_app.html">run_app()</a></code> </p>
+        </td>
+        <td><p>Run the Shiny application</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_study_ui.html">get_study_names()</a></code> <code><a href="get_study_ui.html">get_study_ui()</a></code> <code><a href="get_study_ui.html">get_study_server()</a></code> </p>
+        </td>
+        <td><p>Gather studies within consortium</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="with_busy_indicator_ui.html">with_busy_indicator_ui()</a></code> <code><a href="with_busy_indicator_ui.html">with_busy_indicator_server()</a></code> </p>
+        </td>
+        <td><p>Show busy indicator</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="upload_documents_ui.html">upload_documents_ui()</a></code> <code><a href="upload_documents_ui.html">upload_documents_server()</a></code> </p>
+        </td>
+        <td><p>UI function for the upload_documentation module</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-app-supporting-functions" class="hasAnchor"><a href="#section-app-supporting-functions" class="anchor"></a>App-supporting functions</h2>
+          <p class="section-desc"><p>Functions that the dccvalidator app uses to ensure the user is able to use the application and to provide instructions.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="check_certified_user.html">check_certified_user()</a></code> </p>
+        </td>
+        <td><p>Check if user is certified</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_user_teams.html">get_user_teams()</a></code> </p>
+        </td>
+        <td><p>Get teams a user belongs to</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="instructions.html">instructions()</a></code> </p>
+        </td>
+        <td><p>Create instructions modal text</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-validation-helpers" class="hasAnchor"><a href="#section-validation-helpers" class="anchor"></a>Validation helpers</h2>
+          <p class="section-desc"><p>These functions generate custom conditions for reporting check failures, warnings, and successes.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="check_condition.html">check_condition()</a></code> </p>
+        </td>
+        <td><p>Create a condition of the given type</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="check_pass.html">check_pass()</a></code> <code><a href="check_pass.html">check_warn()</a></code> <code><a href="check_pass.html">check_fail()</a></code> </p>
+        </td>
+        <td><p>Create custom conditions for reporting</p></td>
       </tr>
     </tbody>
     </table>
@@ -241,7 +295,10 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-data-validation-functions">Data validation functions</a></li>
+      <li><a href="#section-shiny-app-functions">Shiny app functions</a></li>
+      <li><a href="#section-app-supporting-functions">App-supporting functions</a></li>
+      <li><a href="#section-validation-helpers">Validation helpers</a></li>
     </ul>
   </div>
 </div>
