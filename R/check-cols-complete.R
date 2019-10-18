@@ -41,7 +41,7 @@ check_cols_complete <- function(data, required_cols,
   ## Return success if all required columns have complete data,
   ## and there are no missing required columns.
   ## Otherwise return warn or fail depending on `strict` argument
-  if (all(!results) & length(missing_cols) == 0) {
+  if (!any(results) & length(missing_cols) == 0) {
     check_pass(
       msg = success_msg,
       behavior = behavior
