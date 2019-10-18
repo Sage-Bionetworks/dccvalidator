@@ -2,7 +2,7 @@
 title: "Using the dccvalidator app in AMP-AD"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{using-the-dccvalidator-app}
+  %\VignetteIndexEntry{using-the-dccvalidator-app-amp-ad}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
