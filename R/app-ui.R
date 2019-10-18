@@ -6,8 +6,8 @@ app_ui <- function(request) {
 
     dashboardSidebar(
       sidebarMenu(
-        menuItem("Validator", tabName = "validator"),
-        menuItem("Documentation", tabName = "documentation")
+        menuItem("Documentation", tabName = "documentation"),
+        menuItem("Validator", tabName = "validator")
       )
     ),
 
