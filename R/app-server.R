@@ -340,7 +340,8 @@ app_server <- function(input, output, session) {
             name = files$indiv$name,
             annotations = list(
               study = study_name(),
-              metadataType = "individual"
+              metadataType = "individual",
+              species = species_name()
             )
           )
         }
@@ -351,7 +352,8 @@ app_server <- function(input, output, session) {
             name = files$biosp$name,
             annotations = list(
               study = study_name(),
-              metadataType = "biospecimen"
+              metadataType = "biospecimen",
+              species = species_name()
             )
           )
         }
@@ -363,7 +365,8 @@ app_server <- function(input, output, session) {
             annotations = list(
               study = study_name(),
               metadataType = "assay",
-              assay = assay_name()
+              assay = assay_name(),
+              species = species_name()
             )
           )
         }
