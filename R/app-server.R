@@ -44,6 +44,13 @@ app_server <- function(input, output, session) {
           name = user$userName
         )
       )
+
+      callModule(
+        get_study_server,
+        "study",
+        study_table_id = reactive("syn11363298")
+      )
+
       inputs_to_enable <- c(
         "indiv_meta",
         "biosp_meta",
