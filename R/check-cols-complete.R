@@ -1,6 +1,7 @@
 #' Check for complete columns
 #'
-#' Check for complete columns in the data and warn (or fail) if present.
+#' Check for complete columns in the data and fail (or warn) if incomplete.
+#' Missing columns that are required to be complete are flagged as incomplete.
 #'
 #' @param data Data to check
 #' @param required_cols A character vector of the required columns to check for
