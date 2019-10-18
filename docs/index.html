@@ -105,16 +105,16 @@
 <a href="#data-submission-validation" class="anchor"></a>Data submission validation</h1>
 <p>This package contains a Shiny app to validate manifests and metadata for AMP-AD studies. It uses the dccvalidator package to check for common data quality issues and gives realtime feedback to the data contributor on errors that need to be fixed. The reporting UI is heavily inspired by the <a href="https://knb.ecoinformatics.org/quality/s=knb.suite.1/doi%3A10.5063%2FF12V2D1V">MetaDIG project’s metadata quality reports</a>.</p>
 <p>The application also allows users to submit documentation of their study, a description of the methods used, etc.</p>
-<div id="local-development" class="section level2">
-<h2 class="hasAnchor">
-<a href="#local-development" class="anchor"></a>Local development</h2>
+</div>
+<div id="local-development" class="section level1">
+<h1 class="hasAnchor">
+<a href="#local-development" class="anchor"></a>Local development</h1>
 <p><code>dccvalidator</code> uses pre-commit hooks to check for common issues, such as code style (which should conform to <a href="https://style.tidyverse.org/">tidyverse style</a>), code parsability, and up-to-date .Rd documentation. To use, you will need to install <a href="https://pre-commit.com/#intro">pre-commit</a>. If on a Mac, I recommend using <a href="https://brew.sh/">homebrew</a>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>brew install pre<span class="op">-</span>commit</span></code></pre></div>
 <p>Then, within this git repo, run:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>pre<span class="op">-</span>commit install</span></code></pre></div>
 <hr>
 <p>Please note that the dccvalidator project is released with a <a href="CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
-</div>
 </div>
 
   </div>

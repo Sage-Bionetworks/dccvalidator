@@ -54,7 +54,7 @@ to be fixed. The reporting UI is heavily inspired by the
 The application also allows users to submit documentation of their study, a
 description of the methods used, etc.
 
-## Local development
+# Local development
 
 `dccvalidator` uses pre-commit hooks to check for common issues, such as code
 style (which should conform to [tidyverse style](https://style.tidyverse.org/)),

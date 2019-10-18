@@ -42,7 +42,7 @@ reports](https://knb.ecoinformatics.org/quality/s=knb.suite.1/doi%3A10.5063%2FF1
 The application also allows users to submit documentation of their
 study, a description of the methods used, etc.
 
-## Local development
+# Local development
 
 `dccvalidator` uses pre-commit hooks to check for common issues, such as
 code style (which should conform to [tidyverse
