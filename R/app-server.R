@@ -34,16 +34,6 @@ app_server <- function(input, output, session) {
     certified <- check_certified_user(user$ownerId)
     report_unsatisfied_requirements(membership, certified)
 
-    ## UI elements to enable/disable based on study name input
-    inputs_to_enable <- c(
-      "indiv_meta",
-      "biosp_meta",
-      "assay_meta",
-      "manifest",
-      "species",
-      "assay_name"
-    )
-
     ## If user is a member of the team(s), create folder to save files and
     ## enable inputs
     if (inherits(membership, "check_pass") &
@@ -73,17 +63,17 @@ app_server <- function(input, output, session) {
         validate(
           need(study_name() != "", message = "Provide study name")
         )
+        inputs_to_enable <- c(
+          "indiv_meta",
+          "biosp_meta",
+          "assay_meta",
+          "manifest",
+          "species",
+          "assay_name"
+        )
         purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
       })
     }
-
-    ## Disable the ui elements if the study name changes back to ""
-    observe({
-      validate(
-        need(study_name() == "", message = "Provide study name")
-      )
-      purrr::walk(inputs_to_enable, function(x) shinyjs::disable(x))
-    })
 
     ## If drosophila species checked, reset fileInput
     observeEvent(input$species, {
