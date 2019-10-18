@@ -44,35 +44,23 @@ app_server <- function(input, output, session) {
           name = user$userName
         )
       )
+      inputs_to_enable <- c(
+        "indiv_meta",
+        "biosp_meta",
+        "assay_meta",
+        "manifest",
+        "species",
+        "assay_name"
+      )
+      purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
 
-      ## Documentation server needs created_folder to run correctly
+      # Documentation server needs created_folder to run correctly
       callModule(
         upload_documents_server,
         "documentation",
         parent_folder = reactive(created_folder),
         study_table_id = reactive("syn11363298")
       )
-
-      ## Get the study name and enable inputs
-      study_name <- callModule(
-        get_study_server,
-        "study",
-        study_table_id = reactive("syn11363298")
-      )
-      observe({
-        validate(
-          need(study_name() != "", message = "Provide study name")
-        )
-        inputs_to_enable <- c(
-          "indiv_meta",
-          "biosp_meta",
-          "assay_meta",
-          "manifest",
-          "species",
-          "assay_name"
-        )
-        purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
-      })
     }
 
     ## If drosophila species checked, reset fileInput
