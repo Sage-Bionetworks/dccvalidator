@@ -2,6 +2,7 @@
 #'
 #' Check if a user is a member of any of the given teams.
 #'
+#' @keywords internal
 #' @param teams Team IDs to check membership in
 #' @param user User to check (e.g. output from [synapser::synGetUserProfile()])
 #' @inheritParams get_user_teams

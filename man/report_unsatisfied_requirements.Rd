@@ -16,3 +16,4 @@ Takes the output from \code{\link[=check_team_membership]{check_team_membership(
 If the user is not in the required teams or certified, creates a modal dialog
 indicating which teams they need to belong to and how to request access.
 }
+\keyword{internal}

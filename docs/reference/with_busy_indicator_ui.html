@@ -6,11 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>These functions add button feedback features including:
-disabling the button while processing requested function,
-showing a spinning wheel while processing requested function,
-displaying a green checkmark showing success upon completion,
-or displaying an error message if the function requested failed. — with_busy_indicator_ui • dccvalidator</title>
+<title>Show busy indicator — with_busy_indicator_ui • dccvalidator</title>
 
 
 <!-- jquery -->
@@ -39,13 +35,12 @@ or displaying an error message if the function requested failed. — with_busy_i
 
 
 
-<meta property="og:title" content="These functions add button feedback features including:
+<meta property="og:title" content="Show busy indicator — with_busy_indicator_ui" />
+<meta property="og:description" content="These functions add button feedback features including:
 disabling the button while processing requested function,
 showing a spinning wheel while processing requested function,
 displaying a green checkmark showing success upon completion,
-or displaying an error message if the function requested failed. — with_busy_indicator_ui" />
-<meta property="og:description" content="Author: Dean Attali
-From https://github.com/daattali/advanced-shiny/blob/master/busy-indicator/helpers.R #nolint" />
+or displaying an error message if the function requested failed." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -124,21 +119,22 @@ From https://github.com/daattali/advanced-shiny/blob/master/busy-indicator/helpe
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>These functions add button feedback features including:
-disabling the button while processing requested function,
-showing a spinning wheel while processing requested function,
-displaying a green checkmark showing success upon completion,
-or displaying an error message if the function requested failed.</h1>
+    <h1>Show busy indicator</h1>
     
     <div class="hidden name"><code>with_busy_indicator_ui.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Author: Dean Attali
-From https://github.com/daattali/advanced-shiny/blob/master/busy-indicator/helpers.R #nolint</p>
+    <p>These functions add button feedback features including:
+disabling the button while processing requested function,
+showing a spinning wheel while processing requested function,
+displaying a green checkmark showing success upon completion,
+or displaying an error message if the function requested failed.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>with_busy_indicator_ui</span>(<span class='no'>button</span>)</pre>
+    <pre class="usage"><span class='fu'>with_busy_indicator_ui</span>(<span class='no'>button</span>)
+
+<span class='fu'><a href='with_busy_indicator_server.html'>with_busy_indicator_server</a></span>(<span class='no'>button_id</span>, <span class='no'>expr</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -147,11 +143,21 @@ From https://github.com/daattali/advanced-shiny/blob/master/busy-indicator/helpe
       <th>button</th>
       <td><p>a shiny actionButton</p></td>
     </tr>
+    <tr>
+      <th>button_id</th>
+      <td><p>id of shiny actionButton</p></td>
+    </tr>
+    <tr>
+      <th>expr</th>
+      <td><p>the code to run when the button is clicked</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Hint for making this work with modules by mmoise in PR#11
+    <p>Author: Dean Attali
+From https://github.com/daattali/advanced-shiny/blob/master/busy-indicator/helpers.R #nolint</p>
+<p>Hint for making this work with modules by mmoise in PR#11
 Wrap the button in this function to attach visual features</p>
 
   </div>

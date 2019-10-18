@@ -22,3 +22,4 @@ Creates and stores a folder on Synapse under the given parent.
 create_folder(parent = "syn17038062", name = "my_new_folder")
 }
 }
+\keyword{internal}

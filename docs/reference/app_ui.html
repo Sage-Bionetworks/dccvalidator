@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • dccvalidator</title>
+<title>App UI — app_ui • dccvalidator</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,9 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="App UI — app_ui" />
+<meta property="og:description" content="Create the UI component of the dccvalidator Shiny app." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -54,7 +56,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -111,138 +113,36 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>App UI</h1>
+    
+    <div class="hidden name"><code>app_ui.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Create the UI component of the dccvalidator Shiny app.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>app_ui</span>(<span class='no'>request</span>)</pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="app_server.html">app_server()</a></code> </p>
-        </td>
-        <td><p>App server</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="app_ui.html">app_ui()</a></code> </p>
-        </td>
-        <td><p>App UI</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="check_annotation_keys.html">check_annotation_keys()</a></code> </p>
-        </td>
-        <td><p>Check annotation keys</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="check_annotation_values.html">check_annotation_values()</a></code> </p>
-        </td>
-        <td><p>Check annotation values</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="check_certified_user.html">check_certified_user()</a></code> </p>
-        </td>
-        <td><p>Check if user is certified</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="check_col_names.html">check_col_names()</a></code> <code><a href="check_col_names.html">check_cols_manifest()</a></code> <code><a href="check_col_names.html">check_cols_individual()</a></code> <code><a href="check_col_names.html">check_cols_assay()</a></code> <code><a href="check_col_names.html">check_cols_biospecimen()</a></code> </p>
-        </td>
-        <td><p>Check column names against their corresponding template</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="check_cols_complete.html">check_cols_complete()</a></code> </p>
-        </td>
-        <td><p>Check for complete columns</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="check_cols_empty.html">check_cols_empty()</a></code> </p>
-        </td>
-        <td><p>Check for empty columns</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="check_condition.html">check_condition()</a></code> </p>
-        </td>
-        <td><p>Create a condition of the given type</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="check_ids_match.html">check_ids_match()</a></code> <code><a href="check_ids_match.html">check_indiv_ids_match()</a></code> <code><a href="check_ids_match.html">check_specimen_ids_match()</a></code> </p>
-        </td>
-        <td><p>Check ids</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="check_indiv_ids_dup.html">check_indiv_ids_dup()</a></code> <code><a href="check_indiv_ids_dup.html">check_specimen_ids_dup()</a></code> </p>
-        </td>
-        <td><p>Check uniqueness of individual and specimen IDs</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="check_keys.html">check_keys()</a></code> </p>
-        </td>
-        <td><p>Check that a given set of keys are all present in an annotations dictionary</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="check_pass.html">check_pass()</a></code> <code><a href="check_pass.html">check_warn()</a></code> <code><a href="check_pass.html">check_fail()</a></code> </p>
-        </td>
-        <td><p>Create custom conditions for reporting</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_template.html">get_template()</a></code> </p>
-        </td>
-        <td><p>Get a template</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="run_app.html">run_app()</a></code> </p>
-        </td>
-        <td><p>Run the Shiny application</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="valid_annotation_keys.html">valid_annotation_keys()</a></code> </p>
-        </td>
-        <td><p>Valid annotation keys</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="valid_annotation_values.html">valid_annotation_values()</a></code> </p>
-        </td>
-        <td><p>Valid annotation values</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>request</th>
+      <td><p>Shiny request</p></td>
+    </tr>
     </table>
-  </div>
 
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
     </ul>
+
   </div>
 </div>
 

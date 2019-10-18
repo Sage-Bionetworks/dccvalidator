@@ -1,4 +1,4 @@
-#' App Server
+#' App server
 #'
 #' Create the server-side component of the dccvalidator Shiny app.
 #'

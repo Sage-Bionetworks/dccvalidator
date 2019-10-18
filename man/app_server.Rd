@@ -2,7 +2,7 @@
 % Please edit documentation in R/app-server.R
 \name{app_server}
 \alias{app_server}
-\title{App Server}
+\title{App server}
 \usage{
 app_server(input, output, session)
 }

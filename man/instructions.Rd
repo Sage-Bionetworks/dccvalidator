@@ -20,3 +20,4 @@ Provides an overview of the application and how to use it, as well as links
 to resources about formatting a manifest and the allowable values of
 annotations.
 }
+\keyword{internal}

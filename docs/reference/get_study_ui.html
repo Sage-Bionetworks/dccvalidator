@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>UI for the get_study module — get_study_ui • dccvalidator</title>
+<title>Gather studies within consortium — get_study_names • dccvalidator</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,12 @@
 
 
 
-<meta property="og:title" content="UI for the get_study module — get_study_ui" />
-<meta property="og:description" content="UI for the get_study module" />
+<meta property="og:title" content="Gather studies within consortium — get_study_names" />
+<meta property="og:description" content="Get study name based on either:
+existing study selection box
+new name for currently non-existing study
+
+" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -115,29 +119,59 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>UI for the get_study module</h1>
+    <h1>Gather studies within consortium</h1>
     
     <div class="hidden name"><code>get_study_ui.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>UI for the get_study module</p>
+    <p>Get study name based on either:</p><ul>
+<li><p>existing study selection box</p></li>
+<li><p>new name for currently non-existing study</p></li>
+</ul>
+
     </div>
 
-    <pre class="usage"><span class='fu'>get_study_ui</span>(<span class='no'>id</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='get_study_names.html'>get_study_names</a></span>(<span class='no'>study_table_id</span>)
+
+<span class='fu'>get_study_ui</span>(<span class='no'>id</span>)
+
+<span class='fu'><a href='get_study_server.html'>get_study_server</a></span>(<span class='no'>input</span>, <span class='no'>output</span>, <span class='no'>session</span>, <span class='no'>study_table_id</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>study_table_id</th>
+      <td><p>synapse Id for the consortium study table</p></td>
+    </tr>
+    <tr>
       <th>id</th>
       <td><p>the id</p></td>
+    </tr>
+    <tr>
+      <th>input</th>
+      <td><p>the input variables from <code><a href='https://rdrr.io/pkg/shiny/man/callModule.html'>shiny::callModule()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>output</th>
+      <td><p>the output variables from <code><a href='https://rdrr.io/pkg/shiny/man/callModule.html'>shiny::callModule()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>session</th>
+      <td><p>the session from <code><a href='https://rdrr.io/pkg/shiny/man/callModule.html'>shiny::callModule()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>study_table_id</th>
+      <td><p>synapse Id for the consortium study table</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>html UI for get_study panel</p>
+    <p>list of studies</p>
+<p>html UI for get_study panel</p>
+<p>name of the study</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

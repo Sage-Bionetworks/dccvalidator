@@ -2,22 +2,32 @@
 % Please edit documentation in R/mod-button-indicator.R
 \name{with_busy_indicator_ui}
 \alias{with_busy_indicator_ui}
-\title{These functions add button feedback features including:
-disabling the button while processing requested function,
-showing a spinning wheel while processing requested function,
-displaying a green checkmark showing success upon completion,
-or displaying an error message if the function requested failed.}
+\alias{with_busy_indicator_server}
+\title{Show busy indicator}
 \usage{
 with_busy_indicator_ui(button)
+
+with_busy_indicator_server(button_id, expr)
 }
 \arguments{
 \item{button}{a shiny actionButton}
+
+\item{button_id}{id of shiny actionButton}
+
+\item{expr}{the code to run when the button is clicked}
 }
 \description{
-Author: Dean Attali
-From https://github.com/daattali/advanced-shiny/blob/master/busy-indicator/helpers.R #nolint
+These functions add button feedback features including:
+disabling the button while processing requested function,
+showing a spinning wheel while processing requested function,
+displaying a green checkmark showing success upon completion,
+or displaying an error message if the function requested failed.
 }
 \details{
+Author: Dean Attali
+From https://github.com/daattali/advanced-shiny/blob/master/busy-indicator/helpers.R #nolint
+
 Hint for making this work with modules by mmoise in PR#11
 Wrap the button in this function to attach visual features
 }
+\keyword{internal}

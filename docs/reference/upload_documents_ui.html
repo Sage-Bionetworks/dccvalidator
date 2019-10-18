@@ -36,7 +36,8 @@
 
 
 <meta property="og:title" content="UI function for the upload_documentation module — upload_documents_ui" />
-<meta property="og:description" content="UI function for the upload_documentation module" />
+<meta property="og:description" content="UI function for the upload_documentation module
+Server function for upload_documentation module" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -122,9 +123,13 @@
 
     <div class="ref-description">
     <p>UI function for the upload_documentation module</p>
+<p>Server function for upload_documentation module</p>
     </div>
 
-    <pre class="usage"><span class='fu'>upload_documents_ui</span>(<span class='no'>id</span>)</pre>
+    <pre class="usage"><span class='fu'>upload_documents_ui</span>(<span class='no'>id</span>)
+
+<span class='fu'><a href='upload_documents_server.html'>upload_documents_server</a></span>(<span class='no'>input</span>, <span class='no'>output</span>, <span class='no'>session</span>, <span class='no'>parent_folder</span>,
+  <span class='no'>study_table_id</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -132,6 +137,26 @@
     <tr>
       <th>id</th>
       <td><p>the module id</p></td>
+    </tr>
+    <tr>
+      <th>input</th>
+      <td><p>the input from <code><a href='https://rdrr.io/pkg/shiny/man/callModule.html'>shiny::callModule()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>output</th>
+      <td><p>the output from <code><a href='https://rdrr.io/pkg/shiny/man/callModule.html'>shiny::callModule()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>session</th>
+      <td><p>the session from <code><a href='https://rdrr.io/pkg/shiny/man/callModule.html'>shiny::callModule()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>parent_folder</th>
+      <td><p>the Synapse folder to put a Documentation folder in</p></td>
+    </tr>
+    <tr>
+      <th>study_table_id</th>
+      <td><p>synapse Id for the consortium study table</p></td>
     </tr>
     </table>
 
