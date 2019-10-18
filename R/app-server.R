@@ -93,52 +93,18 @@ app_server <- function(input, output, session) {
     ## names)
     observeEvent(input$manifest, {
       files$manifest <- input$manifest
-      save_to_synapse(
-        input$manifest,
-        parent = created_folder,
-        name = input$manifest$name,
-        annotations = list(study = study_name())
-      )
     })
 
     observeEvent(input$indiv_meta, {
       files$indiv <- input$indiv_meta
-      save_to_synapse(
-        input$indiv_meta,
-        parent = created_folder,
-        name = input$indiv_meta$name,
-        annotations = list(
-          study = study_name(),
-          metadataType = "individual"
-        )
-      )
     })
 
     observeEvent(input$biosp_meta, {
       files$biosp <- input$biosp_meta
-      save_to_synapse(
-        input$biosp_meta,
-        parent = created_folder,
-        name = input$biosp_meta$name,
-        annotations = list(
-          study = study_name(),
-          metadataType = "biospecimen"
-        )
-      )
     })
 
     observeEvent(input$assay_meta, {
       files$assay <- input$assay_meta
-      save_to_synapse(
-        input$assay_meta,
-        parent = created_folder,
-        name = input$assay_meta$name,
-        annotations = list(
-          study = study_name(),
-          metadataType = "assay",
-          assay = assay_name()
-        )
-      )
     })
 
     ## Load metadata files into session
@@ -365,6 +331,50 @@ app_server <- function(input, output, session) {
             message = "Please upload some data to view a summary"
           )
         )
+
+        ## Upload only the files that have been given
+        if (!is.null(indiv())) {
+          save_to_synapse(
+            files$indiv_meta,
+            parent = created_folder,
+            name = files$indiv_meta$name,
+            annotations = list(
+              study = study_name(),
+              metadataType = "individual"
+            )
+          )
+        }
+        if (!is.null(biosp())) {
+          save_to_synapse(
+            files$biosp_meta,
+            parent = created_folder,
+            name = files$biosp_meta$name,
+            annotations = list(
+              study = study_name(),
+              metadataType = "biospecimen"
+            )
+          )
+        }
+        if (!is.null(assay())) {
+          save_to_synapse(
+            files$assay_meta,
+            parent = created_folder,
+            name = files$assay_meta$name,
+            annotations = list(
+              study = study_name(),
+              metadataType = "assay",
+              assay = assay_name()
+            )
+          )
+        }
+        if (!is.null(manifest())) {
+          save_to_synapse(
+            files$manifest,
+            parent = created_folder,
+            name = files$manifest$name,
+            annotations = list(study = study_name())
+          )
+        }
 
         ## Populate validation report
         ## Successes box
