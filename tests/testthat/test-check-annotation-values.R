@@ -410,7 +410,12 @@ test_that("can_coerce() returns TRUE for numeric/integer/boolean->character", {
   expect_true(can_coerce(TRUE, "character"))
 })
 
+test_that("can_coerce() returns TRUE for integer->numeric", {
+  expect_true(can_coerce(1L, "numeric"))
+})
+
 test_that("can_coerce() returns FALSE if values aren't coercible", {
   expect_false(can_coerce("a", "numeric"))
   expect_false(can_coerce("a", "logical"))
+  expect_false(can_coerce(2.1, "integer"))
 })

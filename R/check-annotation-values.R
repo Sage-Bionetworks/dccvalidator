@@ -3,12 +3,19 @@
 #' Checks that all annotation values are valid. It does not report on values for
 #' invalid _keys_; see [check_annotation_keys()].
 #'
+#' If the allowable annotation values are an enumerated list,
+#' `check_annotation_values()` compares the values in the data to the values in
+#' this list. If there is no enumerated list of values and the annotation
+#' definition merely specifies a required type, then the values are checked
+#' against that type, with values that are coercible to the correct type treated
+#' as valid (see [can_coerce()]).
+#'
 #' @inheritParams check_annotation_keys
 #' @param ... Additional options to [`check_values()`]
 #' @return A condition object indicating whether all annotation values are
 #'   valid. Invalid annotation values are included as data within the object.
 #' @export
-#' @seealso [valid_annotation_values()]
+#' @seealso [valid_annotation_values()], [can_coerce()]
 #'
 #' @examples
 #' \dontrun{
@@ -178,6 +185,7 @@ valid_annotation_values.CsvFileTable <- function(x, annotations, ...) {
 #' @return A vector of invalid values (if `return_valid = FALSE`; otherwise a
 #'   vector of valid values).
 #' @rdname check_values
+#' @seealso [can_coerce()]
 check_type <- function(values, key, annotations, whitelist_values = NULL,
                        return_valid = FALSE) {
   coltype <- annotations[annotations$key == key, "columnType"]
@@ -225,6 +233,9 @@ check_type <- function(values, key, annotations, whitelist_values = NULL,
 #' read lengths, pH values, etc., which are defined as strings in our annotation
 #' vocabulary but can reasonably be numbers.
 #'
+#' This function will also return `TRUE` if the values are integers and the
+#' desired class is numeric.
+#'
 #' This function will *not* affect validation of enumerated values, regardless
 #' of their class. It is only used by the [check_type()] function, which
 #' validates annotations that have a required type but no enumerated values.
@@ -233,10 +244,27 @@ check_type <- function(values, key, annotations, whitelist_values = NULL,
 #' @param class Class of interest
 #' @return Boolean value; TRUE if `values` are coercible to `class`, `FALSE`
 #'   otherwise.
+#' @seealso [check_annotation_values()], [check_type()]
+#' @examples
+#' # Not run because function is not exported
+#' \dontrun{
+#' # Coercible:
+#' can_coerce(1, "character")
+#' can_coerce(TRUE, "character")
+#' can_coerce(1L, "character")
+#' can_coerce(1L, "numeric")
+#'
+#' # Not coercible:
+#' can_coerce("foo", "numeric")
+#' can_coerce("foo", "logical")
+#' can_coerce(2.5, "integer")
+#' }
 can_coerce <- function(values, class) {
   if (class == "character" &
     (inherits(values, "numeric") | inherits(values, "integer") |
       inherits(values, "logical"))) {
+    return(TRUE)
+  } else if (class == "numeric" & inherits(values, "integer")) {
     return(TRUE)
   } else {
     return(FALSE)
