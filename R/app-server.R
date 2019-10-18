@@ -335,9 +335,9 @@ app_server <- function(input, output, session) {
         ## Upload only the files that have been given
         if (!is.null(indiv())) {
           save_to_synapse(
-            files$indiv_meta,
+            files$indiv,
             parent = created_folder,
-            name = files$indiv_meta$name,
+            name = files$indiv$name,
             annotations = list(
               study = study_name(),
               metadataType = "individual"
@@ -346,9 +346,9 @@ app_server <- function(input, output, session) {
         }
         if (!is.null(biosp())) {
           save_to_synapse(
-            files$biosp_meta,
+            files$biosp,
             parent = created_folder,
-            name = files$biosp_meta$name,
+            name = files$biosp$name,
             annotations = list(
               study = study_name(),
               metadataType = "biospecimen"
@@ -357,9 +357,9 @@ app_server <- function(input, output, session) {
         }
         if (!is.null(assay())) {
           save_to_synapse(
-            files$assay_meta,
+            files$assay,
             parent = created_folder,
-            name = files$assay_meta$name,
+            name = files$assay$name,
             annotations = list(
               study = study_name(),
               metadataType = "assay",
