@@ -45,7 +45,7 @@ app_server <- function(input, output, session) {
         )
       )
 
-      callModule(
+      study_name <- callModule(
         get_study_server,
         "study",
         study_table_id = reactive("syn11363298")
@@ -57,7 +57,8 @@ app_server <- function(input, output, session) {
         "assay_meta",
         "manifest",
         "species",
-        "assay_name"
+        "assay_name",
+        "validate_btn"
       )
       purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
 
