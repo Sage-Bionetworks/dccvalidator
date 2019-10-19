@@ -300,6 +300,46 @@ app_server <- function(input, output, session) {
       )
     })
 
+    # Incomplete required columns produce failures -----------------------------
+    complete_cols_manifest <- reactive({
+      check_cols_complete(
+        manifest(),
+        required_cols = c(
+          "consortium",
+          "study",
+          "grant",
+          "fileFormat",
+          "parent"
+        ),
+        success_msg = "All required columns are complete in the manifest",
+        fail_msg = "Some required columns are incomplete in the manifest"
+      )
+    })
+    complete_cols_indiv <- reactive({
+      check_cols_complete(
+        indiv(),
+        required_cols = c("individualID"),
+        success_msg = "All required columns are complete in the individual metadata", # nolint
+        fail_msg = "Some required columns are incomplete in the individual metadata" # nolint
+      )
+    })
+    complete_cols_biosp <- reactive({
+      check_cols_complete(
+        biosp(),
+        required_cols = c("individualID", "specimenID"),
+        success_msg = "All required columns are complete in the biospecimen metadata", # nolint
+        fail_msg = "Some required columns are incomplete in the biospecimen metadata" # nolint
+      )
+    })
+    complete_cols_assay <- reactive({
+      check_cols_complete(
+        assay(),
+        required_cols = c("specimenID"),
+        success_msg = "All required columns are complete in the assay metadata", # nolint
+        fail_msg = "Some required columns are incomplete in the assay metadata" # nolint
+      )
+    })
+
     ## List results
     res <- reactive({
       list(
@@ -320,7 +360,11 @@ app_server <- function(input, output, session) {
         empty_cols_manifest(),
         empty_cols_indiv(),
         empty_cols_biosp(),
-        empty_cols_assay()
+        empty_cols_assay(),
+        complete_cols_manifest(),
+        complete_cols_indiv(),
+        complete_cols_biosp(),
+        complete_cols_assay()
       )
     })
 
