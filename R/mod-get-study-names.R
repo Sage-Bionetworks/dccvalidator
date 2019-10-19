@@ -3,7 +3,7 @@
 #' @return list of studies
 get_study_names <- function(study_table_id) {
   study_table <- syndccutils::get_table_df(study_table_id())
-  return(sort(study_table$StudyName))
+  return(c("", sort(study_table$StudyName)))
 }
 
 #' UI for the get_study module
@@ -85,6 +85,11 @@ get_study_server <- function(input, output, session, study_table_id) {
       study_name(input$study_choice)
     } else {
       study_name(input$study_text)
+    }
+  })
+  observeEvent(input$study_exists, {
+    if (input$study_exists == "No") {
+      study_name("")
     }
   })
   return(study_name)
