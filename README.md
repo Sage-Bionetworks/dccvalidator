@@ -21,9 +21,6 @@ values. You can also check file views and data frames to see if their
 columns correspond to valid annotations, and if the values in the
 columns are valid.
 
-    #> Loading dccvalidator
-    #> Loading required package: shinyBS
-
 ``` r
 library("synapser")
 library("dccvalidator")
@@ -33,10 +30,6 @@ synLogin()
 ``` r
 ## Get annotations
 annots <- get_synapse_annotations()
-#> 
-Create CSV FileHandle [############--------]62.46%   1308/2094       
-Create CSV FileHandle [####################]100.00%   2094/2094   Done...    
-Downloading  [####################]100.00%   256.8kB/256.8kB (1.0MB/s) Job-98692315598654194190027165.csv Done...
 
 ## File
 my_file <- synGet("syn17038065", downloadFile = FALSE)
@@ -53,7 +46,7 @@ check_annotation_values(my_file, annots)
 fv <- synTableQuery("SELECT * FROM syn17038067")
 #> 
  [####################]100.00%   1/1   Done...    
-Downloading  [####################]100.00%   3.2kB/3.2kB (1.2MB/s) Job-98692337059504632983451558.csv Done...
+Downloading  [####################]100.00%   3.2kB/3.2kB (1.2MB/s) Job-98697682824653579897240193.csv Done...
 check_annotation_keys(fv, annots)
 #> <error>
 #> message: Some annotation keys are invalid
