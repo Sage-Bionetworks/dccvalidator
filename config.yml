@@ -1,5 +1,5 @@
 default:
-  storage_location: "syn20400157"
+  parent: "syn20400157"
   study_table: "syn11363298"
   annotations_table: "syn10242922"
   annotations_link: "https://shinypro.synapse.org/users/nsanati/annotationUI/"
@@ -23,10 +23,10 @@ default:
     - "drosophila"
 
 amp-ad:
-  storage_location: "syn20506363"
+  parent: "syn20506363"
 
 pec:
-  storage_location: "syn20825282"
+  parent: "syn20825282"
   study_table: "syn20968992"
   annotations_table: "syn20981788"
   annotations_link: "https://www.synapse.org/#!Synapse:syn20729790"

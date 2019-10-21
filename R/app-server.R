@@ -43,7 +43,7 @@ app_server <- function(input, output, session) {
       inherits(certified, "check_pass")) {
       created_folder <- try(
         create_folder(
-          parent = config::get("storage_location"),
+          parent = config::get("parent"),
           name = user$userName
         )
       )
