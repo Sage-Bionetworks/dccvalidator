@@ -27,7 +27,7 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
         xname,
         " or ",
         yname,
-        " metadata."
+        " metadata"
       ),
       behavior = paste0(
         xname,
@@ -36,7 +36,10 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
         " metadata should both contain a column called ",
         idcol
       ),
-      data = list(colnames(x), colnames(y))
+      data = setNames(
+        list(colnames(x), colnames(y)),
+        c(xname, yname)
+      )
     )
     return(failure)
   }

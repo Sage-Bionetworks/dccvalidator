@@ -77,9 +77,9 @@ show_details.default <- function(x) {
 
 #' @rdname show_details
 show_details.list <- function(x) {
-  dat <- purrr::map2_dfr(names(x), x, function(y, z) {
-    tibble::tibble(key = y, value = paste0(z, collapse = ", "))
-  })
+  dat <- purrr::map_dfr(x, function(x) {
+    tibble::tibble(value = paste0(x, collapse = ", "))
+  }, .id = "key")
   renderTable(dat, colnames = FALSE)
 }
 
