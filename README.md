@@ -4,8 +4,6 @@
 
 [![Travis-CI Build
 Status](https://travis-ci.org/Sage-Bionetworks/dccvalidator.svg?branch=master)](https://travis-ci.org/Sage-Bionetworks/dccvalidator)
-[![Coverage
-status](https://codecov.io/gh/Sage-Bionetworks/dccvalidator/branch/master/graph/badge.svg)](https://codecov.io/github/Sage-Bionetworks/dccvalidator?branch=master)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 Validate CNS data/metadata and annotations.
@@ -35,6 +33,10 @@ synLogin()
 ``` r
 ## Get annotations
 annots <- get_synapse_annotations()
+#> 
+Create CSV FileHandle [############--------]62.46%   1308/2094       
+Create CSV FileHandle [####################]100.00%   2094/2094   Done...    
+Downloading  [####################]100.00%   256.8kB/256.8kB (1.0MB/s) Job-98692315598654194190027165.csv Done...
 
 ## File
 my_file <- synGet("syn17038065", downloadFile = FALSE)
@@ -51,7 +53,7 @@ check_annotation_values(my_file, annots)
 fv <- synTableQuery("SELECT * FROM syn17038067")
 #> 
  [####################]100.00%   1/1   Done...    
-Downloading  [####################]100.00%   3.2kB/3.2kB (1.9MB/s) Job-97816206749552689336072275.csv Done...
+Downloading  [####################]100.00%   3.2kB/3.2kB (1.2MB/s) Job-98692337059504632983451558.csv Done...
 check_annotation_keys(fv, annots)
 #> <error>
 #> message: Some annotation keys are invalid
