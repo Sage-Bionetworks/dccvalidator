@@ -59,3 +59,6 @@ the annotations dictionary. This check is somewhat permissive in that values
 that are coercible to the type are also treated as valid (see
 \code{\link[=can_coerce]{can_coerce()}}).
 }
+\seealso{
+\code{\link[=can_coerce]{can_coerce()}}
+}

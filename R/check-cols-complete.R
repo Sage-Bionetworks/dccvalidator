@@ -1,6 +1,7 @@
 #' Check for complete columns
 #'
-#' Check for complete columns in the data and warn (or fail) if present.
+#' Check for complete columns in the data and fail (or warn) if incomplete.
+#' Missing columns that are required to be complete are flagged as incomplete.
 #'
 #' @param data Data to check
 #' @param required_cols A character vector of the required columns to check for
@@ -23,20 +24,25 @@ check_cols_complete <- function(data, required_cols,
   if (is.null(data)) {
     return(NULL)
   }
-  ## Check if columns in `required_cols` contain missing data
+  req_cols_present <- required_cols[required_cols %in% names(data)]
+  missing_cols <- setdiff(required_cols, req_cols_present)
+
+  ## Check if columns present in data from`required_cols` contain missing data
   results <- purrr::map_lgl(
-    data[, required_cols, drop = FALSE],
+    data[, req_cols_present, drop = FALSE],
     function(x) any(x %in% empty_values)
   )
+
   behavior <- paste0(
     "Columns ",
     paste(required_cols, collapse = ", "),
     " should be complete."
   )
 
-  ## Return success if all required columns have complete data.
+  ## Return success if all required columns have complete data,
+  ## and there are no missing required columns.
   ## Otherwise return warn or fail depending on `strict` argument
-  if (!any(results)) {
+  if (!any(results) & length(missing_cols) == 0) {
     check_pass(
       msg = success_msg,
       behavior = behavior
@@ -45,7 +51,7 @@ check_cols_complete <- function(data, required_cols,
     check_condition(
       msg = fail_msg,
       behavior = behavior,
-      data = names(which(results)),
+      data = c(missing_cols, req_cols_present[which(results)]),
       type = ifelse(strict, "check_fail", "check_warn")
     )
   }

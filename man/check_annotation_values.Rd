@@ -22,6 +22,14 @@ valid. Invalid annotation values are included as data within the object.
 Checks that all annotation values are valid. It does not report on values for
 invalid \emph{keys}; see \code{\link[=check_annotation_keys]{check_annotation_keys()}}.
 }
+\details{
+If the allowable annotation values are an enumerated list,
+\code{check_annotation_values()} compares the values in the data to the values in
+this list. If there is no enumerated list of values and the annotation
+definition merely specifies a required type, then the values are checked
+against that type, with values that are coercible to the correct type treated
+as valid (see \code{\link[=can_coerce]{can_coerce()}}).
+}
 \examples{
 \dontrun{
 library("synapser")
@@ -53,5 +61,5 @@ check_annotation_values(dat, whitelist_values = list(assay = c("foo")))
 }
 }
 \seealso{
-\code{\link[=valid_annotation_values]{valid_annotation_values()}}
+\code{\link[=valid_annotation_values]{valid_annotation_values()}}, \code{\link[=can_coerce]{can_coerce()}}
 }
