@@ -29,7 +29,8 @@ A condition object indicating whether the data contains columns that
 are not complete.
 }
 \description{
-Check for complete columns in the data and warn (or fail) if present.
+Check for complete columns in the data and fail (or warn) if incomplete.
+Missing columns that are required to be complete are flagged as incomplete.
 }
 \examples{
 dat <- data.frame(specimenID = c("x", "y"), organ = c(NA, NA))

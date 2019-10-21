@@ -27,7 +27,28 @@ This function is mainly in place so that we can automatically allow numeric
 read lengths, pH values, etc., which are defined as strings in our annotation
 vocabulary but can reasonably be numbers.
 
+This function will also return \code{TRUE} if the values are integers and the
+desired class is numeric.
+
 This function will \emph{not} affect validation of enumerated values, regardless
 of their class. It is only used by the \code{\link[=check_type]{check_type()}} function, which
 validates annotations that have a required type but no enumerated values.
+}
+\examples{
+# Not run because function is not exported
+\dontrun{
+# Coercible:
+can_coerce(1, "character")
+can_coerce(TRUE, "character")
+can_coerce(1L, "character")
+can_coerce(1L, "numeric")
+
+# Not coercible:
+can_coerce("foo", "numeric")
+can_coerce("foo", "logical")
+can_coerce(2.5, "integer")
+}
+}
+\seealso{
+\code{\link[=check_annotation_values]{check_annotation_values()}}, \code{\link[=check_type]{check_type()}}
 }

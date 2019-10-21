@@ -135,24 +135,25 @@ upload_documents_server <- function(input, output, session,
   # Upload files to Synapse (after renaming them so they keep their original
   # names)
   observeEvent(input$upload_docs, {
-    if (study_name() != "") {
-      if (!is.null(input$study_doc) || !is.null(input$assay_doc)) {
-        # When the button is clicked, wrap the code in the call to the
-        # indicator server function
-        with_busy_indicator_server("upload_docs", {
-          all_docs <- rbind(input$study_doc, input$assay_doc)
-          all_datapaths <- all_docs$datapath
-          all_names <- paste0(study_name(), "_", all_docs$name)
-          docs <- purrr::map2(all_datapaths, all_names, function(x, y) {
-            save_to_synapse(
-              list(datapath = x, name = y),
-              parent = created_docs_folder,
-              name = y,
-              annotations = doc_annots()
-            )
-          })
+    if (!is.null(input$study_doc) || !is.null(input$assay_doc)) {
+      # When the button is clicked, wrap the code in the call to the
+      # indicator server function
+      with_busy_indicator_server("upload_docs", {
+        if (study_name() == "") {
+          stop("Please enter study name.")
+        }
+        all_docs <- rbind(input$study_doc, input$assay_doc)
+        all_datapaths <- all_docs$datapath
+        all_names <- paste0(study_name(), "_", all_docs$name)
+        docs <- purrr::map2(all_datapaths, all_names, function(x, y) {
+          save_to_synapse(
+            list(datapath = x, name = y),
+            parent = created_docs_folder,
+            name = y,
+            annotations = doc_annots()
+          )
         })
-      }
+      })
     }
   })
 }
