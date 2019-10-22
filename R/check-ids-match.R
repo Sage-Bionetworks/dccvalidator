@@ -30,7 +30,7 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
       behavior = glue::glue(
         "{xname} and {yname} metadata should both contain a column called {idcol}" # nolint
       ),
-      data = setNames(
+      data = stats::setNames(
         list(colnames(x), colnames(y)),
         c(xname, yname)
       )
