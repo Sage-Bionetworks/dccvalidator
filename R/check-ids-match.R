@@ -59,7 +59,7 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
     (bidirectional == FALSE & length(missing_from_x) == 0)) {
     check_pass(
       msg = glue::glue(
-        "All {idcol} values match between {xname} and {yname}.",
+        "All {idcol} values match between {xname} and {yname}"
       ),
       behavior = behavior
     )
