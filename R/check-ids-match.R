@@ -18,6 +18,12 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
     return(NULL)
   }
   idcol <- match.arg(idcol)
+  if (is.null(xname) | is.null(yname)) {
+    ## Give them generic names to be included in the check_fail data if needed
+    xname <- xname %||% "x"
+    yname <- yname %||% "y"
+  }
+
   if (!idcol %in% colnames(x) | !idcol %in% colnames(y)) {
     failure <- check_fail(
       msg = glue::glue("Missing column {idcol} in {xname} or {yname} metadata"),
@@ -43,18 +49,10 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
   missing_from_x <- setdiff(y[[idcol]], x[[idcol]])
   missing_from_y <- setdiff(x[[idcol]], y[[idcol]])
 
-  ## Message of correct behavior. Uses the names of the x and y data if present,
-  ## otherwise gives a more generic message.
-  if (is.null(xname) | is.null(yname)) {
-    ## Give them generic names to be included in the check_fail data if needed
-    xname <- xname %||% "x"
-    yname <- yname %||% "y"
-    behavior <- glue::glue("{idcol} values should match.")
-  } else {
-    behavior <- glue::glue(
-      "{idcol} values in the {xname} and {yname} metadata should match."
-    )
-  }
+  ## Message of correct behavior
+  behavior <- glue::glue(
+    "{idcol} values in the {xname} and {yname} metadata should match."
+  )
 
   ## If nothing is missing, return check_pass
   if ((length(missing_from_x) == 0 & length(missing_from_y) == 0) |

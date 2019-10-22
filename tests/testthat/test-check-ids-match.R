@@ -129,13 +129,16 @@ test_that("check_specimen_ids_match catches missing specimen IDs", {
   expect_equal(res$data, expected_result)
 })
 
-test_that("Behavior message leaves out xname/yname if not provided", {
+test_that("Behavior message uses 'x' and 'y' if not provided", {
   res <- check_ids_match(
     invalid_individual,
     invalid_biospecimen,
     idcol = "individualID"
   )
-  expect_equal(res$behavior, "individualID values should match.")
+  expect_equal(
+    res$behavior,
+    "individualID values in the x and y metadata should match."
+  )
 })
 
 test_that("check_ids_match handles NULL input", {
