@@ -4,7 +4,7 @@
     "Repositories": [
       {
         "Name": "CRAN",
-        "URL": "https://cran.rstudio.com/"
+        "URL": "https://cran.rstudio.com"
       },
       {
         "Name": "Sage",
@@ -32,7 +32,7 @@
       },
       {
         "Name": "CRAN",
-        "URL": "https://cran.rstudio.com/"
+        "URL": "https://cran.rstudio.com"
       },
       {
         "Name": "Sage",
@@ -362,15 +362,10 @@
     },
     "glue": {
       "Package": "glue",
-      "Version": "1.3.1.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "glue",
-      "RemoteUsername": "tidyverse",
-      "RemoteRef": "master",
-      "RemoteSha": "71eeddfa43763880ccc6afd9021553fd728b1821",
-      "Hash": "6e2845c5f2b1399a0a080f6b2ce66ad9"
+      "Version": "1.3.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "e8436e647719b7c9d01409767cd88cc8"
     },
     "golem": {
       "Package": "golem",
@@ -721,12 +716,12 @@
       "Version": "2.1.0.9000",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "remotes",
       "RemoteUsername": "r-lib",
+      "RemoteRepo": "remotes",
       "RemoteRef": "master",
-      "RemoteSha": "2f1a0401c31e0a0576ae9e54c38aa11e023ce169",
-      "Hash": "78d6592ef867b8f700ce9dd0f7a719c7"
+      "RemoteSha": "5b3da5f852772159cc2a580888e10536a43e9199",
+      "RemoteHost": "api.github.com",
+      "Hash": "069684d2abbfb39c91d369dcc201559f"
     },
     "renv": {
       "Package": "renv",
@@ -737,7 +732,8 @@
       "RemoteUsername": "rstudio",
       "RemoteRepo": "renv",
       "RemoteRef": "master",
-      "RemoteSha": "5d0c0def33d07b04b95f1134ecbbbf7cd551c7f8"
+      "RemoteSha": "5d0c0def33d07b04b95f1134ecbbbf7cd551c7f8",
+      "Hash": "955c76d1f84265b54f3f1ec0ef098d0a"
     },
     "reshape2": {
       "Package": "reshape2",
