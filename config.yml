@@ -31,6 +31,7 @@ default:
       - "specimenID"
     assay:
       - "specimenID"
+  contact_email: "karawoo@synapse.org"
 
 amp-ad:
   parent: "syn20506363"
@@ -102,3 +103,4 @@ pec:
       - "libraryPrep"
       - "libraryPreparationMethod"
       - "runType"
+  contact_email: "kelsey@synapse.org"
