@@ -25,3 +25,12 @@ details {
   margin-top: 10px;
   color: red;
 }
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: #A9A9A9;
+    padding: 10px;
+    flex-shrink: 0;
+}
