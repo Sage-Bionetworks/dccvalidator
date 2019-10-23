@@ -4,8 +4,6 @@
 
 [![Travis-CI Build
 Status](https://travis-ci.org/Sage-Bionetworks/dccvalidator.svg?branch=master)](https://travis-ci.org/Sage-Bionetworks/dccvalidator)
-[![Coverage
-status](https://codecov.io/gh/Sage-Bionetworks/dccvalidator/branch/master/graph/badge.svg)](https://codecov.io/github/Sage-Bionetworks/dccvalidator?branch=master)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 Validate CNS data/metadata and annotations.
@@ -22,9 +20,6 @@ You can check whether a Synapse file has valid annotation keys and
 values. You can also check file views and data frames to see if their
 columns correspond to valid annotations, and if the values in the
 columns are valid.
-
-    #> Loading dccvalidator
-    #> Loading required package: shinyBS
 
 ``` r
 library("synapser")
@@ -54,7 +49,7 @@ check_annotation_values(my_file, annots)
 fv <- synTableQuery("SELECT * FROM syn17038067")
 #> 
  [####################]100.00%   1/1   Done...    
-Downloading  [####################]100.00%   3.2kB/3.2kB (1.4MB/s) Job-98565054187127989694636014.csv Done...
+Downloading  [####################]100.00%   3.2kB/3.2kB (1.2MB/s) Job-98697682824653579897240193.csv Done...
 check_annotation_keys(fv, annots)
 #> <error>
 #> message: Some annotation keys are invalid

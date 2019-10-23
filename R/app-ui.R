@@ -6,8 +6,8 @@ app_ui <- function(request) {
 
     dashboardSidebar(
       sidebarMenu(
-        menuItem("Validator", tabName = "validator"),
-        menuItem("Documentation", tabName = "documentation")
+        menuItem("Documentation", tabName = "documentation"),
+        menuItem("Validator", tabName = "validator")
       )
     ),
 
@@ -51,7 +51,8 @@ app_ui <- function(request) {
                   selectInput(
                     "assay_name",
                     "Assay type",
-                    c("rnaSeq", "proteomics"))
+                    c("rnaSeq", "proteomics")
+                  )
                 ),
 
                 # Files to be validated
