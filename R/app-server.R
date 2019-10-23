@@ -382,7 +382,7 @@ app_server <- function(input, output, session) {
               !is.null(assay()),
               !is.null(manifest())
             ),
-            message = "Please upload some data to view a summary"
+            message = "Please upload some data to validate"
           )
         )
 
