@@ -30,6 +30,9 @@ synLogin()
 ``` r
 ## Get annotations
 annots <- get_synapse_annotations()
+#> 
+ [####################]100.00%   1/1   Done...    
+Downloading  [####################]100.00%   256.8kB/256.8kB (1.0MB/s) Job-98565045615138825278008857.csv Done...
 
 ## File
 my_file <- synGet("syn17038065", downloadFile = FALSE)
@@ -190,6 +193,13 @@ using [homebrew](https://brew.sh/):
 Then, within this git repo, run:
 
     pre-commit install
+
+When you commit your changes, pre-commit will run the checks described
+above, and the commit will fail if the checks do not pass. If you are
+experiencing issues with the checks and want to commit your work and
+worry about them later, you can run `git commit --no-verify` to skip all
+checks. Or, you can skip certain hooks by their ID (as shown in the file
+`.pre-commit-config.yaml`), e.g. `SKIP=roxygenize git commit -m "foo"`.
 
 -----
 

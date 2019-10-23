@@ -162,6 +162,13 @@ Then, within this git repo, run:
 pre-commit install
 ```
 
+When you commit your changes, pre-commit will run the checks described above,
+and the commit will fail if the checks do not pass. If you are experiencing
+issues with the checks and want to commit your work and worry about them later,
+you can run `git commit --no-verify` to skip all checks. Or, you can skip
+certain hooks by their ID (as shown in the file `.pre-commit-config.yaml`), e.g.
+`SKIP=roxygenize git commit -m "foo"`.
+
 ---
 
 Please note that the dccvalidator project is released with a [Contributor Code
