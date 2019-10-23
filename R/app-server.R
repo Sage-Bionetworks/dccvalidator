@@ -323,13 +323,7 @@ app_server <- function(input, output, session) {
     complete_cols_manifest <- reactive({
       check_cols_complete(
         manifest(),
-        required_cols = c(
-          "consortium",
-          "study",
-          "grant",
-          "fileFormat",
-          "parent"
-        ),
+        required_cols = config::get("complete_columns")$manifest,
         success_msg = "All required columns are complete in the manifest",
         fail_msg = "Some required columns are incomplete in the manifest"
       )
@@ -337,7 +331,7 @@ app_server <- function(input, output, session) {
     complete_cols_indiv <- reactive({
       check_cols_complete(
         indiv(),
-        required_cols = c("individualID"),
+        required_cols = config::get("complete_columns")$individual,
         success_msg = "All required columns are complete in the individual metadata", # nolint
         fail_msg = "Some required columns are incomplete in the individual metadata" # nolint
       )
@@ -345,7 +339,7 @@ app_server <- function(input, output, session) {
     complete_cols_biosp <- reactive({
       check_cols_complete(
         biosp(),
-        required_cols = c("individualID", "specimenID"),
+        required_cols = config::get("complete_columns")$biospecimen,
         success_msg = "All required columns are complete in the biospecimen metadata", # nolint
         fail_msg = "Some required columns are incomplete in the biospecimen metadata" # nolint
       )
@@ -353,7 +347,7 @@ app_server <- function(input, output, session) {
     complete_cols_assay <- reactive({
       check_cols_complete(
         assay(),
-        required_cols = c("specimenID"),
+        required_cols = config::get("complete_columns")$assay,
         success_msg = "All required columns are complete in the assay metadata", # nolint
         fail_msg = "Some required columns are incomplete in the assay metadata" # nolint
       )

@@ -21,9 +21,33 @@ default:
     - "mouse or other animal model"
     - "human"
     - "drosophila"
+  complete_columns:
+    manifest:
+      - "parent"
+    individual:
+      - "individualID"
+    biospecimen:
+      - "individualID"
+      - "specimenID"
+    assay:
+      - "specimenID"
 
 amp-ad:
   parent: "syn20506363"
+  complete_columns:
+    manifest:
+      - "consortium"
+      - "study"
+      - "grant"
+      - "fileFormat"
+      - "parent"
+    individual:
+      - "individualID"
+    biospecimen:
+      - "individualID"
+      - "specimenID"
+    assay:
+      - "specimenID"
 
 pec:
   parent: "syn20825282"
