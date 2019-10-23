@@ -72,29 +72,29 @@ test_that("check_ids_match converts factor columns to character", {
   factor_biospecimen$individualID <- as.factor(factor_biospecimen$individualID) # nolint
 
   char <- check_ids_match(
-    valid_individual,
-    valid_biospecimen,
-    "individualID",
-    "individual",
-    "biospecimen"
+    x = valid_individual,
+    y = valid_biospecimen,
+    idcol = "individualID",
+    xname = "individual",
+    yname = "biospecimen"
   )
   fact <- check_ids_match(
-    factor_individual,
-    factor_biospecimen,
-    "individualID",
-    "individual",
-    "biospecimen"
+    x = factor_individual,
+    y = factor_biospecimen,
+    idcol = "individualID",
+    xname = "individual",
+    yname = "biospecimen"
   )
   expect_equal(char, fact)
 })
 
 test_that("check_ids_match passes when IDs match", {
   res <- check_ids_match(
-    valid_individual,
-    valid_biospecimen,
-    "individualID",
-    "individual",
-    "biospecimen"
+    x = valid_individual,
+    y = valid_biospecimen,
+    idcol = "individualID",
+    xname = "individual",
+    yname = "biospecimen"
   )
   expect_true(inherits(res, "check_pass"))
 })
@@ -129,13 +129,16 @@ test_that("check_specimen_ids_match catches missing specimen IDs", {
   expect_equal(res$data, expected_result)
 })
 
-test_that("Behavior message leaves out xname/yname if not provided", {
+test_that("Behavior message uses 'x' and 'y' if not provided", {
   res <- check_ids_match(
     invalid_individual,
     invalid_biospecimen,
     idcol = "individualID"
   )
-  expect_equal(res$behavior, "individualID values should match.")
+  expect_equal(
+    res$behavior,
+    "individualID values in the x and y metadata should match."
+  )
 })
 
 test_that("check_ids_match handles NULL input", {
@@ -149,14 +152,14 @@ test_that("check_ids_match bidirectional arg looks only in one direction", {
   meta <- data.frame(individualID = 1:4)
   manifest <- data.frame(individualID = 1:2)
   res1 <- check_ids_match(
-    meta,
-    manifest,
+    x = meta,
+    y = manifest,
     idcol = "individualID",
     bidirectional = FALSE
   )
   res2 <- check_ids_match(
-    manifest,
-    meta,
+    x = manifest,
+    y = meta,
     idcol = "individualID",
     bidirectional = FALSE
   )

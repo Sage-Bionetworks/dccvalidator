@@ -14,11 +14,7 @@
 #' }
 get_user_teams <- function(user) {
   user_teams <- synapser::synRestGET(
-    paste0(
-      "/user/",
-      user$ownerId,
-      "/team?limit=10000"
-    )
+    glue::glue("/user/{user$ownerId}/team?limit=10000")
   )$results
 
   purrr::map_chr(user_teams, function(x) x$id)
