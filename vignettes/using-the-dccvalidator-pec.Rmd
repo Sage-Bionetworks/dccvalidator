@@ -1,5 +1,5 @@
 ---
-title: "Using the dccvalidator app in AMP-AD"
+title: "Using the dccvalidator app in PsychENCODE"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{using-the-dccvalidator-app}
