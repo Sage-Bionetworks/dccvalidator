@@ -51,7 +51,7 @@ app_server <- function(input, output, session) {
       study_name <- callModule(
         get_study_server,
         "study",
-        study_table_id = reactive("syn11363298")
+        study_table_id = reactive(config::get("study_table"))
       )
 
       inputs_to_enable <- c(
