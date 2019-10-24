@@ -34,6 +34,9 @@ app_ui <- function(request) {
                 br(),
                 br(),
 
+                # UI for getting the study name
+                get_study_ui("study"),
+
                 shinyjs::disabled(
                   radioButtons(
                     "species",
@@ -102,6 +105,16 @@ app_ui <- function(request) {
                       "text/tsv",
                       "text/tab-separated-values,text/plain",
                       ".tsv"
+                    )
+                  )
+                ),
+
+                # Add an indicator feature to validate button
+                with_busy_indicator_ui(
+                  shinyjs::disabled(
+                    actionButton(
+                      "validate_btn",
+                      "Validate"
                     )
                   )
                 )
