@@ -33,13 +33,6 @@ Some portions of the app submit data to Synapse. This allows curators at Sage to
 troubleshoot issues if needed. No one outside the Sage curation team will be
 able to download the data.
 
-##Data Release
-
-Data is uploaded to a **Staging** folder, private to each individual group. Once curated, data is moved to a **PEC** folder for a limited period of time where all consortium members have access to the data via the PEC Team. Finally, data is made public to Synapse users in a **Data** folder.  All data upload takes place in the [PsychENCODE Knowledge Portal](https://www.synapse.org/#!Synapse:syn4921369/wiki/235539) Synapse Project. While access to the project is public, restrictions are associated with the **Staging** and **PEC** folder to make sure the data remains private for the appropriate period of time. 
-
-Synapse IDs are always preserved (i.e. IDs remain associated to the file).
-
-
 ## Terminology
 
 #### What is a biospecimen? 
@@ -118,6 +111,11 @@ The [Data Analysis Core](https://www.synapse.org/#!Synapse:syn20959298) will rep
 
 Once data has passed validation and the PEC data curators permit edit permissions to the **Staging** folder, data may be uploaded. Bulk file upload is achievable using the [web UI](https://docs.synapse.org/articles/files_and_versioning.html) or the [R, Python and command line clients](https://docs.synapse.org/articles/uploading_in_bulk.html).
 
+##Data Release
+
+Data is uploaded to a **Staging** folder, private to each individual group. Once curated, data is moved to a **PEC** folder for a limited period of time where all consortium members have access to the data via the PEC Team. Finally, data is made public to Synapse users in a **Data** folder.  All data upload takes place in the [PsychENCODE Knowledge Portal](https://www.synapse.org/#!Synapse:syn4921369/wiki/235539) Synapse Project. While access to the project is public, restrictions are associated with the **Staging** and **PEC** folder to make sure the data remains private for the appropriate period of time. 
+
+Synapse IDs are always preserved (i.e. IDs remain associated to the file).
 
 ## Get support 
 
