@@ -227,6 +227,15 @@ app_server <- function(input, output, session) {
     individual_ids_indiv_biosp <- reactive({
       check_indiv_ids_match(indiv(), biosp(), "individual", "biospecimen")
     })
+    individual_ids_indiv_manifest <- reactive({
+      check_indiv_ids_match(
+        indiv(),
+        manifest(),
+        "individual",
+        "manifest",
+        bidirectional = FALSE
+      )
+    })
     specimen_ids_biosp_assay <- reactive({
       check_specimen_ids_match(biosp(), assay(), "biospecimen", "assay")
     })
@@ -361,6 +370,7 @@ app_server <- function(input, output, session) {
         missing_cols_assay(),
         missing_cols_manifest(),
         individual_ids_indiv_biosp(),
+        individual_ids_indiv_manifest(),
         specimen_ids_biosp_assay(),
         specimen_ids_biosp_manifest(),
         annotation_keys_manifest(),
