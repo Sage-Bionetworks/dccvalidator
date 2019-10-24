@@ -44,13 +44,21 @@ app_server <- function(input, output, session) {
           name = user$userName
         )
       )
+
+      study_name <- callModule(
+        get_study_server,
+        "study",
+        study_table_id = reactive("syn11363298")
+      )
+
       inputs_to_enable <- c(
         "indiv_meta",
         "biosp_meta",
         "assay_meta",
         "manifest",
         "species",
-        "assay_name"
+        "assay_name",
+        "validate_btn"
       )
       purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
 
@@ -85,38 +93,18 @@ app_server <- function(input, output, session) {
     ## names)
     observeEvent(input$manifest, {
       files$manifest <- input$manifest
-      save_to_synapse(
-        input$manifest,
-        parent = created_folder,
-        name = input$manifest$name
-      )
     })
 
     observeEvent(input$indiv_meta, {
       files$indiv <- input$indiv_meta
-      save_to_synapse(
-        input$indiv_meta,
-        parent = created_folder,
-        name = input$indiv_meta$name
-      )
     })
 
     observeEvent(input$biosp_meta, {
       files$biosp <- input$biosp_meta
-      save_to_synapse(
-        input$biosp_meta,
-        parent = created_folder,
-        name = input$biosp_meta$name
-      )
     })
 
     observeEvent(input$assay_meta, {
       files$assay <- input$assay_meta
-      save_to_synapse(
-        input$assay_meta,
-        parent = created_folder,
-        name = input$assay_meta$name
-      )
     })
 
     ## Load metadata files into session
@@ -378,45 +366,109 @@ app_server <- function(input, output, session) {
       )
     })
 
-    ## Successes box
-    observe({
-      successes <- purrr::map_lgl(res(), function(x) {
-        inherits(x, "check_pass")
-      })
-      output$successes <- renderUI({
-        report_results(res()[successes], emoji_prefix = "check")
-      })
-      reporting_titles$success <- glue::glue("Successes ({sum(successes)})")
-    })
-
-    ## Warnings box
-    observe({
-      warnings <- purrr::map_lgl(res(), function(x) {
-        inherits(x, "check_warn")
-      })
-      output$warnings <- renderUI({
-        report_results(
-          res()[warnings],
-          emoji_prefix = "warning",
-          verbose = TRUE
+    ## Show validation results on clicking "validate"
+    ## Require that the study name is given; give error if not
+    observeEvent(input$"validate_btn", {
+      with_busy_indicator_server("validate_btn", {
+        if (study_name() == "") {
+          stop("Please enter study name.")
+        }
+        ## Require at least one file input
+        validate(
+          need(
+            any(
+              !is.null(indiv()),
+              !is.null(biosp()),
+              !is.null(assay()),
+              !is.null(manifest())
+            ),
+            message = "Please upload some data to validate"
+          )
         )
-      })
-      reporting_titles$warn <- glue::glue("Warnings ({sum(warnings)})")
-    })
 
-    ## Failures box
-    observe({
-      failures <- purrr::map_lgl(res(), function(x) {
-        inherits(x, "check_fail")
+        ## Upload only the files that have been given
+        if (!is.null(indiv())) {
+          save_to_synapse(
+            files$indiv,
+            parent = created_folder,
+            name = files$indiv$name,
+            annotations = list(
+              study = study_name(),
+              metadataType = "individual",
+              species = species_name()
+            )
+          )
+        }
+        if (!is.null(biosp())) {
+          save_to_synapse(
+            files$biosp,
+            parent = created_folder,
+            name = files$biosp$name,
+            annotations = list(
+              study = study_name(),
+              metadataType = "biospecimen",
+              species = species_name()
+            )
+          )
+        }
+        if (!is.null(assay())) {
+          save_to_synapse(
+            files$assay,
+            parent = created_folder,
+            name = files$assay$name,
+            annotations = list(
+              study = study_name(),
+              metadataType = "assay",
+              assay = assay_name(),
+              species = species_name()
+            )
+          )
+        }
+        if (!is.null(manifest())) {
+          save_to_synapse(
+            files$manifest,
+            parent = created_folder,
+            name = files$manifest$name,
+            annotations = list(study = study_name())
+          )
+        }
+
+        ## Populate validation report
+        ## Successes box
+        successes <- purrr::map_lgl(res(), function(x) {
+          inherits(x, "check_pass")
+        })
+        output$successes <- renderUI({
+          report_results(res()[successes], emoji_prefix = "check")
+        })
+        reporting_titles$success <- glue::glue("Successes ({sum(successes)})")
+
+        ## Warnings box
+        warnings <- purrr::map_lgl(res(), function(x) {
+          inherits(x, "check_warn")
+        })
+        output$warnings <- renderUI({
+          report_results(
+            res()[warnings],
+            emoji_prefix = "warning",
+            verbose = TRUE
+          )
+        })
+        reporting_titles$warn <- glue::glue("Warnings ({sum(warnings)})")
+
+        ## Failures box
+        failures <- purrr::map_lgl(res(), function(x) {
+          inherits(x, "check_fail")
+        })
+        output$failures <- renderUI({
+          report_results(
+            res()[failures],
+            emoji_prefix = "x",
+            verbose = TRUE
+          )
+        })
+        reporting_titles$fail <- glue::glue("Failures ({sum(failures)})")
       })
-      output$failures <- renderUI({
-        report_results(
-          res()[failures],
-          emoji_prefix = "x",
-          verbose = TRUE
-        )
-      })
-      reporting_titles$fail <- glue::glue("Failures ({sum(failures)})")
     })
 
     ## Counts of individuals, specimens, and files

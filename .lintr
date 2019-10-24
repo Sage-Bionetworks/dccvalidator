@@ -1,2 +1,2 @@
-linters: with_defaults(object_length_linter = object_length_linter(40), object_usage_linter = NULL, object_name_linter = NULL, commented_code_linter = NULL)
+linters: with_defaults(object_length_linter = object_length_linter(40), object_usage_linter = NULL, object_name_linter = NULL, commented_code_linter = NULL, cyclocomp_linter = NULL)
 exclusions: list("renv/activate.R")
