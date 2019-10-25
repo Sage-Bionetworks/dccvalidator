@@ -30,7 +30,7 @@ are not complete.
 }
 \description{
 Check for complete columns in the data and fail (or warn) if incomplete.
-Missing columns that are required to be complete are flagged as incomplete.
+Missing columns that are required to be complete are ignored.
 }
 \examples{
 dat <- data.frame(specimenID = c("x", "y"), organ = c(NA, NA))
