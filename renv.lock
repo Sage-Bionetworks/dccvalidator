@@ -191,6 +191,13 @@
       "Repository": "CRAN",
       "Hash": "af7f698e0328e0474f794452177deca6"
     },
+    "config": {
+      "Package": "config",
+      "Version": "0.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7a15075ad1798112b35de17b8de84dbc"
+    },
     "covr": {
       "Package": "covr",
       "Version": "3.3.1",

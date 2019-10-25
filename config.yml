@@ -1,0 +1,73 @@
+default:
+  parent: "syn20400157"
+  study_table: "syn11363298"
+  annotations_table: "syn10242922"
+  annotations_link: "https://shinypro.synapse.org/users/nsanati/annotationUI/"
+  templates_link: "https://www.synapse.org/#!Synapse:syn18512044"
+  teams:
+    - "3320424"
+  templates:
+    manifest_template: "syn20820080"
+    individual_templates:
+      human: "syn12973254"
+      animal: "syn12973253"
+    biospecimen_templates:
+      general: "syn12973252"
+      drosophila: "syn20673251"
+    assay_templates:
+      rnaSeq: "syn12973256"
+  species_list:
+    - "mouse or other animal model"
+    - "human"
+    - "drosophila"
+  complete_columns:
+    manifest:
+      - "parent"
+    individual:
+      - "individualID"
+    biospecimen:
+      - "individualID"
+      - "specimenID"
+    assay:
+      - "specimenID"
+
+amp-ad:
+  parent: "syn20506363"
+  templates:
+    assay_templates:
+      proteomics: "syn12973255"
+  complete_columns:
+    manifest:
+      - "consortium"
+      - "study"
+      - "grant"
+      - "fileFormat"
+      - "parent"
+    individual:
+      - "individualID"
+    biospecimen:
+      - "individualID"
+      - "specimenID"
+    assay:
+      - "specimenID"
+
+pec:
+  parent: "syn20825282"
+  study_table: "syn20968992"
+  annotations_table: "syn20981788"
+  annotations_link: "https://www.synapse.org/#!Synapse:syn20729790"
+  templates_link: "https://www.synapse.org/#!Synapse:syn20729790"
+  teams:
+    - "3323356"
+  templates:
+    manifest_template: "syn20782058"
+    individual_templates:
+      human: "syn20781820"
+    biospecimen_templates:
+      general: "syn20768131"
+    assay_templates:
+      wholeGenomeSeq: "syn20980993"
+      rnaSeq: "syn20768650"
+      ATACSeq: "syn20768526"
+  species_list:
+    - "human"

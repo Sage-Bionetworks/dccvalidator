@@ -41,12 +41,7 @@ app_ui <- function(request) {
                   radioButtons(
                     "species",
                     "Species",
-                    c(
-                      "human",
-                      "drosophila",
-                      "mouse or other animal model" = "general"
-                    ),
-                    selected = "general"
+                    config::get("species_list")
                   )
                 ),
 
@@ -54,7 +49,7 @@ app_ui <- function(request) {
                   selectInput(
                     "assay_name",
                     "Assay type",
-                    c("rnaSeq", "proteomics")
+                    names(config::get("templates")$assay_templates)
                   )
                 ),
 

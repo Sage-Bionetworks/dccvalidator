@@ -39,10 +39,16 @@ test_that("check_cols_individual works for individual columns", {
   incomplete_col <- full_col[, !names(full_col) %in% "yearsEducation"]
 
   expect_true(
-    inherits(check_cols_individual(full_col, "human"), "check_pass")
+    inherits(
+      check_cols_individual(full_col, id = "syn12973254", version = 1),
+      "check_pass"
+    )
   )
   expect_true(
-    inherits(check_cols_individual(incomplete_col, "human"), "check_fail")
+    inherits(
+      check_cols_individual(incomplete_col, id = "syn12973254", version = 1),
+      "check_fail"
+    )
   )
 })
 
@@ -55,7 +61,7 @@ test_that("check_cols_individual returns invalid columns in condition object", {
   incomplete_col <- full_col[, !names(full_col) %in% "yearsEducation"]
 
   expect_equal(
-    check_cols_individual(incomplete_col, "human")$data,
+    check_cols_individual(incomplete_col, id = "syn12973254", version = 1)$data,
     "yearsEducation"
   )
 })
@@ -71,13 +77,21 @@ test_that("check_cols_biospecimen works for biospecimen columns", {
 
   expect_true(
     inherits(
-      check_cols_biospecimen(full_col_biosp, "general"),
+      check_cols_biospecimen(
+        full_col_biosp,
+        id = "syn12973252",
+        version = 4
+      ),
       "check_pass"
     )
   )
   expect_true(
     inherits(
-      check_cols_biospecimen(incomplete_col_biosp, "general"),
+      check_cols_biospecimen(
+        incomplete_col_biosp,
+        id = "syn12973252",
+        version = 4
+      ),
       "check_fail"
     )
   )
@@ -93,7 +107,11 @@ test_that("check_cols_biospecimen returns invalid columns in condition obj.", {
   incomplete_col_biosp <- full_col_biosp[, !names(full_col_biosp) == "organ"]
 
   expect_equal(
-    check_cols_biospecimen(incomplete_col_biosp, "general")$data,
+    check_cols_biospecimen(
+      incomplete_col_biosp,
+      id = "syn12973252",
+      version = 4
+    )$data,
     "organ"
   )
 })
@@ -107,13 +125,13 @@ test_that("check_cols_biospecimen can get drosophila template", {
 
   expect_true(
     inherits(
-      check_cols_biospecimen(drosophila_data, "drosophila"),
+      check_cols_biospecimen(drosophila_data, id = "syn20673251", version = 1),
       "check_pass"
     )
   )
   expect_true(
     inherits(
-      check_cols_biospecimen(drosophila_data, "general"),
+      check_cols_biospecimen(drosophila_data, id = "syn12973252", version = 4),
       "check_fail"
     )
   )
@@ -129,10 +147,16 @@ test_that("check_cols_assay works for assay columns", {
   incomplete_col_assay <- full_col_assay[, !names(full_col_assay) == "RIN"]
 
   expect_true(
-    inherits(check_cols_assay(full_col_assay, "rnaSeq"), "check_pass")
+    inherits(
+      check_cols_assay(full_col_assay, id = "syn12973256", version = 2),
+      "check_pass"
+    )
   )
   expect_true(
-    inherits(check_cols_assay(incomplete_col_assay, "rnaSeq"), "check_fail")
+    inherits(
+      check_cols_assay(incomplete_col_assay, id = "syn12973256", version = 2),
+      "check_fail"
+    )
   )
 })
 
@@ -146,7 +170,11 @@ test_that("check_cols_assay returns invalid columns within condition object", {
   incomplete_col_assay <- full_col_assay[, !names(full_col_assay) == "RIN"]
 
   expect_equal(
-    check_cols_assay(incomplete_col_assay, "rnaSeq")$data,
+    check_cols_assay(
+      incomplete_col_assay,
+      id = "syn12973256",
+      version = 2
+    )$data,
     "RIN"
   )
 })
@@ -159,8 +187,20 @@ test_that("check_cols_manifest works for manifest columns", {
   names(dat) <- cols
   incomplete <- dat[, !names(dat) %in% "parent"]
 
-  expect_true(inherits(check_cols_manifest(dat, version = 3), "check_pass"))
-  expect_equal(check_cols_manifest(incomplete, version = 3)$data, "parent")
+  expect_true(
+    inherits(
+      check_cols_manifest(dat, id = "syn20820080", version = 3),
+      "check_pass"
+    )
+  )
+  expect_equal(
+    check_cols_manifest(
+      incomplete,
+      id = "syn20820080",
+      version = 3
+    )$data,
+    "parent"
+  )
 })
 
 test_that("get_template errors for files that are not xlsx or csv", {
@@ -202,12 +242,12 @@ test_that("wrapper functions for specific template gets the correct version", {
   )
   expect_true(
     inherits(
-      check_cols_biospecimen(dat, "general", version = 2),
+      check_cols_biospecimen(dat, id = "syn12973252", version = 2),
       "check_pass"
     )
   )
   expect_equal(
-    check_cols_biospecimen(dat, "general", version = 3)$data,
+    check_cols_biospecimen(dat, id = "syn12973252", version = 3)$data,
     c("samplingDate", "sampleStatus", "tissueVolume", "fastingState")
   )
 })

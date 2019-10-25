@@ -1,6 +1,6 @@
 Package: dccvalidator
 Title: Validate CNS Data and Metadata
-Version: 0.0.0.9006
+Version: 0.0.0.9007
 Authors@R: 
     c(person(given = "Kara",
              family = "Woo",
@@ -19,6 +19,7 @@ Depends:
     R (>= 3.4),
     shinyBS
 Imports:
+    config,
     DT,
     emo,
     ggplot2,

@@ -30,7 +30,10 @@ app_server <- function(input, output, session) {
     ## Check if user is in AMP-AD Consortium team (needed in order to create
     ## folder at the next step), and if they are a certified user.
     user <- synapser::synGetUserProfile()
-    membership <- check_team_membership(teams = c("3320424"), user = user)
+    membership <- check_team_membership(
+      teams = config::get("teams"),
+      user = user
+    )
     certified <- check_certified_user(user$ownerId)
     report_unsatisfied_requirements(membership, certified)
 
@@ -40,7 +43,7 @@ app_server <- function(input, output, session) {
       inherits(certified, "check_pass")) {
       created_folder <- try(
         create_folder(
-          parent = "syn20506363",
+          parent = config::get("parent"),
           name = user$userName
         )
       )
@@ -48,7 +51,7 @@ app_server <- function(input, output, session) {
       study_name <- callModule(
         get_study_server,
         "study",
-        study_table_id = reactive("syn11363298")
+        study_table_id = reactive(config::get("study_table"))
       )
 
       inputs_to_enable <- c(
@@ -67,7 +70,7 @@ app_server <- function(input, output, session) {
         upload_documents_server,
         "documentation",
         parent_folder = reactive(created_folder),
-        study_table_id = reactive("syn11363298")
+        study_table_id = reactive(config::get("study_table"))
       )
     }
 
@@ -80,7 +83,7 @@ app_server <- function(input, output, session) {
     })
 
     ## Download annotation definitions
-    annots <- get_synapse_annotations()
+    annots <- get_synapse_annotations(synID = config::get("annotations_table"))
 
     ## Store files in separate variable to be able to reset inputs to NULL
     files <- reactiveValues(
@@ -150,11 +153,24 @@ app_server <- function(input, output, session) {
         stringsAsFactors = FALSE
       )
     })
-    species_name <- reactive({
-      input$species
+
+    # Location of templates
+    indiv_template <- reactive({
+      if (input$species == "human") {
+        config::get("templates")$individual_templates[["human"]]
+      } else {
+        config::get("templates")$individual_templates[["animal"]]
+      }
     })
-    assay_name <- reactive({
-      input$assay_name
+    biosp_template <- reactive({
+      if (input$species == "drosophila") {
+        config::get("templates")$biospecimen_templates[["drosophila"]]
+      } else {
+        config::get("templates")$biospecimen_templates[["general"]]
+      }
+    })
+    assay_template <- reactive({
+      config::get("templates")$assay_templates[[input$assay_name]]
     })
 
     observeEvent(input$instructions, {
@@ -163,8 +179,8 @@ app_server <- function(input, output, session) {
           title = "Instructions",
           # nolint start
           instructions(
-            annots_link = "https://shinypro.synapse.org/users/nsanati/annotationUI/",
-            templates_link = "https://www.synapse.org/#!Synapse:syn18512044"
+            annots_link = config::get("annotations_link"),
+            templates_link = config::get("templates_link")
           ),
           # nolint end
           easyClose = TRUE
@@ -180,16 +196,19 @@ app_server <- function(input, output, session) {
 
     # Missing columns ----------------------------------------------------------
     missing_cols_indiv <- reactive({
-      check_cols_individual(indiv(), species_name())
+      check_cols_individual(indiv(), indiv_template())
     })
     missing_cols_biosp <- reactive({
-      check_cols_biospecimen(biosp(), species_name())
+      check_cols_biospecimen(biosp(), biosp_template())
     })
     missing_cols_assay <- reactive({
-      check_cols_assay(assay(), assay_name())
+      check_cols_assay(assay(), assay_template())
     })
     missing_cols_manifest <- reactive({
-      check_cols_manifest(manifest())
+      check_cols_manifest(
+        manifest(),
+        config::get("templates")$manifest_template
+      )
     })
 
     # Individual and specimen IDs match ----------------------------------------
@@ -301,13 +320,7 @@ app_server <- function(input, output, session) {
     complete_cols_manifest <- reactive({
       check_cols_complete(
         manifest(),
-        required_cols = c(
-          "consortium",
-          "study",
-          "grant",
-          "fileFormat",
-          "parent"
-        ),
+        required_cols = config::get("complete_columns")$manifest,
         success_msg = "All required columns are complete in the manifest",
         fail_msg = "Some required columns are incomplete in the manifest"
       )
@@ -315,7 +328,7 @@ app_server <- function(input, output, session) {
     complete_cols_indiv <- reactive({
       check_cols_complete(
         indiv(),
-        required_cols = c("individualID"),
+        required_cols = config::get("complete_columns")$individual,
         success_msg = "All required columns are complete in the individual metadata", # nolint
         fail_msg = "Some required columns are incomplete in the individual metadata" # nolint
       )
@@ -323,7 +336,7 @@ app_server <- function(input, output, session) {
     complete_cols_biosp <- reactive({
       check_cols_complete(
         biosp(),
-        required_cols = c("individualID", "specimenID"),
+        required_cols = config::get("complete_columns")$biospecimen,
         success_msg = "All required columns are complete in the biospecimen metadata", # nolint
         fail_msg = "Some required columns are incomplete in the biospecimen metadata" # nolint
       )
@@ -331,7 +344,7 @@ app_server <- function(input, output, session) {
     complete_cols_assay <- reactive({
       check_cols_complete(
         assay(),
-        required_cols = c("specimenID"),
+        required_cols = config::get("complete_columns")$assay,
         success_msg = "All required columns are complete in the assay metadata", # nolint
         fail_msg = "Some required columns are incomplete in the assay metadata" # nolint
       )
