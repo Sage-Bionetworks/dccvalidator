@@ -172,6 +172,9 @@ app_server <- function(input, output, session) {
     assay_template <- reactive({
       config::get("templates")$assay_templates[[input$assay_name]]
     })
+    species_name <- reactive({
+      input$species
+    })
 
     observeEvent(input$instructions, {
       showModal(
