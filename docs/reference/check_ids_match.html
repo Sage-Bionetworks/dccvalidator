@@ -71,7 +71,7 @@ Ensure that all specimen IDS in two data frames match" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dccvalidator</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9007</span>
       </span>
     </div>
 
@@ -98,6 +98,9 @@ Ensure that all specimen IDS in two data frames match" />
     </li>
     <li>
       <a href="../articles/using-the-dccvalidator-app-amp-ad.html">Using the dccvalidator app in AMP-AD</a>
+    </li>
+    <li>
+      <a href="../articles/using-the-dccvalidator-pec.html">Using the dccvalidator app in PsychENCODE</a>
     </li>
   </ul>
 </li>
@@ -170,7 +173,7 @@ object.</p>
     <pre class="examples"><div class='input'><span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>individualID</span> <span class='kw'>=</span> <span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>individualID</span> <span class='kw'>=</span> <span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>4</span>])
 <span class='fu'>check_specimen_ids_match</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='st'>"individual"</span>, <span class='st'>"biospecimen"</span>)</div><div class='output co'>#&gt; <span style='font-weight: bold;'>&lt;error&gt;</span><span>
-#&gt; message: </span><span style='font-style: italic;'>Missing column specimenID in individual or biospecimen metadata.</span><span>
+#&gt; message: </span><span style='font-style: italic;'>Missing column specimenID in individual or biospecimen metadata</span><span>
 #&gt; class:   `check_fail`</div><div class='input'><span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>specimenID</span> <span class='kw'>=</span> <span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>specimenID</span> <span class='kw'>=</span> <span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>4</span>])
 <span class='fu'>check_specimen_ids_match</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='st'>"biospecimen"</span>, <span class='st'>"assay"</span>)</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>&lt;error&gt;</span><span>

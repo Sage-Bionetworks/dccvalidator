@@ -56,6 +56,19 @@ https://www.synapse.org/#!Synapse:syn18512044
 
 If you don't see a template for the assay(s) in your study, please get in touch.
 
+## Documentation upload
+
+Each study in AMP-AD has accompanying [documentation in the portal](https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648).
+You can submit your documentation through the dccvalidator app on the
+Documentation page. There should be a study description for the whole study, and
+an assay description for each of the assays that was performed. These can be in
+a single file, or you can upload multiple files to the assay description
+section.
+
+```{r documentation, echo = FALSE}
+knitr::include_graphics("amp-ad-documentation.png")
+```
+
 ### Validating metadata
 
 The data validation portion of the app allows you to upload metadata files (as
@@ -67,8 +80,9 @@ Examples of the types of checks we perform are:
 - Individuals and specimens have unique identifiers
 - Metadata terms conform to a controlled vocabulary where applicable
 
-```
-insert screenshot of validation results here
+```{r results, echo = FALSE}
+knitr::include_graphics("amp-ad-results.png")
+knitr::include_graphics("amp-ad-results-details.png")
 ```
 
 ### Viewing data summary
@@ -77,21 +91,6 @@ We also provide a summary of the files you have uploaded, showing the number of
 individuals, specimens, and files. We visualize the data in each column by its
 data type to help spot unexpected missing values.
 
+```{r summary, echo = FALSE}
+knitr::include_graphics("amp-ad-summary.png")
 ```
-insert screenshot of data summary here
-```
-
-## Documentation upload
-
-Each study in AMP-AD has accompanying [documentation in the portal](https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648).
-You can submit your documentation through the dccvalidator app on the
-Documentation page. There should be a study description for the whole study, and
-an assay description for each of the assays that was performed. These can be in
-a single file, or you can upload multiple files to the assay description
-section.
-
-```
-insert screenshot of documentation upload here
-```
-
-

@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">dccvalidator</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9007</span>
       </span>
     </div>
 
@@ -59,6 +59,9 @@
     </li>
     <li>
       <a href="articles/using-the-dccvalidator-app-amp-ad.html">Using the dccvalidator app in AMP-AD</a>
+    </li>
+    <li>
+      <a href="articles/using-the-dccvalidator-pec.html">Using the dccvalidator app in PsychENCODE</a>
     </li>
   </ul>
 </li>
@@ -113,6 +116,7 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>brew install pre<span class="op">-</span>commit</span></code></pre></div>
 <p>Then, within this git repo, run:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>pre<span class="op">-</span>commit install</span></code></pre></div>
+<p>When you commit your changes, pre-commit will run the checks described above, and the commit will fail if the checks do not pass. If you are experiencing issues with the checks and want to commit your work and worry about them later, you can run <code>git commit --no-verify</code> to skip all checks. Or, you can skip certain hooks by their ID (as shown in the file <code>.pre-commit-config.yaml</code>), e.g. <code>SKIP=roxygenize git commit -m "foo"</code>.</p>
 <hr>
 <p>Please note that the dccvalidator project is released with a <a href="CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
@@ -147,7 +151,6 @@
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/Sage-Bionetworks/dccvalidator"><img src="https://travis-ci.org/Sage-Bionetworks/dccvalidator.svg?branch=master" alt="Travis-CI Build Status"></a></li>
-<li><a href="https://codecov.io/github/Sage-Bionetworks/dccvalidator?branch=master"><img src="https://codecov.io/gh/Sage-Bionetworks/dccvalidator/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
 <li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="lifecycle"></a></li>
 </ul>
 </div>

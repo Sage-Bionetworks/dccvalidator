@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dccvalidator</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9007</span>
       </span>
     </div>
 
@@ -58,6 +58,9 @@
     </li>
     <li>
       <a href="../articles/using-the-dccvalidator-app-amp-ad.html">Using the dccvalidator app in AMP-AD</a>
+    </li>
+    <li>
+      <a href="../articles/using-the-dccvalidator-pec.html">Using the dccvalidator app in PsychENCODE</a>
     </li>
   </ul>
 </li>
@@ -121,25 +124,25 @@
 <p>We provide templates for all of the metadata files within the portal: <a href="https://www.synapse.org/#!Synapse:syn18512044" class="uri">https://www.synapse.org/#!Synapse:syn18512044</a></p>
 <p>If you don’t see a template for the assay(s) in your study, please get in touch.</p>
 </div>
-<div id="validating-metadata" class="section level3">
-<h3 class="hasAnchor">
-<a href="#validating-metadata" class="anchor"></a>Validating metadata</h3>
-<p>The data validation portion of the app allows you to upload metadata files (as .csv) and the manifest (as .tsv or .txt) and view the results of a series of automated checks.</p>
-<p>Examples of the types of checks we perform are: - All required columns from the templates are present - Individuals and specimens have unique identifiers - Metadata terms conform to a controlled vocabulary where applicable</p>
-<pre><code>insert screenshot of validation results here</code></pre>
-</div>
-<div id="viewing-data-summary" class="section level3">
-<h3 class="hasAnchor">
-<a href="#viewing-data-summary" class="anchor"></a>Viewing data summary</h3>
-<p>We also provide a summary of the files you have uploaded, showing the number of individuals, specimens, and files. We visualize the data in each column by its data type to help spot unexpected missing values.</p>
-<pre><code>insert screenshot of data summary here</code></pre>
-</div>
 </div>
 <div id="documentation-upload" class="section level2">
 <h2 class="hasAnchor">
 <a href="#documentation-upload" class="anchor"></a>Documentation upload</h2>
 <p>Each study in AMP-AD has accompanying <a href="https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648">documentation in the portal</a>. You can submit your documentation through the dccvalidator app on the Documentation page. There should be a study description for the whole study, and an assay description for each of the assays that was performed. These can be in a single file, or you can upload multiple files to the assay description section.</p>
-<pre><code>insert screenshot of documentation upload here</code></pre>
+<p><img src="amp-ad-documentation.png"><!-- --></p>
+<div id="validating-metadata" class="section level3">
+<h3 class="hasAnchor">
+<a href="#validating-metadata" class="anchor"></a>Validating metadata</h3>
+<p>The data validation portion of the app allows you to upload metadata files (as .csv) and the manifest (as .tsv or .txt) and view the results of a series of automated checks.</p>
+<p>Examples of the types of checks we perform are: - All required columns from the templates are present - Individuals and specimens have unique identifiers - Metadata terms conform to a controlled vocabulary where applicable</p>
+<p><img src="amp-ad-results.png"><!-- --><img src="amp-ad-results-details.png"><!-- --></p>
+</div>
+<div id="viewing-data-summary" class="section level3">
+<h3 class="hasAnchor">
+<a href="#viewing-data-summary" class="anchor"></a>Viewing data summary</h3>
+<p>We also provide a summary of the files you have uploaded, showing the number of individuals, specimens, and files. We visualize the data in each column by its data type to help spot unexpected missing values.</p>
+<p><img src="amp-ad-summary.png"><!-- --></p>
+</div>
 </div>
 </div>
   </div>

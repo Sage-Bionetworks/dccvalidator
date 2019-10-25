@@ -36,7 +36,8 @@
 
 
 <meta property="og:title" content="Check for complete columns — check_cols_complete" />
-<meta property="og:description" content="Check for complete columns in the data and warn (or fail) if present." />
+<meta property="og:description" content="Check for complete columns in the data and fail (or warn) if incomplete.
+Missing columns that are required to be complete are flagged as incomplete." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -69,7 +70,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dccvalidator</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9007</span>
       </span>
     </div>
 
@@ -97,6 +98,9 @@
     <li>
       <a href="../articles/using-the-dccvalidator-app-amp-ad.html">Using the dccvalidator app in AMP-AD</a>
     </li>
+    <li>
+      <a href="../articles/using-the-dccvalidator-pec.html">Using the dccvalidator app in PsychENCODE</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -121,7 +125,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Check for complete columns in the data and warn (or fail) if present.</p>
+    <p>Check for complete columns in the data and fail (or warn) if incomplete.
+Missing columns that are required to be complete are flagged as incomplete.</p>
     </div>
 
     <pre class="usage"><span class='fu'>check_cols_complete</span>(<span class='no'>data</span>, <span class='no'>required_cols</span>, <span class='kw'>empty_values</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>NA</span>, <span class='st'>""</span>),

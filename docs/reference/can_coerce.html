@@ -73,7 +73,7 @@ coercions we want to allow, currently: numeric, integer, or logical to string" /
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dccvalidator</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9007</span>
       </span>
     </div>
 
@@ -100,6 +100,9 @@ coercions we want to allow, currently: numeric, integer, or logical to string" /
     </li>
     <li>
       <a href="../articles/using-the-dccvalidator-app-amp-ad.html">Using the dccvalidator app in AMP-AD</a>
+    </li>
+    <li>
+      <a href="../articles/using-the-dccvalidator-pec.html">Using the dccvalidator app in PsychENCODE</a>
     </li>
   </ul>
 </li>
@@ -156,10 +159,29 @@ otherwise.</p>
     <p>This function is mainly in place so that we can automatically allow numeric
 read lengths, pH values, etc., which are defined as strings in our annotation
 vocabulary but can reasonably be numbers.</p>
+<p>This function will also return <code>TRUE</code> if the values are integers and the
+desired class is numeric.</p>
 <p>This function will <em>not</em> affect validation of enumerated values, regardless
 of their class. It is only used by the <code><a href='check_values.html'>check_type()</a></code> function, which
 validates annotations that have a required type but no enumerated values.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <div class='dont-index'><p><code><a href='check_annotation_values.html'>check_annotation_values()</a></code>, <code><a href='check_values.html'>check_type()</a></code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Not run because function is not exported</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># Coercible:</span>
+<span class='fu'>can_coerce</span>(<span class='fl'>1</span>, <span class='st'>"character"</span>)
+<span class='fu'>can_coerce</span>(<span class='fl'>TRUE</span>, <span class='st'>"character"</span>)
+<span class='fu'>can_coerce</span>(<span class='fl'>1L</span>, <span class='st'>"character"</span>)
+<span class='fu'>can_coerce</span>(<span class='fl'>1L</span>, <span class='st'>"numeric"</span>)
+
+<span class='co'># Not coercible:</span>
+<span class='fu'>can_coerce</span>(<span class='st'>"foo"</span>, <span class='st'>"numeric"</span>)
+<span class='fu'>can_coerce</span>(<span class='st'>"foo"</span>, <span class='st'>"logical"</span>)
+<span class='fu'>can_coerce</span>(<span class='fl'>2.5</span>, <span class='st'>"integer"</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -167,6 +189,8 @@ validates annotations that have a required type but no enumerated values.</p>
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
+      <li><a href="#see-also">See also</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
