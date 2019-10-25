@@ -175,6 +175,9 @@ app_server <- function(input, output, session) {
     species_name <- reactive({
       input$species
     })
+    assay_name <- reactive({
+      input$assay_name
+    })
 
     observeEvent(input$instructions, {
       showModal(
