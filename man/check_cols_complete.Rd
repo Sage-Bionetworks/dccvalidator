@@ -5,7 +5,7 @@
 \title{Check for complete columns}
 \usage{
 check_cols_complete(data, required_cols, empty_values = c(NA, ""),
-  strict = TRUE, success_msg = "Required columns are complete",
+  strict = TRUE, success_msg = "Required columns present are complete",
   fail_msg = "Some required columns are not complete")
 }
 \arguments{
@@ -30,7 +30,7 @@ are not complete.
 }
 \description{
 Check for complete columns in the data and fail (or warn) if incomplete.
-Missing columns that are required to be complete are flagged as incomplete.
+Missing columns that are required to be complete are ignored.
 }
 \examples{
 dat <- data.frame(specimenID = c("x", "y"), organ = c(NA, NA))
