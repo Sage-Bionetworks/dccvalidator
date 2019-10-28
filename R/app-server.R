@@ -422,7 +422,7 @@ app_server <- function(input, output, session) {
             annotations = list(study = study_name())
           )
         }
-        
+
         ## List results
         res <- list(
           missing_cols_indiv(),
@@ -449,7 +449,7 @@ app_server <- function(input, output, session) {
           complete_cols_biosp(),
           complete_cols_assay()
         )
-        
+
 
         ## Populate validation report
         ## Successes box
