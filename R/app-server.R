@@ -220,8 +220,8 @@ app_server <- function(input, output, session) {
     })
     individual_ids_indiv_manifest <- reactive({
       check_indiv_ids_match(
-        manifest(),
         indiv(),
+        manifest(),
         "individual",
         "manifest",
         bidirectional = FALSE
@@ -232,8 +232,8 @@ app_server <- function(input, output, session) {
     })
     specimen_ids_biosp_manifest <- reactive({
       check_specimen_ids_match(
-        manifest(),
         biosp(),
+        manifest(),
         "biospecimen",
         "manifest",
         bidirectional = FALSE
