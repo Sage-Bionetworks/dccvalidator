@@ -19,7 +19,7 @@
 #' check_cols_complete(dat, c("specimenID", "organ"))
 check_cols_complete <- function(data, required_cols,
                                 empty_values = c(NA, ""), strict = TRUE,
-                                success_msg = "Required columns are complete",
+                                success_msg = "Required columns present are complete", # nolint
                                 fail_msg = "Some required columns are not complete") { # nolint
   if (is.null(data)) {
     return(NULL)
