@@ -6,6 +6,7 @@ default:
   templates_link: "https://www.synapse.org/#!Synapse:syn18512044"
   teams:
     - "3320424"
+    - "273957"
   templates:
     manifest_template: "syn20820080"
     individual_templates:
@@ -33,6 +34,8 @@ default:
 
 amp-ad:
   parent: "syn20506363"
+  teams:
+    - "3320424"
   templates:
     assay_templates:
       proteomics: "syn12973255"
