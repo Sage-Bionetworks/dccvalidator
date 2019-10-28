@@ -4,6 +4,8 @@ default:
   annotations_table: "syn10242922"
   annotations_link: "https://shinypro.synapse.org/users/nsanati/annotationUI/"
   templates_link: "https://www.synapse.org/#!Synapse:syn18512044"
+  study_link_animal: "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648"
+  study_link_human: "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn3159438"
   teams:
     - "3320424"
   templates:
@@ -57,6 +59,8 @@ pec:
   annotations_table: "syn20981788"
   annotations_link: "https://www.synapse.org/#!Synapse:syn20729790"
   templates_link: "https://www.synapse.org/#!Synapse:syn20729790"
+  study_link_animal: "https://www.synapse.org/#!Synapse:syn4566132"
+  study_link_human: "https://www.synapse.org/#!Synapse:syn4590909"
   teams:
     - "3323356"
   templates:

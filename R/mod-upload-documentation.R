@@ -1,7 +1,7 @@
 #' UI function for the upload_documentation module
 #' @param id the module id
 #' @return html ui for the module
-upload_documents_ui <- function(id) {
+upload_documents_ui <- function(id, study_link_human, study_link_animal) {
   ns <- NS(id)
 
   tabItem(
@@ -45,12 +45,10 @@ upload_documents_ui <- function(id) {
         # nolint start
         p(
           "Study documentation gives data users an understanding of the cohort, model system, or other unit based on experimental design through which the data has been generated, and the methods used for the assays and/or assessments. This should be similar to a materials and methods section in a paper. An example of what this information should include can be found ",
-          tags$a(href = "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648", "here"),
-          " for an animal model study and ",
-          tags$a(href = "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn3159438", "here"),
-          " for a human study."
-        ),
-
+          HTML(glue::glue("<a target =\"_blank\" href=\"{study_link_animal}\">here</a> for an animal model study and ")),
+        
+        HTML(glue::glue("<a target =\"_blank\" href=\"{study_link_human}\">here</a> for a human study."))
+      ),
         h4("Study Description"),
 
         p("The study description is an overview of the study and should include:"),
