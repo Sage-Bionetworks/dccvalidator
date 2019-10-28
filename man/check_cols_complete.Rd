@@ -5,7 +5,7 @@
 \title{Check for complete columns}
 \usage{
 check_cols_complete(data, required_cols, empty_values = c(NA, ""),
-  strict = TRUE, success_msg = "Required columns are complete",
+  strict = TRUE, success_msg = "Required columns present are complete",
   fail_msg = "Some required columns are not complete")
 }
 \arguments{
