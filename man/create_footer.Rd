@@ -4,7 +4,7 @@
 \alias{create_footer}
 \title{Create app footer}
 \usage{
-create_footer(email = "test@test.com")
+create_footer(email)
 }
 \arguments{
 \item{email}{Email address to contact}
@@ -13,7 +13,6 @@ create_footer(email = "test@test.com")
 A footer tag
 }
 \description{
-The app footer shows the current dccvalidator version, a link to the issue
-tracker, and a contact link.
+The app footer shows a link to the issue tracker and a contact link.
 }
 \keyword{internal}

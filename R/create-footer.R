@@ -5,7 +5,7 @@
 #' @keywords internal
 #' @param email Email address to contact
 #' @return A footer tag
-create_footer <- function(email = "test@test.com") {
+create_footer <- function(email) {
   tags$footer(
     p(
       a(href = "https://github.com/Sage-Bionetworks/dccvalidator/issues", "Report an issue"), # nolint
