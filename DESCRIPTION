@@ -44,7 +44,7 @@ Imports:
 Suggests:
     covr,
     knitr,
-    rmarkdown,
+    rmarkdown (>= 1.16.2),
     testthat,
     withr
 VignetteBuilder: 
