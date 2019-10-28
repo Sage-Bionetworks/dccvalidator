@@ -2,6 +2,7 @@
 #'
 #' @param data Individual metadata file
 #' @inheritParams check_values
+#' @inheritParams check_cols_empty
 #' @return A condition object indicating whether the individual IDs in the
 #'   individual metadata file are unique.
 #' @export
@@ -14,7 +15,8 @@
 #'   specimenID = c("a", "a", "b")
 #' )
 #' check_specimen_ids_dup(dat2)
-check_indiv_ids_dup <- function(data, success_msg = "Individual IDs are unique",
+check_indiv_ids_dup <- function(data, empty_values = c(NA, ""),
+                                success_msg = "Individual IDs are unique",
                                 fail_msg = "Duplicate individual IDs found") {
   if (is.null(data)) {
     return(NULL)
@@ -28,11 +30,14 @@ check_indiv_ids_dup <- function(data, success_msg = "Individual IDs are unique",
     return(failure)
   }
   behavior <- "Individual IDs within the individual metadata should be unique"
-  if (any(duplicated(data$individualID))) {
+  results <- purrr::map_lgl(data$individualID, function(x) !x %in% empty_values)
+  individualIDs <- data$individualID[results]
+  duplicates <- unique(individualIDs[which(duplicated(individualIDs))])
+  if (length(duplicates) > 0) {
     check_fail(
       msg = fail_msg,
       behavior = behavior,
-      data = unique(data$individualID[which(duplicated(data$individualID))])
+      data = duplicates
     )
   } else {
     check_pass(
@@ -43,9 +48,10 @@ check_indiv_ids_dup <- function(data, success_msg = "Individual IDs are unique",
 }
 
 #' @inheritParams check_indiv_ids_dup
+#' @inheritParams check_cols_empty
 #' @rdname check_indiv_ids_dup
 #' @export
-check_specimen_ids_dup <- function(data,
+check_specimen_ids_dup <- function(data, empty_values = c(NA, ""),
                                    success_msg = "Specimen IDs are unique",
                                    fail_msg = "Duplicate specimen IDs found") {
   if (is.null(data)) {
@@ -60,11 +66,14 @@ check_specimen_ids_dup <- function(data,
     return(failure)
   }
   behavior <- "Specimen IDs within the biospecimen metadata should be unique"
-  if (any(duplicated(data$specimenID))) {
+  results <- purrr::map_lgl(data$specimenID, function(x) !x %in% empty_values)
+  specimenIDs <- data$specimenID[results]
+  duplicates <- unique(specimenIDs[which(duplicated(specimenIDs))])
+  if (length(duplicates) > 0) {
     check_fail(
       msg = fail_msg,
       behavior = behavior,
-      data = unique(data$specimenID[which(duplicated(data$specimenID))])
+      data = duplicates
     )
   } else {
     check_pass(

@@ -73,3 +73,33 @@ test_that("check_specimen_ids_dup succeeds when all IDs are unique", {
 test_that("check_specimen_ids_dup handles NULL input", {
   expect_null(check_specimen_ids_dup(NULL))
 })
+
+test_that("NAs are not treated as duplicates", {
+  dat1 <- data.frame(
+    specimenID = c(NA, NA, "y", "y"),
+    stringsAsFactors = FALSE
+  )
+  dat2 <- data.frame(
+    individualID = c(NA, NA, "y", "y"),
+    stringsAsFactors = FALSE
+  )
+  res1 <- check_specimen_ids_dup(dat1)
+  res2 <- check_specimen_ids_dup(dat1[1:2, , drop = FALSE])
+  res3 <- check_indiv_ids_dup(dat2)
+  res4 <- check_indiv_ids_dup(dat2[1:2, , drop = FALSE])
+  expect_true(inherits(res1, "check_fail"))
+  expect_equal(res1$data, "y")
+  expect_true(inherits(res2, "check_pass"))
+  expect_true(inherits(res3, "check_fail"))
+  expect_equal(res3$data, "y")
+  expect_true(inherits(res4, "check_pass"))
+})
+
+test_that("empty strings are not treated as duplicates", {
+  dat1 <- data.frame(specimenID = c("a", "", ""), stringsAsFactors = FALSE)
+  dat2 <- data.frame(individualID = c("a", "", ""), stringsAsFactors = FALSE)
+  res1 <- check_specimen_ids_dup(dat1)
+  res2 <- check_indiv_ids_dup(dat2)
+  expect_true(inherits(res1, "check_pass"))
+  expect_true(inherits(res2, "check_pass"))
+})
