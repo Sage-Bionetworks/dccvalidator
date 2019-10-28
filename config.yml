@@ -63,6 +63,7 @@ pec:
     manifest_template: "syn20782058"
     individual_templates:
       human: "syn20781820"
+      animal: "syn21053116"
     biospecimen_templates:
       general: "syn20768131"
     assay_templates:
@@ -71,3 +72,30 @@ pec:
       ATACSeq: "syn20768526"
   species_list:
     - "human"
+    - "animal model"
+  complete_columns:
+    manifest:
+      - "consortium"
+      - "study"
+      - "grant"
+      - "fileFormat"
+      - "parent"
+    individual:
+      - "individualID"
+      - "individualIdSource"
+      - "species"
+      - "reportedGender"
+      - "postmortem"
+      - "primaryDiagnosis"
+    biospecimen:
+      - "individualID"
+      - "specimenID"
+      - "organ"
+      - "tissue"
+      - "nucleicAcidSource"
+    assay:
+      - "specimenID"
+      - "platform"
+      - "libraryPrep"
+      - "libraryPreparationMethod"
+      - "runType"
