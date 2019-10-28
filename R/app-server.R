@@ -356,35 +356,6 @@ app_server <- function(input, output, session) {
       )
     })
 
-    # ## List results
-    # res <- reactive({
-    #   list(
-    #     missing_cols_indiv(),
-    #     missing_cols_biosp(),
-    #     missing_cols_assay(),
-    #     missing_cols_manifest(),
-    #     individual_ids_indiv_biosp(),
-    #     individual_ids_indiv_manifest(),
-    #     specimen_ids_biosp_assay(),
-    #     specimen_ids_biosp_manifest(),
-    #     annotation_keys_manifest(),
-    #     annotation_values_manifest(),
-    #     annotation_values_indiv(),
-    #     annotation_values_biosp(),
-    #     annotation_values_assay(),
-    #     duplicate_indiv_ids(),
-    #     duplicate_specimen_ids(),
-    #     empty_cols_manifest(),
-    #     empty_cols_indiv(),
-    #     empty_cols_biosp(),
-    #     empty_cols_assay(),
-    #     complete_cols_manifest(),
-    #     complete_cols_indiv(),
-    #     complete_cols_biosp(),
-    #     complete_cols_assay()
-    #   )
-    # })
-
     ## Show validation results on clicking "validate"
     ## Require that the study name is given; give error if not
     observeEvent(input$"validate_btn", {
