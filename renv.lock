@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "3.6.0",
+    "Version": "3.6.1",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -571,6 +571,7 @@
       "RemoteRef": "pack",
       "RemoteRepos": "https://cran.rstudio.com",
       "RemoteSha": "0.1-1",
+      "RemotePkgType": "binary",
       "Hash": "297fdfd63080b703a77be9fa81a4d4ca"
     },
     "packrat": {
@@ -723,12 +724,12 @@
       "Version": "2.1.0.9000",
       "Source": "GitHub",
       "RemoteType": "github",
+      "RemoteHost": "api.github.com",
       "RemoteUsername": "r-lib",
       "RemoteRepo": "remotes",
       "RemoteRef": "master",
-      "RemoteSha": "5b3da5f852772159cc2a580888e10536a43e9199",
-      "RemoteHost": "api.github.com",
-      "Hash": "069684d2abbfb39c91d369dcc201559f"
+      "RemoteSha": "b9b9aa043f30e090a471560c16707855c2a10bce",
+      "Hash": "4bbb7b2822e5472854aadb206b48d866"
     },
     "renv": {
       "Package": "renv",
@@ -909,6 +910,7 @@
       "RemoteRef": "synapser",
       "RemoteRepos": "http://ran.synapse.org",
       "RemoteSha": "0.6.61",
+      "RemotePkgType": "binary",
       "Hash": "637a14039d0e4e4698fe509c0a0b0e78"
     },
     "syndccutils": {
