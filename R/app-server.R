@@ -356,34 +356,34 @@ app_server <- function(input, output, session) {
       )
     })
 
-    ## List results
-    res <- reactive({
-      list(
-        missing_cols_indiv(),
-        missing_cols_biosp(),
-        missing_cols_assay(),
-        missing_cols_manifest(),
-        individual_ids_indiv_biosp(),
-        individual_ids_indiv_manifest(),
-        specimen_ids_biosp_assay(),
-        specimen_ids_biosp_manifest(),
-        annotation_keys_manifest(),
-        annotation_values_manifest(),
-        annotation_values_indiv(),
-        annotation_values_biosp(),
-        annotation_values_assay(),
-        duplicate_indiv_ids(),
-        duplicate_specimen_ids(),
-        empty_cols_manifest(),
-        empty_cols_indiv(),
-        empty_cols_biosp(),
-        empty_cols_assay(),
-        complete_cols_manifest(),
-        complete_cols_indiv(),
-        complete_cols_biosp(),
-        complete_cols_assay()
-      )
-    })
+    # ## List results
+    # res <- reactive({
+    #   list(
+    #     missing_cols_indiv(),
+    #     missing_cols_biosp(),
+    #     missing_cols_assay(),
+    #     missing_cols_manifest(),
+    #     individual_ids_indiv_biosp(),
+    #     individual_ids_indiv_manifest(),
+    #     specimen_ids_biosp_assay(),
+    #     specimen_ids_biosp_manifest(),
+    #     annotation_keys_manifest(),
+    #     annotation_values_manifest(),
+    #     annotation_values_indiv(),
+    #     annotation_values_biosp(),
+    #     annotation_values_assay(),
+    #     duplicate_indiv_ids(),
+    #     duplicate_specimen_ids(),
+    #     empty_cols_manifest(),
+    #     empty_cols_indiv(),
+    #     empty_cols_biosp(),
+    #     empty_cols_assay(),
+    #     complete_cols_manifest(),
+    #     complete_cols_indiv(),
+    #     complete_cols_biosp(),
+    #     complete_cols_assay()
+    #   )
+    # })
 
     ## Show validation results on clicking "validate"
     ## Require that the study name is given; give error if not
@@ -451,24 +451,52 @@ app_server <- function(input, output, session) {
             annotations = list(study = study_name())
           )
         }
+        
+        ## List results
+        res <- list(
+          missing_cols_indiv(),
+          missing_cols_biosp(),
+          missing_cols_assay(),
+          missing_cols_manifest(),
+          individual_ids_indiv_biosp(),
+          individual_ids_indiv_manifest(),
+          specimen_ids_biosp_assay(),
+          specimen_ids_biosp_manifest(),
+          annotation_keys_manifest(),
+          annotation_values_manifest(),
+          annotation_values_indiv(),
+          annotation_values_biosp(),
+          annotation_values_assay(),
+          duplicate_indiv_ids(),
+          duplicate_specimen_ids(),
+          empty_cols_manifest(),
+          empty_cols_indiv(),
+          empty_cols_biosp(),
+          empty_cols_assay(),
+          complete_cols_manifest(),
+          complete_cols_indiv(),
+          complete_cols_biosp(),
+          complete_cols_assay()
+        )
+        
 
         ## Populate validation report
         ## Successes box
-        successes <- purrr::map_lgl(res(), function(x) {
+        successes <- purrr::map_lgl(res, function(x) {
           inherits(x, "check_pass")
         })
         output$successes <- renderUI({
-          report_results(res()[successes], emoji_prefix = "check")
+          report_results(res[successes], emoji_prefix = "check")
         })
         reporting_titles$success <- glue::glue("Successes ({sum(successes)})")
 
         ## Warnings box
-        warnings <- purrr::map_lgl(res(), function(x) {
+        warnings <- purrr::map_lgl(res, function(x) {
           inherits(x, "check_warn")
         })
         output$warnings <- renderUI({
           report_results(
-            res()[warnings],
+            res[warnings],
             emoji_prefix = "warning",
             verbose = TRUE
           )
@@ -476,12 +504,12 @@ app_server <- function(input, output, session) {
         reporting_titles$warn <- glue::glue("Warnings ({sum(warnings)})")
 
         ## Failures box
-        failures <- purrr::map_lgl(res(), function(x) {
+        failures <- purrr::map_lgl(res, function(x) {
           inherits(x, "check_fail")
         })
         output$failures <- renderUI({
           report_results(
-            res()[failures],
+            res[failures],
             emoji_prefix = "x",
             verbose = TRUE
           )
