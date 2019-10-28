@@ -1,7 +1,7 @@
 context("test-create-footer.R")
 
 test_that("create_footer creates footer", {
-  foot <- create_footer()
+  foot <- create_footer("test@test.com")
   expect_true(inherits(foot, "shiny.tag"))
   expect_equal(foot$name, "footer")
 })
