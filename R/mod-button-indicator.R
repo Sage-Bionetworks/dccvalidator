@@ -1,3 +1,5 @@
+#' Show busy indicator
+#'
 #' These functions add button feedback features including:
 #' disabling the button while processing requested function,
 #' showing a spinning wheel while processing requested function,
@@ -10,6 +12,8 @@
 #' Hint for making this work with modules by mmoise in PR#11
 
 #' Wrap the button in this function to attach visual features
+#'
+#' @keywords internal
 #' @param button a shiny actionButton
 with_busy_indicator_ui <- function(button) {
   id <- button[["attribs"]][["id"]]
@@ -41,6 +45,9 @@ with_busy_indicator_ui <- function(button) {
 #' This will execute the expression desired and signal the visual
 #' feedback for the button. If the expression fails, the error
 #' message displayed is from the error that was thrown.
+#'
+#' @keywords internal
+#' @rdname with_busy_indicator_ui
 #' @param button_id id of shiny actionButton
 #' @param expr the code to run when the button is clicked
 with_busy_indicator_server <- function(button_id, expr) {
@@ -92,6 +99,8 @@ with_busy_indicator_server <- function(button_id, expr) {
 }
 
 #' Error message helper.
+#'
+#' @noRd
 #' @param err the error
 #' @param button_id id for the actionButton
 error_func <- function(err, button_id) {

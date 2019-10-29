@@ -14,3 +14,4 @@ check_team_membership(teams, user)
 \description{
 Check if a user is a member of any of the given teams.
 }
+\keyword{internal}

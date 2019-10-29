@@ -1,4 +1,10 @@
-#' UI function for the upload_documentation module
+#' Upload documentation to Synapse
+#'
+#' This module creates a page that explains what documentation is needed to
+#' describe the study and assay(s) that make up the study. It allows the user to
+#' indicate the name of their study and upload documentation files.
+#'
+#' @keywords internal
 #' @param id the module id
 #' @return html ui for the module
 upload_documents_ui <- function(id) {
@@ -100,6 +106,9 @@ upload_documents_ui <- function(id) {
 }
 
 #' Server function for upload_documentation module
+#'
+#' @keywords internal
+#' @rdname upload_documents_ui
 #' @param input the input from [shiny::callModule()]
 #' @param output the output from [shiny::callModule()]
 #' @param session the session from [shiny::callModule()]

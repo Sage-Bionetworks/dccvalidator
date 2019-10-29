@@ -1,6 +1,13 @@
+#' App server
+#'
+#' Create the server-side component of the dccvalidator Shiny app.
+#'
 #' @import shiny
 #' @import shinydashboard
-
+#' @param input Shiny input
+#' @param output Shiny output
+#' @param session Shiny session
+#' @export
 app_server <- function(input, output, session) {
   ## Initial titles for report boxes
   reporting_titles <- reactiveValues(

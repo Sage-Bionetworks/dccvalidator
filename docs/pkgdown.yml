@@ -1,0 +1,8 @@
+pandoc: 2.7.3
+pkgdown: 1.4.1.9000
+pkgdown_sha: 61c3999702966dd75267b98ce905df22521ebd11
+articles:
+  deploying-dccvalidator: deploying-dccvalidator.html
+  using-the-dccvalidator-app-amp-ad: using-the-dccvalidator-app-amp-ad.html
+  using-the-dccvalidator-pec: using-the-dccvalidator-pec.html
+

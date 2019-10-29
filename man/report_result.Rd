@@ -33,3 +33,4 @@ informational button to the right that users can click to learn more about
 what the check was looking for (in the check object this message is stored in
 "behavior").
 }
+\keyword{internal}

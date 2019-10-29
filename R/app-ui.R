@@ -1,5 +1,11 @@
+#' App UI
+#'
+#' Create the UI component of the dccvalidator Shiny app.
+#'
 #' @import shiny
 #' @import shinydashboard
+#' @param request Shiny request
+#' @export
 app_ui <- function(request) {
   dashboardPage(
     dashboardHeader(title = "Metadata Validation"),

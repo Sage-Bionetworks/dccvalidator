@@ -26,3 +26,4 @@ provided, all values for the given keys will be treated as valid.}
 \description{
 Check that a given set of keys are all present in an annotations dictionary
 }
+\keyword{internal}

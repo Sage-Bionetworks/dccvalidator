@@ -24,3 +24,4 @@ user <- synapser::synGetUserProfile()
 get_user_teams(user)
 }
 }
+\keyword{internal}

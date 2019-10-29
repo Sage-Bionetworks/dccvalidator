@@ -2,16 +2,33 @@
 % Please edit documentation in R/mod-upload-documentation.R
 \name{upload_documents_ui}
 \alias{upload_documents_ui}
-\title{UI function for the upload_documentation module}
+\alias{upload_documents_server}
+\title{Upload documentation to Synapse}
 \usage{
 upload_documents_ui(id)
+
+upload_documents_server(input, output, session, parent_folder,
+  study_table_id)
 }
 \arguments{
 \item{id}{the module id}
+
+\item{input}{the input from \code{\link[shiny:callModule]{shiny::callModule()}}}
+
+\item{output}{the output from \code{\link[shiny:callModule]{shiny::callModule()}}}
+
+\item{session}{the session from \code{\link[shiny:callModule]{shiny::callModule()}}}
+
+\item{parent_folder}{the Synapse folder to put a Documentation folder in}
+
+\item{study_table_id}{synapse Id for the consortium study table}
 }
 \value{
 html ui for the module
 }
 \description{
-UI function for the upload_documentation module
+This module creates a page that explains what documentation is needed to
+describe the study and assay(s) that make up the study. It allows the user to
+indicate the name of their study and upload documentation files.
 }
+\keyword{internal}

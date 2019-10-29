@@ -43,8 +43,12 @@ Imports:
     visdat
 Suggests:
     covr,
+    knitr,
+    rmarkdown (>= 1.16.2),
     testthat,
     withr
+VignetteBuilder: 
+    knitr
 Remotes:
     hadley/emo,
     Sage-Bionetworks/syndccutils/R
