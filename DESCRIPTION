@@ -11,7 +11,11 @@ Authors@R:
       person(given = "Nicole",
              family = "Kauer",
              role = "aut",
-             email = "nicole.kauer@sagebase.org"))
+             email = "nicole.kauer@sagebase.org"),
+      person(given = "Kelsey",
+             family = "Montgomery",
+             role = "aut",
+             email = "kelsey.montgomery@sagebase.org"))
 Description: Performs automatic checks for common data/metadata quality
     issues.
 License: MIT + file LICENSE
