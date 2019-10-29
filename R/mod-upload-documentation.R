@@ -151,6 +151,15 @@ upload_documents_server <- function(input, output, session,
         if (study_name() == "") {
           stop("Please enter study name.")
         }
+        # Check if study name has inappropriate characters
+        temp_string <- stringr::str_replace_all(
+          study_name(),
+          " |\\.|_|-|\\+|\\(|\\)",
+          ""
+        )
+        if (grepl("[[:punct:]]", temp_string)) {
+          stop("Study names may only contain: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
+        }
         all_docs <- rbind(input$study_doc, input$assay_doc)
         all_datapaths <- all_docs$datapath
         all_names <- paste0(study_name(), "_", all_docs$name)
