@@ -26,7 +26,7 @@ app_server <- function(input, output, session) {
     showModal(
       modalDialog(
         title = "Not logged in",
-        HTML("You must log in to <a href=\"https://www.synapse.org/\">Synapse</a> to use this application. Please log in, and then refresh this page.") # nolint
+        HTML("You must log in to <a target=\"_blank\" href=\"https://www.synapse.org/\">Synapse</a> to use this application. Please log in, and then refresh this page.") # nolint
       )
     )
   })
