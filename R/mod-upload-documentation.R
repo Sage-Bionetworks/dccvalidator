@@ -162,6 +162,8 @@ upload_documents_server <- function(input, output, session,
             annotations = doc_annots()
           )
         })
+        shinyjs::reset("study_doc")
+        shinyjs::reset("assay_doc")
       })
     }
   })
