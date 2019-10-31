@@ -38,7 +38,7 @@ Some portions of the app submit data to Synapse. This allows curators at Sage to
 troubleshoot issues if needed; no one outside the Sage curation team will be
 able to download the data.
 
-## Data validation
+## Documentation upload
 
 ### Metadata requirements
 
@@ -56,7 +56,7 @@ https://www.synapse.org/#!Synapse:syn18512044
 
 If you don't see a template for the assay(s) in your study, please get in touch.
 
-## Documentation upload
+## Data validation
 
 Each study in AMP-AD has accompanying [documentation in the portal](https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648).
 You can submit your documentation through the dccvalidator app on the
