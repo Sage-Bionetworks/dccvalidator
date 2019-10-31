@@ -50,45 +50,58 @@ upload_documents_ui <- function(id) {
         h3("Upload Study Documentation"),
         # nolint start
         p(
-          "Study documentation gives data users an understanding of the cohort, model system, or other unit based on experimental design through which the data has been generated, and the methods used for the assays and/or assessments. This should be similar to a materials and methods section in a paper. An example of what this information should include can be found ",
+          "This information should be similar to a materials and methods section in a paper. An example of what a study should include can be found ",
           tags$a(href = "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648", "here"),
-          " for an animal model study and ",
+          " for an animal model and ",
           tags$a(href = "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn3159438", "here"),
           " for a human study."
         ),
 
         h4("Study Description"),
 
-        p("The study description is an overview of the study and should include:"),
-
+        p("Each study should be given both a descriptive and an abbreviated name. The abbreviation will be used to annotate all content associated with the study. For a study with a human cohort, the study description should include:"),
         tags$ul(
           tags$li(
-            "human studies",
-            tags$ul(
-              tags$li(
-                "study type (randomized controlled study, prospective observational study, case-control study, or post-mortem study), disease focus, diagnostic criteria and inclusion/exclusion criteria of study participants. For post mortem studies, include the brain bank name(s) and links to website(s)."
-              )
-            )
+            "study type (randomized controlled study, prospective observational study, case-control study, or post-mortem study),"
           ),
           tags$li(
-            "animal model studies",
-            tags$ul(
-              tags$li(
-                "species, treatments, and if genetically modified-genotype and genetic background. Provide a link to the strain datasheet(s) if a commercial model, or a description of how it was created if not."
-              )
-            )
+            "disease focus,"
           ),
           tags$li(
-            "in-vitro cell culture studies",
-            tags$ul(
-              tags$li(
-                "species, cell type, and cell culture information such as primary or immortalized cell line, passage, treatments and other relevant information. If a commercial cell line provide a link."
-              )
-            )
+            "diagnostic criteria and inclusion/exclusion criteria of study participants."
+          ),
+          tags$li(
+            "For post mortem studies, include the brain bank name(s) and links to website(s)."
           )
         ),
 
-        p("Include references for more study information of available. Each study should be given both a descriptive and an abbreviated name. The abbreviation will be used to annotate all content associated with the study."),
+        p("For a study with an animal model cohort, the study description should include:"),
+        tags$ul(
+          tags$li(
+            "species,"
+          ),
+          tags$li(
+            "treatments."
+          ),
+          tags$li(
+            "If genetically modified-genotype and genetic background. Provide a link to the strain datasheet(s) if a commercial model, or a description of how it was created if not."
+          )
+        ),
+
+        p("For studies using in-vitro cell culture, the study description should include:"),
+        tags$ul(
+          tags$li(
+            "species,"
+          ),
+          tags$li(
+            "cell type,"
+          ),
+          tags$li(
+            "cell culture information (such as primary or immortalized cell line, passage, treatments, differentiation). If a commercial cell line, provide a link."
+          )
+        ),
+
+        p("* Include citations for more study information of available."),
 
         h4("Assay Description"),
 
@@ -97,7 +110,13 @@ upload_documents_ui <- function(id) {
           tags$b("sample processing, data generation,"),
           " and ",
           tags$b("data processing,"),
-          " including which organs and tissues the samples came from. For other tests (such as cognitive assessments), include a description of how the test was done."
+          " including which organs and tissues the samples came from. For other tests (such as cognitive assessments or imaging), include a description of how the test was done. Include links for any commercial equipment or tools, code repositories, and citations for more information, if available."
+        ),
+        p(
+          "Detailed protocols are highly recommended. These can be uploaded as pdf together with the data-files, or as links to protocol repositories such as ",
+          tags$a(href = "https://www.protocols.io", "protocols.io"),
+          (" or "),
+          tags$a(href = "https://theolb.readthedocs.io/en/latest/index.html#", "Open Lab Book.")
         )
         # nolint end
       )
