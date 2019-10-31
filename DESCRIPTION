@@ -35,6 +35,7 @@ Imports:
     shinyjs,
     skimr,
     stats,
+    stringr,
     synapser,
     syndccutils (>= 0.0.0.9001),
     tibble,
