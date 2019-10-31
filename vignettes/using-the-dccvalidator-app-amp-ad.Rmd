@@ -74,6 +74,7 @@ The data validation portion of the app allows you to upload metadata files (as
 automated checks.
 
 Examples of the types of checks we perform are:
+
 - All required columns from the templates are present 
 - Individuals and specimens have unique identifiers
 - Metadata terms conform to a controlled vocabulary where applicable
