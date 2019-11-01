@@ -13,7 +13,6 @@ upload_documents_server(input, output, session, parent_folder,
 \arguments{
 \item{id}{the module id}
 
-
 \item{study_link_human}{html link to example of a study using human data}
 
 \item{study_link_animal}{html link to example of a study using animal models}
