@@ -4,10 +4,14 @@
 \alias{upload_documents_ui}
 \title{UI function for the upload_documentation module}
 \usage{
-upload_documents_ui(id)
+upload_documents_ui(id, study_link_human, study_link_animal)
 }
 \arguments{
 \item{id}{the module id}
+
+\item{study_link_human}{html link to example of a study using human data}
+
+\item{study_link_animal}{html link to example of a study using animal models}
 }
 \value{
 html ui for the module

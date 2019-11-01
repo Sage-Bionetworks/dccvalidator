@@ -1,5 +1,7 @@
 #' UI function for the upload_documentation module
 #' @param id the module id
+#' @param study_link_human html link to example of a study using human data
+#' @param study_link_animal html link to example of a study using animal models
 #' @return html ui for the module
 upload_documents_ui <- function(id, study_link_human, study_link_animal) {
   ns <- NS(id)
