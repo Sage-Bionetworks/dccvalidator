@@ -4,6 +4,7 @@
 #' to resources about formatting a manifest and the allowable values of
 #' annotations.
 #'
+#' @keywords internal
 #' @param annots_link Link to a definition of the annotations being used in the
 #'   project
 #' @param templates_link Link to the templates used for validation

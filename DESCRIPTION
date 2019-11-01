@@ -11,7 +11,11 @@ Authors@R:
       person(given = "Nicole",
              family = "Kauer",
              role = "aut",
-             email = "nicole.kauer@sagebase.org"))
+             email = "nicole.kauer@sagebase.org"),
+      person(given = "Kelsey",
+             family = "Montgomery",
+             role = "aut",
+             email = "kelsey.montgomery@sagebase.org"))
 Description: Performs automatic checks for common data/metadata quality
     issues.
 License: MIT + file LICENSE
@@ -35,6 +39,7 @@ Imports:
     shinyjs,
     skimr,
     stats,
+    stringr,
     synapser,
     syndccutils (>= 0.0.0.9001),
     tibble,
@@ -43,8 +48,12 @@ Imports:
     visdat
 Suggests:
     covr,
+    knitr,
+    rmarkdown (>= 1.16.2),
     testthat,
     withr
+VignetteBuilder: 
+    knitr
 Remotes:
     hadley/emo,
     Sage-Bionetworks/syndccutils/R

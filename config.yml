@@ -8,6 +8,7 @@ default:
   study_link_human: "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn3159438"
   teams:
     - "3320424"
+    - "273957"
   templates:
     manifest_template: "syn20820080"
     individual_templates:
@@ -32,12 +33,19 @@ default:
       - "specimenID"
     assay:
       - "specimenID"
+  contact_email: "karawoo@synapse.org"
 
 amp-ad:
   parent: "syn20506363"
+  teams:
+    - "3320424"
   templates:
     assay_templates:
       proteomics: "syn12973255"
+      single cell RNAseq: "syn21018360"
+      wholeGenomeSeq: "syn21018358"
+      wholeExomeSeq: "syn21078272"
+      NanoString: "syn21082744"
   complete_columns:
     manifest:
       - "consortium"
@@ -67,6 +75,7 @@ pec:
     manifest_template: "syn20782058"
     individual_templates:
       human: "syn20781820"
+      animal: "syn21053116"
     biospecimen_templates:
       general: "syn20768131"
     assay_templates:
@@ -75,3 +84,31 @@ pec:
       ATACSeq: "syn20768526"
   species_list:
     - "human"
+    - "animal model"
+  complete_columns:
+    manifest:
+      - "consortium"
+      - "study"
+      - "grant"
+      - "fileFormat"
+      - "parent"
+    individual:
+      - "individualID"
+      - "individualIdSource"
+      - "species"
+      - "reportedGender"
+      - "postmortem"
+      - "primaryDiagnosis"
+    biospecimen:
+      - "individualID"
+      - "specimenID"
+      - "organ"
+      - "tissue"
+      - "nucleicAcidSource"
+    assay:
+      - "specimenID"
+      - "platform"
+      - "libraryPrep"
+      - "libraryPreparationMethod"
+      - "runType"
+  contact_email: "kelsey@synapse.org"

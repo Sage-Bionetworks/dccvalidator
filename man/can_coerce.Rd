@@ -52,3 +52,4 @@ can_coerce(2.5, "integer")
 \seealso{
 \code{\link[=check_annotation_values]{check_annotation_values()}}, \code{\link[=check_type]{check_type()}}
 }
+\keyword{internal}

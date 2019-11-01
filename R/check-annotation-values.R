@@ -181,6 +181,7 @@ valid_annotation_values.CsvFileTable <- function(x, annotations, ...) {
 #' that are coercible to the type are also treated as valid (see
 #' [can_coerce()]).
 #'
+#' @keywords internal
 #' @inheritParams check_value
 #' @return A vector of invalid values (if `return_valid = FALSE`; otherwise a
 #'   vector of valid values).
@@ -240,6 +241,7 @@ check_type <- function(values, key, annotations, whitelist_values = NULL,
 #' of their class. It is only used by the [check_type()] function, which
 #' validates annotations that have a required type but no enumerated values.
 #'
+#' @keywords internal
 #' @param values Vector of values to check
 #' @param class Class of interest
 #' @return Boolean value; TRUE if `values` are coercible to `class`, `FALSE`
@@ -273,6 +275,7 @@ can_coerce <- function(values, class) {
 
 #' Check values for one key
 #'
+#' @keywords internal
 #' @param values The values of an annotation
 #' @param key An annotation key
 #' @inheritParams check_values
@@ -315,6 +318,7 @@ check_value <- function(values, key, annotations, whitelist_keys = NULL,
 
 #' Check a set of keys and their values
 #'
+#' @keywords internal
 #' @param x A data frame of annotation data
 #' @param annotations A data frame of annotations to check against
 #' @param whitelist_keys A character vector of annotation keys to whitelist. If

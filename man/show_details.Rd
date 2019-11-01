@@ -21,3 +21,4 @@ the object is a vector, it prints the elements separated by commas. If the
 data is a list, it creates an HTML table with two columns: one containing the
 list elements' names, and the other containing comma-separated values.
 }
+\keyword{internal}

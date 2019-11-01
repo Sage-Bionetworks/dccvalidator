@@ -1,0 +1,62 @@
+template:
+  params:
+    bootswatch: flatly
+
+reference:
+- title: Data validation functions
+  desc: >
+    Functions to perform data validation and QA/QC checks, and report results as
+    successes, warnings, or failures.
+  contents:
+    - check_annotation_keys
+    - check_annotation_values
+    - check_col_names
+    - check_cols_manifest
+    - check_cols_individual
+    - check_cols_assay
+    - check_cols_biospecimen
+    - check_cols_complete
+    - check_cols_empty
+    - check_ids_match
+    - check_indiv_ids_match
+    - check_specimen_ids_match
+    - check_indiv_ids_dup
+    - check_specimen_ids_dup
+    - check_keys
+    - valid_annotation_keys
+    - valid_annotation_values
+    - get_template
+
+- title: Shiny app functions
+  desc: >
+    Functions to generate and run the dccvalidator Shiny application. Also
+    includes modules that make up the app.
+  contents:
+    - app_server
+    - app_ui
+    - run_app
+    - get_study_ui
+    - get_study_server
+    - with_busy_indicator_ui
+    - with_busy_indicator_server
+    - upload_documents_ui
+    - upload_documents_server
+
+- title: App-supporting functions
+  desc: >
+    Functions that the dccvalidator app uses to ensure the user is able to use
+    the application and to provide instructions.
+  contents:
+    - check_certified_user
+    - get_user_teams
+    - instructions
+
+- title: Validation helpers
+  desc: >
+    These functions generate custom conditions for reporting check failures,
+    warnings, and successes.
+  contents:
+    - check_condition
+    - check_pass
+    - check_warn
+    - check_fail

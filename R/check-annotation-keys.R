@@ -143,6 +143,7 @@ valid_annotation_keys.CsvFileTable <- function(x, annotations, ...) {
 
 #' Check that a given set of keys are all present in an annotations dictionary
 #'
+#' @keywords internal
 #' @inheritParams check_values
 check_keys <- function(x, annotations, whitelist_keys = NULL,
                        success_msg = "All annotation keys are valid",

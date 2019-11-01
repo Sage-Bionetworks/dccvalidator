@@ -1,0 +1,122 @@
+---
+title: "Using the dccvalidator app in PsychENCODE"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{using-the-dccvalidator-app-in-pec}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+We've built the dccvalidator tool to streamline the process of data validation
+and QA/QC. As the PsychENCODE (PEC) Knowledge Portal has grown to more than 39 contributing labs and over 90,000 data files, we've realized a need to be more standardized in our approaches to data curation. Thus, we built an application that performs many of the routine data quality checks we previously conducted by hand, with the hopes that it will help you, the data contributor, get your data checked, validated,nand shared easily and quickly.
+
+The application is hosted on a Shiny server [here](https://shinypro.synapse.org/users/kmontgomery/dccvalidator-app/).
+
+# Instructions
+
+To use this application you must:
+
+1. Be logged in to Synapse in your browser
+2. Be a [Synapse certified user](https://docs.synapse.org/articles/accounts_certified_users_and_profile_validation.html)
+3. Be a member of the [PEC team](https://www.synapse.org/#!Team:3323356)
+
+Some portions of the app submit data to Synapse. This allows curators at Sage to
+troubleshoot issues if needed. No one outside the Sage curation team will be
+able to download the data.
+
+## Terminology
+
+#### What is a biospecimen? 
+
+A biospecimen is a sample of material such as tissue, cells, DNA, RNA or protein that has a unique identifier associated to it - `specimenID`. The same biospecimen may be characterized in multiple assay types. In this case, the unique identifier should remain the same. We strongly recommend you do *not* name specimens using individual identifiers. In the case where multiple sequencing libaries are prepared from a single biospecimen, `LibraryID` is an available key. Replicates are tracked using integers and the keys `technicalReplicate` and `sequencingReplicate`. 
+
+#### What is a manifest? How is a manifest different than a metadata file? 
+
+A manifest is .tsv or .txt file with data files to be uploaded to Synapse as entries in each row. Details of a manifest are described in the [Uploading and Downloading Data in Bulk](https://docs.synapse.org/articles/uploading_in_bulk.html) Synapse User Guide. While a metadata file will be stored on Synapse as a flat file, and select variables added as file annotations, all variables in a manifest file will live as annotations respective to the file in that row. To successfully upload a file, you must specify the local `path` to the file and the Synapse ID of the folder in the `parent` column.
+
+#### Can I track relationships between files in Synapse as I upload data? 
+
+Yes, Synapse supports [Provenance](https://docs.synapse.org/articles/provenance.html)! Provenance can be leveraged to connect raw data to reprocessed or summarized data. Populate the `used` column in the manifest with the synID. The required values format for linking multiple files is `used = synID;synID`. 
+
+#### Can I associate relevant code to files? 
+
+Yes, with [Provenance](https://docs.synapse.org/articles/provenance.html). Populate the `executed` column with the url to your Github repo. 
+
+
+## Study and assay documentation upload
+
+Each study in PEC will have accompanying documentation in the PEC portal. Here is an example of study [documentation in the Accelerating Medicines Partnership in Alzheimer's Disease portal](https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648), developed by Sage Bionetworks. 
+
+You can submit your documentation through the dccvalidator app on the Documentation page. There should be a study description for the whole study, and an assay description for each of the assays that was performed. These can be in a single file, or you can upload multiple files to the assay description
+section.
+
+#### How do I get access to a Staging folder to upload data? 
+
+With a new study, there may not yet be a **Staging folder** in the PEC Knowledge Portal. Please contact us - [PEC_SageAdmin@synaspse.org](mailto:PEC__SageAdmin@synapse.org).
+
+
+## Data validation
+
+### Metadata requirements
+
+Each study should include metadata that would help a new researcher understand and reuse the data. In most cases, we will expect 4 files:
+
+1. **Individual metadata** describing each individual in the study
+   - Each row corresponds to a unique individual
+2. **Biospecimen metadata** describing the specimens that were collected
+3. **Assay metadata** describing the assay that was performed. If multiple assays were part of the study, there will be one assay file for each.
+4. A **manifest** listing each file that will be uploaded. Remember to include your metadata files in the manifest.
+
+Metadata file templates are [available in the PsychENCODE Knowledge Portal resources](https://www.synapse.org/#!Synapse:syn20729790). 
+
+If you don't see a template for the assay(s) in your study, please send a request for a new schema to [PEC_SageAdmin@synapse.org](mailto:PEC_SageAdmin@synapse.org). We depend on your expertise to develop schemas that capture the most pertinent metadata!
+
+### Validating metadata
+
+The data validation portion of the app allows you to upload metadata files (as .csv) and the manifest (as .tsv or .txt) and view the results of a series of automated checks.
+
+Examples of the types of checks we perform are:
+- All required columns from the templates are present
+- Individuals and specimens have unique identifiers
+- Metadata terms conform to a controlled vocabulary, where applicable
+
+### Viewing data summary
+
+We also provide a summary of the files you have uploaded, showing the number of individuals, specimens, and files. We visualize the data in each column by its data type to help spot unexpected missing values.
+
+
+## Types of data to upload
+
+The [Data Analysis Core](https://www.synapse.org/#!Synapse:syn20959298) will reprocess common data types during PEC Phase II. Currently, common data types are RNASeq, ATACSeq, ChipSeq and all single cell data. For common data types, **only fastq files are required**. For other data types, please provide **fastq** and **bam** files. 
+
+#### Raw
+- **fastq** - All lanes and barcodes of the same replicate are merged into one file per paired-end. Therefore, each specimenID will be associate to at least two files for each paired-end read. We recommend to include specimenID in the filename.
+
+#### Processed 
+- **count matricies** - RNASeq, ChIPSeq and ATACSeq data all produce count matricies. These file types are especially useful for data users who want to compare their own datasets without bioinformatic processing.
+
+- **peaks** - A processed data type specific to ChIPSeq output.
+
+  
+## Uploading data to Synapse after validation
+
+Once data has passed validation and the PEC data curators permit edit permissions to the **Staging** folder, data may be uploaded. Bulk file upload is achievable using the [web UI](https://docs.synapse.org/articles/files_and_versioning.html) or the [R, Python and command line clients](https://docs.synapse.org/articles/uploading_in_bulk.html).
+
+## Data Release
+
+Data is uploaded to a **Staging** folder, private to each individual group. Once curated, data is moved to a **PEC** folder for a limited period of time where all consortium members have access to the data via the PEC Team. Finally, data is made public to Synapse users in a **Data** folder.  All data upload takes place in the [PsychENCODE Knowledge Portal](https://www.synapse.org/#!Synapse:syn4921369/wiki/235539) Synapse Project. While access to the project is public, restrictions are associated with the **Staging** and **PEC** folder to make sure the data remains private for the appropriate period of time. 
+
+Synapse IDs are always preserved (i.e. IDs remain associated to the file).
+
+## Get support 
+
+Please send questions to [PEC_SageAdmin@synapse.org](mailto:PEC_SageAdmin@synapse.org). 

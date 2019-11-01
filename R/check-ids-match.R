@@ -46,8 +46,8 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
     y[[idcol]] <- as.character(y[[idcol]])
   }
 
-  missing_from_x <- setdiff(y[[idcol]], x[[idcol]])
-  missing_from_y <- setdiff(x[[idcol]], y[[idcol]])
+  missing_from_x <- stats::na.omit(setdiff(y[[idcol]], x[[idcol]]))
+  missing_from_y <- stats::na.omit(setdiff(x[[idcol]], y[[idcol]]))
 
   ## Message of correct behavior
   behavior <- glue::glue(

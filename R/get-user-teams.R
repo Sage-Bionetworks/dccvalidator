@@ -4,6 +4,7 @@
 #' current logged in user. You must be logged in to Synapse to use this
 #' function.
 #'
+#' @keywords internal
 #' @param user Synapser user object (e.g. output from
 #'   [synapser::synGetUserProfile()])
 #' @return Character vector of team IDs the user belongs to

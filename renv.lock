@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "3.6.0",
+    "Version": "3.6.1",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -235,15 +235,16 @@
     },
     "dccvalidator": {
       "Package": "dccvalidator",
-      "Version": "0.0.0.9002",
+      "Version": "0.0.0.9007",
       "Source": "GitHub",
+      "Remotes": "hadley/emo, Sage-Bionetworks/syndccutils/R",
       "RemoteType": "github",
-      "RemoteUsername": "Sage-Bionetworks",
-      "RemoteRepo": "dccvalidator",
-      "RemoteRef": "master",
-      "RemoteSha": "4660625983b81131e483a63f7a9151aef47fa71a",
       "RemoteHost": "api.github.com",
-      "Hash": "cf0dde1a68d6e95f81b94cc5fe884165"
+      "RemoteRepo": "dccvalidator",
+      "RemoteUsername": "Sage-Bionetworks",
+      "RemoteRef": "master",
+      "RemoteSha": "3b2dd6bba35e24ade4a6d2bf42137995959f06b7",
+      "Hash": "46e7cc9f871ea2c6ff031cd347394221"
     },
     "desc": {
       "Package": "desc",
@@ -394,6 +395,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "dd1a219a8e8212b1808640670893274e"
+    },
+    "highlight": {
+      "Package": "highlight",
+      "Version": "0.4.7.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "f10a7317affc76cf87d22a11c8196b6d"
     },
     "highr": {
       "Package": "highr",
@@ -571,6 +579,7 @@
       "RemoteRef": "pack",
       "RemoteRepos": "https://cran.rstudio.com",
       "RemoteSha": "0.1-1",
+      "RemotePkgType": "binary",
       "Hash": "297fdfd63080b703a77be9fa81a4d4ca"
     },
     "packrat": {
@@ -607,6 +616,18 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "587295d4cdb937d4e3cf19bd46829326"
+    },
+    "pkgdown": {
+      "Package": "pkgdown",
+      "Version": "1.4.1.9000",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "pkgdown",
+      "RemoteUsername": "r-lib",
+      "RemoteRef": "master",
+      "RemoteSha": "61c3999702966dd75267b98ce905df22521ebd11",
+      "Hash": "cf8e393299b2495b3a3d5dafb1b74051"
     },
     "pkgload": {
       "Package": "pkgload",
@@ -718,17 +739,24 @@
       "Repository": "CRAN",
       "Hash": "d3d55a556f7f2e74f449d6a53b8abf8e"
     },
+    "rematch2": {
+      "Package": "rematch2",
+      "Version": "2.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "0f9d491406a99401fdbfd8e8234cf1aa"
+    },
     "remotes": {
       "Package": "remotes",
       "Version": "2.1.0.9000",
       "Source": "GitHub",
       "RemoteType": "github",
+      "RemoteHost": "api.github.com",
       "RemoteUsername": "r-lib",
       "RemoteRepo": "remotes",
       "RemoteRef": "master",
-      "RemoteSha": "5b3da5f852772159cc2a580888e10536a43e9199",
-      "RemoteHost": "api.github.com",
-      "Hash": "069684d2abbfb39c91d369dcc201559f"
+      "RemoteSha": "b9b9aa043f30e090a471560c16707855c2a10bce",
+      "Hash": "4bbb7b2822e5472854aadb206b48d866"
     },
     "renv": {
       "Package": "renv",
@@ -772,10 +800,15 @@
     },
     "rmarkdown": {
       "Package": "rmarkdown",
-      "Version": "1.16",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "74352997ea70389458e7a8b7059dfb95"
+      "Version": "1.16.2",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "rmarkdown",
+      "RemoteUsername": "rstudio",
+      "RemoteRef": "master",
+      "RemoteSha": "5b0df0ee2212aa3eaf34a3f8be05915cbd867c8c",
+      "Hash": "80855f901b5f1ba24d11e4a42ad72101"
     },
     "roxygen2": {
       "Package": "roxygen2",
@@ -909,6 +942,7 @@
       "RemoteRef": "synapser",
       "RemoteRepos": "http://ran.synapse.org",
       "RemoteSha": "0.6.61",
+      "RemotePkgType": "binary",
       "Hash": "637a14039d0e4e4698fe509c0a0b0e78"
     },
     "syndccutils": {

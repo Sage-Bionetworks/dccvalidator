@@ -1,4 +1,10 @@
-#' UI function for the upload_documentation module
+#' Upload documentation to Synapse
+#'
+#' This module creates a page that explains what documentation is needed to
+#' describe the study and assay(s) that make up the study. It allows the user to
+#' indicate the name of their study and upload documentation files.
+#'
+#' @keywords internal
 #' @param id the module id
 #' @param study_link_human html link to example of a study using human data
 #' @param study_link_animal html link to example of a study using animal models
@@ -100,6 +106,9 @@ upload_documents_ui <- function(id, study_link_human, study_link_animal) {
 }
 
 #' Server function for upload_documentation module
+#'
+#' @keywords internal
+#' @rdname upload_documents_ui
 #' @param input the input from [shiny::callModule()]
 #' @param output the output from [shiny::callModule()]
 #' @param session the session from [shiny::callModule()]
@@ -139,8 +148,8 @@ upload_documents_server <- function(input, output, session,
       # When the button is clicked, wrap the code in the call to the
       # indicator server function
       with_busy_indicator_server("upload_docs", {
-        if (study_name() == "") {
-          stop("Please enter study name.")
+        if (!is_study_name_valid(study_name())) {
+          stop("Please check that study name is entered and only contains: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
         }
         all_docs <- rbind(input$study_doc, input$assay_doc)
         all_datapaths <- all_docs$datapath
@@ -153,6 +162,8 @@ upload_documents_server <- function(input, output, session,
             annotations = doc_annots()
           )
         })
+        shinyjs::reset("study_doc")
+        shinyjs::reset("assay_doc")
       })
     }
   })

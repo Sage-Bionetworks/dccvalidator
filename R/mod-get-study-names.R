@@ -1,4 +1,7 @@
 #' Gather studies within consortium
+#'
+#' @keywords internal
+#' @rdname get_study_ui
 #' @param study_table_id synapse Id for the consortium study table
 #' @return list of studies
 get_study_names <- function(study_table_id) {
@@ -7,6 +10,8 @@ get_study_names <- function(study_table_id) {
 }
 
 #' UI for the get_study module
+#'
+#' @keywords internal
 #' @param id the id
 #' @return html UI for get_study panel
 get_study_ui <- function(id) {
@@ -50,9 +55,13 @@ get_study_ui <- function(id) {
 
 #' Server function for the get_study module that gives the study
 #' name given by the user
+#'
 #' Get study name based on either:
 #' - existing study selection box
 #' - new name for currently non-existing study
+#'
+#' @keywords internal
+#' @rdname get_study_ui
 #' @param input the input variables from [shiny::callModule()]
 #' @param output the output variables from [shiny::callModule()]
 #' @param session the session from [shiny::callModule()]

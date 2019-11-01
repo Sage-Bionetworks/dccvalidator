@@ -62,3 +62,4 @@ that are coercible to the type are also treated as valid (see
 \seealso{
 \code{\link[=can_coerce]{can_coerce()}}
 }
+\keyword{internal}

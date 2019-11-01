@@ -2,7 +2,7 @@
 % Please edit documentation in R/run-app.R
 \name{run_app}
 \alias{run_app}
-\title{Run the Shiny Application}
+\title{Run the Shiny application}
 \usage{
 run_app(...)
 }
@@ -10,5 +10,5 @@ run_app(...)
 \item{...}{Additional golem options passed to \code{\link[golem:with_golem_options]{golem::with_golem_options()}}}
 }
 \description{
-Run the Shiny Application
+Run the Shiny application
 }

@@ -1,6 +1,13 @@
+#' App server
+#'
+#' Create the server-side component of the dccvalidator Shiny app.
+#'
 #' @import shiny
 #' @import shinydashboard
-
+#' @param input Shiny input
+#' @param output Shiny output
+#' @param session Shiny session
+#' @export
 app_server <- function(input, output, session) {
   ## Initial titles for report boxes
   reporting_titles <- reactiveValues(
@@ -19,7 +26,7 @@ app_server <- function(input, output, session) {
     showModal(
       modalDialog(
         title = "Not logged in",
-        HTML("You must log in to <a href=\"https://www.synapse.org/\">Synapse</a> to use this application. Please log in, and then refresh this page.") # nolint
+        HTML("You must log in to <a target=\"_blank\" href=\"https://www.synapse.org/\">Synapse</a> to use this application. Please log in, and then refresh this page.") # nolint
       )
     )
   })
@@ -327,7 +334,7 @@ app_server <- function(input, output, session) {
       check_cols_complete(
         manifest(),
         required_cols = config::get("complete_columns")$manifest,
-        success_msg = "All required columns are complete in the manifest",
+        success_msg = "All required columns present are complete in the manifest", # nolint
         fail_msg = "Some required columns are incomplete in the manifest"
       )
     })
@@ -335,7 +342,7 @@ app_server <- function(input, output, session) {
       check_cols_complete(
         indiv(),
         required_cols = config::get("complete_columns")$individual,
-        success_msg = "All required columns are complete in the individual metadata", # nolint
+        success_msg = "All required columns present are complete in the individual metadata", # nolint
         fail_msg = "Some required columns are incomplete in the individual metadata" # nolint
       )
     })
@@ -343,7 +350,7 @@ app_server <- function(input, output, session) {
       check_cols_complete(
         biosp(),
         required_cols = config::get("complete_columns")$biospecimen,
-        success_msg = "All required columns are complete in the biospecimen metadata", # nolint
+        success_msg = "All required columns present are complete in the biospecimen metadata", # nolint
         fail_msg = "Some required columns are incomplete in the biospecimen metadata" # nolint
       )
     })
@@ -351,37 +358,8 @@ app_server <- function(input, output, session) {
       check_cols_complete(
         assay(),
         required_cols = config::get("complete_columns")$assay,
-        success_msg = "All required columns are complete in the assay metadata", # nolint
+        success_msg = "All required columns present are complete in the assay metadata", # nolint
         fail_msg = "Some required columns are incomplete in the assay metadata" # nolint
-      )
-    })
-
-    ## List results
-    res <- reactive({
-      list(
-        missing_cols_indiv(),
-        missing_cols_biosp(),
-        missing_cols_assay(),
-        missing_cols_manifest(),
-        individual_ids_indiv_biosp(),
-        individual_ids_indiv_manifest(),
-        specimen_ids_biosp_assay(),
-        specimen_ids_biosp_manifest(),
-        annotation_keys_manifest(),
-        annotation_values_manifest(),
-        annotation_values_indiv(),
-        annotation_values_biosp(),
-        annotation_values_assay(),
-        duplicate_indiv_ids(),
-        duplicate_specimen_ids(),
-        empty_cols_manifest(),
-        empty_cols_indiv(),
-        empty_cols_biosp(),
-        empty_cols_assay(),
-        complete_cols_manifest(),
-        complete_cols_indiv(),
-        complete_cols_biosp(),
-        complete_cols_assay()
       )
     })
 
@@ -389,8 +367,8 @@ app_server <- function(input, output, session) {
     ## Require that the study name is given; give error if not
     observeEvent(input$"validate_btn", {
       with_busy_indicator_server("validate_btn", {
-        if (study_name() == "") {
-          stop("Please enter study name.")
+        if (!is_study_name_valid(study_name())) {
+          stop("Please check that study name is entered and only contains: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
         }
         ## Require at least one file input
         validate(
@@ -452,23 +430,51 @@ app_server <- function(input, output, session) {
           )
         }
 
+        ## List results
+        res <- list(
+          missing_cols_indiv(),
+          missing_cols_biosp(),
+          missing_cols_assay(),
+          missing_cols_manifest(),
+          individual_ids_indiv_biosp(),
+          individual_ids_indiv_manifest(),
+          specimen_ids_biosp_assay(),
+          specimen_ids_biosp_manifest(),
+          annotation_keys_manifest(),
+          annotation_values_manifest(),
+          annotation_values_indiv(),
+          annotation_values_biosp(),
+          annotation_values_assay(),
+          duplicate_indiv_ids(),
+          duplicate_specimen_ids(),
+          empty_cols_manifest(),
+          empty_cols_indiv(),
+          empty_cols_biosp(),
+          empty_cols_assay(),
+          complete_cols_manifest(),
+          complete_cols_indiv(),
+          complete_cols_biosp(),
+          complete_cols_assay()
+        )
+
+
         ## Populate validation report
         ## Successes box
-        successes <- purrr::map_lgl(res(), function(x) {
+        successes <- purrr::map_lgl(res, function(x) {
           inherits(x, "check_pass")
         })
         output$successes <- renderUI({
-          report_results(res()[successes], emoji_prefix = "check")
+          report_results(res[successes], emoji_prefix = "check")
         })
         reporting_titles$success <- glue::glue("Successes ({sum(successes)})")
 
         ## Warnings box
-        warnings <- purrr::map_lgl(res(), function(x) {
+        warnings <- purrr::map_lgl(res, function(x) {
           inherits(x, "check_warn")
         })
         output$warnings <- renderUI({
           report_results(
-            res()[warnings],
+            res[warnings],
             emoji_prefix = "warning",
             verbose = TRUE
           )
@@ -476,12 +482,12 @@ app_server <- function(input, output, session) {
         reporting_titles$warn <- glue::glue("Warnings ({sum(warnings)})")
 
         ## Failures box
-        failures <- purrr::map_lgl(res(), function(x) {
+        failures <- purrr::map_lgl(res, function(x) {
           inherits(x, "check_fail")
         })
         output$failures <- renderUI({
           report_results(
-            res()[failures],
+            res[failures],
             emoji_prefix = "x",
             verbose = TRUE
           )
