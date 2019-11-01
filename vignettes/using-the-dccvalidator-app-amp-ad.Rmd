@@ -65,7 +65,7 @@ an assay description for each of the assays that was performed. These can be in
 a single file, or you can upload multiple files to the assay description
 section.
 
-![A screenshot of a website with instructions on how to provide documentation of a study, and a space to upload documentation files](../man/figures/amp-ad-documentation.png)
+![A screenshot of a website with instructions on how to provide documentation of a study, and a space to upload documentation files](../man/figures/amp-documentation.png)
 
 ### Validating metadata
 
@@ -79,8 +79,8 @@ Examples of the types of checks we perform are:
 - Individuals and specimens have unique identifiers
 - Metadata terms conform to a controlled vocabulary where applicable
 
-![A screenshot showing three boxes on a webpage. Each box depicts successes, warnings, or failures that occurred when validating the data](../man/figures/amp-ad-results.png)
-![A screenshot showing three boxes on a webpage. Each box depicts successes, warnings, or failures that occurred when validating the data. Some of the failures have additional information describing the source of the problem.](../man/figures/amp-ad-results-details.png)
+![A screenshot showing three boxes on a webpage. Each box depicts successes, warnings, or failures that occurred when validating the data](../man/figures/amp-results.png)
+![A screenshot showing three boxes on a webpage. Each box depicts successes, warnings, or failures that occurred when validating the data. Some of the failures have additional information describing the source of the problem.](../man/figures/amp-results-details.png)
 
 ### Viewing data summary
 
@@ -88,4 +88,4 @@ We also provide a summary of the files you have uploaded, showing the number of
 individuals, specimens, and files. We visualize the data in each column by its
 data type to help spot unexpected missing values.
 
-![A screenshot showing a summary of several data files uploaded, including how many specimens, individuals, and data files were included, and a breakdown of the types of data in the file](../man/figures/amp-ad-summary.png)
+![A screenshot showing a summary of several data files uploaded, including how many specimens, individuals, and data files were included, and a breakdown of the types of data in the file](../man/figures/amp-summary.png)
