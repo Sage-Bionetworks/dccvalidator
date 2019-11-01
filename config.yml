@@ -40,6 +40,10 @@ amp-ad:
   templates:
     assay_templates:
       proteomics: "syn12973255"
+      single cell RNAseq: "syn21018360"
+      wholeGenomeSeq: "syn21018358"
+      wholeExomeSeq: "syn21078272"
+      NanoString: "syn21082744"
   complete_columns:
     manifest:
       - "consortium"

@@ -37,7 +37,7 @@
 
 <meta property="og:title" content="Check for complete columns — check_cols_complete" />
 <meta property="og:description" content="Check for complete columns in the data and fail (or warn) if incomplete.
-Missing columns that are required to be complete are flagged as incomplete." />
+Missing columns that are required to be complete are ignored." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -126,11 +126,11 @@ Missing columns that are required to be complete are flagged as incomplete." />
 
     <div class="ref-description">
     <p>Check for complete columns in the data and fail (or warn) if incomplete.
-Missing columns that are required to be complete are flagged as incomplete.</p>
+Missing columns that are required to be complete are ignored.</p>
     </div>
 
     <pre class="usage"><span class='fu'>check_cols_complete</span>(<span class='no'>data</span>, <span class='no'>required_cols</span>, <span class='kw'>empty_values</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>NA</span>, <span class='st'>""</span>),
-  <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>success_msg</span> <span class='kw'>=</span> <span class='st'>"Required columns are complete"</span>,
+  <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>success_msg</span> <span class='kw'>=</span> <span class='st'>"Required columns present are complete"</span>,
   <span class='kw'>fail_msg</span> <span class='kw'>=</span> <span class='st'>"Some required columns are not complete"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -190,7 +190,7 @@ are not complete.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kara Woo, Nicole Kauer.</p>
+  <p>Developed by Kara Woo, Nicole Kauer, Kelsey Montgomery.</p>
 </div>
 
 <div class="pkgdown">

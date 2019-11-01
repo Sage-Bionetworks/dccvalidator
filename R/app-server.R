@@ -26,7 +26,7 @@ app_server <- function(input, output, session) {
     showModal(
       modalDialog(
         title = "Not logged in",
-        HTML("You must log in to <a href=\"https://www.synapse.org/\">Synapse</a> to use this application. Please log in, and then refresh this page.") # nolint
+        HTML("You must log in to <a target=\"_blank\" href=\"https://www.synapse.org/\">Synapse</a> to use this application. Please log in, and then refresh this page.") # nolint
       )
     )
   })
@@ -367,8 +367,8 @@ app_server <- function(input, output, session) {
     ## Require that the study name is given; give error if not
     observeEvent(input$"validate_btn", {
       with_busy_indicator_server("validate_btn", {
-        if (study_name() == "") {
-          stop("Please enter study name.")
+        if (!is_study_name_valid(study_name())) {
+          stop("Please check that study name is entered and only contains: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
         }
         ## Require at least one file input
         validate(

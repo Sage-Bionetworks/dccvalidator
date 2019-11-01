@@ -127,10 +127,12 @@
     <p>Check uniqueness of individual and specimen IDs</p>
     </div>
 
-    <pre class="usage"><span class='fu'>check_indiv_ids_dup</span>(<span class='no'>data</span>, <span class='kw'>success_msg</span> <span class='kw'>=</span> <span class='st'>"Individual IDs are unique"</span>,
+    <pre class="usage"><span class='fu'>check_indiv_ids_dup</span>(<span class='no'>data</span>, <span class='kw'>empty_values</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>NA</span>, <span class='st'>""</span>),
+  <span class='kw'>success_msg</span> <span class='kw'>=</span> <span class='st'>"Individual IDs are unique"</span>,
   <span class='kw'>fail_msg</span> <span class='kw'>=</span> <span class='st'>"Duplicate individual IDs found"</span>)
 
-<span class='fu'>check_specimen_ids_dup</span>(<span class='no'>data</span>, <span class='kw'>success_msg</span> <span class='kw'>=</span> <span class='st'>"Specimen IDs are unique"</span>,
+<span class='fu'>check_specimen_ids_dup</span>(<span class='no'>data</span>, <span class='kw'>empty_values</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>NA</span>, <span class='st'>""</span>),
+  <span class='kw'>success_msg</span> <span class='kw'>=</span> <span class='st'>"Specimen IDs are unique"</span>,
   <span class='kw'>fail_msg</span> <span class='kw'>=</span> <span class='st'>"Duplicate specimen IDs found"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -139,6 +141,11 @@
     <tr>
       <th>data</th>
       <td><p>Individual metadata file</p></td>
+    </tr>
+    <tr>
+      <th>empty_values</th>
+      <td><p>Values that are considered empty. Defaults to <code>NA</code> and
+<code>""</code>.</p></td>
     </tr>
     <tr>
       <th>success_msg</th>
@@ -182,7 +189,7 @@ individual metadata file are unique.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kara Woo, Nicole Kauer.</p>
+  <p>Developed by Kara Woo, Nicole Kauer, Kelsey Montgomery.</p>
 </div>
 
 <div class="pkgdown">
