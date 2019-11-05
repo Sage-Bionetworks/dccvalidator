@@ -26,8 +26,6 @@ and shared more easily and quickly.
 
 The application can be found at https://shinypro.synapse.org/users/kwoo/dccvalidator-app/
 
-# Instructions
-
 To use this application you must:
 
 1. Be logged in to Synapse in your browser
@@ -38,27 +36,30 @@ Some portions of the app submit data to Synapse. This allows curators at Sage to
 troubleshoot issues if needed; no one outside the Sage curation team will be
 able to download the data.
 
-## Documentation upload
+# Instructions
 
-### Metadata requirements
+## Step 1: Contact the AMP-AD data coordinating administrator
 
-Each study should include metadata that would help a new researcher understand
-and reuse the data. In most cases, we will expect 4 files:
+Please contact the AMP-AD data coordinating administrator
+(<AMPAD_SageAdmin@synapse.org>) to let us know that you plan to submit data.
 
-1. **Individual metadata** describing each individual in the study
-2. **Biospecimen metadata** describing the specimens that were collected
-3. **Assay metadata** describing the assay that was performed. If multiple
-   assays were part of the study, there will be one assay file for each.
-4. A **manifest** listing each file that will be uploaded.
+AMP-AD organizes data into studies, which are based on cohorts or model systems.
+If you are contributing data for a new study, we will work with you to name the
+study and provide you with a location to which you will upload data. If you are
+contributing new data for an existing study, we will provide you with the
+location to which you will upload data. If you're not sure whether your data
+should be a new study or part of an existing one, we can help you figure that
+out.
 
-We provide templates for all of the metadata files within the portal:
-https://www.synapse.org/#!Synapse:syn18512044
+## Step 2: Provide documentation of the study
 
-If you don't see a template for the assay(s) in your study, please get in touch.
+Each study in AMP-AD has accompanying [documentation in the portal](https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648). 
+If you are submitting a new study, or a new assay for an existing study, you
+will need to provide documentation of the methods you used. If you are
+submitting new data for an existing assay in an existing study (such as RNAseq
+data for new samples in a study that already contains RNAseq data), you can skip
+this step.
 
-## Data validation
-
-Each study in AMP-AD has accompanying [documentation in the portal](https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648).
 You can submit your documentation through the dccvalidator app on the
 Documentation page. There should be a study description for the whole study, and
 an assay description for each of the assays that was performed. These can be in
@@ -67,7 +68,26 @@ section.
 
 ![A screenshot of a website with instructions on how to provide documentation of a study, and a space to upload documentation files](../man/figures/amp-documentation.png)
 
-### Validating metadata
+## Step 3: Prepare metadata
+
+Each study should include metadata that would help a new researcher understand
+and reuse the data. In most cases, we will expect 4 files:
+
+1. **Individual metadata** describing each individual in the study
+2. **Biospecimen metadata** describing the specimens that were collected
+3. **Assay metadata** describing the assay that was performed. If multiple
+   assays were part of the study, there will be one assay file for each.
+4. A **manifest** listing each file that will be uploaded (including raw data
+   files as well as the metadata files above), where it will be uploaded to, and
+   some additional metadata about the files. The `parent` column of the manifest
+   should contain the synapse ID that we provided you in Step 1.
+
+We provide templates for all of the metadata files and the manifest within the
+portal: https://www.synapse.org/#!Synapse:syn18512044
+
+If you don't see a template for the assay(s) in your study, please get in touch.
+
+## Step 4: Validate metadata
 
 The data validation portion of the app allows you to upload metadata files (as
 .csv) and the manifest (as .tsv or .txt) and view the results of a series of
@@ -89,3 +109,9 @@ individuals, specimens, and files. We visualize the data in each column by its
 data type to help spot unexpected missing values.
 
 ![A screenshot showing a summary of several data files uploaded, including how many specimens, individuals, and data files were included, and a breakdown of the types of data in the file](../man/figures/amp-summary.png)
+
+## Step 5: Upload data to Synapse
+
+Once you have submitted your documentation, validated your metadata, and
+corrected any errors found by the validator, you are ready to submit data to
+Synapse. Use the [R](https://github.com/Sage-Bionetworks/synapserutils#batch-process), [Python, or command line](https://python-docs.synapse.org/build/html/synapseutils.html#synapseutils.sync.syncToSynapse) clients to upload, or contact the DCC team for assistance.
