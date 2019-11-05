@@ -22,8 +22,8 @@ please read the
 The app is deployed on the server through the following steps:
 
 1. ssh into the Shiny Pro server and navigate to `/home/kwoo/ShinyApps/dccvalidator-app`
-1. `git pull` changes from GitHub
-1. To ensure packages are up-to-date, open an R session and run `renv::restore()`
+2. `git pull` changes from GitHub
+3. To ensure packages are up-to-date, open an R session and run `renv::restore()`
 
 You may need to run `touch restart.txt` afterward to ensure the application is
 restarted.
@@ -32,11 +32,19 @@ If you want to deploy the app in a different location (e.g. because you want to
 stand up a new version that is customized for a different community):
 
 1. ssh into the Shiny Pro server
-1. Create a folder under `/home/yourusername/ShinyApps`
-1. `git clone` the repository into the folder you've created
-1. If needed, make any changes to the application's behavior by editing the
+2. Create a folder under `/home/yourusername/ShinyApps`
+3. `git clone` the repository into the folder you've created
+4. If needed, make any changes to the application's behavior by editing the
    files, or check out a branch that contains your changes
-1. To ensure packages are up-to-date, open an R session and run `renv::restore()`
+5. To ensure packages are up-to-date, open an R session and run `renv::restore()`
+6. The Sage Shiny Server administrator must configure the utilization scheduler to ensure each connection has its own R process. 
+```
+location /users {
+  location /yourusername/ShinyApps {
+    utilization_scheduler 1 0.7 10;
+  }
+}
+```
 
 Again, you may need to run `touch restart.txt` afterward to ensure the
 application is restarted.
