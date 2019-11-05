@@ -190,7 +190,11 @@ app_ui <- function(request) {
           ),
 
           # Documentation tab UI
-          upload_documents_ui("documentation")
+          upload_documents_ui(
+            id = "documentation",
+            study_link_human = config::get("study_link_human"),
+            study_link_animal = config::get("study_link_animal")
+          )
         ),
         class = "tab-content"
       )

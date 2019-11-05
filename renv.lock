@@ -236,9 +236,15 @@
     "dccvalidator": {
       "Package": "dccvalidator",
       "Version": "0.0.0.9007",
-      "Source": "unknown",
+      "Source": "GitHub",
       "Remotes": "hadley/emo, Sage-Bionetworks/syndccutils/R",
-      "Hash": "da2fd6ab2aa377343e40d785f98b50de"
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "dccvalidator",
+      "RemoteUsername": "Sage-Bionetworks",
+      "RemoteRef": "master",
+      "RemoteSha": "3b2dd6bba35e24ade4a6d2bf42137995959f06b7",
+      "Hash": "46e7cc9f871ea2c6ff031cd347394221"
     },
     "desc": {
       "Package": "desc",

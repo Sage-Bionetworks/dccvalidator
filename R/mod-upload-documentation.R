@@ -6,8 +6,10 @@
 #'
 #' @keywords internal
 #' @param id the module id
+#' @param study_link_human html link to example of a study using human data
+#' @param study_link_animal html link to example of a study using animal models
 #' @return html ui for the module
-upload_documents_ui <- function(id) {
+upload_documents_ui <- function(id, study_link_human, study_link_animal) {
   ns <- NS(id)
 
   tabItem(
@@ -51,12 +53,9 @@ upload_documents_ui <- function(id) {
         # nolint start
         p(
           "This information should be similar to a materials and methods section in a paper. An example of what a study should include can be found ",
-          tags$a(href = "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648", "here"),
-          " for an animal model and ",
-          tags$a(href = "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn3159438", "here"),
-          " for a human study."
+          HTML(glue::glue("<a target =\"_blank\" href=\"{study_link_animal}\">here</a> for an animal model study and ")),
+          HTML(glue::glue("<a target =\"_blank\" href=\"{study_link_human}\">here</a> for a human study."))
         ),
-
         h4("Study Description"),
 
         p("Each study should be given both a descriptive and an abbreviated name. The abbreviation will be used to annotate all content associated with the study. For a study with a human cohort, the study description should include:"),
@@ -167,8 +166,8 @@ upload_documents_server <- function(input, output, session,
       # When the button is clicked, wrap the code in the call to the
       # indicator server function
       with_busy_indicator_server("upload_docs", {
-        if (study_name() == "") {
-          stop("Please enter study name.")
+        if (!is_study_name_valid(study_name())) {
+          stop("Please check that study name is entered and only contains: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
         }
         all_docs <- rbind(input$study_doc, input$assay_doc)
         all_datapaths <- all_docs$datapath
