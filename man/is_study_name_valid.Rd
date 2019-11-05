@@ -15,3 +15,4 @@ TRUE if study_name is valid; FALSE otherwise.
 \description{
 Checks that the name of the study is valid.
 }
+\keyword{internal}

@@ -1,5 +1,6 @@
 #' Checks that the name of the study is valid.
 #'
+#' @keywords internal
 #' @param study_name Name of the study.
 #' @return TRUE if study_name is valid; FALSE otherwise.
 is_study_name_valid <- function(study_name) {
