@@ -34,3 +34,7 @@ footer {
     padding: 10px;
     flex-shrink: 0;
 }
+
+summary {
+    display: list-item
+}

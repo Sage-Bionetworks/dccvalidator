@@ -24,7 +24,10 @@ report_result <- function(result, emoji_prefix = NULL, verbose = FALSE) {
         emo::ji(emoji_prefix),
         result$message,
         ## Include details drawer for verbose == TRUE
-        tags$details(show_details(result$data))
+        tags$details(
+          tags$summary("Show details"),
+          show_details(result$data)
+        )
       ),
       popify(
         tags$a(icon(name = "question-circle"), href = "#"),
