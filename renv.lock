@@ -12,34 +12,6 @@
       }
     ]
   },
-  "Bioconductor": {
-    "Repositories": [
-      {
-        "Name": "BioCsoft",
-        "URL": "https://bioconductor.org/packages/3.9/bioc"
-      },
-      {
-        "Name": "BioCann",
-        "URL": "https://bioconductor.org/packages/3.9/data/annotation"
-      },
-      {
-        "Name": "BioCexp",
-        "URL": "https://bioconductor.org/packages/3.9/data/experiment"
-      },
-      {
-        "Name": "BioCworkflows",
-        "URL": "https://bioconductor.org/packages/3.9/workflows"
-      },
-      {
-        "Name": "CRAN",
-        "URL": "https://cran.rstudio.com"
-      },
-      {
-        "Name": "Sage",
-        "URL": "http://ran.synapse.org"
-      }
-    ]
-  },
   "Packages": {
     "BH": {
       "Package": "BH",
@@ -72,11 +44,8 @@
     "PythonEmbedInR": {
       "Package": "PythonEmbedInR",
       "Version": "0.3.37",
-      "Source": "CRAN",
-      "RemoteType": "standard",
-      "RemoteRef": "PythonEmbedInR",
-      "RemoteRepos": "http://ran.synapse.org",
-      "RemoteSha": "0.3.37",
+      "Source": "Repository",
+      "Repository": "Sage",
       "Hash": "1c9851afda5c6300be59a1d99fc694dc"
     },
     "R6": {
@@ -232,19 +201,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "f2f76b5c5394350c4d4ee77dab51d35c"
-    },
-    "dccvalidator": {
-      "Package": "dccvalidator",
-      "Version": "0.0.0.9007",
-      "Source": "GitHub",
-      "Remotes": "hadley/emo, Sage-Bionetworks/syndccutils/R",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "dccvalidator",
-      "RemoteUsername": "Sage-Bionetworks",
-      "RemoteRef": "master",
-      "RemoteSha": "3b2dd6bba35e24ade4a6d2bf42137995959f06b7",
-      "Hash": "46e7cc9f871ea2c6ff031cd347394221"
     },
     "desc": {
       "Package": "desc",
@@ -760,15 +716,15 @@
     },
     "renv": {
       "Package": "renv",
-      "Version": "0.7.1-16",
+      "Version": "0.8.2-19",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteUsername": "rstudio",
       "RemoteRepo": "renv",
+      "RemoteUsername": "rstudio",
       "RemoteRef": "master",
-      "RemoteSha": "5d0c0def33d07b04b95f1134ecbbbf7cd551c7f8",
-      "Hash": "955c76d1f84265b54f3f1ec0ef098d0a"
+      "RemoteSha": "b434756f96cb1d0a701318a6d069955f532c93ef",
+      "Hash": "3a2fc4e01b9cdb23c51f8e2e2664c431"
     },
     "reshape2": {
       "Package": "reshape2",
