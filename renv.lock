@@ -893,12 +893,8 @@
     "synapser": {
       "Package": "synapser",
       "Version": "0.6.61",
-      "Source": "CRAN",
-      "RemoteType": "standard",
-      "RemoteRef": "synapser",
-      "RemoteRepos": "http://ran.synapse.org",
-      "RemoteSha": "0.6.61",
-      "RemotePkgType": "binary",
+      "Source": "Repository",
+      "Repository": "Sage",
       "Hash": "637a14039d0e4e4698fe509c0a0b0e78"
     },
     "syndccutils": {
