@@ -303,6 +303,7 @@ app_server <- function(input, output, session) {
     empty_cols_manifest <- reactive({
       check_cols_empty(
         manifest(),
+        required_cols = config::get("complete_columns")$manifest,
         success_msg = "No columns are empty in the manifest",
         fail_msg = "Some columns are empty in the manifest"
       )
@@ -310,6 +311,7 @@ app_server <- function(input, output, session) {
     empty_cols_indiv <- reactive({
       check_cols_empty(
         indiv(),
+        required_cols = config::get("complete_columns")$individual,
         success_msg = "No columns are empty in the individual metadata",
         fail_msg = "Some columns are empty in the individual metadata"
       )
@@ -317,6 +319,7 @@ app_server <- function(input, output, session) {
     empty_cols_biosp <- reactive({
       check_cols_empty(
         biosp(),
+        required_cols = config::get("complete_columns")$biospecimen,
         success_msg = "No columns are empty in the biospecimen metadata",
         fail_msg = "Some columns are empty in the biospecimen metadata"
       )
@@ -324,6 +327,7 @@ app_server <- function(input, output, session) {
     empty_cols_assay <- reactive({
       check_cols_empty(
         assay(),
+        required_cols = config::get("complete_columns")$assay,
         success_msg = "No columns are empty in the assay metadata",
         fail_msg = "Some columns are empty in the assay metadata"
       )
