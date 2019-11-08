@@ -385,6 +385,9 @@ app_server <- function(input, output, session) {
 
         ## Upload only the files that have been given
         if (!is.null(indiv())) {
+          if (!is_name_valid(files$indiv$name)) {
+            stop("Please check that file names only contains: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
+          }
           save_to_synapse(
             files$indiv,
             parent = created_folder,
@@ -397,6 +400,9 @@ app_server <- function(input, output, session) {
           )
         }
         if (!is.null(biosp())) {
+          if (!is_name_valid(files$biosp$name)) {
+            stop("Please check that file names only contains: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
+          }
           save_to_synapse(
             files$biosp,
             parent = created_folder,
@@ -409,6 +415,9 @@ app_server <- function(input, output, session) {
           )
         }
         if (!is.null(assay())) {
+          if (!is_name_valid(files$assay$name)) {
+            stop("Please check that file names only contains: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
+          }
           save_to_synapse(
             files$assay,
             parent = created_folder,
@@ -422,6 +431,9 @@ app_server <- function(input, output, session) {
           )
         }
         if (!is.null(manifest())) {
+          if (!is_name_valid(files$manifest$name)) {
+            stop("Please check that file names only contains: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
+          }
           save_to_synapse(
             files$manifest,
             parent = created_folder,
