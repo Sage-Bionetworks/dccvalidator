@@ -55,6 +55,7 @@ Suggests:
 VignetteBuilder: 
     knitr
 Remotes:
+    daattali/shinyjs,
     hadley/emo,
     Sage-Bionetworks/syndccutils/R
 Additional_repositories: http://ran.synapse.org
