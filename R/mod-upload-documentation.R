@@ -166,7 +166,7 @@ upload_documents_server <- function(input, output, session,
       # When the button is clicked, wrap the code in the call to the
       # indicator server function
       with_busy_indicator_server("upload_docs", {
-        if (!is_study_name_valid(study_name())) {
+        if (!is_name_valid(study_name())) {
           stop("Please check that study name is entered and only contains: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
         }
         all_docs <- rbind(input$study_doc, input$assay_doc)
