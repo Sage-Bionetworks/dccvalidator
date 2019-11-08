@@ -854,10 +854,15 @@
     },
     "shinyjs": {
       "Package": "shinyjs",
-      "Version": "1.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "f80ba8b88aa5cd27157e8cd3bbd7cc35"
+      "Version": "1.0.1.9006",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "shinyjs",
+      "RemoteUsername": "daattali",
+      "RemoteRef": "master",
+      "RemoteSha": "6b21ff72dedbea29ee24cee90e96db530dc7bfd1",
+      "Hash": "5d9867679cf81a08c345e5570f73e902"
     },
     "skimr": {
       "Package": "skimr",
