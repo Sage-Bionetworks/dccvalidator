@@ -36,7 +36,7 @@ Imports:
     rlang,
     shiny,
     shinydashboard,
-    shinyjs,
+    shinyjs (>= 1.0.1.9006),
     skimr,
     stats,
     stringr,
