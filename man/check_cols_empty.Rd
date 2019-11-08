@@ -4,8 +4,8 @@
 \alias{check_cols_empty}
 \title{Check for empty columns}
 \usage{
-check_cols_empty(data, empty_values = c(NA, ""), strict = FALSE,
-  success_msg = "No columns are empty",
+check_cols_empty(data, empty_values = c(NA, ""), required_cols = NULL,
+  strict = FALSE, success_msg = "No columns are empty",
   fail_msg = "Some columns are empty")
 }
 \arguments{
@@ -13,6 +13,9 @@ check_cols_empty(data, empty_values = c(NA, ""), strict = FALSE,
 
 \item{empty_values}{Values that are considered empty. Defaults to \code{NA} and
 \code{""}.}
+
+\item{required_cols}{A character vector of the required columns to check for
+completeness.}
 
 \item{strict}{If \code{FALSE}, return a \code{"check_warn"} object; if \code{TRUE}, return a
 \code{"check_fail"} object}
