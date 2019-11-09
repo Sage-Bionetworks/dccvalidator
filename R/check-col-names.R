@@ -29,13 +29,16 @@ check_col_names <- function(data, template, success_msg = NULL, fail_msg = NULL,
 #' @rdname check_col_names
 #' @examples
 #' \dontrun{
-#' library("synapser")
-#' synLogin()
+#' library("reticulate")
+#' synapse <- reticulate::import("synapseclient")
+#' syn <- synapse$Synapse()
+#' syn$login()
+#'
 #' a <- data.frame(path = "/path/file.txt", parent = "syn123", assay = "rnaSeq")
-#' check_cols_manifest(a)
+#' check_cols_manifest(a, syn)
 #'
 #' b <- data.frame(assay = "rnaSeq")
-#' check_cols_manifest(b)
+#' check_cols_manifest(b, syn)
 #' }
 check_cols_manifest <- function(data, id,
                                 success_msg = "All manifest columns present",
@@ -139,11 +142,12 @@ check_cols_biospecimen <- function(data, id,
 #'
 #' @param synID Synapse ID of an excel or csv file containing a metadata
 #'   template
-#' @param ... Additional arguments passed to [synapser::synGet()]
+#' @inheritParams get_synapse_annotations
+#' @param ... Additional arguments passed to syn$get()
 #' @return Character vector of template column names
 #' @export
-get_template <- function(synID, ...) {
-  template <- try(synapser::synGet(synID, ...), silent = TRUE)
+get_template <- function(synID, syn, ...) {
+  template <- try(syn$get(synID, ...), silent = TRUE)
   if (inherits(template, "try-error")) {
     stop(
       "Couldn't download metadata template. Make sure you are logged in to Synapse and that `synID` is a valid synapse ID.", # nolint

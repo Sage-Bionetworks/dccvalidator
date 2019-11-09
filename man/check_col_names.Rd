@@ -42,7 +42,7 @@ against}
 
 \item{id}{Synapse ID of the template to check against}
 
-\item{...}{Additional arguments passed to \code{\link[synapser:synGet]{synapser::synGet()}}}
+\item{...}{Additional arguments passed to syn$get()}
 }
 \value{
 A condition object indicating whether the required columns were
@@ -53,13 +53,16 @@ Check column names against their corresponding template
 }
 \examples{
 \dontrun{
-library("synapser")
-synLogin()
+library("reticulate")
+synapse <- reticulate::import("synapseclient")
+syn <- synapse$Synapse()
+syn$login()
+
 a <- data.frame(path = "/path/file.txt", parent = "syn123", assay = "rnaSeq")
-check_cols_manifest(a)
+check_cols_manifest(a, syn)
 
 b <- data.frame(assay = "rnaSeq")
-check_cols_manifest(b)
+check_cols_manifest(b, syn)
 }
 }
 \seealso{

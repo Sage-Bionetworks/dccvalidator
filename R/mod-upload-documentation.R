@@ -81,13 +81,16 @@ upload_documents_ui <- function(id, study_link_human,
 #'
 #' @keywords internal
 #' @rdname upload_documents_ui
+#' @inheritParams get_synapse_table
+#' @inheritParams create_folder
 #' @param input the input from [shiny::callModule()]
 #' @param output the output from [shiny::callModule()]
 #' @param session the session from [shiny::callModule()]
 #' @param parent_folder the Synapse folder to put a Documentation folder in
 #' @param study_table_id synapse Id for the consortium study table
 upload_documents_server <- function(input, output, session,
-                                    parent_folder, study_table_id) {
+                                    parent_folder, study_table_id,
+                                    synapseclient, syn) {
   inputs_to_enable <- c(
     "doc_study",
     "study_doc",
@@ -97,11 +100,11 @@ upload_documents_server <- function(input, output, session,
   purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
 
   # Create folder for upload
-  docs_folder <- synapser::Folder(
+  docs_folder <- synapseclient$Folder(
     name = "Documentation",
     parent = parent_folder()
   )
-  created_docs_folder <- synapser::synStore(docs_folder)
+  created_docs_folder <- syn$store(docs_folder)
 
   # Get the study name
   study_name <- callModule(
@@ -130,7 +133,9 @@ upload_documents_server <- function(input, output, session,
           save_to_synapse(
             list(datapath = x, name = y),
             parent = created_docs_folder,
-            annotations = doc_annots()
+            annotations = doc_annots(),
+            synapseclient = synapseclient,
+            syn = syn
           )
         })
         shinyjs::reset("study_doc")

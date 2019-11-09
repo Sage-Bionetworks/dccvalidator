@@ -4,11 +4,12 @@
 \alias{get_user_teams}
 \title{Get teams a user belongs to}
 \usage{
-get_user_teams(user)
+get_user_teams(user, syn)
 }
 \arguments{
-\item{user}{Synapser user object (e.g. output from
-\code{\link[synapser:synGetUserProfile]{synapser::synGetUserProfile()}})}
+\item{user}{Synapser user object (e.g. output from syn$getUserProfile())}
+
+\item{syn}{Synapse client object}
 }
 \value{
 Character vector of team IDs the user belongs to
@@ -20,8 +21,12 @@ function.
 }
 \examples{
 \dontrun{
-user <- synapser::synGetUserProfile()
-get_user_teams(user)
+library("reticulate")
+synapse <- reticulate::import("synapseclient")
+syn <- synapse$Synapse()
+syn$login()
+user <- syn$getUserProfile()
+get_user_teams(user, syn)
 }
 }
 \keyword{internal}

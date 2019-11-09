@@ -4,13 +4,15 @@
 \alias{check_annotation_keys}
 \title{Check annotation keys}
 \usage{
-check_annotation_keys(x, annotations, ...)
+check_annotation_keys(x, annotations, syn, ...)
 }
 \arguments{
 \item{x}{An object to check.}
 
 \item{annotations}{A data frame of annotation definitions. Must contain at
 least three columns: \code{key}, \code{value}, and \code{columnType}.}
+
+\item{syn}{Synapse client object}
 
 \item{...}{Additional parameters passed to \code{\link[=check_keys]{check_keys()}}}
 }
@@ -25,23 +27,25 @@ annotation keys; \code{valid_annotation_keys()} returns \emph{valid} annotation 
 }
 \examples{
 \dontrun{
-library("synapser")
-synLogin()
-annots <- get_synapse_annotations()
-my_file <- synGet("syn11931757", downloadFile = FALSE)
-check_annotation_keys(my_file, annots)
+library("reticulate")
+synapse <- import("synapseclient")
+syn <- synapse$Synapse()
+syn$login()
+annots <- get_synapse_annotations(syn = syn)
+my_file <- syn$get("syn11931757", downloadFile = FALSE)
+check_annotation_keys(my_file, annots, syn)
 
 dat <- data.frame(non_annotation = 5, assay = "rnaSeq")
 check_annotation_keys(dat, annots)
 
-fv <- synTableQuery("SELECT * FROM syn17020234")
+fv <- syn$tableQuery("SELECT * FROM syn17020234")
 check_annotation_keys(fv, annots)
 
 # If you don't specify an annotations data frame, these functions will
 # download annotations automatically using `get_synapse_annotations()` (must
 # be logged in to Synapse)
-my_file <- synGet("syn11931757", downloadFile = FALSE)
-check_annotation_keys(my_file)
+my_file <- syn$get("syn11931757", downloadFile = FALSE)
+check_annotation_keys(my_file, syn = syn)
 }
 }
 \seealso{

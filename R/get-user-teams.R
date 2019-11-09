@@ -5,16 +5,20 @@
 #' function.
 #'
 #' @keywords internal
-#' @param user Synapser user object (e.g. output from
-#'   [synapser::synGetUserProfile()])
+#' @inheritParams get_synapse_annotations
+#' @param user Synapser user object (e.g. output from syn$getUserProfile())
 #' @return Character vector of team IDs the user belongs to
 #' @examples
 #' \dontrun{
-#' user <- synapser::synGetUserProfile()
-#' get_user_teams(user)
+#' library("reticulate")
+#' synapse <- reticulate::import("synapseclient")
+#' syn <- synapse$Synapse()
+#' syn$login()
+#' user <- syn$getUserProfile()
+#' get_user_teams(user, syn)
 #' }
-get_user_teams <- function(user) {
-  user_teams <- synapser::synRestGET(
+get_user_teams <- function(user, syn) {
+  user_teams <- syn$restGET(
     glue::glue("/user/{user$ownerId}/team?limit=10000")
   )$results
 

@@ -1,8 +1,11 @@
 context("test-check-annotation-values.R")
 
-library("synapser")
 library("tibble")
-attempt_login()
+library("reticulate")
+use_python("usr/local/bin/python3")
+synapse <- reticulate::import("synapseclient")
+syn <- synapse$Synapse()
+attempt_login(syn)
 annots <- tribble(
   ~key, ~value, ~columnType,
   "assay", "rnaSeq", "STRING",
@@ -43,10 +46,10 @@ test_that("check_annotation_values returns invalid values in $data", {
 test_that("check_annotation_values works for File objects", {
   skip_if_not(logged_in())
 
-  a <- synGet("syn17038064", downloadFile = FALSE)
-  b <- synGet("syn17038065", downloadFile = FALSE)
-  resa <- check_annotation_values(a, annots)
-  resb <- check_annotation_values(b, annots)
+  a <- syn$get("syn17038064", downloadFile = FALSE)
+  b <- syn$get("syn17038065", downloadFile = FALSE)
+  resa <- check_annotation_values(a, annots, syn)
+  resb <- check_annotation_values(b, annots, syn)
   expect_true(inherits(resa, "check_pass"))
   expect_true(inherits(resb, "check_fail"))
   expect_equal(
@@ -60,7 +63,7 @@ test_that("check_annotation_values works for File objects", {
 test_that("check_annotation_values works for file views", {
   skip_if_not(logged_in())
 
-  fv <- synTableQuery("SELECT * FROM syn17038067")
+  fv <- syn$tableQuery("SELECT * FROM syn17038067")
   res <- check_annotation_values(fv, annots)
   expect_true(inherits(res, "check_fail"))
   expect_equal(res$data, list(assay = "wrongAssay", species = "wrongSpecies"))
@@ -93,15 +96,15 @@ test_that("valid_annotation_values fails when no annotations present", {
 test_that("valid_annotation_values works for File objects", {
   skip_if_not(logged_in())
 
-  a <- synGet("syn17038064", downloadFile = FALSE)
-  resa <- valid_annotation_values(a, annots)
+  a <- syn$get("syn17038064", downloadFile = FALSE)
+  resa <- valid_annotation_values(a, annots, syn)
   expect_equal(resa, list(fileFormat = "txt"))
 })
 
 test_that("valid_annotation_values works for file views", {
   skip_if_not(logged_in())
 
-  fv <- synTableQuery("SELECT * FROM syn17038067")
+  fv <- syn$tableQuery("SELECT * FROM syn17038067")
   res <- valid_annotation_values(fv, annots)
   ## Slightly awkward test because synapse seems to return the values in
   ## different orders sometimes
@@ -129,7 +132,7 @@ test_that("check_value returns valid or invalid valies", {
 test_that("check_value falls back to get_synapse_annotations", {
   skip_if_not(logged_in())
 
-  res <- check_value("wrong", "fileFormat", return_valid = FALSE)
+  res <- check_value("wrong", "fileFormat", return_valid = FALSE, syn = syn)
   expect_equal(res, "wrong")
   ## Should be the same as passing in annots:
   expect_equal(

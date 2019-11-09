@@ -4,10 +4,12 @@
 \alias{check_certified_user}
 \title{Check if user is certified}
 \usage{
-check_certified_user(id)
+check_certified_user(id, syn)
 }
 \arguments{
 \item{id}{User ID}
+
+\item{syn}{Synapse client object}
 }
 \description{
 Check if user has completed and passed the Certified User Quiz.

@@ -9,7 +9,7 @@ upload_documents_ui(id, study_link_human, study_link_animal,
   study_link_ref)
 
 upload_documents_server(input, output, session, parent_folder,
-  study_table_id)
+  study_table_id, synapseclient, syn)
 }
 \arguments{
 \item{id}{the module id}
@@ -30,6 +30,11 @@ preference}
 \item{parent_folder}{the Synapse folder to put a Documentation folder in}
 
 \item{study_table_id}{synapse Id for the consortium study table}
+
+\item{synapseclient}{Synapse client module (e.g. output of
+\code{reticulate::import("synapseclient")})}
+
+\item{syn}{Synapse client object}
 }
 \value{
 html ui for the module

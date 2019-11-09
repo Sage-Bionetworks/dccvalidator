@@ -4,12 +4,14 @@
 \alias{check_team_membership}
 \title{Check team membership}
 \usage{
-check_team_membership(teams, user)
+check_team_membership(teams, user, syn)
 }
 \arguments{
 \item{teams}{Team IDs to check membership in}
 
-\item{user}{User to check (e.g. output from \code{\link[synapser:synGetUserProfile]{synapser::synGetUserProfile()}})}
+\item{user}{User to check (e.g. output from syn$getUserProfile())}
+
+\item{syn}{Synapse client object}
 }
 \description{
 Check if a user is a member of any of the given teams.

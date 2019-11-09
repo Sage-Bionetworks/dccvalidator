@@ -4,12 +4,17 @@
 \alias{create_folder}
 \title{Create folder on Synapse}
 \usage{
-create_folder(parent, name)
+create_folder(parent, name, synapseclient, syn)
 }
 \arguments{
 \item{parent}{Synapse ID of the parent where the folder should be created}
 
 \item{name}{Name of the folder to be created}
+
+\item{synapseclient}{Synapse client module (e.g. output of
+\code{reticulate::import("synapseclient")})}
+
+\item{syn}{Synapse client object}
 }
 \value{
 Synapse object of the folder that was created
@@ -19,7 +24,17 @@ Creates and stores a folder on Synapse under the given parent.
 }
 \examples{
 \dontrun{
-create_folder(parent = "syn17038062", name = "my_new_folder")
+library("reticulate")
+synapse <- import("synapseclient")
+syn <- synapse$Synapse()
+syn$login()
+
+create_folder(
+  parent = "syn17038062",
+  name = "my_new_folder",
+  synapseclient = synapse,
+  syn = syn
+)
 }
 }
 \keyword{internal}

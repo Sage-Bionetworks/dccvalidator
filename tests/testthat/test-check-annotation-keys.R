@@ -1,8 +1,11 @@
 context("test-check-annotation-keys.R")
 
-library("synapser")
 library("tibble")
-attempt_login()
+library("reticulate")
+use_python("usr/local/bin/python3")
+synapse <- import("synapseclient")
+syn <- synapse$Synapse()
+syn$login()
 
 annots <- tribble(
   ~key, ~value, ~columnType,
@@ -34,10 +37,10 @@ test_that("check_annotation_keys returns invalid annotation values", {
 test_that("check_annotation_keys works for File objects", {
   skip_if_not(logged_in())
 
-  a <- synGet("syn17038064", downloadFile = FALSE)
-  b <- synGet("syn17038065", downloadFile = FALSE)
-  resa <- check_annotation_keys(a, annots)
-  resb <- check_annotation_keys(b, annots)
+  a <- syn$get("syn17038064", downloadFile = FALSE)
+  b <- syn$get("syn17038065", downloadFile = FALSE)
+  resa <- check_annotation_keys(a, annots, syn)
+  resb <- check_annotation_keys(b, annots, syn)
 
   expect_true(inherits(resa, "check_pass"))
   expect_true(inherits(resb, "check_fail"))
@@ -48,7 +51,7 @@ test_that("check_annotation_keys works for File objects", {
 test_that("check_annotation_keys works for file views", {
   skip_if_not(logged_in())
 
-  fv <- synTableQuery("SELECT * FROM syn17038067")
+  fv <- syn$tableQuery("SELECT * FROM syn17038067")
   res <- check_annotation_keys(fv, annots)
   expect_true(inherits(res, "check_fail"))
   expect_equal(res$data, "randomAnnotation")
@@ -70,10 +73,10 @@ test_that("valid_annotation_keys returns valid annotation keys", {
 test_that("valid_annotation_keys works for File objects", {
   skip_if_not(logged_in())
 
-  a <- synGet("syn17038064", downloadFile = FALSE)
-  b <- synGet("syn17038065", downloadFile = FALSE)
-  resa <- valid_annotation_keys(a, annots)
-  resb <- valid_annotation_keys(b, annots)
+  a <- syn$get("syn17038064", downloadFile = FALSE)
+  b <- syn$get("syn17038065", downloadFile = FALSE)
+  resa <- valid_annotation_keys(a, annots, syn)
+  resb <- valid_annotation_keys(b, annots, syn)
   expect_equal(resa, "fileFormat")
   ## Sort because I think Synapse doesn't always return the same order
   expect_equal(sort(resb), c("assay", "fileFormat", "species"))
@@ -82,7 +85,7 @@ test_that("valid_annotation_keys works for File objects", {
 test_that("valid_annotation_keys works for file views", {
   skip_if_not(logged_in())
 
-  fv <- synTableQuery("SELECT * FROM syn17038067")
+  fv <- syn$tableQuery("SELECT * FROM syn17038067")
   res <- valid_annotation_keys(fv, annots)
   ## Sort because I think Synapse doesn't always return the same order
   expect_equal(sort(res), c("assay", "fileFormat", "species"))
@@ -112,7 +115,7 @@ test_that("check_keys", {
 test_that("check_keys falls back to get_synapse_annotations", {
   skip_if_not(logged_in())
 
-  res <- check_keys("not a key", return_valid = FALSE)
+  res <- check_keys("not a key", return_valid = FALSE, syn)
   expect_equal(res$data, "not a key")
 })
 

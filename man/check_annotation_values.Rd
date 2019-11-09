@@ -4,13 +4,15 @@
 \alias{check_annotation_values}
 \title{Check annotation values}
 \usage{
-check_annotation_values(x, annotations, ...)
+check_annotation_values(x, annotations, syn, ...)
 }
 \arguments{
 \item{x}{An object to check.}
 
 \item{annotations}{A data frame of annotation definitions. Must contain at
 least three columns: \code{key}, \code{value}, and \code{columnType}.}
+
+\item{syn}{Synapse client object}
 
 \item{...}{Additional options to \code{\link[=check_values]{check_values()}}}
 }
@@ -32,11 +34,14 @@ as valid (see \code{\link[=can_coerce]{can_coerce()}}).
 }
 \examples{
 \dontrun{
-library("synapser")
-synLogin()
+library("reticulate")
+synapse <- reticulate::import("synapseclient")
+syn <- synapse$Synapse()
+syn$login()
+
 annots <- get_synapse_annotations()
-my_file <- synGet("syn11931757", downloadFile = FALSE)
-check_annotation_values(my_file, annots)
+my_file <- syn$get("syn11931757", downloadFile = FALSE)
+check_annotation_values(my_file, annots, syn)
 
 dat <- data.frame(
   non_annotation = 5:7,
@@ -51,13 +56,18 @@ check_annotation_values(fv, annots)
 # If you don't specify an annotations data frame, these functions will
 # download annotations automatically using `get_synapse_annotations()` (must
 # be logged in to Synapse)
-my_file <- synGet("syn11931757", downloadFile = FALSE)
-check_annotation_values(my_file)
+my_file <- syn$get("syn11931757", downloadFile = FALSE)
+check_annotation_values(my_file, syn = syn)
 
 # It is possible to whitelist certain certain values, or all values for
 # certain keys:
-check_annotation_values(dat, whitelist_keys = "assay")
-check_annotation_values(dat, whitelist_values = list(assay = c("foo")))
+check_annotation_values(dat, whitelist_keys = "assay", syn = syn)
+
+check_annotation_values(
+  dat,
+  whitelist_values = list(assay = c("foo")),
+  syn = syn
+)
 }
 }
 \seealso{

@@ -3,13 +3,14 @@
 #' Check if a user is a member of any of the given teams.
 #'
 #' @keywords internal
+#' @inheritParams get_synapse_annotations
 #' @param teams Team IDs to check membership in
-#' @param user User to check (e.g. output from [synapser::synGetUserProfile()])
+#' @param user User to check (e.g. output from syn$getUserProfile())
 #' @inheritParams get_user_teams
-check_team_membership <- function(teams, user) {
+check_team_membership <- function(teams, user, syn) {
   user_teams <- get_user_teams(user)
   team_names <- glue::glue_collapse(
-    purrr::map_chr(teams, function(x) synapser::synGetTeam(x)$name),
+    purrr::map_chr(teams, function(x) syn$getTeam(x)$name),
     sep = ", "
   )
   behavior <- glue::glue(

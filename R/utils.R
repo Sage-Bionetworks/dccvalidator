@@ -10,27 +10,27 @@ on_travis <- function() {
 }
 
 ## Look up env vars and log in to Synapse
-syn_travis_login <- function() {
+syn_travis_login <- function(syn) {
   ## Credentials are encrypted on travis
   user <- Sys.getenv("SYNAPSE_USER")
   pass <- Sys.getenv("SYNAPSE_PASSWORD")
-  synapser::synLogin(email = user, password = pass)
+  syn$login(email = user, password = pass)
 }
 
 ## Attempt to log in using encrypted travis variables if on travis within Sage
 ## org, or with regular synLogin() if not on travis. If on travis but not within
 ## Sage, do nothing.
-attempt_login <- function(...) {
+attempt_login <- function(syn, ...) {
   if (on_travis()) {
-    try(syn_travis_login(), silent = TRUE)
+    try(syn_travis_login(syn), silent = TRUE)
   } else {
-    synapser::synLogin(...)
+    syn$login(...)
   }
 }
 
 ## Check if we're logged in
-logged_in <- function() {
-  if (is.null(PythonEmbedInR::pyGet("syn.username"))) {
+logged_in <- function(syn) {
+  if (is.null(syn$username)) {
     return(FALSE)
   } else {
     return(TRUE)
@@ -40,17 +40,19 @@ logged_in <- function() {
 ## Save uploaded files to Synapse
 save_to_synapse <- function(input_file,
                             parent,
-                            annotations = NULL) {
+                            annotations = NULL,
+                            synapseclient,
+                            syn) {
   if (!is_name_valid(input_file$name)) {
     stop("Please check that file names only contain: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
   }
-  file_to_upload <- synapser::File(
+  file_to_upload <- synapseclient$File(
     input_file$datapath,
     parent = parent,
     name = input_file$name,
     annotations = annotations
   )
-  synapser::synStore(file_to_upload)
+  syn$store(file_to_upload)
 }
 
 "%||%" <- function(a, b) {

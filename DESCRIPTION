@@ -33,8 +33,8 @@ Imports:
     golem,
     pkgload,
     purrr,
-    PythonEmbedInR,
     readxl,
+    reticulate,
     rlang,
     shiny,
     shinydashboard,
@@ -42,8 +42,6 @@ Imports:
     skimr,
     stats,
     stringr,
-    synapser,
-    syndccutils (>= 0.0.0.9001),
     tibble,
     tools,
     utils,
@@ -58,8 +56,7 @@ VignetteBuilder:
     knitr
 Remotes:
     daattali/shinyjs,
-    hadley/emo,
-    Sage-Bionetworks/syndccutils/R
+    hadley/emo
 Additional_repositories: http://ran.synapse.org
 ByteCompile: true
 Encoding: UTF-8

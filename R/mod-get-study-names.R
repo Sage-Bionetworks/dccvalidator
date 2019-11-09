@@ -2,10 +2,11 @@
 #'
 #' @keywords internal
 #' @rdname get_study_ui
+#' @inheritParams get_synapse_table
 #' @param study_table_id synapse Id for the consortium study table
 #' @return list of studies
-get_study_names <- function(study_table_id) {
-  study_table <- syndccutils::get_table_df(study_table_id())
+get_study_names <- function(study_table_id, syn) {
+  study_table <- get_synapse_table(study_table_id(), syn)
   return(c("", sort(study_table$StudyName)))
 }
 
@@ -62,13 +63,14 @@ get_study_ui <- function(id) {
 #'
 #' @keywords internal
 #' @rdname get_study_ui
+#' @inheritParams get_synapse_table
 #' @param input the input variables from [shiny::callModule()]
 #' @param output the output variables from [shiny::callModule()]
 #' @param session the session from [shiny::callModule()]
 #' @param study_table_id synapse Id for the consortium study table
 #' @return name of the study
-get_study_server <- function(input, output, session, study_table_id) {
-  all_studies <- get_study_names(study_table_id)
+get_study_server <- function(input, output, session, study_table_id, syn) {
+  all_studies <- get_study_names(study_table_id, syn)
   # The session passed in from callModule() does not work for updating
   # the input selection choices; manually get session
   session <- getDefaultReactiveDomain()

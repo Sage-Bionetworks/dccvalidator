@@ -8,6 +8,7 @@
 #' @param annotations A data frame of annotation definitions. Must contain at
 #'   least three columns: `key`, `value`, and `columnType`.
 #' @param ... Additional parameters passed to [`check_keys()`]
+#' @inheritParams get_synapse_annotations
 #' @return A condition object indicating whether keys match the given annotation
 #'   dictionary. Erroneous keys are included as data within the object.
 #' @export
@@ -15,25 +16,27 @@
 #'
 #' @examples
 #' \dontrun{
-#' library("synapser")
-#' synLogin()
-#' annots <- get_synapse_annotations()
-#' my_file <- synGet("syn11931757", downloadFile = FALSE)
-#' check_annotation_keys(my_file, annots)
+#' library("reticulate")
+#' synapse <- import("synapseclient")
+#' syn <- synapse$Synapse()
+#' syn$login()
+#' annots <- get_synapse_annotations(syn = syn)
+#' my_file <- syn$get("syn11931757", downloadFile = FALSE)
+#' check_annotation_keys(my_file, annots, syn)
 #'
 #' dat <- data.frame(non_annotation = 5, assay = "rnaSeq")
 #' check_annotation_keys(dat, annots)
 #'
-#' fv <- synTableQuery("SELECT * FROM syn17020234")
+#' fv <- syn$tableQuery("SELECT * FROM syn17020234")
 #' check_annotation_keys(fv, annots)
 #'
 #' # If you don't specify an annotations data frame, these functions will
 #' # download annotations automatically using `get_synapse_annotations()` (must
 #' # be logged in to Synapse)
-#' my_file <- synGet("syn11931757", downloadFile = FALSE)
-#' check_annotation_keys(my_file)
+#' my_file <- syn$get("syn11931757", downloadFile = FALSE)
+#' check_annotation_keys(my_file, syn = syn)
 #' }
-check_annotation_keys <- function(x, annotations, ...) {
+check_annotation_keys <- function(x, annotations, syn, ...) {
   UseMethod("check_annotation_keys", x)
 }
 
@@ -43,8 +46,8 @@ check_annotation_keys.NULL <- function(x, annotations, ...) {
 }
 
 #' @export
-check_annotation_keys.File <- function(x, annotations, ...) {
-  file_annots <- synapser::synGetAnnotations(x)
+check_annotation_keys.File <- function(x, annotations, syn, ...) {
+  file_annots <- syn$getAnnotations(x)
   check_keys(
     names(file_annots),
     annotations,
@@ -60,7 +63,7 @@ check_annotation_keys.data.frame <- function(x, annotations, ...) {
 
 #' @export
 check_annotation_keys.CsvFileTable <- function(x, annotations, ...) {
-  dat <- synapser::as.data.frame(x)
+  dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE)
   fv_synapse_cols <- c(
     "ROW_ID",
     "ROW_VERSION",
@@ -89,9 +92,10 @@ check_annotation_keys.CsvFileTable <- function(x, annotations, ...) {
 #' file, or Synapse file view.
 #'
 #' @inheritParams check_annotation_keys
+#' @inheritParams get_synapse_annotations
 #' @return A vector of valid annotation keys present in `x`.
 #' @export
-valid_annotation_keys <- function(x, annotations, ...) {
+valid_annotation_keys <- function(x, annotations, syn, ...) {
   UseMethod("valid_annotation_keys", x)
 }
 
@@ -101,8 +105,8 @@ valid_annotation_keys.NULL <- function(x, annotations, ...) {
 }
 
 #' @export
-valid_annotation_keys.File <- function(x, annotations, ...) {
-  file_annots <- synapser::synGetAnnotations(x)
+valid_annotation_keys.File <- function(x, annotations, syn, ...) {
+  file_annots <- syn$getAnnotations(x)
   check_keys(
     names(file_annots),
     annotations,
@@ -118,7 +122,7 @@ valid_annotation_keys.data.frame <- function(x, annotations, ...) {
 
 #' @export
 valid_annotation_keys.CsvFileTable <- function(x, annotations, ...) {
-  dat <- synapser::as.data.frame(x)
+  dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE)
   fv_synapse_cols <- c(
     "ROW_ID",
     "ROW_VERSION",
@@ -155,7 +159,7 @@ check_keys <- function(x, annotations, whitelist_keys = NULL,
   }
   ## Get annotations if not passed in
   if (missing(annotations)) {
-    annotations <- syndccutils::get_synapse_annotations()
+    annotations <- get_synapse_annotations()
   }
   if (!all(c("key", "value", "columnType") %in% names(annotations))) {
     stop(
