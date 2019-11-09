@@ -24,17 +24,6 @@ test_that("login works on travis in main repo", {
   expect_false(inherits(login, "try-error"))
 })
 
-test_that("get_annotation fails if no key provided", {
-  expect_error(get_annotation("syn12345"))
-})
-
-test_that("get_annotation gets value of an annotation on a Synapse entity", {
-  skip_if_not(logged_in())
-
-  annot <- get_annotation("syn17038064", "fileFormat")
-  expect_equal(annot, c(syn17038064 = "txt"))
-})
-
 test_that("%||% gives b if a is NULL", {
   a <- NULL
   b <- "foo"

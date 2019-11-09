@@ -37,16 +37,6 @@ logged_in <- function() {
   }
 }
 
-## Get the value of an annotation on object(s) x
-get_annotation <- function(ids, key) {
-  if (missing(key)) {
-    stop("Please provide an annotation key to look up", call. = FALSE)
-  }
-  ids <- purrr::set_names(ids)
-  annots <- purrr::map(ids, function(x) synapser::synGetAnnotations(x)[[key]])
-  unlist(annots)
-}
-
 ## Save uploaded files to Synapse
 save_to_synapse <- function(input_file,
                             parent,
