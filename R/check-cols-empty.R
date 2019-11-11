@@ -1,6 +1,12 @@
 #' Check for empty columns
 #'
 #' Check for empty columns in the data and warn (or fail) if present.
+#' The function takes in a list of required column names that are
+#' not tested for emptiness. This is due to the existing function
+#' `check_cols_complete()`, which ensures that the required columns are
+#' complete. By ignoring the required columns in `check_cols_empty()`,
+#' there are no conflicting results for the same column in the event
+#' that a required column was also empty.
 #'
 #' @param data Data to check
 #' @param empty_values Values that are considered empty. Defaults to `NA` and

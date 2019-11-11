@@ -30,6 +30,12 @@ are empty.
 }
 \description{
 Check for empty columns in the data and warn (or fail) if present.
+The function takes in a list of required column names that are
+not tested for emptiness. This is due to the existing function
+\code{check_cols_complete()}, which ensures that the required columns are
+complete. By ignoring the required columns in \code{check_cols_empty()},
+there are no conflicting results for the same column in the event
+that a required column was also empty.
 }
 \examples{
 dat <- data.frame(specimenID = c("x", "y"), organ = c(NA, NA))
