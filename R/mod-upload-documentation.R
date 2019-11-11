@@ -25,14 +25,16 @@ upload_documents_ui <- function(id, study_link_human, study_link_animal) {
         shinyjs::disabled(
           fileInput(
             ns("study_doc"),
-            "Upload the study description file"
+            "Upload study description file (.txt, .docx, .md, .pdf, .tex)",
+            accept = c(".txt", ".docx", ".md", ".pdf", ".tex")
           )
         ),
         shinyjs::disabled(
           fileInput(
             ns("assay_doc"),
-            "Upload the assay description files",
-            multiple = TRUE
+            "Upload assay description files (.txt, .docx, .md, .pdf, .tex)",
+            multiple = TRUE,
+            accept = c(".txt", ".docx", ".md", ".pdf", ".tex")
           )
         ),
 
