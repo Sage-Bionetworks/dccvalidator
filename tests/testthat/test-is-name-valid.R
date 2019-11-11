@@ -30,6 +30,7 @@ test_that("is_name_valid returns FALSE when name is invalid", {
   name8 <- "study&"
   name9 <- "study*"
   name10 <- ""
+  name11 <- NULL
   expect_false(is_name_valid(name1))
   expect_false(is_name_valid(name2))
   expect_false(is_name_valid(name3))
@@ -40,4 +41,5 @@ test_that("is_name_valid returns FALSE when name is invalid", {
   expect_false(is_name_valid(name8))
   expect_false(is_name_valid(name9))
   expect_false(is_name_valid(name10))
+  expect_false(is_name_valid(name11))
 })
