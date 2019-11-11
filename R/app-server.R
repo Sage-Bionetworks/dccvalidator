@@ -226,7 +226,13 @@ app_server <- function(input, output, session) {
 
     # Individual and specimen IDs match ----------------------------------------
     individual_ids_indiv_biosp <- reactive({
-      check_indiv_ids_match(indiv(), biosp(), "individual", "biospecimen")
+      check_indiv_ids_match(
+        indiv(),
+        biosp(),
+        "individual",
+        "biospecimen",
+        bidirectional = FALSE
+      )
     })
     individual_ids_indiv_manifest <- reactive({
       check_indiv_ids_match(
@@ -238,7 +244,13 @@ app_server <- function(input, output, session) {
       )
     })
     specimen_ids_biosp_assay <- reactive({
-      check_specimen_ids_match(biosp(), assay(), "biospecimen", "assay")
+      check_specimen_ids_match(
+        biosp(),
+        assay(),
+        "biospecimen",
+        "assay",
+        bidirectional = FALSE
+      )
     })
     specimen_ids_biosp_manifest <- reactive({
       check_specimen_ids_match(
