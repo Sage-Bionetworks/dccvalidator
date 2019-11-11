@@ -6,17 +6,20 @@
 #' @return TRUE if name is valid; FALSE otherwise.
 is_name_valid <- function(name) {
   valid <- TRUE
-  if (name == "") {
+  if (is.null(name)) {
     valid <- FALSE
-  }
-  # Check if study name has inappropriate characters
-  temp_string <- stringr::str_replace_all(
-    name,
-    " |\\.|_|-|\\+|\\(|\\)",
-    ""
-  )
-  if (grepl("[[:punct:]]", temp_string)) {
+  } else if (name == "") {
     valid <- FALSE
+  } else {
+    # Check if study name has inappropriate characters
+    temp_string <- stringr::str_replace_all(
+      name,
+      " |\\.|_|-|\\+|\\(|\\)",
+      ""
+    )
+    if (grepl("[[:punct:]]", temp_string)) {
+      valid <- FALSE
+    }
   }
   valid
 }
