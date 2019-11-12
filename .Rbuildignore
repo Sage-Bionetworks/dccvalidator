@@ -14,3 +14,4 @@
 ^\.pre-commit-config\.yaml$
 ^\.Rprofile$
 ^config\.yml$
+^_pkgdown\.yml$

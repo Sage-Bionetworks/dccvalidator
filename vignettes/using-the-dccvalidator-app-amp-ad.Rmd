@@ -65,7 +65,6 @@ Documentation page. There should be a study description for the whole study, and
 an assay description for each of the assays that was performed. These can be in
 a single file, or you can upload multiple files to the assay description
 section.
-
 ![A screenshot of a website with instructions on how to provide documentation of a study, and a space to upload documentation files](../man/figures/amp-documentation.png)
 
 ## Step 3: Prepare metadata
@@ -107,7 +106,6 @@ Examples of the types of checks we perform are:
 We also provide a summary of the files you have uploaded, showing the number of
 individuals, specimens, and files. We visualize the data in each column by its
 data type to help spot unexpected missing values.
-
 ![A screenshot showing a summary of several data files uploaded, including how many specimens, individuals, and data files were included, and a breakdown of the types of data in the file](../man/figures/amp-summary.png)
 
 ## Step 5: Upload data to Synapse

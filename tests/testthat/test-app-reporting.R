@@ -24,7 +24,7 @@ test_that("report_result includes message indicating what went wrong", {
 test_that("report_result `verbose` option adds data", {
   res2 <- report_result(dat, "x", verbose = TRUE)
   expect_equal(
-    res2$children[[1]]$children[[3]]$children[[1]],
+    res2$children[[1]]$children[[3]]$children[[2]],
     "thing1, thing2" # report_results concatenates the vector
   )
 })
