@@ -108,8 +108,11 @@ individuals, specimens, and files. We visualize the data in each column by its
 data type to help spot unexpected missing values.
 ![A screenshot showing a summary of several data files uploaded, including how many specimens, individuals, and data files were included, and a breakdown of the types of data in the file](../man/figures/amp-summary.png)
 
-## Step 5: Upload data to Synapse
+## Step 5: Contact the AMP-AD data coordinating administrator and upload data
 
 Once you have submitted your documentation, validated your metadata, and
 corrected any errors found by the validator, you are ready to submit data to
-Synapse. Use the [R](https://github.com/Sage-Bionetworks/synapserutils#batch-process), [Python, or command line](https://python-docs.synapse.org/build/html/synapseutils.html#synapseutils.sync.syncToSynapse) clients to upload, or contact the DCC team for assistance.
+Synapse. Contact the AMP-AD data coordinating administrator, who will grant you
+edit permissions to the Synapse folder.
+
+Use the [R](https://github.com/Sage-Bionetworks/synapserutils#batch-process), [Python, or command line](https://python-docs.synapse.org/build/html/synapseutils.html#synapseutils.sync.syncToSynapse) clients to upload the files in your manifest. The DCC team can help if you need assistance.
