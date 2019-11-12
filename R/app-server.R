@@ -11,7 +11,7 @@
 app_server <- function(input, output, session) {
   ## Render vignette markdown
   output$markdown <- renderUI({
-    HTML(markdown::markdownToHTML(knitr::knit(config::get("path_to_markdown"), quiet = TRUE)))
+    HTML(markdown::markdownToHTML(knitr::knit(config::get("path_to_markdown"), quiet = TRUE), stylesheet = ("inst/app/www/custom.css")))
   })
   
   ## Initial titles for report boxes
