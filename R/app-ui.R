@@ -12,6 +12,7 @@ app_ui <- function(request) {
 
     dashboardSidebar(
       sidebarMenu(
+        menuItem("Using the App", tabName = "vignette"),
         menuItem("Documentation", tabName = "documentation"),
         menuItem("Validator", tabName = "validator")
       ),
@@ -195,6 +196,10 @@ app_ui <- function(request) {
             study_link_human = config::get("study_link_human"),
             study_link_animal = config::get("study_link_animal")
           )
+        ),
+        tabItem(
+          tabName = "vignette",
+          uiOutput('markdown')
         ),
         class = "tab-content"
       )

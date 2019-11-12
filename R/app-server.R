@@ -9,6 +9,11 @@
 #' @param session Shiny session
 #' @export
 app_server <- function(input, output, session) {
+  ## Render vignette markdown
+  output$markdown <- renderUI({
+    HTML(markdown::markdownToHTML(knitr::knit(config::get("path_to_markdown"), quiet = TRUE)))
+  })
+  
   ## Initial titles for report boxes
   reporting_titles <- reactiveValues(
     success = "Successes (0)",
