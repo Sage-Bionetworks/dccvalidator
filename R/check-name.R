@@ -1,4 +1,5 @@
-#' Checks that the name of the study or file is valid.
+#' Checks that the name of the study or file is valid
+#'
 #' Valid strings contain: letters, numbers, spaces, underscores,
 #' hyphens, periods, plus signs, and parentheses.
 #'
