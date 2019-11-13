@@ -26,7 +26,14 @@ upload_documents_ui <- function(id, study_link_human, study_link_animal) {
           fileInput(
             ns("study_doc"),
             "Upload study description file (.txt, .docx, .md, .pdf, .tex)",
-            accept = c(".txt", ".docx", ".md", ".pdf", ".tex")
+            accept = c(
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document", # nolint
+              "application/msword",
+              "application/pdf",
+              "text/plain",
+              "application/x-tex",
+              "text/markdown"
+            )
           )
         ),
         shinyjs::disabled(
@@ -34,7 +41,14 @@ upload_documents_ui <- function(id, study_link_human, study_link_animal) {
             ns("assay_doc"),
             "Upload assay description files (.txt, .docx, .md, .pdf, .tex)",
             multiple = TRUE,
-            accept = c(".txt", ".docx", ".md", ".pdf", ".tex")
+            accept = c(
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document", # nolint
+              "application/msword",
+              "application/pdf",
+              "text/plain",
+              "application/x-tex",
+              "text/markdown"
+            )
           )
         ),
 
