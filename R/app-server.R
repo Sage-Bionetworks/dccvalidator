@@ -268,7 +268,7 @@ app_server <- function(input, output, session) {
         manifest(),
         annots,
         whitelist_keys = c("path", "parent"),
-        success_msg = "All values in the manifest are valid",
+        success_msg = "All keys (column names) in the manifest are valid",
         fail_msg = "Some values in the manifest are invalid"
       )
     })
