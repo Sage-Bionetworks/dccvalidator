@@ -2,9 +2,7 @@
 % Please edit documentation in R/check-name.R
 \name{is_name_valid}
 \alias{is_name_valid}
-\title{Checks that the name of the study or file is valid.
-Valid strings contain: letters, numbers, spaces, underscores,
-hyphens, periods, plus signs, and parentheses.}
+\title{Checks that the name of the study or file is valid}
 \usage{
 is_name_valid(name)
 }
@@ -15,7 +13,7 @@ is_name_valid(name)
 TRUE if name is valid; FALSE otherwise.
 }
 \description{
-Checks that the name of the study or file is valid.
 Valid strings contain: letters, numbers, spaces, underscores,
 hyphens, periods, plus signs, and parentheses.
 }
+\keyword{internal}
