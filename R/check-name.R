@@ -3,6 +3,7 @@
 #' Valid strings contain: letters, numbers, spaces, underscores,
 #' hyphens, periods, plus signs, and parentheses.
 #'
+#'@keywords internal
 #' @param name Name of file or study as a string.
 #' @return TRUE if name is valid; FALSE otherwise.
 is_name_valid <- function(name) {
