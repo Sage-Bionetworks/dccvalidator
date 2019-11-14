@@ -8,8 +8,11 @@
 #' @param id the module id
 #' @param study_link_human html link to example of a study using human data
 #' @param study_link_animal html link to example of a study using animal models
+#' @param study_link_ref html link to example of study acknowledgment
+#'   preference
 #' @return html ui for the module
-upload_documents_ui <- function(id, study_link_human, study_link_animal) {
+upload_documents_ui <- function(id, study_link_human,
+                                study_link_animal, study_link_ref) {
   ns <- NS(id)
 
   tabItem(
@@ -70,7 +73,10 @@ upload_documents_ui <- function(id, study_link_human, study_link_animal) {
         p(
           "This information should be similar to a materials and methods section in a paper. An example of what a study should include can be found ",
           HTML(glue::glue("<a target =\"_blank\" href=\"{study_link_animal}\">here</a> for an animal model study and ")),
-          HTML(glue::glue("<a target =\"_blank\" href=\"{study_link_human}\">here</a> for a human study."))
+          HTML(glue::glue("<a target =\"_blank\" href=\"{study_link_human}\">here</a> for a human study.")),
+          "If you wish, also provide an acknowledgement statment and/or reference that should be included in publications resulting from secondary data use; examples can be found ",
+          HTML(glue::glue("<a target =\"_blank\" href=\"{study_link_ref}\">here</a>.")),
+          "This can be provided as part of the study documentation text."
         ),
         h4("Study Description"),
 
