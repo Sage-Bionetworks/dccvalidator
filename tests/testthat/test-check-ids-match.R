@@ -185,7 +185,8 @@ test_that("check_ids_match bidirectional arg returns relevant data", {
   )
 expect_equal(res1$data, list(`Missing from x` = 5, `Missing from y` = 3:4))
 expect_equal(length(res1$data), 2)
-  expect_equal(res2$data[[1]], 5)
+  expect_equal(res2$data, list(`Missing from x` = 5))
+  expect_equal(length(res2$data), 1)
 })
 
 test_that("check_ids_match data gets default names if not provided", {
