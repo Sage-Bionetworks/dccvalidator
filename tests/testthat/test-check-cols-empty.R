@@ -36,3 +36,12 @@ test_that("can customize empty values", {
   res <- check_cols_empty(dat, empty_values = NA)
   expect_true(inherits(res, "check_pass"))
 })
+
+test_that("`required_cols` are not checked for emptiness", {
+  dat <- data.frame(x = 1, y = NA, z = "")
+  res1 <- check_cols_empty(dat, required_cols = c("y", "z"))
+  res2 <- check_cols_empty(dat, required_cols = "y")
+  expect_true(inherits(res1, "check_pass"))
+  expect_true(inherits(res2, "check_warn"))
+  expect_equal(res2$data, "z")
+})

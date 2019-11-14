@@ -4,8 +4,8 @@
 \alias{check_cols_empty}
 \title{Check for empty columns}
 \usage{
-check_cols_empty(data, empty_values = c(NA, ""), strict = FALSE,
-  success_msg = "No columns are empty",
+check_cols_empty(data, empty_values = c(NA, ""), required_cols = NULL,
+  strict = FALSE, success_msg = "No columns are empty",
   fail_msg = "Some columns are empty")
 }
 \arguments{
@@ -13,6 +13,9 @@ check_cols_empty(data, empty_values = c(NA, ""), strict = FALSE,
 
 \item{empty_values}{Values that are considered empty. Defaults to \code{NA} and
 \code{""}.}
+
+\item{required_cols}{A character vector of the required columns to check for
+completeness.}
 
 \item{strict}{If \code{FALSE}, return a \code{"check_warn"} object; if \code{TRUE}, return a
 \code{"check_fail"} object}
@@ -27,6 +30,12 @@ are empty.
 }
 \description{
 Check for empty columns in the data and warn (or fail) if present.
+The function takes in a list of required column names that are
+not tested for emptiness. This is due to the existing function
+\code{check_cols_complete()}, which ensures that the required columns are
+complete. By ignoring the required columns in \code{check_cols_empty()},
+there are no duplicated results for the same column in the event
+that a required column was also empty.
 }
 \examples{
 dat <- data.frame(specimenID = c("x", "y"), organ = c(NA, NA))
