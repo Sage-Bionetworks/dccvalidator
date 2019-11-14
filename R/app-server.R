@@ -400,7 +400,6 @@ app_server <- function(input, output, session) {
           save_to_synapse(
             files$indiv,
             parent = created_folder,
-            name = files$indiv$name,
             annotations = list(
               study = study_name(),
               metadataType = "individual",
@@ -412,7 +411,6 @@ app_server <- function(input, output, session) {
           save_to_synapse(
             files$biosp,
             parent = created_folder,
-            name = files$biosp$name,
             annotations = list(
               study = study_name(),
               metadataType = "biospecimen",
@@ -424,7 +422,6 @@ app_server <- function(input, output, session) {
           save_to_synapse(
             files$assay,
             parent = created_folder,
-            name = files$assay$name,
             annotations = list(
               study = study_name(),
               metadataType = "assay",
@@ -437,7 +434,6 @@ app_server <- function(input, output, session) {
           save_to_synapse(
             files$manifest,
             parent = created_folder,
-            name = files$manifest$name,
             annotations = list(study = study_name())
           )
         }

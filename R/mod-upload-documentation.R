@@ -192,7 +192,6 @@ upload_documents_server <- function(input, output, session,
           save_to_synapse(
             list(datapath = x, name = y),
             parent = created_docs_folder,
-            name = y,
             annotations = doc_annots()
           )
         })
