@@ -267,13 +267,20 @@ app_server <- function(input, output, session) {
       check_annotation_keys(
         manifest(),
         annots,
-        whitelist_keys = c("path", "parent")
+        whitelist_keys = c("path", "parent"),
+        success_msg = "All keys (column names) in the manifest are valid",
+        fail_msg = "Some keys (column names) in the manifest are invalid"
       )
     })
 
     # Annotation values in manifest and metadata are valid ---------------------
     annotation_values_manifest <- reactive({
-      check_annotation_values(manifest(), annots)
+      check_annotation_values(
+        manifest(),
+        annots,
+        success_msg = "All values in the manifest are valid",
+        fail_msg = "Some values in the manifest are invalid"
+      )
     })
     annotation_values_indiv <- reactive({
       check_annotation_values(
