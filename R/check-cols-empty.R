@@ -5,7 +5,7 @@
 #' not tested for emptiness. This is due to the existing function
 #' `check_cols_complete()`, which ensures that the required columns are
 #' complete. By ignoring the required columns in `check_cols_empty()`,
-#' there are no conflicting results for the same column in the event
+#' there are no duplicated results for the same column in the event
 #' that a required column was also empty.
 #'
 #' @param data Data to check
