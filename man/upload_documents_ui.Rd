@@ -26,7 +26,6 @@ upload_documents_server(input, output, session, parent_folder,
 \item{parent_folder}{the Synapse folder to put a Documentation folder in}
 
 \item{study_table_id}{synapse Id for the consortium study table}
-
 }
 \value{
 html ui for the module
