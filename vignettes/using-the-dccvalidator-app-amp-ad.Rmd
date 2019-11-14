@@ -87,6 +87,15 @@ portal: https://www.synapse.org/#!Synapse:syn18512044
 
 If you don't see a template for the assay(s) in your study, please get in touch.
 
+### Adding to an existing study
+
+If you are adding new data to an existing study, please create and validate a
+complete set of metadata. For example, if you are adding data on new donors, you
+should download the existing individual metadata file and add the new donors as
+additional rows, rather than submitting a file containing only the new donors.
+If you need help finding the existing metadata, please contact the AMP-AD data
+coordinating administrator.
+
 ## Step 4: Validate metadata
 
 The data validation portion of the app allows you to upload metadata files (as.csv) and the manifest (as .tsv or .txt) and view the results of a series of automated checks. 
