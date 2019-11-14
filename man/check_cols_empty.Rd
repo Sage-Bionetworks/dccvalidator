@@ -34,7 +34,7 @@ The function takes in a list of required column names that are
 not tested for emptiness. This is due to the existing function
 \code{check_cols_complete()}, which ensures that the required columns are
 complete. By ignoring the required columns in \code{check_cols_empty()},
-there are no conflicting results for the same column in the event
+there are no duplicated results for the same column in the event
 that a required column was also empty.
 }
 \examples{
