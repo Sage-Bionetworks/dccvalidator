@@ -168,6 +168,30 @@ test_that("check_ids_match bidirectional arg looks only in one direction", {
   expect_equal(res2$data[[1]], c(3, 4))
 })
 
+test_that("check_ids_match bidirectional arg returns relevant data", {
+  meta <- data.frame(individualID = 1:4)
+  manifest <- data.frame(individualID = c(1:2, 5))
+  res1 <- check_ids_match(
+    x = meta,
+    y = manifest,
+    idcol = "individualID",
+    bidirectional = TRUE
+  )
+  res2 <- check_ids_match(
+    x = meta,
+    y = manifest,
+    idcol = "individualID",
+    bidirectional = FALSE
+  )
+  expect_equal(
+    res1$data,
+    list(`Missing from x` = 5, `Missing from y` = 3:4)
+  )
+  expect_equal(length(res1$data), 2)
+  expect_equal(res2$data, list(`Missing from x` = 5))
+  expect_equal(length(res2$data), 1)
+})
+
 test_that("check_ids_match data gets default names if not provided", {
   x <- data.frame(individualID = 1:3)
   y <- data.frame(individualID = 4:6)

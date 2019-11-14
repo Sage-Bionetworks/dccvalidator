@@ -64,15 +64,24 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
       behavior = behavior
     )
   } else {
+    if (bidirectional == FALSE) {
+      data <- stats::setNames(
+        list(missing_from_x),
+        glue::glue("Missing from {xname}")
+      )
+    }
+    else {
+      data <- stats::setNames(
+        list(missing_from_x, missing_from_y),
+        glue::glue("Missing from {c(xname, yname)}")
+      )
+    }
     check_fail(
       msg = glue::glue(
         "{idcol} values are mismatched between {xname} and {yname}"
       ),
       behavior = behavior,
-      data = stats::setNames(
-        list(missing_from_x, missing_from_y),
-        glue::glue("Missing from {c(xname, yname)}")
-      )
+      data = data
     )
   }
 }
