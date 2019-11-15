@@ -267,13 +267,20 @@ app_server <- function(input, output, session) {
       check_annotation_keys(
         manifest(),
         annots,
-        whitelist_keys = c("path", "parent")
+        whitelist_keys = c("path", "parent"),
+        success_msg = "All keys (column names) in the manifest are valid",
+        fail_msg = "Some keys (column names) in the manifest are invalid"
       )
     })
 
     # Annotation values in manifest and metadata are valid ---------------------
     annotation_values_manifest <- reactive({
-      check_annotation_values(manifest(), annots)
+      check_annotation_values(
+        manifest(),
+        annots,
+        success_msg = "All values in the manifest are valid",
+        fail_msg = "Some values in the manifest are invalid"
+      )
     })
     annotation_values_indiv <- reactive({
       check_annotation_values(
@@ -315,6 +322,7 @@ app_server <- function(input, output, session) {
     empty_cols_manifest <- reactive({
       check_cols_empty(
         manifest(),
+        required_cols = config::get("complete_columns")$manifest,
         success_msg = "No columns are empty in the manifest",
         fail_msg = "Some columns are empty in the manifest"
       )
@@ -322,6 +330,7 @@ app_server <- function(input, output, session) {
     empty_cols_indiv <- reactive({
       check_cols_empty(
         indiv(),
+        required_cols = config::get("complete_columns")$individual,
         success_msg = "No columns are empty in the individual metadata",
         fail_msg = "Some columns are empty in the individual metadata"
       )
@@ -329,6 +338,7 @@ app_server <- function(input, output, session) {
     empty_cols_biosp <- reactive({
       check_cols_empty(
         biosp(),
+        required_cols = config::get("complete_columns")$biospecimen,
         success_msg = "No columns are empty in the biospecimen metadata",
         fail_msg = "Some columns are empty in the biospecimen metadata"
       )
@@ -336,6 +346,7 @@ app_server <- function(input, output, session) {
     empty_cols_assay <- reactive({
       check_cols_empty(
         assay(),
+        required_cols = config::get("complete_columns")$assay,
         success_msg = "No columns are empty in the assay metadata",
         fail_msg = "Some columns are empty in the assay metadata"
       )
@@ -379,7 +390,7 @@ app_server <- function(input, output, session) {
     ## Require that the study name is given; give error if not
     observeEvent(input$"validate_btn", {
       with_busy_indicator_server("validate_btn", {
-        if (!is_study_name_valid(study_name())) {
+        if (!is_name_valid(study_name())) {
           stop("Please check that study name is entered and only contains: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
         }
         ## Require at least one file input
@@ -400,7 +411,6 @@ app_server <- function(input, output, session) {
           save_to_synapse(
             files$indiv,
             parent = created_folder,
-            name = files$indiv$name,
             annotations = list(
               study = study_name(),
               metadataType = "individual",
@@ -412,7 +422,6 @@ app_server <- function(input, output, session) {
           save_to_synapse(
             files$biosp,
             parent = created_folder,
-            name = files$biosp$name,
             annotations = list(
               study = study_name(),
               metadataType = "biospecimen",
@@ -424,7 +433,6 @@ app_server <- function(input, output, session) {
           save_to_synapse(
             files$assay,
             parent = created_folder,
-            name = files$assay$name,
             annotations = list(
               study = study_name(),
               metadataType = "assay",
@@ -437,7 +445,6 @@ app_server <- function(input, output, session) {
           save_to_synapse(
             files$manifest,
             parent = created_folder,
-            name = files$manifest$name,
             annotations = list(study = study_name())
           )
         }

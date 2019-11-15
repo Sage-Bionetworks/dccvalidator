@@ -50,12 +50,14 @@ get_annotation <- function(ids, key) {
 ## Save uploaded files to Synapse
 save_to_synapse <- function(input_file,
                             parent,
-                            name = NULL,
                             annotations = NULL) {
+  if (!is_name_valid(input_file$name)) {
+    stop("Please check that file names only contain: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
+  }
   file_to_upload <- synapser::File(
     input_file$datapath,
     parent = parent,
-    name = name,
+    name = input_file$name,
     annotations = annotations
   )
   synapser::synStore(file_to_upload)

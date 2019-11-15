@@ -25,14 +25,30 @@ upload_documents_ui <- function(id, study_link_human, study_link_animal) {
         shinyjs::disabled(
           fileInput(
             ns("study_doc"),
-            "Upload the study description file"
+            "Upload study description file (.txt, .docx, .md, .pdf, .tex)",
+            accept = c(
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document", # nolint
+              "application/msword",
+              "application/pdf",
+              "text/plain",
+              "application/x-tex",
+              "text/markdown"
+            )
           )
         ),
         shinyjs::disabled(
           fileInput(
             ns("assay_doc"),
-            "Upload the assay description files",
-            multiple = TRUE
+            "Upload assay description files (.txt, .docx, .md, .pdf, .tex)",
+            multiple = TRUE,
+            accept = c(
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document", # nolint
+              "application/msword",
+              "application/pdf",
+              "text/plain",
+              "application/x-tex",
+              "text/markdown"
+            )
           )
         ),
 
@@ -166,7 +182,7 @@ upload_documents_server <- function(input, output, session,
       # When the button is clicked, wrap the code in the call to the
       # indicator server function
       with_busy_indicator_server("upload_docs", {
-        if (!is_study_name_valid(study_name())) {
+        if (!is_name_valid(study_name())) {
           stop("Please check that study name is entered and only contains: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
         }
         all_docs <- rbind(input$study_doc, input$assay_doc)
@@ -176,7 +192,6 @@ upload_documents_server <- function(input, output, session,
           save_to_synapse(
             list(datapath = x, name = y),
             parent = created_docs_folder,
-            name = y,
             annotations = doc_annots()
           )
         })
