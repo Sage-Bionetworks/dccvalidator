@@ -67,79 +67,11 @@ upload_documents_ui <- function(id, study_link_human,
       ),
 
       mainPanel(
-        # Instructions/Description
-        h3("Upload Study Documentation"),
-        # nolint start
-        p(
-          "This information should be similar to a materials and methods section in a paper. An example of what a study should include can be found ",
-          HTML(glue::glue("<a target =\"_blank\" href=\"{study_link_animal}\">here</a> for an animal model study and ")),
-          HTML(glue::glue("<a target =\"_blank\" href=\"{study_link_human}\">here</a> for a human study.")),
-          "If you wish, also provide an acknowledgement statment and/or reference that should be included in publications resulting from secondary data use; examples can be found ",
-          HTML(glue::glue("<a target =\"_blank\" href=\"{study_link_ref}\">here</a>.")),
-          "This can be provided as part of the study documentation text."
-        ),
-        h4("Study Description"),
-
-        p("Each study should be given both a descriptive and an abbreviated name. The abbreviation will be used to annotate all content associated with the study. For a study with a human cohort, the study description should include:"),
-        tags$ul(
-          tags$li(
-            "study type (randomized controlled study, prospective observational study, case-control study, or post-mortem study),"
-          ),
-          tags$li(
-            "disease focus,"
-          ),
-          tags$li(
-            "diagnostic criteria and inclusion/exclusion criteria of study participants."
-          ),
-          tags$li(
-            "For post mortem studies, include the brain bank name(s) and links to website(s)."
-          )
-        ),
-
-        p("For a study with an animal model cohort, the study description should include:"),
-        tags$ul(
-          tags$li(
-            "species,"
-          ),
-          tags$li(
-            "treatments."
-          ),
-          tags$li(
-            "If genetically modified-genotype and genetic background. Provide a link to the strain datasheet(s) if a commercial model, or a description of how it was created if not."
-          )
-        ),
-
-        p("For studies using in-vitro cell culture, the study description should include:"),
-        tags$ul(
-          tags$li(
-            "species,"
-          ),
-          tags$li(
-            "cell type,"
-          ),
-          tags$li(
-            "cell culture information (such as primary or immortalized cell line, passage, treatments, differentiation). If a commercial cell line, provide a link."
-          )
-        ),
-
-        p("* Include citations for more study information of available."),
-
-        h4("Assay Description"),
-
-        p(
-          "For each assay, provide a summary of ",
-          tags$b("sample processing, data generation,"),
-          " and ",
-          tags$b("data processing,"),
-          " including which organs and tissues the samples came from. For other tests (such as cognitive assessments or imaging), include a description of how the test was done. Include links for any commercial equipment or tools, code repositories, and citations for more information, if available."
-        ),
-        p(
-          "Detailed protocols are highly recommended. These can be uploaded as pdf together with the data-files, or as links to protocol repositories such as ",
-          tags$a(href = "https://www.protocols.io", "protocols.io"),
-          (" or "),
-          tags$a(href = "https://theolb.readthedocs.io/en/latest/index.html#", "Open Lab Book.")
+        upload_docs_instruct_text(
+          study_link_human,
+          study_link_animal,
+          study_link_ref
         )
-        # nolint end
       )
     )
   )
@@ -207,4 +139,107 @@ upload_documents_server <- function(input, output, session,
       })
     }
   })
+}
+
+#' Create instructions for uploading documentation
+#'
+#' This function creates the instruction text for the Documentation
+#' portion of dccvalidator. The study_link_ref argument dictates
+#' whether instructions for uploading an acknowledgment is added.
+#' If study_link_ref is an empty string, then the acknowledgement
+#' instructions are not added.
+#'
+#' @inheritParams upload_documents_ui
+#' @return html taglist with instructions
+upload_docs_instruct_text <- function(study_link_human, study_link_animal,
+                                      study_link_ref) {
+  if (study_link_ref != "") {
+    overview_text <- p(
+      # nolint start
+      "This information should be similar to a materials and methods section in a paper. An example of what a study should include can be found ",
+      HTML(glue::glue("<a target =\"_blank\" href=\"{study_link_animal}\">here</a> for an animal model study and ")),
+      HTML(glue::glue("<a target =\"_blank\" href=\"{study_link_human}\">here</a> for a human study.")),
+      "If you wish, also provide an acknowledgement statment and/or reference that should be included in publications resulting from secondary data use; examples can be found ",
+      HTML(glue::glue("<a target =\"_blank\" href=\"{study_link_ref}\">here</a>.")),
+      "This can be provided as part of the study or assay documentation text."
+      # nolint end
+    )
+  } else {
+    overview_text <- p(
+      # nolint start
+      "This information should be similar to a materials and methods section in a paper. An example of what a study should include can be found ",
+      HTML(glue::glue("<a target =\"_blank\" href=\"{study_link_animal}\">here</a> for an animal model study and ")),
+      HTML(glue::glue("<a target =\"_blank\" href=\"{study_link_human}\">here</a> for a human study."))
+      # nolint end
+    )
+  }
+
+  tagList(
+    # Instructions/Description
+    h3("Upload Study Documentation"),
+    # nolint start
+    overview_text,
+    h4("Study Description"),
+
+    p("Each study should be given both a descriptive and an abbreviated name. The abbreviation will be used to annotate all content associated with the study. For a study with a human cohort, the study description should include:"),
+    tags$ul(
+      tags$li(
+        "study type (randomized controlled study, prospective observational study, case-control study, or post-mortem study),"
+      ),
+      tags$li(
+        "disease focus,"
+      ),
+      tags$li(
+        "diagnostic criteria and inclusion/exclusion criteria of study participants."
+      ),
+      tags$li(
+        "For post mortem studies, include the brain bank name(s) and links to website(s)."
+      )
+    ),
+
+    p("For a study with an animal model cohort, the study description should include:"),
+    tags$ul(
+      tags$li(
+        "species,"
+      ),
+      tags$li(
+        "treatments."
+      ),
+      tags$li(
+        "If genetically modified-genotype and genetic background. Provide a link to the strain datasheet(s) if a commercial model, or a description of how it was created if not."
+      )
+    ),
+
+    p("For studies using in-vitro cell culture, the study description should include:"),
+    tags$ul(
+      tags$li(
+        "species,"
+      ),
+      tags$li(
+        "cell type,"
+      ),
+      tags$li(
+        "cell culture information (such as primary or immortalized cell line, passage, treatments, differentiation). If a commercial cell line, provide a link."
+      )
+    ),
+
+    p("* Include citations for more study information of available."),
+
+    h4("Assay Description"),
+
+    p(
+      "For each assay, provide a summary of ",
+      tags$b("sample processing, data generation,"),
+      " and ",
+      tags$b("data processing,"),
+      " including which organs and tissues the samples came from. For other tests (such as cognitive assessments or imaging), include a description of how the test was done. Include links for any commercial equipment or tools, code repositories, and citations for more information, if available."
+    ),
+    p(
+      "Detailed protocols are highly recommended. These can be uploaded as pdf together with the data-files, or as links to protocol repositories such as ",
+      tags$a(href = "https://www.protocols.io", "protocols.io"),
+      (" or "),
+      tags$a(href = "https://theolb.readthedocs.io/en/latest/index.html#", "Open Lab Book.")
+    )
+    # nolint end
+  )
 }

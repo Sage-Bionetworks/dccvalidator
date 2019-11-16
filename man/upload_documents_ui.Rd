@@ -18,7 +18,8 @@ upload_documents_server(input, output, session, parent_folder,
 
 \item{study_link_animal}{html link to example of a study using animal models}
 
-\item{study_link_ref}{html link to example of study acknowledgments/references}
+\item{study_link_ref}{html link to example of study acknowledgment
+preference}
 
 \item{input}{the input from \code{\link[shiny:callModule]{shiny::callModule()}}}
 
