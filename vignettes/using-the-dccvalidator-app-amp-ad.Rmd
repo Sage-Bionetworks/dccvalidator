@@ -39,7 +39,7 @@ able to download the data.
 Please contact the AMP-AD data coordinating
 administrator(<AMPAD_SageAdmin@synapse.org>) to let us know that you plan to
 submit data. The AMP-AD Knowledge Portal organizes data into studies, which are
-sets of data and metadata from a specific human cohort, model systems, or other
+sets of data and metadata from a specific human cohort, model system, or other
 experimental unit. If you are contributing data for a new study, we will work
 with you to name the study and provide you with a location to which you will
 upload data. If you are contributing new data for an existing study, we will
