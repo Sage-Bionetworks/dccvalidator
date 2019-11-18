@@ -161,7 +161,7 @@ upload_docs_instruct_text <- function(study_link_human, study_link_animal,
       HTML(glue::glue("<a target =\"_blank\" href=\"{study_link_human}\">here</a> for a human study.")),
       "If you wish, also provide an acknowledgement statment and/or reference that should be included in publications resulting from secondary data use; examples can be found ",
       HTML(glue::glue("<a target =\"_blank\" href=\"{study_link_ref}\">here</a>.")),
-      "This can be provided as part of the study or assay documentation text."
+      "This can be provided as part of the study documentation text."
       # nolint end
     )
   } else {
