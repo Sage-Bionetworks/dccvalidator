@@ -13,10 +13,10 @@ app_server <- function(input, output, session) {
   output$markdown <- renderUI({
     HTML(markdown::markdownToHTML(
       knitr::knit(input = glue::glue(
-        file_path_sans_ext(config::get("path_to_markdown")), ".Rmd"
+        tools::file_path_sans_ext(config::get("path_to_markdown")), ".Rmd"
         ),
         output = glue::glue(
-          file_path_sans_ext(config::get("path_to_markdown")), ".md"
+          tools::file_path_sans_ext(config::get("path_to_markdown")), ".md"
         ),
                   quiet = TRUE),
       stylesheet = ("inst/app/www/custom.css")))
