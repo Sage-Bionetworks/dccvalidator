@@ -65,8 +65,7 @@ can upload multiple files to the assay description section.
 If you are submitting documentation for multiple studies, it should be submitted
 one study at a time. To acknowledge your data contribution you can upload an
 acknowledgement statement, and/or publication that should be referenced in
-publications based on secondary data use, together with the study and assay
-documentation.
+publications based on secondary data use, in the study description file.
 
 
 ## Step 3: Prepare metadata
