@@ -223,7 +223,7 @@ upload_docs_instruct_text <- function(study_link_human, study_link_animal,
       )
     ),
 
-    p("* Include citations for more study information of available."),
+    p("Include citations for more study information if available."),
 
     h4("Assay Description"),
 
