@@ -17,8 +17,9 @@ knitr::opts_chunk$set(
 # Introduction
 
 The dccvalidator tool streamlines the data curation process by performing
-metadata validation checks before the data is uploaded. The dccvalidator
-application can be found at
+metadata validation checks before data is uploaded. It also allows contributors
+to submit documentation of their studies, making the data more understandable
+and discoverable. The dccvalidator application can be found at
 https://shinypro.synapse.org/users/kwoo/dccvalidator-app/
 
 To use this application you must:
