@@ -6,6 +6,7 @@ default:
   templates_link: "https://www.synapse.org/#!Synapse:syn18512044"
   study_link_animal: "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648"
   study_link_human: "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn3159438"
+  study_link_ref: ""
   teams:
     - "3320424"
     - "273957"
@@ -39,6 +40,7 @@ amp-ad:
   parent: "syn20506363"
   teams:
     - "3320424"
+  study_link_ref: "https://adknowledgeportal.synapse.org/#/DataAccess/AcknowledgementStatements"
   templates:
     assay_templates:
       proteomics: "syn12973255"
