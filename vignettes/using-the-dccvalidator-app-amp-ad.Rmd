@@ -16,17 +16,11 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-We've built the dccvalidator tool to streamline the process of data validation
-and QA/QC. As the AMP-AD Knowledge Portal has grown to 50+ studies and over
-70,000 data files, we've realized a need to be more standardized in our
-approaches to data curation. Thus, we built an application that performs many of
-the routine data quality checks we previously conducted by hand, with the hopes
-that it will help you, the data contributor, get your data checked, validated,
-and shared more easily and quickly.
-
-The application can be found at https://shinypro.synapse.org/users/kwoo/dccvalidator-app/
-
-# Instructions
+The dccvalidator tool streamlines the data curation process by performing
+metadata validation checks before data is uploaded. It also allows contributors
+to submit documentation of their studies, making the data more understandable
+and discoverable. The dccvalidator application can be found at
+https://shinypro.synapse.org/users/kwoo/dccvalidator-app/.
 
 To use this application you must:
 
@@ -38,52 +32,95 @@ Some portions of the app submit data to Synapse. This allows curators at Sage to
 troubleshoot issues if needed; no one outside the Sage curation team will be
 able to download the data.
 
-## Documentation upload
+# Instructions
 
-### Metadata requirements
+## Step 1: Contact the AMP-AD data coordinating administrator
 
-Each study should include metadata that would help a new researcher understand
-and reuse the data. In most cases, we will expect 4 files:
+Please contact the AMP-AD data coordinating
+administrator(<AMPAD_SageAdmin@synapse.org>) to let us know that you plan to
+submit data. The AMP-AD Knowledge Portal organizes data into studies, which are
+sets of data and metadata from a specific human cohort, model system, or other
+experimental unit. If you are contributing data for a new study, we will work
+with you to name the study and provide you with a location to which you will
+upload data. If you are contributing new data for an existing study, we will
+provide you with the location to which you will upload data. If you're not sure
+whether your data should be a new study or part of an existing one, we can help
+you figure that out.
+
+## Step 2: Provide documentation of the study
+
+Each study has accompanying [documentation in the
+portal](https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648).
+If you are submitting a new study, or data for a new assay within an existing
+study, you will need to provide documentation about the study and of the methods
+you used. If you are submitting new data for an existing assay in an existing
+study (such as RNAseq data on additional donors), you can skip this step.
+
+You can submit your study and assay documentation through the dccvalidator app
+on the Documentation page. There must be a study description, and a description
+of each of the assays that were performed. These can be in a single file, or you
+can upload multiple files to the assay description section. 
+![A screenshot of a website with instructions on how to provide documentation of a study, and a space to upload documentation files](../man/figures/amp-documentation.png).
+
+If you are submitting documentation for multiple studies, it should be submitted
+one study at a time. To acknowledge your data contribution you can upload an
+acknowledgement statement, and/or publication that should be referenced in
+publications based on secondary data use, in the study description file.
+
+
+## Step 3: Prepare metadata
+
+Each study must include metadata that helps data users understand and reuse the
+data. In most cases, we will expect 4 files:
 
 1. **Individual metadata** describing each individual in the study
 2. **Biospecimen metadata** describing the specimens that were collected
 3. **Assay metadata** describing the assay that was performed. If multiple
    assays were part of the study, there will be one assay file for each.
-4. A **manifest** listing each file that will be uploaded.
+4. A **manifest** listing each file that will be uploaded (including raw data
+   files as well as the metadata files above), where it will be uploaded to, and
+   some additional metadata about the files. The `parent` column of the manifest
+   should contain the synapse ID that we provided you in Step 1.
 
-We provide templates for all of the metadata files within the portal:
-https://www.synapse.org/#!Synapse:syn18512044
+We provide templates for all of the metadata files and the manifest within the
+portal: https://www.synapse.org/#!Synapse:syn18512044
 
 If you don't see a template for the assay(s) in your study, please get in touch.
 
-## Data validation
+### Adding to an existing study
 
-Each study in AMP-AD has accompanying [documentation in the portal](https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648).
-You can submit your documentation through the dccvalidator app on the
-Documentation page. There should be a study description for the whole study, and
-an assay description for each of the assays that was performed. These can be in
-a single file, or you can upload multiple files to the assay description
-section.
-![A screenshot of a website with instructions on how to provide documentation of a study, and a space to upload documentation files](../man/figures/amp-documentation.png)
+If you are adding new data to an existing study, please create and validate a
+complete set of metadata. For example, if you are adding data on new donors, you
+should download the existing individual metadata file and add the new donors as
+additional rows, rather than submitting a file containing only the new donors.
+If you need help finding the existing metadata, please contact the AMP-AD data
+coordinating administrator.
 
-### Validating metadata
+## Step 4: Validate metadata
 
-The data validation portion of the app allows you to upload metadata files (as
-.csv) and the manifest (as .tsv or .txt) and view the results of a series of
-automated checks.
+The data validation portion of the app allows you to upload metadata files (as.csv) and the manifest (as .tsv or .txt) and view the results of a series of automated checks. 
 
-Examples of the types of checks we perform are:
+Examples of the types of checks we perform are: 
 
 - All required columns from the templates are present 
 - Individuals and specimens have unique identifiers
-- Metadata terms conform to a controlled vocabulary where applicable
+- Metadata terms conform to a controlled vocabulary where applicable 
 
 ![A screenshot showing three boxes on a webpage. Each box depicts successes, warnings, or failures that occurred when validating the data](../man/figures/amp-results.png)
 ![A screenshot showing three boxes on a webpage. Each box depicts successes, warnings, or failures that occurred when validating the data. Some of the failures have additional information describing the source of the problem.](../man/figures/amp-results-details.png)
 
 ### Viewing data summary
-
-We also provide a summary of the files you have uploaded, showing the number of
+ 
+We provide a summary of the files you have uploaded, showing the number of
 individuals, specimens, and files. We visualize the data in each column by its
 data type to help spot unexpected missing values.
 ![A screenshot showing a summary of several data files uploaded, including how many specimens, individuals, and data files were included, and a breakdown of the types of data in the file](../man/figures/amp-summary.png)
+
+## Step 5: Contact the AMP-AD data coordinating administrator and upload data
+
+Once you have submitted your documentation, validated your metadata, and
+corrected any errors found by the validator, you are ready to submit data to
+Synapse. Contact the AMP-AD data coordinating administrator, who will grant you
+edit permissions to the Synapse folder.
+
+Use the [R](https://github.com/Sage-Bionetworks/synapserutils#batch-process), [Python, or command line](https://python-docs.synapse.org/build/html/synapseutils.html#synapseutils.sync.syncToSynapse) clients to upload the files in your manifest. The DCC team can help if you need assistance.
