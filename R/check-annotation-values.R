@@ -65,7 +65,7 @@ check_annotation_values.NULL <- function(x, annotations, ...) {
 }
 
 #' @export
-check_annotation_values.File <- function(x, annotations, syn, ...) {
+check_annotation_values.synapseclient.entity.File <- function(x, annotations, syn, ...) { # nolint
   annots <- syn$getAnnotations(x)
   check_values(
     annots,
@@ -87,7 +87,7 @@ check_annotation_values.data.frame <- function(x, annotations, ...) {
 }
 
 #' @export
-check_annotation_values.CsvFileTable <- function(x, annotations, ...) {
+check_annotation_values.synapseclient.table.CsvFileTable <- function(x, annotations, ...) { # nolint
   dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE)
   fv_synapse_cols <- c(
     "ROW_ID",
@@ -135,7 +135,7 @@ valid_annotation_values.NULL <- function(x, annotations, ...) {
 }
 
 #' @export
-valid_annotation_values.File <- function(x, annotations, syn, ...) {
+valid_annotation_values.synapseclient.entity.File <- function(x, annotations, syn, ...) { # nolint
   annots <- syn$getAnnotations(x)
   check_values(
     annots,
@@ -156,7 +156,7 @@ valid_annotation_values.data.frame <- function(x, annotations, ...) {
 }
 
 #' @export
-valid_annotation_values.CsvFileTable <- function(x, annotations, ...) {
+valid_annotation_values.synapseclient.table.CsvFileTable <- function(x, annotations, ...) { # nolint
   dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE)
   fv_synapse_cols <- c(
     "ROW_ID",
