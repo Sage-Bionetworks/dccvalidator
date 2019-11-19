@@ -312,10 +312,22 @@ app_server <- function(input, output, session) {
 
     # Individual and specimen IDs are not duplicated ---------------------------
     duplicate_indiv_ids <- reactive({
-      check_indiv_ids_dup(indiv())
+      check_indiv_ids_dup(
+        indiv(),
+        # nolint start
+        success_msg = "Individual IDs in the individual metadata file are unique",
+        fail_msg = "Duplicate individual IDs found in the individual metadata file"
+        # nolint end
+      )
     })
     duplicate_specimen_ids <- reactive({
-      check_specimen_ids_dup(biosp())
+      check_specimen_ids_dup(
+        biosp(),
+        # nolint start
+        success_msg = "Specimen IDs in the biospecimen metadata file are unique",
+        fail_msg = "Duplicate specimen IDs found in the biospecimen metadata file"
+        # nolint end
+      )
     })
 
     # Empty columns produce warnings -------------------------------------------
