@@ -35,7 +35,7 @@ test_that("check_annotation_keys returns invalid annotation values", {
 })
 
 test_that("check_annotation_keys works for File objects", {
-  skip_if_not(logged_in())
+  skip_if_not(logged_in(syn = syn))
 
   a <- syn$get("syn17038064", downloadFile = FALSE)
   b <- syn$get("syn17038065", downloadFile = FALSE)
@@ -49,7 +49,7 @@ test_that("check_annotation_keys works for File objects", {
 })
 
 test_that("check_annotation_keys works for file views", {
-  skip_if_not(logged_in())
+  skip_if_not(logged_in(syn = syn))
 
   fv <- syn$tableQuery("SELECT * FROM syn17038067")
   res <- check_annotation_keys(fv, annots)
@@ -71,7 +71,7 @@ test_that("valid_annotation_keys returns valid annotation keys", {
 })
 
 test_that("valid_annotation_keys works for File objects", {
-  skip_if_not(logged_in())
+  skip_if_not(logged_in(syn = syn))
 
   a <- syn$get("syn17038064", downloadFile = FALSE)
   b <- syn$get("syn17038065", downloadFile = FALSE)
@@ -83,7 +83,7 @@ test_that("valid_annotation_keys works for File objects", {
 })
 
 test_that("valid_annotation_keys works for file views", {
-  skip_if_not(logged_in())
+  skip_if_not(logged_in(syn = syn))
 
   fv <- syn$tableQuery("SELECT * FROM syn17038067")
   res <- valid_annotation_keys(fv, annots)
@@ -113,9 +113,9 @@ test_that("check_keys", {
 })
 
 test_that("check_keys falls back to get_synapse_annotations", {
-  skip_if_not(logged_in())
+  skip_if_not(logged_in(syn = syn))
 
-  res <- check_keys("not a key", return_valid = FALSE, syn)
+  res <- check_keys("not a key", return_valid = FALSE, syn = syn)
   expect_equal(res$data, "not a key")
 })
 
