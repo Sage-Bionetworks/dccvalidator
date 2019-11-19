@@ -88,7 +88,7 @@ check_annotation_values.data.frame <- function(x, annotations, ...) {
 
 #' @export
 check_annotation_values.synapseclient.table.CsvFileTable <- function(x, annotations, ...) { # nolint
-  dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE)
+  dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE, na.strings = "")
   fv_synapse_cols <- c(
     "ROW_ID",
     "ROW_VERSION",
@@ -302,7 +302,7 @@ check_value <- function(values, key, annotations, whitelist_keys = NULL,
   whitelist <- unique(whitelist_values[[key]])
 
   if (missing(annotations)) {
-    annotations <- get_synapse_annotations(syn)
+    annotations <- get_synapse_annotations(syn = syn)
   }
   if (!key %in% annotations$key) {
     return(NULL)
@@ -358,7 +358,7 @@ check_values <- function(x, annotations, whitelist_keys = NULL,
     stop("No annotations present to check", call. = FALSE)
   }
   if (missing(annotations)) {
-    annotations <- get_synapse_annotations(syn)
+    annotations <- get_synapse_annotations(syn = syn)
   }
   if (!all(c("key", "value", "columnType") %in% names(annotations))) {
     stop(

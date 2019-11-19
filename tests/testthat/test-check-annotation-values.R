@@ -48,8 +48,8 @@ test_that("check_annotation_values works for File objects", {
 
   a <- syn$get("syn17038064", downloadFile = FALSE)
   b <- syn$get("syn17038065", downloadFile = FALSE)
-  resa <- check_annotation_values(a, annots, syn)
-  resb <- check_annotation_values(b, annots, syn)
+  resa <- check_annotation_values(a, annots, syn = syn)
+  resb <- check_annotation_values(b, annots, syn = syn)
   expect_true(inherits(resa, "check_pass"))
   expect_true(inherits(resb, "check_fail"))
   expect_equal(
@@ -97,7 +97,7 @@ test_that("valid_annotation_values works for File objects", {
   skip_if_not(logged_in(syn = syn))
 
   a <- syn$get("syn17038064", downloadFile = FALSE)
-  resa <- valid_annotation_values(a, annots, syn)
+  resa <- valid_annotation_values(a, annots, syn = syn)
   expect_equal(resa, list(fileFormat = "txt"))
 })
 
@@ -277,13 +277,12 @@ test_that("check_values can whitelist keys and values simultaneously", {
 test_that("check_values false back to get_synapse_annotations()", {
   skip_if_not(logged_in(syn = syn))
 
-
   dat <- tibble(
     fileFormat = c("wrong", "wronger", "wrongest", "txt"),
     assay = c("rnaSeq", "rnaSeq", "rnaSeq", "also wrong")
   )
-  res1 <- check_values(dat, annots)
-  res2 <- check_values(dat)
+  res1 <- check_values(dat, annots, syn = syn)
+  res2 <- check_values(dat, syn = syn)
   expect_identical(res1, res2)
 })
 
