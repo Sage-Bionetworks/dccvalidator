@@ -57,7 +57,6 @@ VignetteBuilder:
 Remotes:
     daattali/shinyjs,
     hadley/emo
-Additional_repositories: http://ran.synapse.org
 ByteCompile: true
 Encoding: UTF-8
 LazyData: true
