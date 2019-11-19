@@ -47,7 +47,7 @@ check_annotation_keys.NULL <- function(x, annotations, ...) {
 
 #' @export
 check_annotation_keys.synapseclient.entity.File <- function(x, annotations, syn, ...) { # nolint
-  file_annots <- syn$getAnnotations(x)
+  file_annots <- dict_to_list(syn$getAnnotations(x))
   check_keys(
     names(file_annots),
     annotations,
@@ -106,7 +106,7 @@ valid_annotation_keys.NULL <- function(x, annotations, ...) {
 
 #' @export
 valid_annotation_keys.synapseclient.entity.File <- function(x, annotations, syn, ...) { # nolint
-  file_annots <- syn$getAnnotations(x)
+  file_annots <- dict_to_list(syn$getAnnotations(x))
   check_keys(
     names(file_annots),
     annotations,
