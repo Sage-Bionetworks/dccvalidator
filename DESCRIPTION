@@ -1,7 +1,7 @@
 Package: dccvalidator
 Title: Validate Data and Metadata
-Version: 0.0.0.9008
-Authors@R: 
+Version: 0.0.0.9009
+Authors@R:
     c(person(given = "Kara",
              family = "Woo",
              role = c("aut", "cre"),
