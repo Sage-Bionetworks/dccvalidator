@@ -23,6 +23,6 @@ test_that("create_folder() creates a folder", {
     synapseclient = synapse,
     syn = syn
   )
-  expect_true(inherits(created_folder, "Folder"))
+  expect_true(inherits(created_folder, "synapseclient.entity.Folder"))
   on.exit(syn$delete(created_folder)) # delete on exit
 })
