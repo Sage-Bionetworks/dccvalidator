@@ -231,7 +231,7 @@ test_that("check_cols_manifest works for manifest columns", {
 
   expect_true(
     inherits(
-      check_cols_manifest(dat, id = "syn20820080", version = 3),
+      check_cols_manifest(dat, id = "syn20820080", version = 3, syn = syn),
       "check_pass"
     )
   )
