@@ -8,7 +8,7 @@
 #' @param user User to check (e.g. output from syn$getUserProfile())
 #' @inheritParams get_user_teams
 check_team_membership <- function(teams, user, syn) {
-  user_teams <- get_user_teams(user)
+  user_teams <- get_user_teams(user, syn = syn)
   team_names <- glue::glue_collapse(
     purrr::map_chr(teams, function(x) syn$getTeam(x)$name),
     sep = ", "
