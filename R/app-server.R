@@ -36,7 +36,8 @@ app_server <- function(input, output, session) {
     user <- syn$getUserProfile()
     membership <- check_team_membership(
       teams = config::get("teams"),
-      user = user
+      user = user,
+      syn = syn
     )
     certified <- check_certified_user(user$ownerId)
     report_unsatisfied_requirements(membership, certified)
