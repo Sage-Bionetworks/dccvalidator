@@ -7,7 +7,7 @@ syn <- synapse$Synapse()
 attempt_login(syn)
 
 test_that("check_team_membership() returns check_pass if user is in the team", {
-  skip_if_not(logged_in())
+  skip_if_not(logged_in(syn = syn))
 
   user <- syn$getUserProfile("dcctravistest")
   result <- check_team_membership(teams = "3396691", user = user, syn = syn)
@@ -15,7 +15,7 @@ test_that("check_team_membership() returns check_pass if user is in the team", {
 })
 
 test_that("check_team_membership() returns check_fail if user not in team", {
-  skip_if_not(logged_in())
+  skip_if_not(logged_in(syn = syn))
 
   user <- syn$getUserProfile("dcctravistest")
   result <- check_team_membership(teams = "3397398", user = user, syn = syn)
@@ -23,7 +23,7 @@ test_that("check_team_membership() returns check_fail if user not in team", {
 })
 
 test_that("check_team_membership() can check multiple teams", {
-  skip_if_not(logged_in())
+  skip_if_not(logged_in(syn = syn))
 
   user <- syn$getUserProfile("dcctravistest")
   result <- check_team_membership(

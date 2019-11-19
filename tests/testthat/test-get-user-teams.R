@@ -7,7 +7,7 @@ syn <- synapse$Synapse()
 attempt_login(syn)
 
 test_that("get_user_teams gets team memberships", {
-  skip_if_not(logged_in())
+  skip_if_not(logged_in(syn = syn))
 
   user <- syn$getUserProfile("dcctravistest")
   teams <- get_user_teams(user, syn)

@@ -7,7 +7,7 @@ syn <- synapse$Synapse()
 attempt_login(syn)
 
 test_that("create_folder() creates a folder", {
-  skip_if_not(logged_in())
+  skip_if_not(logged_in(syn = syn))
 
   op <- options(digits.secs = 3)
   ## Create folder name with timestamp including milliseconds
