@@ -69,8 +69,7 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
         list(missing_from_x),
         glue::glue("Missing from {xname}")
       )
-    }
-    else {
+    } else {
       data <- stats::setNames(
         list(missing_from_x, missing_from_y),
         glue::glue("Missing from {c(xname, yname)}")
