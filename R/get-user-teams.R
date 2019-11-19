@@ -6,7 +6,7 @@
 #'
 #' @keywords internal
 #' @inheritParams get_synapse_annotations
-#' @param user Synapser user object (e.g. output from syn$getUserProfile())
+#' @param user Synapse user object (e.g. output from syn$getUserProfile())
 #' @return Character vector of team IDs the user belongs to
 #' @examples
 #' \dontrun{

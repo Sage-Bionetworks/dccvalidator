@@ -7,7 +7,7 @@
 get_user_teams(user, syn)
 }
 \arguments{
-\item{user}{Synapser user object (e.g. output from syn$getUserProfile())}
+\item{user}{Synapse user object (e.g. output from syn$getUserProfile())}
 
 \item{syn}{Synapse client object}
 }

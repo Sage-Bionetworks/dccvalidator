@@ -7,8 +7,10 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' library("synapser")
-#' synLogin()
+#' library("reticulate")
+#' synapse <- reticulate::import("synapseclient")
+#' syn <- synapse$Synapse()
+#' syn$login()
 #' check_certified_user("3384770")
 #' }
 check_certified_user <- function(id, syn) {
