@@ -46,7 +46,7 @@ check_annotation_keys.NULL <- function(x, annotations, ...) {
 }
 
 #' @export
-check_annotation_keys.File <- function(x, annotations, syn, ...) {
+check_annotation_keys.synapseclient.entity.File <- function(x, annotations, syn, ...) { # nolint
   file_annots <- syn$getAnnotations(x)
   check_keys(
     names(file_annots),
@@ -62,7 +62,7 @@ check_annotation_keys.data.frame <- function(x, annotations, ...) {
 }
 
 #' @export
-check_annotation_keys.CsvFileTable <- function(x, annotations, ...) {
+check_annotation_keys.synapseclient.table.CsvFileTable <- function(x, annotations, ...) { # nolint
   dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE)
   fv_synapse_cols <- c(
     "ROW_ID",
@@ -105,7 +105,7 @@ valid_annotation_keys.NULL <- function(x, annotations, ...) {
 }
 
 #' @export
-valid_annotation_keys.File <- function(x, annotations, syn, ...) {
+valid_annotation_keys.synapseclient.entity.File <- function(x, annotations, syn, ...) { # nolint
   file_annots <- syn$getAnnotations(x)
   check_keys(
     names(file_annots),
@@ -121,7 +121,7 @@ valid_annotation_keys.data.frame <- function(x, annotations, ...) {
 }
 
 #' @export
-valid_annotation_keys.CsvFileTable <- function(x, annotations, ...) {
+valid_annotation_keys.synapseclient.table.CsvFileTable <- function(x, annotations, ...) { # nolint
   dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE)
   fv_synapse_cols <- c(
     "ROW_ID",
@@ -152,14 +152,14 @@ valid_annotation_keys.CsvFileTable <- function(x, annotations, ...) {
 check_keys <- function(x, annotations, whitelist_keys = NULL,
                        success_msg = "All annotation keys are valid",
                        fail_msg = "Some annotation keys are invalid",
-                       return_valid = FALSE) {
+                       return_valid = FALSE, syn) {
   ## Need to provide data to check
   if (length(x) == 0) {
     stop("No annotations present to check", call. = FALSE)
   }
   ## Get annotations if not passed in
   if (missing(annotations)) {
-    annotations <- get_synapse_annotations()
+    annotations <- get_synapse_annotations(syn = syn)
   }
   if (!all(c("key", "value", "columnType") %in% names(annotations))) {
     stop(
