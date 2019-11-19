@@ -740,6 +740,13 @@
       "Repository": "CRAN",
       "Hash": "ac685130d1a25e3f6470960fd29c5693"
     },
+    "reticulate": {
+      "Package": "reticulate",
+      "Version": "1.13",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "a083b977df80dcb6ef64d2b623edff22"
+    },
     "rex": {
       "Package": "rex",
       "Version": "1.1.2",
