@@ -199,7 +199,7 @@ app_ui <- function(request) {
         ),
         tabItem(
           tabName = "vignette",
-          uiOutput('markdown')
+          uiOutput("markdown")
         ),
         class = "tab-content"
       )

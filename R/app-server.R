@@ -21,7 +21,6 @@ app_server <- function(input, output, session) {
                   quiet = TRUE),
       stylesheet = ("inst/app/www/custom.css")))
   })
-  
   ## Initial titles for report boxes
   reporting_titles <- reactiveValues(
     success = "Successes (0)",
