@@ -29,6 +29,7 @@ Imports:
     ggplot2,
     glue,
     golem,
+    markdown,
     pkgload,
     purrr,
     PythonEmbedInR,
