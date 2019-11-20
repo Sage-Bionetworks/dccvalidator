@@ -457,7 +457,10 @@ app_server <- function(input, output, session) {
           save_to_synapse(
             files$manifest,
             parent = created_folder,
-            annotations = list(study = study_name())
+            annotations = list(
+              study = study_name(),
+              metadataType = "manifest"
+            )
           )
         }
 
