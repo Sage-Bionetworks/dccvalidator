@@ -38,3 +38,7 @@ footer {
 summary {
     display: list-item
 }
+
+img {
+  max-width: 100%;
+}
