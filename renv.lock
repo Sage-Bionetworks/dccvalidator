@@ -12,6 +12,11 @@
       }
     ]
   },
+  "Python": {
+    "Version": "3.7.4",
+    "Type": "virtualenv",
+    "Name": null
+  },
   "Packages": {
     "BH": {
       "Package": "BH",
@@ -53,10 +58,10 @@
     },
     "R6": {
       "Package": "R6",
-      "Version": "2.4.0",
+      "Version": "2.4.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "92b50d943a7c76c67918c1e1beb68627"
+      "Hash": "32b894df8893259af194abdc2b1fc366"
     },
     "RColorBrewer": {
       "Package": "RColorBrewer",
@@ -67,10 +72,10 @@
     },
     "Rcpp": {
       "Package": "Rcpp",
-      "Version": "1.0.2",
+      "Version": "1.0.3",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "c25fa7d5684fa7001ddfea3755243975"
+      "Hash": "084336e3a1a0d358337525d7a394bb8b"
     },
     "askpass": {
       "Package": "askpass",
