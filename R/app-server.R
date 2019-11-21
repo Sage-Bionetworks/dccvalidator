@@ -398,6 +398,16 @@ app_server <- function(input, output, session) {
       )
     })
 
+    # Metadata files appear in manifest ----------------------------------------
+    meta_files_in_manifest <- reactive({
+      check_files_manifest(
+        manifest(),
+        c(files$indiv$name, files$biosp$name, files$assay$name),
+        success_msg = "Manifest file contains all metadata files",
+        fail_msg = "Manifest file does not contain all metadata files"
+      )
+    })
+
     ## Show validation results on clicking "validate"
     ## Require that the study name is given; give error if not
     observeEvent(input$"validate_btn", {
@@ -488,7 +498,8 @@ app_server <- function(input, output, session) {
           complete_cols_manifest(),
           complete_cols_indiv(),
           complete_cols_biosp(),
-          complete_cols_assay()
+          complete_cols_assay(),
+          meta_files_in_manifest()
         )
 
 
