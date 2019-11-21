@@ -110,7 +110,8 @@ upload_documents_server <- function(input, output, session,
   study_name <- callModule(
     get_study_server,
     "doc_study",
-    study_table_id = study_table_id
+    study_table_id = study_table_id,
+    syn = syn
   )
   doc_annots <- reactive({
     list(study = study_name())

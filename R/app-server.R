@@ -39,7 +39,7 @@ app_server <- function(input, output, session) {
       user = user,
       syn = syn
     )
-    certified <- check_certified_user(user$ownerId)
+    certified <- check_certified_user(user$ownerId, syn = syn)
     report_unsatisfied_requirements(membership, certified)
 
     ## If user is a member of the team(s), create folder to save files and
@@ -49,7 +49,9 @@ app_server <- function(input, output, session) {
       created_folder <- try(
         create_folder(
           parent = config::get("parent"),
-          name = user$userName
+          name = user$userName,
+          synapseclient = synapse,
+          syn = syn
         )
       )
 
@@ -213,18 +215,19 @@ app_server <- function(input, output, session) {
 
     # Missing columns ----------------------------------------------------------
     missing_cols_indiv <- reactive({
-      check_cols_individual(indiv(), indiv_template())
+      check_cols_individual(indiv(), indiv_template(), syn = syn)
     })
     missing_cols_biosp <- reactive({
-      check_cols_biospecimen(biosp(), biosp_template())
+      check_cols_biospecimen(biosp(), biosp_template(), syn = syn)
     })
     missing_cols_assay <- reactive({
-      check_cols_assay(assay(), assay_template())
+      check_cols_assay(assay(), assay_template(), syn = syn)
     })
     missing_cols_manifest <- reactive({
       check_cols_manifest(
         manifest(),
-        config::get("templates")$manifest_template
+        config::get("templates")$manifest_template,
+        syn = syn
       )
     })
 
