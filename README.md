@@ -13,9 +13,15 @@ prior to data releases.
 
 ## Installation
 
+You can install dccvalidator with the following command:
+
 ``` r
 devtools::install_github("Sage-Bionetworks/dccvalidator")
 ```
+
+Many of the functions also require that the
+[synapseclient](https://pypi.org/project/synapseclient/) Python package
+be installed.
 
 ## Check data
 
