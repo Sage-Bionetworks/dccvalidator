@@ -17,6 +17,7 @@ reference:
     - check_cols_biospecimen
     - check_cols_complete
     - check_cols_empty
+    - check_files_manifest
     - check_ids_match
     - check_indiv_ids_match
     - check_specimen_ids_match
