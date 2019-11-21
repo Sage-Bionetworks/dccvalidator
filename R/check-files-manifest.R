@@ -26,9 +26,8 @@
 check_files_manifest <- function(manifest, filenames,
                                  # nolint start
                                  success_msg = "All required files are present in manifest",
-                                 fail_msg = "Some files are missing from manifest"
-                                 # nolint end
-) {
+                                 fail_msg = "Some files are missing from manifest") {
+  # nolint end
   if (is.null(manifest) || is.null(filenames)) {
     return(NULL)
   }
