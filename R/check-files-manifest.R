@@ -29,7 +29,7 @@ check_files_manifest <- function(manifest, filenames,
                                  fail_msg = "Some files are missing from manifest"
                                  # nolint end
 ) {
-  if (is.null(manifest)) {
+  if (is.null(manifest) || is.null(filenames)) {
     return(NULL)
   }
   if (!"path" %in% names(manifest)) {

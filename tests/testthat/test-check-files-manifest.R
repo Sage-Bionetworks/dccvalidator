@@ -2,9 +2,17 @@ context("test-check-files-manifest.R")
 
 library("tibble")
 
-test_that("check_files_manifest returns NULL if NULL input", {
+test_that("check_files_manifest returns NULL if NULL manifest", {
   res <- check_files_manifest(NULL, "test.csv")
   expect_null(res)
+})
+
+test_that("check_files_manifest returns NULL if NULL filenames", {
+  manifest <- data.frame(path = c("a.csv", "b.txt"))
+  res1 <- check_files_manifest(manifest, NULL)
+  res2 <- check_files_manifest(manifest, c(NULL, NULL, NULL))
+  expect_null(res1)
+  expect_null(res2)
 })
 
 test_that("check_files_manifest returns check_fail if no path column", {
