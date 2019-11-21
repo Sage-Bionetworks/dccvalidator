@@ -35,7 +35,7 @@ test_that("check_files_manifest works if path column is a factor", {
   expect_equal(res$data, "test.csv")
 })
 
-test_that("check_files_manifest returnsc check_pass if files are present", {
+test_that("check_files_manifest returns check_pass if files are present", {
   manifest <- data.frame(path = c("a.csv", "b.txt", "c.docx"))
   res1 <- check_files_manifest(manifest, c("a.csv"))
   res2 <- check_files_manifest(manifest, c("a.csv", "b.txt", "c.docx"))
