@@ -267,7 +267,7 @@ app_server <- function(input, output, session) {
       check_annotation_keys(
         manifest(),
         annots,
-        whitelist_keys = c("path", "parent"),
+        whitelist_keys = c("path", "parent", "name", "used", "executed"),
         success_msg = "All keys (column names) in the manifest are valid",
         fail_msg = "Some keys (column names) in the manifest are invalid"
       )
