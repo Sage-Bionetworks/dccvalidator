@@ -29,6 +29,9 @@ r_github_packages:
   - jimhester/lintr
   - rstudio/rmarkdown
 
+before_install:
+  - pip install --user synapseclient
+
 after_success:
   - Rscript -e 'covr::codecov()'
 
