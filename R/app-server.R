@@ -546,7 +546,11 @@ app_server <- function(input, output, session) {
       valueBox(
         length(
           unique(
-            c(indiv()$individualID, biosp()$individualID)
+            c(
+              indiv()$individualID,
+              biosp()$individualID,
+              manifest()$individualID
+            )
           )
         ),
         "Individuals",
