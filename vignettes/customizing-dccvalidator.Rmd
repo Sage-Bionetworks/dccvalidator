@@ -49,7 +49,7 @@ run_app()
 ```
 
 The other steps above (creating a folder to store files, and providing a
-configuration file) are still necessary.
+configuration file with a default configuration) are still necessary.
 
 ## Configuration options
 
