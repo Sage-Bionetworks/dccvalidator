@@ -40,6 +40,17 @@ To create a custom version of the app, you'll need to follow these steps:
    [Deploying dccvalidator](https://sage-bionetworks.github.io/dccvalidator/articles/deploying-dccvalidator.html) 
    vignette.
 
+Alternatively, instead of forking the repository you can install dccvalidator
+and create an `app.R` file containing the following:
+
+```
+library("dccvalidator")
+run_app()
+```
+
+The other steps above (creating a folder to store files, and providing a
+configuration file with a default configuration) are still necessary.
+
 ## Configuration options
 
 * `parent`: The Synapse project or folder where files will be stored

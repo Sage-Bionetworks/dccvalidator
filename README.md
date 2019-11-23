@@ -42,6 +42,11 @@ reports](https://knb.ecoinformatics.org/quality/s=knb.suite.1/doi%3A10.5063%2FF1
 The application also allows users to submit documentation of their
 study, a description of the methods used, etc.
 
+See the [customizing
+dccvalidator](https://sage-bionetworks.github.io/dccvalidator/articles/customizing-dccvalidator.html)
+vignette for information on how to spin up a customized version of the
+application
+
 # Local development
 
 `dccvalidator` uses pre-commit hooks to check for common issues, such as
