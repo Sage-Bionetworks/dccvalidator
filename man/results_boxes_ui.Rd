@@ -14,5 +14,6 @@ The html UI for the module.
 }
 \description{
 This function outputs the html tags needed to
-create the results boxes UI.
+create UI for the successes, warnings, and
+failures results boxes.
 }

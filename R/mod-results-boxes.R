@@ -1,15 +1,14 @@
 #' UI function for results boxes module
 #'
 #' This function outputs the html tags needed to
-#' create the results boxes UI.
+#' create UI for the successes, warnings, and
+#' failures results boxes.
 #'
 #' @param id The module id.
 #' @return The html UI for the module.
 results_boxes_ui <- function(id) {
   ns <- NS(id)
-  tabPanel(
-    "Validation Results",
-    br(),
+  tagList(
     shinydashboard::box(
       uiOutput(ns("successes")),
       solidHeader = TRUE,

@@ -130,7 +130,11 @@ app_ui <- function(request) {
               # Main panel
               mainPanel(
                 tabsetPanel(
-                  results_boxes_ui("Validation Results"),
+                  tabPanel(
+                    "Validation Results",
+                    br(),
+                    results_boxes_ui("Validation Results")
+                  ),
                   tabPanel(
                     "Data summary",
                     fluidRow(
