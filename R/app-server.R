@@ -10,14 +10,7 @@
 #' @export
 app_server <- function(input, output, session) {
   ## Initial titles for report boxes
-  reporting_titles <- reactiveValues(
-    success = "Successes (0)",
-    warn = "Warnings (0)",
-    fail = "Failures (0)"
-  )
-  output$num_success <- renderText(reporting_titles$success)
-  output$num_warn <- renderText(reporting_titles$warn)
-  output$num_fail <- renderText(reporting_titles$fail)
+  callModule(results_boxes_server, "Validation Results", results = NULL)
 
   session$sendCustomMessage(type = "readCookie", message = list())
 
@@ -502,42 +495,7 @@ app_server <- function(input, output, session) {
           meta_files_in_manifest()
         )
 
-
-        ## Populate validation report
-        ## Successes box
-        successes <- purrr::map_lgl(res, function(x) {
-          inherits(x, "check_pass")
-        })
-        output$successes <- renderUI({
-          report_results(res[successes], emoji_prefix = "check")
-        })
-        reporting_titles$success <- glue::glue("Successes ({sum(successes)})")
-
-        ## Warnings box
-        warnings <- purrr::map_lgl(res, function(x) {
-          inherits(x, "check_warn")
-        })
-        output$warnings <- renderUI({
-          report_results(
-            res[warnings],
-            emoji_prefix = "warning",
-            verbose = TRUE
-          )
-        })
-        reporting_titles$warn <- glue::glue("Warnings ({sum(warnings)})")
-
-        ## Failures box
-        failures <- purrr::map_lgl(res, function(x) {
-          inherits(x, "check_fail")
-        })
-        output$failures <- renderUI({
-          report_results(
-            res[failures],
-            emoji_prefix = "x",
-            verbose = TRUE
-          )
-        })
-        reporting_titles$fail <- glue::glue("Failures ({sum(failures)})")
+        callModule(results_boxes_server, "Validation Results", res)
       })
     })
 
