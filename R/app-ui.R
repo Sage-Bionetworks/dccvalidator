@@ -133,30 +133,7 @@ app_ui <- function(request) {
                   tabPanel(
                     "Validation Results",
                     br(),
-                    shinydashboard::box(
-                      uiOutput("successes"),
-                      solidHeader = TRUE,
-                      collapsible = TRUE,
-                      title = textOutput("num_success"),
-                      status = "success",
-                      width = 12
-                    ),
-                    shinydashboard::box(
-                      uiOutput("warnings"),
-                      solidHeader = TRUE,
-                      collapsible = TRUE,
-                      title = textOutput("num_warn"),
-                      status = "warning",
-                      width = 12
-                    ),
-                    shinydashboard::box(
-                      uiOutput("failures"),
-                      solidHeader = TRUE,
-                      collapsible = TRUE,
-                      title = textOutput("num_fail"),
-                      status = "danger",
-                      width = 12
-                    )
+                    results_boxes_ui("Validation Results")
                   ),
                   tabPanel(
                     "Data summary",
