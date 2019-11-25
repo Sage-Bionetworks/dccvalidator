@@ -42,6 +42,8 @@ reference:
     - with_busy_indicator_server
     - upload_documents_ui
     - upload_documents_server
+    - results_boxes_ui
+    - results_boxes_server
 
 - title: App-supporting functions
   desc: >

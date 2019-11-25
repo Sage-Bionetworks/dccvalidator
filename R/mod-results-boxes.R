@@ -4,6 +4,7 @@
 #' create UI for the successes, warnings, and
 #' failures results boxes.
 #'
+#' @export
 #' @param id The module id.
 #' @return The html UI for the module.
 results_boxes_ui <- function(id) {
@@ -42,6 +43,7 @@ results_boxes_ui <- function(id) {
 #' UI, attaching titles and populating
 #' the validation results.
 #'
+#' @export
 #' @param input The input from [shiny::callModule()].
 #' @param output The output from [shiny::callModule()].
 #' @param session The session from [shiny::callModule()].
