@@ -13,6 +13,7 @@
 
 #' Wrap the button in this function to attach visual features
 #'
+#' @export
 #' @keywords internal
 #' @param button a shiny actionButton
 with_busy_indicator_ui <- function(button) {
@@ -46,6 +47,7 @@ with_busy_indicator_ui <- function(button) {
 #' feedback for the button. If the expression fails, the error
 #' message displayed is from the error that was thrown.
 #'
+#' @export
 #' @keywords internal
 #' @rdname with_busy_indicator_ui
 #' @param button_id id of shiny actionButton
