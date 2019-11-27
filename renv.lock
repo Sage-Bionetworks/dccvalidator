@@ -367,6 +367,13 @@
       "Repository": "CRAN",
       "Hash": "6a58b2980a57345822ec5f9c7d2d1751"
     },
+    "here": {
+      "Package": "here",
+      "Version": "0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "17102304d55b3242d6199cddc0fd79f7"
+    },
     "hexbin": {
       "Package": "hexbin",
       "Version": "1.27.3",

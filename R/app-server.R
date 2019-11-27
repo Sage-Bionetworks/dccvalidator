@@ -9,7 +9,6 @@
 #' @param session Shiny session
 #' @export
 app_server <- function(input, output, session) {
-  reticulate::use_python("usr/local/bin/python3")
   synapse <- reticulate::import("synapseclient")
   syn <- synapse$Synapse()
 
