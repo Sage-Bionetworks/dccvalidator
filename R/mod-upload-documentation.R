@@ -183,39 +183,39 @@ upload_docs_instruct_text <- function(study_link_human, study_link_animal,
     p("Each study should be given both a descriptive and an abbreviated name. The abbreviation will be used to annotate all content associated with the study. For a study with a human cohort, the study description should include:"),
     tags$ul(
       tags$li(
-        "study type (randomized controlled study, prospective observational study, case-control study, or post-mortem study),"
+        "study type (randomized controlled study, prospective observational study, case-control study, or post-mortem study)"
       ),
       tags$li(
-        "disease focus,"
+        "disease focus"
       ),
       tags$li(
-        "diagnostic criteria and inclusion/exclusion criteria of study participants."
+        "diagnostic criteria and inclusion/exclusion criteria of study participants"
       ),
       tags$li(
-        "For post mortem studies, include the brain bank name(s) and links to website(s)."
+        "(for post mortem studies) the brain bank name(s) and links to website(s)"
       )
     ),
 
     p("For a study with an animal model cohort, the study description should include:"),
     tags$ul(
       tags$li(
-        "species,"
+        "species"
       ),
       tags$li(
-        "treatments."
+        "treatments"
       ),
       tags$li(
-        "If genetically modified-genotype and genetic background. Provide a link to the strain datasheet(s) if a commercial model, or a description of how it was created if not."
+        "(if genetically modified) genotype and genetic background. Provide a link to the strain datasheet(s) if a commercial model, or a description of how it was created if not."
       )
     ),
 
     p("For studies using in-vitro cell culture, the study description should include:"),
     tags$ul(
       tags$li(
-        "species,"
+        "species"
       ),
       tags$li(
-        "cell type,"
+        "cell type"
       ),
       tags$li(
         "cell culture information (such as primary or immortalized cell line, passage, treatments, differentiation). If a commercial cell line, provide a link."
