@@ -12,11 +12,6 @@
       }
     ]
   },
-  "Python": {
-    "Version": "3.7.5",
-    "Type": "virtualenv",
-    "Name": null
-  },
   "Packages": {
     "BH": {
       "Package": "BH",
