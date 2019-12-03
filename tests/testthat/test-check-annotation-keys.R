@@ -5,7 +5,7 @@ library("reticulate")
 use_python("usr/local/bin/python3")
 synapse <- import("synapseclient")
 syn <- synapse$Synapse()
-syn$login()
+attempt_login(syn = syn)
 
 annots <- tribble(
   ~key, ~value, ~columnType,
