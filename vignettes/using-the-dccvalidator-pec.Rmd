@@ -54,7 +54,7 @@ Yes, with [Provenance](https://docs.synapse.org/articles/provenance.html). Popul
 
 ## Study and assay documentation upload
 
-Each study in PEC will have accompanying documentation in the PEC portal. Here is an example of study [documentation in the Accelerating Medicines Partnership in Alzheimer's Disease portal](https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648), developed by Sage Bionetworks. 
+Each study in PEC will have accompanying documentation in the PEC portal. Here is an example of study [documentation in the Accelerating Medicines Partnership in Alzheimer's Disease portal](https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn3219045), developed by Sage Bionetworks. 
 
 You can submit your documentation through the dccvalidator app on the Documentation page. There should be a study description for the whole study, and an assay description for each of the assays that was performed. These can be in a single file, or you can upload multiple files to the assay description
 section.
@@ -109,7 +109,7 @@ The [Data Analysis Core](https://www.synapse.org/#!Synapse:syn20959298) will rep
   
 ## Uploading data to Synapse after validation
 
-Once data has passed validation and the PEC data curators permit edit permissions to the **Staging** folder, data may be uploaded. Bulk file upload is achievable using the [web UI](https://docs.synapse.org/articles/files_and_versioning.html) or the [R, Python and command line clients](https://docs.synapse.org/articles/uploading_in_bulk.html).
+Once data has passed validation and the PEC data curators permit edit permissions to the **Staging** folder, data must be uploaded using the manifest. Upload using a manifest is achievable with the [R, Python and command line clients](https://docs.synapse.org/articles/uploading_in_bulk.html).
 
 ## Data Release
 
