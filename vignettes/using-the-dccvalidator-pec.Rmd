@@ -119,4 +119,4 @@ Synapse IDs are always preserved (i.e. IDs remain associated to the file).
 
 ## Get support 
 
-Please send questions to [PEC_SageAdmin@synapse.org](mailto:PEC_SageAdmin@synapse.org). 
+Please send questions and requests for new keys or values to [PEC_SageAdmin@synapse.org](mailto:PEC_SageAdmin@synapse.org). 
