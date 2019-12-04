@@ -121,6 +121,7 @@ data type to help spot unexpected missing values.
 Once you have submitted your documentation, validated your metadata, and
 corrected any errors found by the validator, you are ready to submit data to
 Synapse. Contact the AMP-AD data coordinating administrator, who will grant you
-edit permissions to the Synapse folder.
+edit permissions to the Synapse folder where you can upload your data files,
+metadata, and any other research products you wish to share.
 
 Use the [R](https://github.com/Sage-Bionetworks/synapserutils#batch-process), [Python, or command line](https://python-docs.synapse.org/build/html/synapseutils.html#synapseutils.sync.syncToSynapse) clients to upload the files in your manifest. The DCC team can help if you need assistance.
