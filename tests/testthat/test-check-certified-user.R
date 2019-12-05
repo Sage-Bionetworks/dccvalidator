@@ -1,6 +1,6 @@
 context("test-chec-certified-user.R")
 
-syn <- synapse$Synapse()
+syn <- attempt_instantiate()
 attempt_login(syn)
 
 test_that("check_certified_user returns check_pass if certified", {

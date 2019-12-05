@@ -1,6 +1,6 @@
 context("test-check-team-membership.R")
 
-syn <- synapse$Synapse()
+syn <- attempt_instantiate()
 attempt_login(syn)
 
 test_that("check_team_membership() returns check_pass if user is in the team", {

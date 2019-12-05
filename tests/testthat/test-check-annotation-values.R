@@ -1,7 +1,7 @@
 context("test-check-annotation-values.R")
 
 library("tibble")
-syn <- synapse$Synapse()
+syn <- attempt_instantiate()
 attempt_login(syn)
 annots <- tribble(
   ~key, ~value, ~columnType,

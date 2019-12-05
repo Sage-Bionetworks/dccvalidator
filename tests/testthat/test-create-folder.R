@@ -1,6 +1,6 @@
 context("test-create-folder.R")
 
-syn <- synapse$Synapse()
+syn <- attempt_instantiate()
 attempt_login(syn)
 
 test_that("create_folder() creates a folder", {

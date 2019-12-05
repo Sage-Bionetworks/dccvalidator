@@ -1,6 +1,6 @@
 context("utils.R")
 
-syn <- synapse$Synapse()
+syn <- attempt_instantiate()
 attempt_login(syn)
 
 test_that("on_travis() returns TRUE on Travis", {

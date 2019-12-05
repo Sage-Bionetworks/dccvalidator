@@ -1,6 +1,6 @@
 context("test-get-user-teams.R")
 
-syn <- synapse$Synapse()
+syn <- attempt_instantiate()
 attempt_login(syn)
 
 test_that("get_user_teams gets team memberships", {

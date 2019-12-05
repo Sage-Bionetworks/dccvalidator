@@ -1,6 +1,6 @@
 context("test-check-col-names.R")
 
-syn <- synapse$Synapse()
+syn <- attempt_instantiate()
 
 test_that("check_col_names returns condition object when check passes", {
   template <- data.frame(x = 1, y = 1)
