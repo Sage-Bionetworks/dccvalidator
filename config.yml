@@ -48,6 +48,7 @@ amp-ad:
       wholeGenomeSeq: "syn21018358"
       wholeExomeSeq: "syn21078272"
       NanoString: "syn21082744"
+      snpArray: "syn21372586"
   complete_columns:
     manifest:
       - "consortium"
