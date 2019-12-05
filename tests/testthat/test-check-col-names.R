@@ -1,8 +1,5 @@
 context("test-check-col-names.R")
 
-library("reticulate")
-use_python("usr/local/bin/python3")
-synapse <- reticulate::import("synapseclient")
 syn <- synapse$Synapse()
 
 test_that("check_col_names returns condition object when check passes", {

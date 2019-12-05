@@ -11,8 +11,6 @@
 #' @return Synapse object of the folder that was created
 #' @examples
 #' \dontrun{
-#' library("reticulate")
-#' synapse <- import("synapseclient")
 #' syn <- synapse$Synapse()
 #' syn$login()
 #'

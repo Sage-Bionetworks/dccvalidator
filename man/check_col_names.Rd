@@ -53,8 +53,6 @@ Check column names against their corresponding template
 }
 \examples{
 \dontrun{
-library("reticulate")
-synapse <- reticulate::import("synapseclient")
 syn <- synapse$Synapse()
 syn$login()
 

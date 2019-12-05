@@ -27,8 +27,6 @@ annotation keys; \code{valid_annotation_keys()} returns \emph{valid} annotation 
 }
 \examples{
 \dontrun{
-library("reticulate")
-synapse <- import("synapseclient")
 syn <- synapse$Synapse()
 syn$login()
 annots <- get_synapse_annotations(syn = syn)

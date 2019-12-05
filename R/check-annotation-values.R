@@ -20,8 +20,6 @@
 #'
 #' @examples
 #' \dontrun{
-#' library("reticulate")
-#' synapse <- reticulate::import("synapseclient")
 #' syn <- synapse$Synapse()
 #' syn$login()
 #'

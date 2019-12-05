@@ -34,8 +34,6 @@ as valid (see \code{\link[=can_coerce]{can_coerce()}}).
 }
 \examples{
 \dontrun{
-library("reticulate")
-synapse <- reticulate::import("synapseclient")
 syn <- synapse$Synapse()
 syn$login()
 

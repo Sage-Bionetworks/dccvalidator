@@ -9,7 +9,6 @@
 #' @param session Shiny session
 #' @export
 app_server <- function(input, output, session) {
-  synapse <- reticulate::import("synapseclient")
   syn <- synapse$Synapse()
 
   ## Initial titles for report boxes

@@ -16,8 +16,6 @@ Check if user has completed and passed the Certified User Quiz.
 }
 \examples{
 \dontrun{
-library("reticulate")
-synapse <- reticulate::import("synapseclient")
 syn <- synapse$Synapse()
 syn$login()
 check_certified_user("3384770")

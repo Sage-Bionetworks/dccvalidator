@@ -1,9 +1,6 @@
 context("test-check-annotation-keys.R")
 
 library("tibble")
-library("reticulate")
-use_python("usr/local/bin/python3")
-synapse <- import("synapseclient")
 syn <- synapse$Synapse()
 attempt_login(syn = syn)
 

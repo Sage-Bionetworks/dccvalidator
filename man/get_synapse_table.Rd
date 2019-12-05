@@ -20,8 +20,6 @@ Get the contents of a Synapse table as a data frame
 }
 \examples{
 \dontrun{
-library("reticulate")
-synapse <- import("synapseclient")
 syn <- synapse$Synapse()
 syn$login()
 get_synapse_table(synID = "syn10242922", syn = syn)

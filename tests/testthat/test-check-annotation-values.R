@@ -1,9 +1,6 @@
 context("test-check-annotation-values.R")
 
 library("tibble")
-library("reticulate")
-use_python("usr/local/bin/python3")
-synapse <- reticulate::import("synapseclient")
 syn <- synapse$Synapse()
 attempt_login(syn)
 annots <- tribble(

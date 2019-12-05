@@ -1,8 +1,5 @@
 context("test-check-team-membership.R")
 
-library("reticulate")
-use_python("usr/local/bin/python3")
-synapse <- reticulate::import("synapseclient")
 syn <- synapse$Synapse()
 attempt_login(syn)
 

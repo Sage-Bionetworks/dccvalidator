@@ -10,8 +10,6 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' library("reticulate")
-#' synapse <- import("synapseclient")
 #' syn <- synapse$Synapse()
 #' syn$login()
 #' get_synapse_annotations(synID = "syn10242922", syn = syn)
@@ -31,8 +29,6 @@ get_synapse_annotations <- function(synID = "syn10242922", syn) {
 #' @export
 #' @examples
 #' \dontrun{
-#' library("reticulate")
-#' synapse <- import("synapseclient")
 #' syn <- synapse$Synapse()
 #' syn$login()
 #' get_synapse_table(synID = "syn10242922", syn = syn)

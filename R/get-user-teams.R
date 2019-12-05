@@ -10,8 +10,6 @@
 #' @return Character vector of team IDs the user belongs to
 #' @examples
 #' \dontrun{
-#' library("reticulate")
-#' synapse <- reticulate::import("synapseclient")
 #' syn <- synapse$Synapse()
 #' syn$login()
 #' user <- syn$getUserProfile()

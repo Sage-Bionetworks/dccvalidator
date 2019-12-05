@@ -23,8 +23,6 @@ frame.
 }
 \examples{
 \dontrun{
-library("reticulate")
-synapse <- import("synapseclient")
 syn <- synapse$Synapse()
 syn$login()
 get_synapse_annotations(synID = "syn10242922", syn = syn)

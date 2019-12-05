@@ -29,8 +29,6 @@ check_col_names <- function(data, template, success_msg = NULL, fail_msg = NULL,
 #' @rdname check_col_names
 #' @examples
 #' \dontrun{
-#' library("reticulate")
-#' synapse <- reticulate::import("synapseclient")
 #' syn <- synapse$Synapse()
 #' syn$login()
 #'

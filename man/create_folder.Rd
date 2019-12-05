@@ -24,8 +24,6 @@ Creates and stores a folder on Synapse under the given parent.
 }
 \examples{
 \dontrun{
-library("reticulate")
-synapse <- import("synapseclient")
 syn <- synapse$Synapse()
 syn$login()
 
