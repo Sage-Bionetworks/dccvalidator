@@ -41,16 +41,6 @@
       "Repository": "CRAN",
       "Hash": "a60009c832f495604f54399f21d89cc8"
     },
-    "PythonEmbedInR": {
-      "Package": "PythonEmbedInR",
-      "Version": "0.3.37",
-      "Source": "CRAN",
-      "RemoteType": "standard",
-      "RemoteRef": "PythonEmbedInR",
-      "RemoteRepos": "http://ran.synapse.org",
-      "RemoteSha": "0.3.37",
-      "Hash": "1c9851afda5c6300be59a1d99fc694dc"
-    },
     "R6": {
       "Package": "R6",
       "Version": "2.4.1",
@@ -198,25 +188,18 @@
       "Repository": "CRAN",
       "Hash": "63410438360944341b6bba487340a466"
     },
-    "data.table": {
-      "Package": "data.table",
-      "Version": "1.12.6",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "e4c9420e97e4b574c7f7cd00fa4c1879"
-    },
     "dccvalidator": {
       "Package": "dccvalidator",
-      "Version": "0.0.0.9007",
+      "Version": "0.0.0.9009",
       "Source": "GitHub",
-      "Remotes": "hadley/emo, Sage-Bionetworks/syndccutils/R",
+      "Remotes": "daattali/shinyjs, hadley/emo",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "dccvalidator",
       "RemoteUsername": "Sage-Bionetworks",
-      "RemoteRef": "master",
-      "RemoteSha": "70feb32c12eb728fe460eef416d1ae179b787bb5",
-      "Hash": "6e4014e62522ae23688d9b8c9451a904"
+      "RemoteRef": "reticulate",
+      "RemoteSha": "dc6af370f7c67ea83b9fe30b7d26b5f4a760452a",
+      "Hash": "66b2a30a928ef69f05646c756a628c96"
     },
     "desc": {
       "Package": "desc",
@@ -299,20 +282,6 @@
       "Repository": "CRAN",
       "Hash": "7a0d4ec0aa0299e3907f8f4f982e33b4"
     },
-    "feather": {
-      "Package": "feather",
-      "Version": "0.3.5",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "778376f8e2cfc8d6a6911c289973f732"
-    },
-    "forcats": {
-      "Package": "forcats",
-      "Version": "0.4.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "4d7e4a2ed5adadda6714eb7b9361213b"
-    },
     "fs": {
       "Package": "fs",
       "Version": "1.3.1",
@@ -368,13 +337,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "17102304d55b3242d6199cddc0fd79f7"
-    },
-    "hexbin": {
-      "Package": "hexbin",
-      "Version": "1.27.3",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "dd1a219a8e8212b1808640670893274e"
     },
     "highlight": {
       "Package": "highlight",
@@ -544,24 +506,6 @@
       "Repository": "CRAN",
       "Hash": "6c438de366d5693238d1c400deb66cb6"
     },
-    "openxlsx": {
-      "Package": "openxlsx",
-      "Version": "4.1.2",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "46df5bc5d825c29e152ecb4658fbe80c"
-    },
-    "pack": {
-      "Package": "pack",
-      "Version": "0.1-1",
-      "Source": "CRAN",
-      "RemoteType": "standard",
-      "RemoteRef": "pack",
-      "RemoteRepos": "https://cran.rstudio.com",
-      "RemoteSha": "0.1-1",
-      "RemotePkgType": "binary",
-      "Hash": "297fdfd63080b703a77be9fa81a4d4ca"
-    },
     "packrat": {
       "Package": "packrat",
       "Version": "0.5.0",
@@ -617,18 +561,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "1a8304cc1382ef64e3b710ba589d7bc0"
-    },
-    "plotly": {
-      "Package": "plotly",
-      "Version": "4.9.0.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "plotly",
-      "RemoteUsername": "ropensci",
-      "RemoteRef": "master",
-      "RemoteSha": "c299c5f0741e8bba5f143334672f90bea09df61a",
-      "Hash": "f84aadf30e8158c25607e2b7a0e8c2ac"
     },
     "plyr": {
       "Package": "plyr",
@@ -761,13 +693,6 @@
       "Repository": "CRAN",
       "Hash": "6a374bfb33486a98af825be15b6b87bb"
     },
-    "rjson": {
-      "Package": "rjson",
-      "Version": "0.2.20",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "d3349736ec0f60d05591c316b926382e"
-    },
     "rlang": {
       "Package": "rlang",
       "Version": "0.4.1",
@@ -817,26 +742,12 @@
       "Repository": "CRAN",
       "Hash": "7ea870b707f4ef757127a610c2556e29"
     },
-    "rvest": {
-      "Package": "rvest",
-      "Version": "0.3.4",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "76bb112bc3833454dc701230aa9cb3ed"
-    },
     "scales": {
       "Package": "scales",
       "Version": "1.0.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "a96e9571cd875b7b934990d85b7a3c18"
-    },
-    "selectr": {
-      "Package": "selectr",
-      "Version": "0.4-1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "40ccee5dc2b97e197648525aefcfd0ba"
     },
     "sessioninfo": {
       "Package": "sessioninfo",
@@ -905,31 +816,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "41d6310ad18bd019a203d7adc496a28b"
-    },
-    "synapser": {
-      "Package": "synapser",
-      "Version": "0.6.61",
-      "Source": "CRAN",
-      "RemoteType": "standard",
-      "RemoteRef": "synapser",
-      "RemoteRepos": "http://ran.synapse.org",
-      "RemoteSha": "0.6.61",
-      "RemotePkgType": "binary",
-      "Hash": "637a14039d0e4e4698fe509c0a0b0e78"
-    },
-    "syndccutils": {
-      "Package": "syndccutils",
-      "Version": "0.0.0.9001",
-      "Source": "GitHub",
-      "Remotes": "ropensci/plotly",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "syndccutils",
-      "RemoteUsername": "Sage-Bionetworks",
-      "RemoteRef": "master",
-      "RemoteSha": "550b4c0839457e3a48ff72636e028a9611065e5c",
-      "RemoteSubdir": "R",
-      "Hash": "c0b54cfbfedd110dc18bd3400bae3138"
     },
     "sys": {
       "Package": "sys",
@@ -1075,13 +961,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "45d65588b02d47970fc84adecb2ee664"
-    },
-    "zip": {
-      "Package": "zip",
-      "Version": "2.0.4",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "46b867331ae12e0a3f5b7942cfac16ba"
     }
   }
 }
