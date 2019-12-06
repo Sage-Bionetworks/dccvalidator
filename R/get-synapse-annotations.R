@@ -38,6 +38,10 @@ get_synapse_table <- function(synID, syn) {
     glue::glue("select * from {synID}"),
     includeRowIdAndRowVersion = FALSE
   )
-  dat <- utils::read.csv(query_result$filepath, stringsAsFactors = FALSE)
+  dat <- utils::read.csv(
+    query_result$filepath,
+    na.strings = "",
+    stringsAsFactors = FALSE
+  )
   dat
 }
