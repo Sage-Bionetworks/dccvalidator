@@ -4,6 +4,9 @@ language: R
 sudo: false
 cache: packages
 
+before_install:
+  - sudo apt-get -y install libv8-dev
+
 r:
 - 3.4
 - oldrel
