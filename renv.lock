@@ -53,10 +53,10 @@
     },
     "R6": {
       "Package": "R6",
-      "Version": "2.4.0",
+      "Version": "2.4.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "92b50d943a7c76c67918c1e1beb68627"
+      "Hash": "32b894df8893259af194abdc2b1fc366"
     },
     "RColorBrewer": {
       "Package": "RColorBrewer",
@@ -67,10 +67,17 @@
     },
     "Rcpp": {
       "Package": "Rcpp",
-      "Version": "1.0.2",
+      "Version": "1.0.3",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "c25fa7d5684fa7001ddfea3755243975"
+      "Hash": "084336e3a1a0d358337525d7a394bb8b"
+    },
+    "V8": {
+      "Package": "V8",
+      "Version": "2.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "0287ba9640c1a28f389859b0d3c41cfc"
     },
     "askpass": {
       "Package": "askpass",
@@ -432,6 +439,13 @@
       "Repository": "CRAN",
       "Hash": "b7e67b6a7bc2fdae729c0f3ff9026a8a"
     },
+    "jsonvalidate": {
+      "Package": "jsonvalidate",
+      "Version": "1.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "391b0d67b93aa9e6c31952ea018c0ee6"
+    },
     "knitr": {
       "Package": "knitr",
       "Version": "1.25",
@@ -763,10 +777,15 @@
     },
     "rmarkdown": {
       "Package": "rmarkdown",
-      "Version": "1.16",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "74352997ea70389458e7a8b7059dfb95"
+      "Version": "1.18.4",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "rmarkdown",
+      "RemoteUsername": "rstudio",
+      "RemoteRef": "master",
+      "RemoteSha": "8b52852d4032a870022ff3a89f63f82e2c8df603",
+      "Hash": "a8929aa0b3a494193c12a82502731272"
     },
     "roxygen2": {
       "Package": "roxygen2",
