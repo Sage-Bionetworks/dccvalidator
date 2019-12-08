@@ -43,7 +43,8 @@ check_schema_json <- function(json, schema,
       behavior = behavior
     )
   } else {
-    return_data <- attr(result, "errors")[, "message", drop = FALSE]
+    return_data <- attr(result, "errors")
+    return_data <- glue::glue("{return_data$dataPath} {return_data$message}")
     check_fail(
       msg = fail_msg,
       behavior = behavior,
