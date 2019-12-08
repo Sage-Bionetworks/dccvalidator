@@ -24,9 +24,12 @@ reference:
     - check_indiv_ids_dup
     - check_specimen_ids_dup
     - check_keys
+    - check_schema_json
+    - check_schema_df
     - valid_annotation_keys
     - valid_annotation_values
     - get_template
+    - df_to_json_list
 
 - title: Shiny app functions
   desc: >
