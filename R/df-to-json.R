@@ -12,7 +12,7 @@
 #' dat <- data.frame(
 #'   x = c(NA, 1L)
 #' )
-#' df_to_json(dat)
+#' df_to_json_list(dat)
 df_to_json_list <- function(df) {
   result <- vector("list", nrow(df))
   for (i in seq_len(nrow(df))) {
