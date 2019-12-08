@@ -29,6 +29,7 @@ Imports:
     ggplot2,
     glue,
     golem,
+    jsonvalidate,
     pkgload,
     purrr,
     PythonEmbedInR,
