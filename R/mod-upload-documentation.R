@@ -235,9 +235,9 @@ upload_docs_instruct_text <- function(study_link_human, study_link_animal,
     ),
     p(
       "Detailed protocols are highly recommended. These can be uploaded as pdf together with the data-files, or as links to protocol repositories such as ",
-      tags$a(href = "https://www.protocols.io", "protocols.io"),
+      tags$a(href = "https://www.protocols.io", "protocols.io", target = "_blank"),
       (" or "),
-      tags$a(href = "https://theolb.readthedocs.io/en/latest/index.html#", "Open Lab Book.")
+      tags$a(href = "https://theolb.readthedocs.io/en/latest/index.html#", "Open Lab Book.", target = "_blank")
     )
     # nolint end
   )
