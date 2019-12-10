@@ -72,3 +72,41 @@ test_that("check_schema_json catches multiple errors", {
   expect_true(inherits(result, "check_fail"))
   expect_equal(length(result$data), 2)
 })
+
+test_that("check_schema_json works with references", {
+  parent <- c(
+    "{",
+    '  "$schema": "http://json-schema.org/draft-07/schema#",',
+    '  "type": "object",',
+    '  "properties": {',
+    '    "x": {',
+    '      "$ref": "child.json"',
+    "    }",
+    "  },",
+    '  "required": ["x"]',
+    "}"
+  )
+  child <- c(
+    "{",
+    '    "type": "integer"',
+    "}"
+  )
+  path <- tempfile()
+  dir.create(path)
+  writeLines(parent, file.path(path, "parent.json"))
+  writeLines(child, file.path(path, "child.json"))
+
+  valid <- '{"x": 1}'
+  invalid <- '{"x": "foo"}'
+
+  res1 <- check_schema_json(
+    json = valid,
+    schema = file.path(path, "parent.json")
+  )
+  res2 <- check_schema_json(
+    json = invalid,
+    schema = file.path(path, "parent.json")
+  )
+  expect_true(inherits(res1, "check_pass"))
+  expect_true(inherits(res2, "check_fail"))
+})
