@@ -30,7 +30,7 @@ Imports:
     glue,
     golem,
     jsonlite,
-    jsonvalidate,
+    jsonvalidate (>= 1.2.2),
     pkgload,
     purrr,
     PythonEmbedInR,
@@ -59,6 +59,7 @@ VignetteBuilder:
 Remotes:
     daattali/shinyjs,
     hadley/emo,
+    ropensci/jsonvalidate,
     Sage-Bionetworks/syndccutils/R
 Additional_repositories: http://ran.synapse.org
 ByteCompile: true
