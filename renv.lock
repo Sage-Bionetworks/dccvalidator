@@ -116,10 +116,10 @@
     },
     "callr": {
       "Package": "callr",
-      "Version": "3.3.2",
+      "Version": "3.4.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "3826226af5ca33cd8fa0b1d9c190b300"
+      "Hash": "23343bb7e834a6de377ca84d4504de72"
     },
     "cellranger": {
       "Package": "cellranger",
@@ -763,10 +763,10 @@
     },
     "rmarkdown": {
       "Package": "rmarkdown",
-      "Version": "1.16",
+      "Version": "1.18",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "74352997ea70389458e7a8b7059dfb95"
+      "Hash": "d215e8f618a90708d146520701059baa"
     },
     "roxygen2": {
       "Package": "roxygen2",

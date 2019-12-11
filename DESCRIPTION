@@ -1,5 +1,5 @@
 Package: dccvalidator
-Title: Validate CNS Data and Metadata
+Title: Validate Data and Metadata
 Version: 0.0.0.9008
 Authors@R: 
     c(person(given = "Kara",
@@ -19,6 +19,8 @@ Authors@R:
 Description: Performs automatic checks for common data/metadata quality
     issues.
 License: MIT + file LICENSE
+URL: https://sage-bionetworks.github.io/dccvalidator/,
+    https://github.com/Sage-Bionetworks/dccvalidator
 Depends:
     R (>= 3.4),
     shinyBS
