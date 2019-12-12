@@ -40,7 +40,7 @@ stand up a new version that is customized for a different community):
 1. To ensure each connection has its own R process, the Sage Shiny Server administrator must configure the utilization scheduler. This is not necessary for the app to function, but might improve performance.
 ```
 location /users {
-  location /yourusername/ShinyApps {
+  location /yourusername/yourappname {
     utilization_scheduler 1 0.7 10;
   }
 }
