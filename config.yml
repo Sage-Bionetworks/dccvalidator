@@ -64,7 +64,7 @@ amp-ad:
 
 pec:
   parent: "syn20825282"
-  path_to_markdown: "vignettes/using-the-dccvalidator-pec.Rmd"
+  path_to_markdown: "inst/using-the-dccvalidator-pec.Rmd"
   study_table: "syn20968992"
   annotations_table: "syn20981788"
   annotations_link: "https://www.synapse.org/#!Synapse:syn20729790"
