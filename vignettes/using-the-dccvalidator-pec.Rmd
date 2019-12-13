@@ -1,5 +1,5 @@
 ---
-title: "using-the-dccvalidator-pec.Rmd"
+title: "Using the dccvalidator app in PsychENCODE"
 author: "Kelsey Montgomery"
 date: "12/12/2019"
 output: html_document
