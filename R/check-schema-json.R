@@ -29,12 +29,15 @@
 check_schema_json <- function(json, schema,
                               success_msg = "Data is valid against the schema",
                               fail_msg = "Data is invalid against the schema") {
-  result <- jsonvalidate::json_validate(
-    json = json,
-    schema = schema,
-    verbose = TRUE,
-    greedy = TRUE,
-    engine = "ajv"
+  result <- suppressWarnings(
+    # (using suppressWarnings to avoid warning about "schema $id ignored")
+    jsonvalidate::json_validate(
+      json = json,
+      schema = schema,
+      verbose = TRUE,
+      greedy = TRUE,
+      engine = "ajv"
+    )
   )
   behavior <- "Data should conform to the schema"
   if (result) {
