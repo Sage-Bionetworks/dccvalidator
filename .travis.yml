@@ -4,28 +4,27 @@ language: R
 sudo: false
 cache: packages
 
-r:
-- 3.4
-- oldrel
-- release
-- devel
-jobs:
+matrix:
   include:
-    - if: type = pull_request
-      stage: lint
-      r: release
-      script:
-        - |
-          R CMD INSTALL $PKG_TARBALL
-          Rscript -e 'lintr::lint_package()'
-    - stage: deploy
-      before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
-      deploy:
-        provider: script
-        script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
-        skip_cleanup: true
-        on:
-          branch: pkgdown-test
+  - r: devel
+  - if: type = pull_request
+    stage: lint
+    r: release
+    script:
+      - |
+        R CMD INSTALL $PKG_TARBALL
+        Rscript -e 'lintr::lint_package()'
+  - r: release
+    before_cache:
+    - Rscript -e 'remotes::install_cran("pkgdown")'
+    deploy:
+      provider: script
+      script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
+      skip_cleanup: true
+      on:
+        branch: pkgdown-test
+  - r: 3.5
+  - r: 3.4
 
 r_github_packages:
   - jimhester/lintr
