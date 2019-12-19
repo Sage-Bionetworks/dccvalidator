@@ -19,7 +19,7 @@ jobs:
           R CMD INSTALL $PKG_TARBALL
           Rscript -e 'lintr::lint_package()'
     - stage: deploy
-      before_cache: Rscript -e 'remotes::install_github("r-lib/pkgdown")'
+      before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
       deploy:
         provider: script
         script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
