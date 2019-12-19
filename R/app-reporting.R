@@ -110,7 +110,7 @@ report_unsatisfied_requirements <- function(membership, certified) {
       purrr::map_chr(
         membership$data,
         function(x) {
-          glue::glue("<a href=\"https://www.synapse.org/#!Team:{x}\">https://www.synapse.org/#!Team:{x}</a>") # nolint
+          glue::glue("<a href=\"https://www.synapse.org/#!Team:{x}\">https://www.synapse.org/#!Team:{x}</a>")
         }
       ),
       sep = "<br>"
