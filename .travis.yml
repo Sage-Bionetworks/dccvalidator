@@ -7,6 +7,7 @@ cache: packages
 matrix:
   include:
   - r: devel
+  - r: release
   - if: type = pull_request
     stage: lint
     r: release
@@ -14,7 +15,8 @@ matrix:
       - |
         R CMD INSTALL $PKG_TARBALL
         Rscript -e 'lintr::lint_package()'
-  - r: release
+  - stage: deploy
+    r: release
     before_cache:
     - Rscript -e 'remotes::install_cran("pkgdown")'
     deploy:
