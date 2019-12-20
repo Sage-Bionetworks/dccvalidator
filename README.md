@@ -19,9 +19,16 @@ You can install dccvalidator with the following command:
 devtools::install_github("Sage-Bionetworks/dccvalidator")
 ```
 
-Many of the functions also require that the
-[synapseclient](https://pypi.org/project/synapseclient/) Python package
-be installed.
+Many functions in dccvalidator use reticulate and the [Synapse Python
+client](https://pypi.org/project/synapseclient/). See the [reticulate
+documentation](https://rstudio.github.io/reticulate/#python-version) for
+information on how to set R to use a specific version of Python if you
+don’t want to use the default Python installation on your machine.
+Whichever Python installation you choose should have synapseclient
+installed.
+
+Because dccvalidator uses reticulate, it is not compatible with the
+[synapser](https://r-docs.synapse.org/) package..
 
 ## Check data
 
