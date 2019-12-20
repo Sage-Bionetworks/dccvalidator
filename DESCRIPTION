@@ -48,7 +48,6 @@ Imports:
     visdat
 Suggests:
     covr,
-    here,
     knitr,
     rmarkdown (>= 1.16.2),
     testthat,
