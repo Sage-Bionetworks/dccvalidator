@@ -193,13 +193,12 @@
       "Version": "0.0.0.9009",
       "Source": "GitHub",
       "RemoteType": "github",
-      "Remotes": "daattali/shinyjs, hadley/emo",
       "RemoteHost": "api.github.com",
-      "RemoteRepo": "dccvalidator",
       "RemoteUsername": "Sage-Bionetworks",
-      "RemoteRef": "reticulate",
-      "RemoteSha": "dc6af370f7c67ea83b9fe30b7d26b5f4a760452a",
-      "Hash": "66b2a30a928ef69f05646c756a628c96"
+      "RemoteRepo": "dccvalidator",
+      "RemoteRef": "master",
+      "RemoteSha": "26ba9fc788065de45537c699c44b782041f39ee5",
+      "Hash": "3b464c9368dd061564bb09f6dd208a29"
     },
     "desc": {
       "Package": "desc",
@@ -252,14 +251,13 @@
       "Package": "emo",
       "Version": "0.0.0.9000",
       "Source": "GitHub",
-      "Remotes": "tidyverse/glue",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "emo",
       "RemoteUsername": "hadley",
+      "RemoteRepo": "emo",
       "RemoteRef": "master",
-      "RemoteSha": "02a520689861c3354f7c6b575e309280b2a3a172",
-      "Hash": "5651e69c9f4e329e5df642ffa47a1176"
+      "RemoteSha": "3f03b11491ce3d6fc5601e210927eff73bf8e350",
+      "RemoteHost": "api.github.com",
+      "Hash": "694ecb79904d7337aa366e09be9be791"
     },
     "evaluate": {
       "Package": "evaluate",
