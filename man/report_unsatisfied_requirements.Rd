@@ -4,12 +4,14 @@
 \alias{report_unsatisfied_requirements}
 \title{Create a modal dialog if user is not in required team(s) or certified}
 \usage{
-report_unsatisfied_requirements(membership, certified)
+report_unsatisfied_requirements(membership, certified, syn)
 }
 \arguments{
 \item{membership}{Output from \code{\link[=check_team_membership]{check_team_membership()}}}
 
 \item{certified}{Output from \code{\link[=check_certified_user]{check_certified_user()}}}
+
+\item{syn}{Synapse client object}
 }
 \description{
 Takes the output from \code{\link[=check_team_membership]{check_team_membership()}} and \code{\link[=check_certified_user]{check_certified_user()}}.

@@ -6,7 +6,8 @@
 \usage{
 check_keys(x, annotations, whitelist_keys = NULL,
   success_msg = "All annotation keys are valid",
-  fail_msg = "Some annotation keys are invalid", return_valid = FALSE)
+  fail_msg = "Some annotation keys are invalid", return_valid = FALSE,
+  syn)
 }
 \arguments{
 \item{x}{A data frame of annotation data}
@@ -22,6 +23,8 @@ provided, all values for the given keys will be treated as valid.}
 
 \item{return_valid}{Should the function return valid values? Defaults to
 \code{FALSE} (i.e. the function will return invalid values).}
+
+\item{syn}{Synapse client object}
 }
 \description{
 Check that a given set of keys are all present in an annotations dictionary

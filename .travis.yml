@@ -3,6 +3,9 @@
 language: R
 sudo: false
 cache: packages
+env:
+  global:
+    - PATH=/opt/python/3.7.1/bin:$PATH
 
 matrix:
   include:
@@ -29,6 +32,10 @@ matrix:
 r_github_packages:
   - jimhester/lintr
   - rstudio/rmarkdown
+
+before_install:
+  - pip install --user pandas
+  - pip install --user synapseclient
 
 after_success:
   - Rscript -e 'covr::codecov()'

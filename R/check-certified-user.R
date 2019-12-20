@@ -3,17 +3,18 @@
 #' Check if user has completed and passed the Certified User Quiz.
 #'
 #' @param id User ID
+#' @inheritParams get_synapse_annotations
 #' @export
 #' @examples
 #' \dontrun{
-#' library("synapser")
-#' synLogin()
+#' syn <- synapse$Synapse()
+#' syn$login()
 #' check_certified_user("3384770")
 #' }
-check_certified_user <- function(id) {
+check_certified_user <- function(id, syn) {
   res <- list(passed = FALSE)
   try(
-    res <- synapser::synRestGET(
+    res <- syn$restGET(
       glue::glue("/user/{id}/certifiedUserPassingRecord")
     ),
     silent = TRUE
