@@ -26,7 +26,7 @@ app_server <- function(input, output, session) {
     )
   })
 
-  foo <- observeEvent(input$cookie, {
+  observeEvent(input$cookie, {
     syn$login(sessionToken = input$cookie)
 
     ## Check if user is in AMP-AD Consortium team (needed in order to create
