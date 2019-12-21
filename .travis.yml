@@ -3,34 +3,40 @@
 language: R
 sudo: false
 cache: packages
+env:
+  global:
+    - PATH=/opt/python/3.7.1/bin:$PATH
 
-before_install:
-  - sudo apt-get -y install libv8-dev
-
-r:
-- 3.4
-- oldrel
-- release
-- devel
-jobs:
+matrix:
   include:
-    - if: type = pull_request
-      stage: lint
-      r: release
-      script:
-        - |
-          R CMD INSTALL $PKG_TARBALL
-          Rscript -e 'lintr::lint_package()'
-    - stage: deploy
-      before_cache: Rscript -e 'remotes::install_github("r-lib/pkgdown")'
-      deploy:
-        provider: script
-        script: Rscript -e 'pkgdown::deploy_site_github()'
-        skip_cleanup: true
+  - r: devel
+  - r: release
+  - r: 3.5
+  - r: 3.4
+  - stage: deploy
+    r: release
+    before_cache:
+    - Rscript -e 'remotes::install_cran("pkgdown")'
+    deploy:
+      provider: script
+      script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
+      skip_cleanup: true
+  - if: type = pull_request
+    stage: lint
+    r: release
+    script:
+      - |
+        R CMD INSTALL $PKG_TARBALL
+        Rscript -e 'lintr::lint_package()'
 
 r_github_packages:
   - jimhester/lintr
   - rstudio/rmarkdown
+
+before_install:
+  - pip install --user pandas
+  - pip install --user synapseclient
+  - sudo apt-get -y install libv8-dev
 
 after_success:
   - Rscript -e 'covr::codecov()'

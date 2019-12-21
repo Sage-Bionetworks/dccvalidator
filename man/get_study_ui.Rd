@@ -6,14 +6,16 @@
 \alias{get_study_server}
 \title{Gather studies within consortium}
 \usage{
-get_study_names(study_table_id)
+get_study_names(study_table_id, syn)
 
 get_study_ui(id)
 
-get_study_server(input, output, session, study_table_id)
+get_study_server(input, output, session, study_table_id, syn)
 }
 \arguments{
 \item{study_table_id}{synapse Id for the consortium study table}
+
+\item{syn}{Synapse client object}
 
 \item{id}{the id}
 

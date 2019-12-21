@@ -11,6 +11,7 @@
 #' as valid (see [can_coerce()]).
 #'
 #' @inheritParams check_annotation_keys
+#' @inheritParams get_synapse_annotations
 #' @param ... Additional options to [`check_values()`]
 #' @return A condition object indicating whether all annotation values are
 #'   valid. Invalid annotation values are included as data within the object.
@@ -19,11 +20,12 @@
 #'
 #' @examples
 #' \dontrun{
-#' library("synapser")
-#' synLogin()
+#' syn <- synapse$Synapse()
+#' syn$login()
+#'
 #' annots <- get_synapse_annotations()
-#' my_file <- synGet("syn11931757", downloadFile = FALSE)
-#' check_annotation_values(my_file, annots)
+#' my_file <- syn$get("syn11931757", downloadFile = FALSE)
+#' check_annotation_values(my_file, annots, syn)
 #'
 #' dat <- data.frame(
 #'   non_annotation = 5:7,
@@ -38,15 +40,20 @@
 #' # If you don't specify an annotations data frame, these functions will
 #' # download annotations automatically using `get_synapse_annotations()` (must
 #' # be logged in to Synapse)
-#' my_file <- synGet("syn11931757", downloadFile = FALSE)
-#' check_annotation_values(my_file)
+#' my_file <- syn$get("syn11931757", downloadFile = FALSE)
+#' check_annotation_values(my_file, syn = syn)
 #'
 #' # It is possible to whitelist certain certain values, or all values for
 #' # certain keys:
-#' check_annotation_values(dat, whitelist_keys = "assay")
-#' check_annotation_values(dat, whitelist_values = list(assay = c("foo")))
+#' check_annotation_values(dat, whitelist_keys = "assay", syn = syn)
+#'
+#' check_annotation_values(
+#'   dat,
+#'   whitelist_values = list(assay = c("foo")),
+#'   syn = syn
+#' )
 #' }
-check_annotation_values <- function(x, annotations, ...) {
+check_annotation_values <- function(x, annotations, syn, ...) {
   UseMethod("check_annotation_values", x)
 }
 
@@ -56,13 +63,14 @@ check_annotation_values.NULL <- function(x, annotations, ...) {
 }
 
 #' @export
-check_annotation_values.File <- function(x, annotations, ...) {
-  annots <- synapser::synGetAnnotations(x)
+check_annotation_values.synapseclient.entity.File <- function(x, annotations, syn, ...) { # nolint
+  annots <- dict_to_list(syn$getAnnotations(x))
   check_values(
     annots,
     annotations,
     ...,
-    return_valid = FALSE
+    return_valid = FALSE,
+    syn = syn
   )
 }
 
@@ -77,8 +85,8 @@ check_annotation_values.data.frame <- function(x, annotations, ...) {
 }
 
 #' @export
-check_annotation_values.CsvFileTable <- function(x, annotations, ...) {
-  dat <- synapser::as.data.frame(x)
+check_annotation_values.synapseclient.table.CsvFileTable <- function(x, annotations, ...) { # nolint
+  dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE, na.strings = "")
   fv_synapse_cols <- c(
     "ROW_ID",
     "ROW_VERSION",
@@ -112,9 +120,10 @@ check_annotation_values.CsvFileTable <- function(x, annotations, ...) {
 #' file, or Synapse file view.
 #'
 #' @inheritParams check_annotation_values
+#' @inheritParams get_synapse_annotations
 #' @return A named list of valid annotation values.
 #' @export
-valid_annotation_values <- function(x, annotations, ...) {
+valid_annotation_values <- function(x, annotations, syn, ...) {
   UseMethod("valid_annotation_values", x)
 }
 
@@ -124,8 +133,8 @@ valid_annotation_values.NULL <- function(x, annotations, ...) {
 }
 
 #' @export
-valid_annotation_values.File <- function(x, annotations, ...) {
-  annots <- synapser::synGetAnnotations(x)
+valid_annotation_values.synapseclient.entity.File <- function(x, annotations, syn, ...) { # nolint
+  annots <- dict_to_list(syn$getAnnotations(x))
   check_values(
     annots,
     annotations,
@@ -145,8 +154,8 @@ valid_annotation_values.data.frame <- function(x, annotations, ...) {
 }
 
 #' @export
-valid_annotation_values.CsvFileTable <- function(x, annotations, ...) {
-  dat <- synapser::as.data.frame(x)
+valid_annotation_values.synapseclient.table.CsvFileTable <- function(x, annotations, ...) { # nolint
+  dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE)
   fv_synapse_cols <- c(
     "ROW_ID",
     "ROW_VERSION",
@@ -276,20 +285,22 @@ can_coerce <- function(values, class) {
 #' Check values for one key
 #'
 #' @keywords internal
+#' @inheritParams get_synapse_annotations
 #' @param values The values of an annotation
 #' @param key An annotation key
 #' @inheritParams check_values
 #' @return A character vector of valid or invalid values
 #' @rdname check_values
 check_value <- function(values, key, annotations, whitelist_keys = NULL,
-                        whitelist_values = NULL, return_valid = FALSE) {
+                        whitelist_values = NULL, return_valid = FALSE,
+                        syn) {
   values <- unlist(values)
 
   ## Get whitelisted values for key, if any
   whitelist <- unique(whitelist_values[[key]])
 
   if (missing(annotations)) {
-    annotations <- syndccutils::get_synapse_annotations()
+    annotations <- get_synapse_annotations(syn = syn)
   }
   if (!key %in% annotations$key) {
     return(NULL)
@@ -319,6 +330,7 @@ check_value <- function(values, key, annotations, whitelist_keys = NULL,
 #' Check a set of keys and their values
 #'
 #' @keywords internal
+#' @inheritParams get_synapse_annotations
 #' @param x A data frame of annotation data
 #' @param annotations A data frame of annotations to check against
 #' @param whitelist_keys A character vector of annotation keys to whitelist. If
@@ -339,12 +351,12 @@ check_values <- function(x, annotations, whitelist_keys = NULL,
                          whitelist_values = NULL,
                          success_msg = "All annotation values are valid",
                          fail_msg = "Some annotation values are invalid",
-                         return_valid = FALSE) {
+                         return_valid = FALSE, syn) {
   if (length(names(x)) == 0) {
     stop("No annotations present to check", call. = FALSE)
   }
   if (missing(annotations)) {
-    annotations <- syndccutils::get_synapse_annotations()
+    annotations <- get_synapse_annotations(syn = syn)
   }
   if (!all(c("key", "value", "columnType") %in% names(annotations))) {
     stop(

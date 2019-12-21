@@ -49,6 +49,7 @@ amp-ad:
       wholeExomeSeq: "syn21078272"
       NanoString: "syn21082744"
       snpArray: "syn21372586"
+      TMT quantitation: "syn21433357"
   complete_columns:
     manifest:
       - "consortium"

@@ -9,6 +9,8 @@
 #' @param session Shiny session
 #' @export
 app_server <- function(input, output, session) {
+  syn <- synapse$Synapse()
+
   ## Initial titles for report boxes
   callModule(results_boxes_server, "Validation Results", results = NULL)
 
@@ -24,18 +26,19 @@ app_server <- function(input, output, session) {
     )
   })
 
-  foo <- observeEvent(input$cookie, {
-    synapser::synLogin(sessionToken = input$cookie)
+  observeEvent(input$cookie, {
+    syn$login(sessionToken = input$cookie)
 
     ## Check if user is in AMP-AD Consortium team (needed in order to create
     ## folder at the next step), and if they are a certified user.
-    user <- synapser::synGetUserProfile()
+    user <- syn$getUserProfile()
     membership <- check_team_membership(
       teams = config::get("teams"),
-      user = user
+      user = user,
+      syn = syn
     )
-    certified <- check_certified_user(user$ownerId)
-    report_unsatisfied_requirements(membership, certified)
+    certified <- check_certified_user(user$ownerId, syn = syn)
+    report_unsatisfied_requirements(membership, certified, syn = syn)
 
     ## If user is a member of the team(s), create folder to save files and
     ## enable inputs
@@ -44,14 +47,17 @@ app_server <- function(input, output, session) {
       created_folder <- try(
         create_folder(
           parent = config::get("parent"),
-          name = user$userName
+          name = user$userName,
+          synapseclient = synapse,
+          syn = syn
         )
       )
 
       study_name <- callModule(
         get_study_server,
         "study",
-        study_table_id = reactive(config::get("study_table"))
+        study_table_id = reactive(config::get("study_table")),
+        syn = syn
       )
 
       inputs_to_enable <- c(
@@ -70,7 +76,9 @@ app_server <- function(input, output, session) {
         upload_documents_server,
         "documentation",
         parent_folder = reactive(created_folder),
-        study_table_id = reactive(config::get("study_table"))
+        study_table_id = reactive(config::get("study_table")),
+        synapseclient = synapse,
+        syn = syn
       )
     }
 
@@ -83,7 +91,10 @@ app_server <- function(input, output, session) {
     })
 
     ## Download annotation definitions
-    annots <- get_synapse_annotations(synID = config::get("annotations_table"))
+    annots <- get_synapse_annotations(
+      synID = config::get("annotations_table"),
+      syn
+    )
 
     ## Store files in separate variable to be able to reset inputs to NULL
     files <- reactiveValues(
@@ -202,18 +213,19 @@ app_server <- function(input, output, session) {
 
     # Missing columns ----------------------------------------------------------
     missing_cols_indiv <- reactive({
-      check_cols_individual(indiv(), indiv_template())
+      check_cols_individual(indiv(), indiv_template(), syn = syn)
     })
     missing_cols_biosp <- reactive({
-      check_cols_biospecimen(biosp(), biosp_template())
+      check_cols_biospecimen(biosp(), biosp_template(), syn = syn)
     })
     missing_cols_assay <- reactive({
-      check_cols_assay(assay(), assay_template())
+      check_cols_assay(assay(), assay_template(), syn = syn)
     })
     missing_cols_manifest <- reactive({
       check_cols_manifest(
         manifest(),
-        config::get("templates")$manifest_template
+        config::get("templates")$manifest_template,
+        syn = syn
       )
     })
 
@@ -430,7 +442,9 @@ app_server <- function(input, output, session) {
               study = study_name(),
               metadataType = "individual",
               species = species_name()
-            )
+            ),
+            synapseclient = synapse,
+            syn = syn
           )
         }
         if (!is.null(biosp())) {
@@ -441,7 +455,9 @@ app_server <- function(input, output, session) {
               study = study_name(),
               metadataType = "biospecimen",
               species = species_name()
-            )
+            ),
+            synapseclient = synapse,
+            syn = syn
           )
         }
         if (!is.null(assay())) {
@@ -453,7 +469,9 @@ app_server <- function(input, output, session) {
               metadataType = "assay",
               assay = assay_name(),
               species = species_name()
-            )
+            ),
+            synapseclient = synapse,
+            syn = syn
           )
         }
         if (!is.null(manifest())) {
@@ -463,7 +481,9 @@ app_server <- function(input, output, session) {
             annotations = list(
               study = study_name(),
               metadataType = "manifest"
-            )
+            ),
+            synapseclient = synapse,
+            syn = syn
           )
         }
 
