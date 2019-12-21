@@ -2,7 +2,7 @@
 #'
 #' Check if a user is a member of any of the given teams.
 #'
-#' @keywords internal
+#' @export
 #' @inheritParams get_synapse_annotations
 #' @param teams Team IDs to check membership in
 #' @param user User to check (e.g. output from syn$getUserProfile())
