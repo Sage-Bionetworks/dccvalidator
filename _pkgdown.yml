@@ -51,6 +51,7 @@ reference:
     the application and to provide instructions.
   contents:
     - check_certified_user
+    - check_team_membership
     - get_user_teams
     - instructions
 
