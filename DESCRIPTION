@@ -29,6 +29,7 @@ Imports:
     ggplot2,
     glue,
     golem,
+    knitr,
     markdown,
     pkgload,
     purrr,
@@ -49,7 +50,6 @@ Imports:
     visdat
 Suggests:
     covr,
-    knitr,
     rmarkdown (>= 1.16.2),
     testthat,
     withr
