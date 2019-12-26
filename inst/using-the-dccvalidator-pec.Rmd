@@ -2,7 +2,7 @@
 title: "Using the dccvalidator app in PsychENCODE"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{using-the-dccvalidator-app-in-pec}
+  %\VignetteIndexEntry{using-the-dccvalidator-pec}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
