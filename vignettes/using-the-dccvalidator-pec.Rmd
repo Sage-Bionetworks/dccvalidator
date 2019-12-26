@@ -7,5 +7,5 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r direct-to-child, child = '../inst/using-the-dccvalidator-pec.Rmd'}
+```{r direct-to-child, child = system.file("using-the-dccvalidator-pec.Rmd", package = "dccvalidator")}
 ```
