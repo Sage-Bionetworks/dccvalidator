@@ -11,7 +11,8 @@
 app_server <- function(input, output, session) {
   ## Render vignette markdown
   output$markdown <- renderUI({
-    HTML(markdown::markdownToHTML(
+    HTML(
+      markdown::markdownToHTML(
       knitr::knit(input = glue::glue(
         tools::file_path_sans_ext(config::get("path_to_markdown")), ".Rmd"
         ),
