@@ -1,5 +1,7 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-
+dist: trusty
+addons:
+  chrome: stable
 language: R
 sudo: false
 cache: packages
@@ -36,6 +38,7 @@ r_github_packages:
 before_install:
   - pip install --user pandas
   - pip install --user synapseclient
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 
 after_success:
   - Rscript -e 'covr::codecov()'
