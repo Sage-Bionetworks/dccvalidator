@@ -38,6 +38,10 @@ default:
 
 amp-ad:
   parent: "syn20506363"
+  annotations_table:
+    - "syn10242922"
+    - "syn21459391"
+  annotations_link: "https://shinypro.synapse.org/users/kwoo/amp-ad-metadata-dictionary/"
   teams:
     - "3320424"
   study_link_ref: "https://adknowledgeportal.synapse.org/#/DataAccess/AcknowledgementStatements"
