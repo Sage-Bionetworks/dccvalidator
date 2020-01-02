@@ -50,6 +50,7 @@ Suggests:
     covr,
     knitr,
     rmarkdown (>= 1.16.2),
+    shinytest,
     testthat,
     withr
 VignetteBuilder: 
