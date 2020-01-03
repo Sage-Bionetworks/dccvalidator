@@ -189,7 +189,11 @@ app_ui <- function(request) {
               )
             )
           ),
-
+          # Embedd How To Use App vignette
+          tabItem(
+            tabName = "vignette",
+            get_markdown()
+          ),
           # Documentation tab UI
           upload_documents_ui(
             id = "documentation",
