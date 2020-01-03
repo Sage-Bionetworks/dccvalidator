@@ -30,7 +30,7 @@ To create a custom version of the app, you'll need to follow these steps:
 1. Fork the [dccvalidator](https://github.com/Sage-Bionetworks/dccvalidator/blob/master/config.yml)
    GitHub repository.
 1. Create a new configuration in the `config.yml` file. Note that any values you
-   do not customize will be inherited from the default configuration. YML format requires a default configuration.
+   do not customize will be inherited from the default configuration. The configuration file must have a `default` configuration.
 1. (Optional): create a pull request with your configuration back to the
    upstream dccvalidator repository.
 1. Within the file [`app.R`](https://github.com/Sage-Bionetworks/dccvalidator/blob/master/app.R),
