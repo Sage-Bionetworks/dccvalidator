@@ -201,10 +201,6 @@ app_ui <- function(request) {
             study_link_animal = config::get("study_link_animal")
           )
         ),
-        tabItem(
-          tabName = "vignette",
-          uiOutput("markdown")
-        ),
         class = "tab-content"
       )
     )
