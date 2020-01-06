@@ -12,9 +12,9 @@ app_ui <- function(request) {
 
     dashboardSidebar(
       sidebarMenu(
-        conditionalPanel(!is.na(config::get("path_to_markdown")) == TRUE, {
-            menuItem("Using the App", tabName = "vignette")
-        }),
+        if (!is.na(config::get("path_to_markdown"))) {
+          menuItem("Using the App", tabName = "vignette")
+        },
         menuItem("Documentation", tabName = "documentation"),
         menuItem("Validator", tabName = "validator")
       ),
