@@ -13,9 +13,22 @@ prior to data releases.
 
 ## Installation
 
+You can install dccvalidator with the following command:
+
 ``` r
 devtools::install_github("Sage-Bionetworks/dccvalidator")
 ```
+
+Many functions in dccvalidator use reticulate and the [Synapse Python
+client](https://pypi.org/project/synapseclient/). See the [reticulate
+documentation](https://rstudio.github.io/reticulate/#python-version) for
+information on how to set R to use a specific version of Python if you
+don’t want to use the default Python installation on your machine.
+Whichever Python installation you choose should have synapseclient
+installed.
+
+Because dccvalidator uses reticulate, it is not compatible with the
+[synapser](https://r-docs.synapse.org/) package..
 
 ## Check data
 
@@ -41,6 +54,11 @@ reports](https://knb.ecoinformatics.org/quality/s=knb.suite.1/doi%3A10.5063%2FF1
 
 The application also allows users to submit documentation of their
 study, a description of the methods used, etc.
+
+See the [customizing
+dccvalidator](https://sage-bionetworks.github.io/dccvalidator/articles/customizing-dccvalidator.html)
+vignette for information on how to spin up a customized version of the
+application
 
 # Local development
 

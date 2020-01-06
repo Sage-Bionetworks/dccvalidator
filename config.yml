@@ -7,6 +7,7 @@ default:
   templates_link: "https://www.synapse.org/#!Synapse:syn18512044"
   study_link_animal: "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648"
   study_link_human: "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn3159438"
+  study_link_ref: ""
   teams:
     - "3320424"
     - "273957"
@@ -38,8 +39,13 @@ default:
 
 amp-ad:
   parent: "syn20506363"
+  annotations_table:
+    - "syn10242922"
+    - "syn21459391"
+  annotations_link: "https://shinypro.synapse.org/users/kwoo/amp-ad-metadata-dictionary/"
   teams:
     - "3320424"
+  study_link_ref: "https://adknowledgeportal.synapse.org/#/DataAccess/AcknowledgementStatements"
   templates:
     assay_templates:
       proteomics: "syn12973255"
@@ -47,6 +53,8 @@ amp-ad:
       wholeGenomeSeq: "syn21018358"
       wholeExomeSeq: "syn21078272"
       NanoString: "syn21082744"
+      snpArray: "syn21372586"
+      TMT quantitation: "syn21433357"
   complete_columns:
     manifest:
       - "consortium"

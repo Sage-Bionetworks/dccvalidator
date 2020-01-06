@@ -5,10 +5,11 @@
 \alias{upload_documents_server}
 \title{Upload documentation to Synapse}
 \usage{
-upload_documents_ui(id, study_link_human, study_link_animal)
+upload_documents_ui(id, study_link_human, study_link_animal,
+  study_link_ref)
 
 upload_documents_server(input, output, session, parent_folder,
-  study_table_id)
+  study_table_id, synapseclient, syn)
 }
 \arguments{
 \item{id}{the module id}
@@ -16,6 +17,9 @@ upload_documents_server(input, output, session, parent_folder,
 \item{study_link_human}{html link to example of a study using human data}
 
 \item{study_link_animal}{html link to example of a study using animal models}
+
+\item{study_link_ref}{html link to example of study acknowledgment
+preference}
 
 \item{input}{the input from \code{\link[shiny:callModule]{shiny::callModule()}}}
 
@@ -27,6 +31,10 @@ upload_documents_server(input, output, session, parent_folder,
 
 \item{study_table_id}{synapse Id for the consortium study table}
 
+\item{synapseclient}{Synapse client module (e.g. output of
+\code{reticulate::import("synapseclient")})}
+
+\item{syn}{Synapse client object}
 }
 \value{
 html ui for the module

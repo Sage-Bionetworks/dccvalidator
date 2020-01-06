@@ -1,0 +1,95 @@
+---
+title: "Customizing dccvalidator"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{customizing-dccvalidator}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+dccvalidator is intended to be customizable for different settings. The Shiny
+application uses a [configuration file](https://github.com/Sage-Bionetworks/dccvalidator/blob/master/config.yml)
+to set details such as where to store uploaded files, which metadata templates
+to validate against, whom to contact with questions, etc.
+
+To create a custom version of the app, you'll need to follow these steps:
+
+1. Create a Synapse project or folder with the appropriate permissions to store
+   uploaded files. In AMP-AD, we created a folder to which consortium members
+   have permissions to read and write, but *not* download. Only the curation
+   team has the ability to download files (in order to assist with debugging).
+   See this
+   [example of how to create a project with appropriate permissions](https://github.com/Sage-Bionetworks/dccvalidator/blob/master/inst/app/create_project.R).
+1. Fork the [dccvalidator](https://github.com/Sage-Bionetworks/dccvalidator/blob/master/config.yml)
+   GitHub repository.
+1. Create a new configuration in the `config.yml` file. Note that any values you
+   do not customize will be inherited from the default configuration. The configuration file must have a `default` configuration.
+1. (Optional): create a pull request with your configuration back to the
+   upstream dccvalidator repository.
+1. Within the file [`app.R`](https://github.com/Sage-Bionetworks/dccvalidator/blob/master/app.R),
+   replace the `"default"` configuration with the name of your new 
+   configuration.
+1. Deploy the application as described in the 
+   [Deploying dccvalidator](https://sage-bionetworks.github.io/dccvalidator/articles/deploying-dccvalidator.html) 
+   vignette.
+
+To install the dccvalidator instead of forking the repository:
+
+1. Create an `app.R` file containing the following:
+
+```
+library("dccvalidator")
+run_app()
+```
+1. Create a `config.yml` file using the configuration options specified below and name the parameters "default".
+```
+default:
+  parent: "syn20400157"
+```
+1. Create a Synapse project or folder with the appropriate permissions to store
+   uploaded files. In AMP-AD, we created a folder to which consortium members
+   have permissions to read and write, but *not* download. Only the curation
+   team has the ability to download files (in order to assist with debugging).
+   See this
+   [example of how to create a project with appropriate permissions](https://github.com/Sage-Bionetworks/dccvalidator/blob/master/inst/app/create_project.R).
+   
+## Configuration options
+
+* `parent`: The Synapse project or folder where files will be stored
+* `study_table`: Synapse ID of a table that lists all of the existing studies in
+  the consortium. It should have a column called `StudyName`.
+* `annotations_table`: Synapse ID of a table that lists allowable annotation
+  keys and values for the consortium. This should follow the same basic format
+  as our Synapse Annotations table, e.g. there must be the following columns:
+  `key`, `value`, and `columnType`. `columnType` options are `STRING`,
+  `BOOLEAN`, `INTEGER`, `DOUBLE`.
+* `annotations_link`: URL to a list or description of allowable annotation
+  values (so users can read more)
+* `templates_link`: URL to the location of metadata templates
+* `study_link_animal`: URL to an example study description for an animal model
+  study
+* `study_link_human`: URL to an example study description for a human study
+* `teams`: The team(s) a user must be a member of in order to use the app. If
+  the user is not in any of the teams, they will see a message telling them they
+  must be added to one of the teams.
+* `templates` (including `manifest_template`, `individual_templates`,
+  `biospecimen_templates`, and `assay_templates`): Synapse IDs of templates to
+  use for validation. These should be either .xlsx or .csv files, where the
+  column names reflect the required columns in the template. If the template is
+  an excel file with multiple sheets, the first sheet will be used.
+* `species_list`: List of possible species in the consortium. These are shown as
+  options in the validation UI and control which individual template and
+  biospecimen template the app validates against.
+* `complete_columns`: For each metadata file and the manifest, a list of the
+  columns that must be complete (i.e. not contain any missing values or empty
+  strings)
+* `contact_email`: Email address linked in footer for users to contact if they
+  have questions
+

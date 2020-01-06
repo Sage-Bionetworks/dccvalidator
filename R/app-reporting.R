@@ -100,9 +100,10 @@ show_details.list <- function(x) {
 #' indicating which teams they need to belong to and how to request access.
 #'
 #' @keywords internal
+#' @inheritParams get_synapse_table
 #' @param membership Output from [check_team_membership()]
 #' @param certified Output from [check_certified_user()]
-report_unsatisfied_requirements <- function(membership, certified) {
+report_unsatisfied_requirements <- function(membership, certified, syn) {
   member_message <- tagList()
   certified_message <- tagList()
   if (inherits(membership, "check_fail")) {
@@ -116,7 +117,7 @@ report_unsatisfied_requirements <- function(membership, certified) {
       sep = "<br>"
     )
     missing_teams <- glue::glue_collapse(
-      purrr::map_chr(membership$data, function(x) synapser::synGetTeam(x)$name),
+      purrr::map_chr(membership$data, function(x) syn$getTeam(x)$name),
       sep = ", "
     )
     member_message <- tagList(

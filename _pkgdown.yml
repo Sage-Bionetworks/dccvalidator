@@ -17,6 +17,7 @@ reference:
     - check_cols_biospecimen
     - check_cols_complete
     - check_cols_empty
+    - check_files_manifest
     - check_ids_match
     - check_indiv_ids_match
     - check_specimen_ids_match
@@ -41,6 +42,8 @@ reference:
     - with_busy_indicator_server
     - upload_documents_ui
     - upload_documents_server
+    - results_boxes_ui
+    - results_boxes_server
 
 - title: App-supporting functions
   desc: >
@@ -48,6 +51,7 @@ reference:
     the application and to provide instructions.
   contents:
     - check_certified_user
+    - check_team_membership
     - get_user_teams
     - instructions
 

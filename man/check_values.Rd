@@ -10,13 +10,13 @@ check_type(values, key, annotations, whitelist_values = NULL,
   return_valid = FALSE)
 
 check_value(values, key, annotations, whitelist_keys = NULL,
-  whitelist_values = NULL, return_valid = FALSE)
+  whitelist_values = NULL, return_valid = FALSE, syn)
 
 check_values(x, annotations, whitelist_keys = NULL,
   whitelist_values = NULL,
   success_msg = "All annotation values are valid",
   fail_msg = "Some annotation values are invalid",
-  return_valid = FALSE)
+  return_valid = FALSE, syn)
 }
 \arguments{
 \item{values}{The values of an annotation}
@@ -33,6 +33,8 @@ vectors) to whitelist}
 
 \item{whitelist_keys}{A character vector of annotation keys to whitelist. If
 provided, all values for the given keys will be treated as valid.}
+
+\item{syn}{Synapse client object}
 
 \item{x}{A data frame of annotation data}
 

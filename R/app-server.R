@@ -9,15 +9,10 @@
 #' @param session Shiny session
 #' @export
 app_server <- function(input, output, session) {
+  syn <- synapse$Synapse()
+
   ## Initial titles for report boxes
-  reporting_titles <- reactiveValues(
-    success = "Successes (0)",
-    warn = "Warnings (0)",
-    fail = "Failures (0)"
-  )
-  output$num_success <- renderText(reporting_titles$success)
-  output$num_warn <- renderText(reporting_titles$warn)
-  output$num_fail <- renderText(reporting_titles$fail)
+  callModule(results_boxes_server, "Validation Results", results = NULL)
 
   session$sendCustomMessage(type = "readCookie", message = list())
 
@@ -31,18 +26,19 @@ app_server <- function(input, output, session) {
     )
   })
 
-  foo <- observeEvent(input$cookie, {
-    synapser::synLogin(sessionToken = input$cookie)
+  observeEvent(input$cookie, {
+    syn$login(sessionToken = input$cookie)
 
     ## Check if user is in AMP-AD Consortium team (needed in order to create
     ## folder at the next step), and if they are a certified user.
-    user <- synapser::synGetUserProfile()
+    user <- syn$getUserProfile()
     membership <- check_team_membership(
       teams = config::get("teams"),
-      user = user
+      user = user,
+      syn = syn
     )
-    certified <- check_certified_user(user$ownerId)
-    report_unsatisfied_requirements(membership, certified)
+    certified <- check_certified_user(user$ownerId, syn = syn)
+    report_unsatisfied_requirements(membership, certified, syn = syn)
 
     ## If user is a member of the team(s), create folder to save files and
     ## enable inputs
@@ -51,14 +47,17 @@ app_server <- function(input, output, session) {
       created_folder <- try(
         create_folder(
           parent = config::get("parent"),
-          name = user$userName
+          name = user$userName,
+          synapseclient = synapse,
+          syn = syn
         )
       )
 
       study_name <- callModule(
         get_study_server,
         "study",
-        study_table_id = reactive(config::get("study_table"))
+        study_table_id = reactive(config::get("study_table")),
+        syn = syn
       )
 
       inputs_to_enable <- c(
@@ -77,7 +76,9 @@ app_server <- function(input, output, session) {
         upload_documents_server,
         "documentation",
         parent_folder = reactive(created_folder),
-        study_table_id = reactive(config::get("study_table"))
+        study_table_id = reactive(config::get("study_table")),
+        synapseclient = synapse,
+        syn = syn
       )
     }
 
@@ -90,7 +91,11 @@ app_server <- function(input, output, session) {
     })
 
     ## Download annotation definitions
-    annots <- get_synapse_annotations(synID = config::get("annotations_table"))
+    annots <- purrr::map_dfr(
+      config::get("annotations_table"),
+      get_synapse_annotations,
+      syn = syn
+    )
 
     ## Store files in separate variable to be able to reset inputs to NULL
     files <- reactiveValues(
@@ -209,24 +214,31 @@ app_server <- function(input, output, session) {
 
     # Missing columns ----------------------------------------------------------
     missing_cols_indiv <- reactive({
-      check_cols_individual(indiv(), indiv_template())
+      check_cols_individual(indiv(), indiv_template(), syn = syn)
     })
     missing_cols_biosp <- reactive({
-      check_cols_biospecimen(biosp(), biosp_template())
+      check_cols_biospecimen(biosp(), biosp_template(), syn = syn)
     })
     missing_cols_assay <- reactive({
-      check_cols_assay(assay(), assay_template())
+      check_cols_assay(assay(), assay_template(), syn = syn)
     })
     missing_cols_manifest <- reactive({
       check_cols_manifest(
         manifest(),
-        config::get("templates")$manifest_template
+        config::get("templates")$manifest_template,
+        syn = syn
       )
     })
 
     # Individual and specimen IDs match ----------------------------------------
     individual_ids_indiv_biosp <- reactive({
-      check_indiv_ids_match(indiv(), biosp(), "individual", "biospecimen")
+      check_indiv_ids_match(
+        indiv(),
+        biosp(),
+        "individual",
+        "biospecimen",
+        bidirectional = FALSE
+      )
     })
     individual_ids_indiv_manifest <- reactive({
       check_indiv_ids_match(
@@ -238,7 +250,13 @@ app_server <- function(input, output, session) {
       )
     })
     specimen_ids_biosp_assay <- reactive({
-      check_specimen_ids_match(biosp(), assay(), "biospecimen", "assay")
+      check_specimen_ids_match(
+        biosp(),
+        assay(),
+        "biospecimen",
+        "assay",
+        bidirectional = FALSE
+      )
     })
     specimen_ids_biosp_manifest <- reactive({
       check_specimen_ids_match(
@@ -255,13 +273,20 @@ app_server <- function(input, output, session) {
       check_annotation_keys(
         manifest(),
         annots,
-        whitelist_keys = c("path", "parent")
+        whitelist_keys = c("path", "parent", "name", "used", "executed"),
+        success_msg = "All keys (column names) in the manifest are valid",
+        fail_msg = "Some keys (column names) in the manifest are invalid"
       )
     })
 
     # Annotation values in manifest and metadata are valid ---------------------
     annotation_values_manifest <- reactive({
-      check_annotation_values(manifest(), annots)
+      check_annotation_values(
+        manifest(),
+        annots,
+        success_msg = "All values in the manifest are valid",
+        fail_msg = "Some values in the manifest are invalid"
+      )
     })
     annotation_values_indiv <- reactive({
       check_annotation_values(
@@ -293,16 +318,29 @@ app_server <- function(input, output, session) {
 
     # Individual and specimen IDs are not duplicated ---------------------------
     duplicate_indiv_ids <- reactive({
-      check_indiv_ids_dup(indiv())
+      check_indiv_ids_dup(
+        indiv(),
+        # nolint start
+        success_msg = "Individual IDs in the individual metadata file are unique",
+        fail_msg = "Duplicate individual IDs found in the individual metadata file"
+        # nolint end
+      )
     })
     duplicate_specimen_ids <- reactive({
-      check_specimen_ids_dup(biosp())
+      check_specimen_ids_dup(
+        biosp(),
+        # nolint start
+        success_msg = "Specimen IDs in the biospecimen metadata file are unique",
+        fail_msg = "Duplicate specimen IDs found in the biospecimen metadata file"
+        # nolint end
+      )
     })
 
     # Empty columns produce warnings -------------------------------------------
     empty_cols_manifest <- reactive({
       check_cols_empty(
         manifest(),
+        required_cols = config::get("complete_columns")$manifest,
         success_msg = "No columns are empty in the manifest",
         fail_msg = "Some columns are empty in the manifest"
       )
@@ -310,6 +348,7 @@ app_server <- function(input, output, session) {
     empty_cols_indiv <- reactive({
       check_cols_empty(
         indiv(),
+        required_cols = config::get("complete_columns")$individual,
         success_msg = "No columns are empty in the individual metadata",
         fail_msg = "Some columns are empty in the individual metadata"
       )
@@ -317,6 +356,7 @@ app_server <- function(input, output, session) {
     empty_cols_biosp <- reactive({
       check_cols_empty(
         biosp(),
+        required_cols = config::get("complete_columns")$biospecimen,
         success_msg = "No columns are empty in the biospecimen metadata",
         fail_msg = "Some columns are empty in the biospecimen metadata"
       )
@@ -324,6 +364,7 @@ app_server <- function(input, output, session) {
     empty_cols_assay <- reactive({
       check_cols_empty(
         assay(),
+        required_cols = config::get("complete_columns")$assay,
         success_msg = "No columns are empty in the assay metadata",
         fail_msg = "Some columns are empty in the assay metadata"
       )
@@ -363,11 +404,21 @@ app_server <- function(input, output, session) {
       )
     })
 
+    # Metadata files appear in manifest ----------------------------------------
+    meta_files_in_manifest <- reactive({
+      check_files_manifest(
+        manifest(),
+        c(files$indiv$name, files$biosp$name, files$assay$name),
+        success_msg = "Manifest file contains all metadata files",
+        fail_msg = "Manifest file does not contain all metadata files"
+      )
+    })
+
     ## Show validation results on clicking "validate"
     ## Require that the study name is given; give error if not
     observeEvent(input$"validate_btn", {
       with_busy_indicator_server("validate_btn", {
-        if (!is_study_name_valid(study_name())) {
+        if (!is_name_valid(study_name())) {
           stop("Please check that study name is entered and only contains: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
         }
         ## Require at least one file input
@@ -388,45 +439,52 @@ app_server <- function(input, output, session) {
           save_to_synapse(
             files$indiv,
             parent = created_folder,
-            name = files$indiv$name,
             annotations = list(
               study = study_name(),
               metadataType = "individual",
               species = species_name()
-            )
+            ),
+            synapseclient = synapse,
+            syn = syn
           )
         }
         if (!is.null(biosp())) {
           save_to_synapse(
             files$biosp,
             parent = created_folder,
-            name = files$biosp$name,
             annotations = list(
               study = study_name(),
               metadataType = "biospecimen",
               species = species_name()
-            )
+            ),
+            synapseclient = synapse,
+            syn = syn
           )
         }
         if (!is.null(assay())) {
           save_to_synapse(
             files$assay,
             parent = created_folder,
-            name = files$assay$name,
             annotations = list(
               study = study_name(),
               metadataType = "assay",
               assay = assay_name(),
               species = species_name()
-            )
+            ),
+            synapseclient = synapse,
+            syn = syn
           )
         }
         if (!is.null(manifest())) {
           save_to_synapse(
             files$manifest,
             parent = created_folder,
-            name = files$manifest$name,
-            annotations = list(study = study_name())
+            annotations = list(
+              study = study_name(),
+              metadataType = "manifest"
+            ),
+            synapseclient = synapse,
+            syn = syn
           )
         }
 
@@ -454,45 +512,11 @@ app_server <- function(input, output, session) {
           complete_cols_manifest(),
           complete_cols_indiv(),
           complete_cols_biosp(),
-          complete_cols_assay()
+          complete_cols_assay(),
+          meta_files_in_manifest()
         )
 
-
-        ## Populate validation report
-        ## Successes box
-        successes <- purrr::map_lgl(res, function(x) {
-          inherits(x, "check_pass")
-        })
-        output$successes <- renderUI({
-          report_results(res[successes], emoji_prefix = "check")
-        })
-        reporting_titles$success <- glue::glue("Successes ({sum(successes)})")
-
-        ## Warnings box
-        warnings <- purrr::map_lgl(res, function(x) {
-          inherits(x, "check_warn")
-        })
-        output$warnings <- renderUI({
-          report_results(
-            res[warnings],
-            emoji_prefix = "warning",
-            verbose = TRUE
-          )
-        })
-        reporting_titles$warn <- glue::glue("Warnings ({sum(warnings)})")
-
-        ## Failures box
-        failures <- purrr::map_lgl(res, function(x) {
-          inherits(x, "check_fail")
-        })
-        output$failures <- renderUI({
-          report_results(
-            res[failures],
-            emoji_prefix = "x",
-            verbose = TRUE
-          )
-        })
-        reporting_titles$fail <- glue::glue("Failures ({sum(failures)})")
+        callModule(results_boxes_server, "Validation Results", res)
       })
     })
 
@@ -501,7 +525,11 @@ app_server <- function(input, output, session) {
       valueBox(
         length(
           unique(
-            c(indiv()$individualID, biosp()$individualID)
+            c(
+              indiv()$individualID,
+              biosp()$individualID,
+              manifest()$individualID
+            )
           )
         ),
         "Individuals",

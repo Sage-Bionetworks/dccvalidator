@@ -1,7 +1,7 @@
 Package: dccvalidator
 Title: Validate CNS Data and Metadata
 Version: 0.0.0.9010
-Authors@R: 
+Authors@R:
     c(person(given = "Kara",
              family = "Woo",
              role = c("aut", "cre"),
@@ -19,6 +19,8 @@ Authors@R:
 Description: Performs automatic checks for common data/metadata quality
     issues.
 License: MIT + file LICENSE
+URL: https://sage-bionetworks.github.io/dccvalidator/,
+    https://github.com/Sage-Bionetworks/dccvalidator
 Depends:
     R (>= 3.4),
     shinyBS
@@ -33,17 +35,15 @@ Imports:
     markdown,
     pkgload,
     purrr,
-    PythonEmbedInR,
     readxl,
+    reticulate,
     rlang,
     shiny,
     shinydashboard,
-    shinyjs,
+    shinyjs (>= 1.0.1.9006),
     skimr,
     stats,
     stringr,
-    synapser,
-    syndccutils (>= 0.0.0.9001),
     tibble,
     tools,
     utils,
@@ -56,11 +56,11 @@ Suggests:
 VignetteBuilder: 
     knitr
 Remotes:
-    hadley/emo,
-    Sage-Bionetworks/syndccutils/R
-Additional_repositories: http://ran.synapse.org
+    daattali/shinyjs,
+    hadley/emo
 ByteCompile: true
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
+SystemRequirements: synapseclient (pypi.org/project/synapseclient)

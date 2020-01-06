@@ -136,30 +136,7 @@ app_ui <- function(request) {
                   tabPanel(
                     "Validation Results",
                     br(),
-                    shinydashboard::box(
-                      uiOutput("successes"),
-                      solidHeader = TRUE,
-                      collapsible = TRUE,
-                      title = textOutput("num_success"),
-                      status = "success",
-                      width = 12
-                    ),
-                    shinydashboard::box(
-                      uiOutput("warnings"),
-                      solidHeader = TRUE,
-                      collapsible = TRUE,
-                      title = textOutput("num_warn"),
-                      status = "warning",
-                      width = 12
-                    ),
-                    shinydashboard::box(
-                      uiOutput("failures"),
-                      solidHeader = TRUE,
-                      collapsible = TRUE,
-                      title = textOutput("num_fail"),
-                      status = "danger",
-                      width = 12
-                    )
+                    results_boxes_ui("Validation Results")
                   ),
                   tabPanel(
                     "Data summary",
@@ -202,7 +179,8 @@ app_ui <- function(request) {
           upload_documents_ui(
             id = "documentation",
             study_link_human = config::get("study_link_human"),
-            study_link_animal = config::get("study_link_animal")
+            study_link_animal = config::get("study_link_animal"),
+            study_link_ref = config::get("study_link_ref")
           )
         ),
         class = "tab-content"

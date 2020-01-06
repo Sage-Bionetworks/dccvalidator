@@ -4,13 +4,15 @@
 \alias{valid_annotation_keys}
 \title{Valid annotation keys}
 \usage{
-valid_annotation_keys(x, annotations, ...)
+valid_annotation_keys(x, annotations, syn, ...)
 }
 \arguments{
 \item{x}{An object to check.}
 
 \item{annotations}{A data frame of annotation definitions. Must contain at
 least three columns: \code{key}, \code{value}, and \code{columnType}.}
+
+\item{syn}{Synapse client object}
 
 \item{...}{Additional parameters passed to \code{\link[=check_keys]{check_keys()}}}
 }
