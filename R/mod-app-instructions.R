@@ -6,7 +6,8 @@ get_markdown <- function() {
     output = glue::glue(
       tools::file_path_sans_ext(config::get("path_to_markdown")), ".md"
     ),
-    quiet = TRUE)
+    quiet = TRUE), 
+    stylesheet = system.file("app/www/custom.css", package = "dccvalidator")
     )
     )
 }
