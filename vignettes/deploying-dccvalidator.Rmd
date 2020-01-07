@@ -37,6 +37,14 @@ stand up a new version that is customized for a different community):
 1. If needed, make any changes to the application's behavior by editing the
    files, or check out a branch that contains your changes
 1. To ensure packages are up-to-date, open an R session and run `renv::restore()`
+1. To ensure each connection has its own R process, the Sage Shiny Server administrator must configure the utilization scheduler. This is not necessary for the app to function, but might improve performance.
+```
+location /users {
+  location /yourusername/yourappname {
+    utilization_scheduler 1 0.7 10;
+  }
+}
+```
 
 Again, you may need to run `touch restart.txt` afterward to ensure the
 application is restarted.

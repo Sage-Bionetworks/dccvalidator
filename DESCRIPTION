@@ -1,6 +1,6 @@
 Package: dccvalidator
 Title: Validate Data and Metadata
-Version: 0.0.0.9009
+Version: 0.0.0.9011
 Authors@R:
     c(person(given = "Kara",
              family = "Woo",
@@ -33,6 +33,8 @@ Imports:
     golem,
     jsonlite,
     jsonvalidate (>= 1.2.2),
+    knitr,
+    markdown,
     pkgload,
     purrr,
     readxl,
@@ -50,7 +52,6 @@ Imports:
     visdat
 Suggests:
     covr,
-    knitr,
     rmarkdown (>= 1.16.2),
     testthat,
     withr

@@ -21,9 +21,16 @@ test_that("check_files_manifest returns check_fail if no path column", {
   expect_true(inherits(res, "check_fail"))
 })
 
-test_that("check_files_manifest returns check_fail if files are missing", {
+test_that("check_files_manifest returns check_warn if files are missing", {
   manifest <- data.frame(path = c("a.csv", "b.txt"), stringsAsFactors = FALSE)
   res <- check_files_manifest(manifest, "test.csv")
+  expect_true(inherits(res, "check_warn"))
+  expect_equal(res$data, "test.csv")
+})
+
+test_that("check_files_manifest returns check_fail if strict = TRUE", {
+  manifest <- data.frame(path = c("a.csv", "b.txt"), stringsAsFactors = FALSE)
+  res <- check_files_manifest(manifest, "test.csv", strict = TRUE)
   expect_true(inherits(res, "check_fail"))
   expect_equal(res$data, "test.csv")
 })
@@ -31,7 +38,7 @@ test_that("check_files_manifest returns check_fail if files are missing", {
 test_that("check_files_manifest works if path column is a factor", {
   manifest <- data.frame(path = c("a.csv", "b.txt"))
   res <- check_files_manifest(manifest, "test.csv")
-  expect_true(inherits(res, "check_fail"))
+  expect_true(inherits(res, "check_warn"))
   expect_equal(res$data, "test.csv")
 })
 
@@ -48,7 +55,7 @@ test_that("check_files_manifest works with tibbles", {
   res1 <- check_files_manifest(manifest, c("a.csv"))
   res2 <- check_files_manifest(manifest, c("d.xlsx"))
   expect_true(inherits(res1, "check_pass"))
-  expect_true(inherits(res2, "check_fail"))
+  expect_true(inherits(res2, "check_warn"))
 })
 
 test_that("check_files_manifest avoids partial matching", {
@@ -57,7 +64,7 @@ test_that("check_files_manifest avoids partial matching", {
     path = c("c.docx", "d.xlsx")
   )
   res <- check_files_manifest(manifest, "a.csv")
-  expect_true(inherits(res, "check_fail"))
+  expect_true(inherits(res, "check_warn"))
   expect_equal(res$data, "a.csv")
 })
 
@@ -80,5 +87,5 @@ test_that("manifest can have full paths", {
   res1 <- check_files_manifest(manifest, "file.csv")
   res2 <- check_files_manifest(manifest, "file.txt")
   expect_true(inherits(res1, "check_pass"))
-  expect_true(inherits(res2, "check_fail"))
+  expect_true(inherits(res2, "check_warn"))
 })

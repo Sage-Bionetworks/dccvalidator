@@ -4,14 +4,17 @@
 \alias{check_files_manifest}
 \title{Check that files are present in manifest}
 \usage{
-check_files_manifest(manifest, filenames,
+check_files_manifest(manifest, filenames, strict = FALSE,
   success_msg = "All required files are present in manifest",
-  fail_msg = "Some files are missing from manifest")
+  fail_msg = "Some files may be missing from manifest")
 }
 \arguments{
 \item{manifest}{The manifest as a data frame or tibble}
 
 \item{filenames}{File names to look for in the \code{path} column of the manifest}
+
+\item{strict}{If \code{FALSE}, return a \code{"check_warn"} object; if \code{TRUE}, return a
+\code{"check_fail"} object}
 
 \item{success_msg}{Message indicating the check succeeded.}
 

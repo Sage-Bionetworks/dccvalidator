@@ -91,9 +91,10 @@ app_server <- function(input, output, session) {
     })
 
     ## Download annotation definitions
-    annots <- get_synapse_annotations(
-      synID = config::get("annotations_table"),
-      syn
+    annots <- purrr::map_dfr(
+      config::get("annotations_table"),
+      get_synapse_annotations,
+      syn = syn
     )
 
     ## Store files in separate variable to be able to reset inputs to NULL
