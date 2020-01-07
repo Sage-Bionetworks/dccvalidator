@@ -1,6 +1,6 @@
 default:
   parent: "syn20400157"
-  path_to_markdown: !expr system.file("using-the-dccvalidator-app-amp-ad.Rmd", package = "dccvalidator")
+    path_to_markdown: "inst/using-the-dccvalidator-app-amp-ad.Rmd"
   study_table: "syn11363298"
   annotations_table: "syn10242922"
   annotations_link: "https://shinypro.synapse.org/users/nsanati/annotationUI/"
