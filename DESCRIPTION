@@ -1,5 +1,5 @@
 Package: dccvalidator
-Title: Validate CNS Data and Metadata
+Title: Validate Data and Metadata
 Version: 0.0.0.9010
 Authors@R:
     c(person(given = "Kara",
