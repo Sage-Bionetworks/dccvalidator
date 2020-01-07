@@ -1,6 +1,6 @@
 default:
   parent: "syn20400157"
-  path_to_markdown: "vignettes/using-the-dccvalidator-app-amp-ad.Rmd"
+  path_to_markdown: !expr system.file("using-the-dccvalidator-app-amp-ad.Rmd", package = "dccvalidator")
   study_table: "syn11363298"
   annotations_table: "syn10242922"
   annotations_link: "https://shinypro.synapse.org/users/nsanati/annotationUI/"
@@ -72,7 +72,7 @@ amp-ad:
 
 pec:
   parent: "syn20825282"
-  path_to_markdown: "inst/using-the-dccvalidator-pec.Rmd"
+  path_to_markdown: !expr system.file("using-the-dccvalidator-pec.Rmd", package = "dccvalidator")
   study_table: "syn20968992"
   annotations_table: "syn20981788"
   annotations_link: "https://www.synapse.org/#!Synapse:syn20729790"
