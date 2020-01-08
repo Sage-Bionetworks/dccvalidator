@@ -1,5 +1,4 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-dist: xenial
 addons:
   chrome: stable
 language: R
@@ -38,7 +37,8 @@ r_github_packages:
 before_install:
   - pip install --user pandas
   - pip install --user synapseclient
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  - "export PHANTOMJS_VERSION=2.1.1"
+  - "export PATH=$PWD/travis_phantomjs/phantomjs-$PHANTOMJS_VERSION-linux-x86_64/bin:$PATH"
 
 after_success:
   - Rscript -e 'covr::codecov()'
