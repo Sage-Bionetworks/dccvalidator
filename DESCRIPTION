@@ -57,8 +57,7 @@ VignetteBuilder:
     knitr
 Remotes:
     daattali/shinyjs,
-    hadley/emo,
-    rstudio/shinytest
+    hadley/emo
 ByteCompile: true
 Encoding: UTF-8
 LazyData: true
