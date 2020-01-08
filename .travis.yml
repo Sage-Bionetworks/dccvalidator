@@ -36,6 +36,7 @@ r_github_packages:
 before_install:
   - pip install --user pandas
   - pip install --user synapseclient
+  - sudo apt-get -y install libv8-dev
 
 after_success:
   - Rscript -e 'covr::codecov()'

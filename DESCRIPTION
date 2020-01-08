@@ -1,6 +1,6 @@
 Package: dccvalidator
 Title: Validate Data and Metadata
-Version: 0.0.0.9010
+Version: 0.0.0.9011
 Authors@R:
     c(person(given = "Kara",
              family = "Woo",
@@ -31,6 +31,8 @@ Imports:
     ggplot2,
     glue,
     golem,
+    jsonlite,
+    jsonvalidate (>= 1.2.2),
     knitr,
     markdown,
     pkgload,
@@ -57,7 +59,8 @@ VignetteBuilder:
     knitr
 Remotes:
     daattali/shinyjs,
-    hadley/emo
+    hadley/emo,
+    ropensci/jsonvalidate
 ByteCompile: true
 Encoding: UTF-8
 LazyData: true

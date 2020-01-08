@@ -62,6 +62,13 @@
       "Repository": "CRAN",
       "Hash": "084336e3a1a0d358337525d7a394bb8b"
     },
+    "V8": {
+      "Package": "V8",
+      "Version": "2.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "0287ba9640c1a28f389859b0d3c41cfc"
+    },
     "askpass": {
       "Package": "askpass",
       "Version": "1.1",
@@ -183,10 +190,10 @@
     },
     "curl": {
       "Package": "curl",
-      "Version": "4.2",
+      "Version": "4.3",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "63410438360944341b6bba487340a466"
+      "Hash": "f42ae4b12d342a357cc551ca1ecd8cc1"
     },
     "dccvalidator": {
       "Package": "dccvalidator",
@@ -391,6 +398,18 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "b7e67b6a7bc2fdae729c0f3ff9026a8a"
+    },
+    "jsonvalidate": {
+      "Package": "jsonvalidate",
+      "Version": "1.2.2",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "jsonvalidate",
+      "RemoteUsername": "ropensci",
+      "RemoteRef": "master",
+      "RemoteSha": "ab6c6fe389870370bb29234c6d76047540d1a973",
+      "Hash": "0a5645af7e88d58adfad5604cdc6a15f"
     },
     "knitr": {
       "Package": "knitr",
