@@ -106,10 +106,10 @@
     },
     "callr": {
       "Package": "callr",
-      "Version": "3.4.0",
+      "Version": "3.3.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "23343bb7e834a6de377ca84d4504de72"
+      "Hash": "3826226af5ca33cd8fa0b1d9c190b300"
     },
     "cellranger": {
       "Package": "cellranger",
@@ -190,15 +190,15 @@
     },
     "dccvalidator": {
       "Package": "dccvalidator",
-      "Version": "0.0.0.9009",
+      "Version": "0.0.0.9010",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "Sage-Bionetworks",
       "RemoteRepo": "dccvalidator",
       "RemoteRef": "master",
-      "RemoteSha": "26ba9fc788065de45537c699c44b782041f39ee5",
-      "Hash": "3b464c9368dd061564bb09f6dd208a29"
+      "RemoteSha": "c02818a55a4a42b7e97588635a8c51b087c2c102",
+      "Hash": "7790b79a599abd4301553c191abc15b8"
     },
     "desc": {
       "Package": "desc",
