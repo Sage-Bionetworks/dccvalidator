@@ -203,8 +203,18 @@ check_type <- function(values, key, annotations, whitelist_values = NULL,
     ## need to be sure to get a vector if annotations is a tibble
     coltype <- unlist(coltype)
   }
+  coltype <- unique(as.character(coltype))
+  # coltype should be unique, if not then switch() will fail, so let's stop with
+  # an informative error
+  if (length(coltype) != 1) {
+    stop(
+      glue::glue("Cannot validate values for key '{key}' because multiple valid types were found. Please contact an administrator to fix the data dictionary."), # nolint
+      call. = FALSE
+    )
+  }
+
   correct_class <- switch(
-    unique(as.character(coltype)),
+    coltype,
     "STRING" = "character",
     "BOOLEAN" = "logical",
     "INTEGER" = "integer",

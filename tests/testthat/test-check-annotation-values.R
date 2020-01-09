@@ -401,6 +401,12 @@ test_that("whitelist_values works in check_type", {
   )
 })
 
+test_that("Multiple column types produces an error", {
+  annotations <- tibble(key = c("x", "x"), columnType = c("STRING", "DOUBLE"))
+  a <- c("a")
+  expect_error(check_type(a, "x", annotations, return_valid = FALSE))
+})
+
 ## can_coerce() ----------------------------------------------------------------
 
 test_that("can_coerce() returns TRUE for numeric/integer/boolean->character", {
