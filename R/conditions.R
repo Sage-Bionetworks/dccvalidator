@@ -12,6 +12,26 @@
 #' @param data Data to return (e.g. invalid values that need attention)
 #' @return An S3 object of class "check_pass", "check_warn", or "check_fail"
 #' @export
+#' @examples
+#' check_pass(msg = "Success!", behavior = "Files should be complete")
+#' check_warn(
+#'   msg = "Warning, some data is missing",
+#'   behavior = "Files should be complete",
+#'   data = c("specimenID", "assay") # columns with missing data
+#' )
+#' check_fail(
+#'   msg = "Error, some required data is missing",
+#'   behavior = "Files should be complete",
+#'   data = c("specimenID", "assay") # columns with missing data
+#' )
+#'
+#' strict <- TRUE
+#' check_condition(
+#'   msg = "Some data is missing",
+#'   behavior = "Files should be complete",
+#'   data = c("specimenID", "assay"),
+#'   type = ifelse(strict, "check_fail", "check_warn")
+#' )
 check_pass <- function(msg, behavior, data = NULL) {
   rlang::message_cnd(
     "check_pass",

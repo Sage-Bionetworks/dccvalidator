@@ -26,7 +26,20 @@ provided, all values for the given keys will be treated as valid.}
 
 \item{syn}{Synapse client object}
 }
+\value{
+A condition object indicating whether keys match the given annotation
+dictionary. Erroneous keys are included as data within the object.
+}
 \description{
 Check that a given set of keys are all present in an annotations dictionary
 }
-\keyword{internal}
+\examples{
+annots <- data.frame(
+  key = c("fileFormat", "fileFormat"),
+  value = c("txt", "csv"),
+  columnType = c("STRING", "STRING"),
+  stringsAsFactors = FALSE
+)
+check_keys("fileFormat", annots)
+check_keys("x", annots)
+}

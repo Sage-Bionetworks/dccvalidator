@@ -33,13 +33,23 @@ against that type, with values that are coercible to the correct type treated
 as valid (see \code{\link[=can_coerce]{can_coerce()}}).
 }
 \examples{
+annots <- data.frame(
+  key = c("assay", "fileFormat", "fileFormat", "fileFormat", "species"),
+  value = c("rnaSeq", "fastq", "txt", "csv", "Human"),
+  columnType = c("STRING", "STRING", "STRING", "STRING", "STRING")
+)
+dat1 <- data.frame(assay = "not a valid assay")
+dat2 <- data.frame(assay = "rnaSeq")
+check_annotation_values(dat1, annots)
+check_annotation_values(dat2, annots)
+
 \dontrun{
 syn <- synapse$Synapse()
 syn$login()
 
-annots <- get_synapse_annotations()
+annots <- get_synapse_annotations(syn = syn)
 my_file <- syn$get("syn11931757", downloadFile = FALSE)
-check_annotation_values(my_file, annots, syn)
+check_annotation_values(my_file, annots)
 
 dat <- data.frame(
   non_annotation = 5:7,

@@ -52,6 +52,9 @@ present (\code{"check_pass"}) or absent (\code{"check_fail"}).
 Check column names against their corresponding template
 }
 \examples{
+template <- c("individualID", "specimenID", "assay")
+dat <- data.frame(individualID = c("a", "b"), specimenID = c("a1", "b1"))
+check_col_names(dat, template)
 \dontrun{
 syn <- synapse$Synapse()
 syn$login()

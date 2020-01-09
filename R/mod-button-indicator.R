@@ -14,7 +14,6 @@
 #' Wrap the button in this function to attach visual features
 #'
 #' @export
-#' @keywords internal
 #' @param button a shiny actionButton
 with_busy_indicator_ui <- function(button) {
   id <- button[["attribs"]][["id"]]
@@ -48,7 +47,6 @@ with_busy_indicator_ui <- function(button) {
 #' message displayed is from the error that was thrown.
 #'
 #' @export
-#' @keywords internal
 #' @rdname with_busy_indicator_ui
 #' @param button_id id of shiny actionButton
 #' @param expr the code to run when the button is clicked

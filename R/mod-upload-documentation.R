@@ -4,7 +4,7 @@
 #' describe the study and assay(s) that make up the study. It allows the user to
 #' indicate the name of their study and upload documentation files.
 #'
-#' @keywords internal
+#' @noRd
 #' @param id the module id
 #' @param study_link_human html link to example of a study using human data
 #' @param study_link_animal html link to example of a study using animal models
@@ -79,7 +79,7 @@ upload_documents_ui <- function(id, study_link_human,
 
 #' Server function for upload_documentation module
 #'
-#' @keywords internal
+#' @noRd
 #' @rdname upload_documents_ui
 #' @inheritParams get_synapse_table
 #' @inheritParams create_folder
@@ -154,6 +154,7 @@ upload_documents_server <- function(input, output, session,
 #' If study_link_ref is an empty string, then the acknowledgement
 #' instructions are not added.
 #'
+#' @noRd
 #' @inheritParams upload_documents_ui
 #' @return html taglist with instructions
 upload_docs_instruct_text <- function(study_link_human, study_link_animal,

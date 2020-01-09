@@ -30,3 +30,24 @@ These functions create custom condition objects with subclasses "check_pass",
 \code{\link[dccvalidator:check_col_names]{dccvalidator::check_col_names()}} use these to report results and provide
 additional data on the source of errors or invalid data if needed.
 }
+\examples{
+check_pass(msg = "Success!", behavior = "Files should be complete")
+check_warn(
+  msg = "Warning, some data is missing",
+  behavior = "Files should be complete",
+  data = c("specimenID", "assay") # columns with missing data
+)
+check_fail(
+  msg = "Error, some required data is missing",
+  behavior = "Files should be complete",
+  data = c("specimenID", "assay") # columns with missing data
+)
+
+strict <- TRUE
+check_condition(
+  msg = "Some data is missing",
+  behavior = "Files should be complete",
+  data = c("specimenID", "assay"),
+  type = ifelse(strict, "check_fail", "check_warn")
+)
+}

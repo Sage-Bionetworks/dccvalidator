@@ -12,6 +12,10 @@
 #'   not (`"check_fail"`). Mismatched IDs are included as data within the
 #'   object.
 #' @export
+#' @examples
+#' a <- data.frame(individualID = LETTERS[1:3])
+#' b <- data.frame(individualID = LETTERS[1:4])
+#' check_ids_match(a, b, idcol = "individualID", xname = "a", yname = "b")
 check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
                             xname = NULL, yname = NULL, bidirectional = TRUE) {
   if (is.null(x) | is.null(y)) {

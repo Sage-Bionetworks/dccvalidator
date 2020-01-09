@@ -23,3 +23,14 @@ A vector of valid annotation keys present in \code{x}.
 Checks for and returns the valid annotation keys in a data framae, Synapse
 file, or Synapse file view.
 }
+\examples{
+annots <- data.frame(
+  key = c("assay", "fileFormat", "fileFormat", "fileFormat", "species"),
+  value = c("rnaSeq", "fastq", "txt", "csv", "Human"),
+  columnType = c("STRING", "STRING", "STRING", "STRING", "STRING")
+)
+dat1 <- data.frame(x = 1)
+dat2 <- data.frame(assay = "rnaSeq")
+valid_annotation_keys(dat1, annots)
+valid_annotation_keys(dat2, annots)
+}

@@ -15,6 +15,16 @@
 #' @seealso [valid_annotation_keys()]
 #'
 #' @examples
+#' annots <- data.frame(
+#'   key = c("assay", "fileFormat", "fileFormat", "fileFormat", "species"),
+#'   value = c("rnaSeq", "fastq", "txt", "csv", "Human"),
+#'   columnType = c("STRING", "STRING", "STRING", "STRING", "STRING")
+#' )
+#' dat1 <- data.frame(x = 1)
+#' dat2 <- data.frame(assay = "rnaSeq")
+#' check_annotation_keys(dat1, annots)
+#' check_annotation_keys(dat2, annots)
+#'
 #' \dontrun{
 #' syn <- synapse$Synapse()
 #' syn$login()
@@ -93,6 +103,16 @@ check_annotation_keys.synapseclient.table.CsvFileTable <- function(x, annotation
 #' @inheritParams get_synapse_annotations
 #' @return A vector of valid annotation keys present in `x`.
 #' @export
+#' @examples
+#' annots <- data.frame(
+#'   key = c("assay", "fileFormat", "fileFormat", "fileFormat", "species"),
+#'   value = c("rnaSeq", "fastq", "txt", "csv", "Human"),
+#'   columnType = c("STRING", "STRING", "STRING", "STRING", "STRING")
+#' )
+#' dat1 <- data.frame(x = 1)
+#' dat2 <- data.frame(assay = "rnaSeq")
+#' valid_annotation_keys(dat1, annots)
+#' valid_annotation_keys(dat2, annots)
 valid_annotation_keys <- function(x, annotations, syn, ...) {
   UseMethod("valid_annotation_keys", x)
 }
@@ -145,8 +165,19 @@ valid_annotation_keys.synapseclient.table.CsvFileTable <- function(x, annotation
 
 #' Check that a given set of keys are all present in an annotations dictionary
 #'
-#' @keywords internal
 #' @inheritParams check_values
+#' @return A condition object indicating whether keys match the given annotation
+#'   dictionary. Erroneous keys are included as data within the object.
+#' @export
+#' @examples
+#' annots <- data.frame(
+#'   key = c("fileFormat", "fileFormat"),
+#'   value = c("txt", "csv"),
+#'   columnType = c("STRING", "STRING"),
+#'   stringsAsFactors = FALSE
+#' )
+#' check_keys("fileFormat", annots)
+#' check_keys("x", annots)
 check_keys <- function(x, annotations, whitelist_keys = NULL,
                        success_msg = "All annotation keys are valid",
                        fail_msg = "Some annotation keys are invalid",

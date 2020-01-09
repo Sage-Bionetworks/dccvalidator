@@ -30,4 +30,3 @@ From https://github.com/daattali/advanced-shiny/blob/master/busy-indicator/helpe
 Hint for making this work with modules by mmoise in PR#11
 Wrap the button in this function to attach visual features
 }
-\keyword{internal}

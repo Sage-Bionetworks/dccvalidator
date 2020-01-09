@@ -6,7 +6,18 @@
 #' @inheritParams get_synapse_annotations
 #' @param teams Team IDs to check membership in
 #' @param user User to check (e.g. output from syn$getUserProfile())
-#' @inheritParams get_user_teams
+#' @examples
+#' \dontrun{
+#' syn <- synapse$Synapse()
+#' syn$login()
+#' user <- syn$getUserProfile("dcctravistest")
+#' check_team_membership(teams = "3396691", user = user, syn = syn)
+#' check_team_membership(
+#'   teams = c("3397398", "3377637"),
+#'   user = user,
+#'   syn = syn
+#' )
+#' }
 check_team_membership <- function(teams, user, syn) {
   user_teams <- get_user_teams(user, syn = syn)
   team_names <- glue::glue_collapse(

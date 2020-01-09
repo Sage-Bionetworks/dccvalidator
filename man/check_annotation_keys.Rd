@@ -26,6 +26,16 @@ are valid annotations. \code{check_annotation_keys()} returns any invalid
 annotation keys; \code{valid_annotation_keys()} returns \emph{valid} annotation keys.
 }
 \examples{
+annots <- data.frame(
+  key = c("assay", "fileFormat", "fileFormat", "fileFormat", "species"),
+  value = c("rnaSeq", "fastq", "txt", "csv", "Human"),
+  columnType = c("STRING", "STRING", "STRING", "STRING", "STRING")
+)
+dat1 <- data.frame(x = 1)
+dat2 <- data.frame(assay = "rnaSeq")
+check_annotation_keys(dat1, annots)
+check_annotation_keys(dat2, annots)
+
 \dontrun{
 syn <- synapse$Synapse()
 syn$login()
