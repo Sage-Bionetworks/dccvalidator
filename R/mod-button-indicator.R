@@ -1,20 +1,48 @@
 #' Show busy indicator
 #'
-#' These functions add button feedback features including:
-#' disabling the button while processing requested function,
-#' showing a spinning wheel while processing requested function,
-#' displaying a green checkmark showing success upon completion,
-#' or displaying an error message if the function requested failed.
+#' These functions add button feedback features including: disabling the button
+#' while processing requested function, showing a spinning wheel while
+#' processing requested function, displaying a green checkmark showing success
+#' upon completion, or displaying an error message if the function requested
+#' failed. They require the development version of
+#' [shinyjs](https://github.com/daattali/shinyjs) (>= 1.0.1.9006). With earlier
+#' versions, the buttons will succeed but visual indicator feedback will not
+#' appear.
 #'
-#' Author: Dean Attali
-#' From https://github.com/daattali/advanced-shiny/blob/master/busy-indicator/helpers.R #nolint
-#'
-#' Hint for making this work with modules by mmoise in PR#11
-
 #' Wrap the button in this function to attach visual features
 #'
+#' Author: Dean Attali
+#'
+#' Redistributed under MIT License from:
+#' https://github.com/daattali/advanced-shiny/blob/de590d593a0871848a3a31afd82584637decc972/busy-indicator/helpers.R
+#'
+#' Hint for making this work with modules by mmoisse in PR#11: https://github.com/daattali/advanced-shiny/pull/11
+#'
 #' @export
-#' @param button a shiny actionButton
+#' @param button A Shiny actionButton
+#' @examples
+#' library("shiny")
+#'
+#' server <- function(input, output) {
+#'   observeEvent(input$action, {
+#'     with_busy_indicator_server("action", {
+#'       Sys.sleep(1)
+#'       output$value <- renderPrint("Success!")
+#'     })
+#'   })
+#' }
+#'
+#' ui <- fluidPage(
+#'   includeCSS(
+#'    system.file("app/www/custom.css", package = "dccvalidator")
+#'   ),
+#'   with_busy_indicator_ui(actionButton("action", label = "Action")),
+#'   fluidRow(column(2, textOutput("value")))
+#' )
+#'
+#' \dontrun{
+#' shinyApp(ui, server)
+#' }
 with_busy_indicator_ui <- function(button) {
   id <- button[["attribs"]][["id"]]
   div(
