@@ -1,3 +1,4 @@
+# nolint start
 #' Show busy indicator
 #'
 #' These functions add button feedback features including: disabling the button
@@ -43,6 +44,7 @@
 #' \dontrun{
 #' shinyApp(ui, server)
 #' }
+# nolint end
 with_busy_indicator_ui <- function(button) {
   id <- button[["attribs"]][["id"]]
   div(
