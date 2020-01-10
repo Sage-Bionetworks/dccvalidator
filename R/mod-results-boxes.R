@@ -7,6 +7,39 @@
 #' @export
 #' @param id The module id.
 #' @return The html UI for the module.
+#' @examples
+#' library("shiny")
+#' library("shinydashboard")
+#'
+#' server <- function(input, output) {
+#'   # Create some sample results
+#'   res <- list(
+#'     check_pass(msg = "All good!", behavior = "Values should be >10"),
+#'     check_fail(
+#'       msg = "Some values are too small",
+#'       behavior = "Values should be > 10",
+#'       data = c(5.5, 1.3)
+#'     )
+#'   )
+#'   # Show results in boxes
+#'   callModule(results_boxes_server, "Validation Results", res)
+#' }
+#'
+#' ui <- function(request) {
+#'   dashboardPage(
+#'     header = dashboardHeader(),
+#'     sidebar = dashboardSidebar(),
+#'     body = dashboardBody(
+#'       includeCSS(
+#'         system.file("app/www/custom.css", package = "dccvalidator")
+#'       ),
+#'       results_boxes_ui("Validation Results")
+#'     )
+#'   )
+#' }
+#' \dontrun{
+#' shinyApp(ui, server)
+#' }
 results_boxes_ui <- function(id) {
   ns <- NS(id)
   tagList(
