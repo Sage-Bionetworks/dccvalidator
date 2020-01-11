@@ -58,11 +58,13 @@ check_annotation_values <- function(x, annotations, ...) {
 }
 
 #' @export
+#' @rdname check_annotation_values
 check_annotation_values.NULL <- function(x, annotations, ...) {
   return(NULL)
 }
 
 #' @export
+#' @rdname check_annotation_values
 check_annotation_values.synapseclient.entity.File <- function(x, annotations, syn, ...) { # nolint
   annots <- dict_to_list(syn$getAnnotations(x))
   check_values(
@@ -75,6 +77,7 @@ check_annotation_values.synapseclient.entity.File <- function(x, annotations, sy
 }
 
 #' @export
+#' @rdname check_annotation_values
 check_annotation_values.data.frame <- function(x, annotations, ...) {
   check_values(
     x,
@@ -85,6 +88,7 @@ check_annotation_values.data.frame <- function(x, annotations, ...) {
 }
 
 #' @export
+#' @rdname check_annotation_values
 check_annotation_values.synapseclient.table.CsvFileTable <- function(x, annotations, ...) { # nolint
   dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE, na.strings = "")
   fv_synapse_cols <- c(
@@ -128,11 +132,13 @@ valid_annotation_values <- function(x, annotations, ...) {
 }
 
 #' @export
+#' @rdname valid_annotation_values
 valid_annotation_values.NULL <- function(x, annotations, ...) {
   return(NULL)
 }
 
 #' @export
+#' @rdname valid_annotation_values
 valid_annotation_values.synapseclient.entity.File <- function(x, annotations, syn, ...) { # nolint
   annots <- dict_to_list(syn$getAnnotations(x))
   check_values(
@@ -144,6 +150,7 @@ valid_annotation_values.synapseclient.entity.File <- function(x, annotations, sy
 }
 
 #' @export
+#' @rdname valid_annotation_values
 valid_annotation_values.data.frame <- function(x, annotations, ...) {
   check_values(
     x,
@@ -154,6 +161,7 @@ valid_annotation_values.data.frame <- function(x, annotations, ...) {
 }
 
 #' @export
+#' @rdname valid_annotation_values
 valid_annotation_values.synapseclient.table.CsvFileTable <- function(x, annotations, ...) { # nolint
   dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE)
   fv_synapse_cols <- c(

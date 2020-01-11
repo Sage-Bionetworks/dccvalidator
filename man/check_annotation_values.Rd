@@ -2,9 +2,23 @@
 % Please edit documentation in R/check-annotation-values.R
 \name{check_annotation_values}
 \alias{check_annotation_values}
+\alias{check_annotation_values.NULL}
+\alias{check_annotation_values.synapseclient.entity.File}
+\alias{check_annotation_values.data.frame}
+\alias{check_annotation_values.synapseclient.table.CsvFileTable}
 \title{Check annotation values}
 \usage{
 check_annotation_values(x, annotations, ...)
+
+\method{check_annotation_values}{NULL}(x, annotations, ...)
+
+\method{check_annotation_values}{synapseclient.entity.File}(x, annotations,
+  syn, ...)
+
+\method{check_annotation_values}{data.frame}(x, annotations, ...)
+
+\method{check_annotation_values}{synapseclient.table.CsvFileTable}(x,
+  annotations, ...)
 }
 \arguments{
 \item{x}{An object to check.}
