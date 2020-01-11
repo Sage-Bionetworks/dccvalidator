@@ -8,7 +8,7 @@
 #' @param annotations A data frame of annotation definitions. Must contain at
 #'   least three columns: `key`, `value`, and `columnType`.
 #' @param ... Additional parameters passed to [`check_keys()`]
-#' @inheritParams get_synapse_annotations
+#' @param syn Synapse client object
 #' @return A condition object indicating whether keys match the given annotation
 #'   dictionary. Erroneous keys are included as data within the object.
 #' @export
@@ -34,7 +34,7 @@
 #' my_file <- syn$get("syn11931757", downloadFile = FALSE)
 #' check_annotation_keys(my_file, syn = syn)
 #' }
-check_annotation_keys <- function(x, annotations, syn, ...) {
+check_annotation_keys <- function(x, annotations, ...) {
   UseMethod("check_annotation_keys", x)
 }
 
@@ -90,10 +90,10 @@ check_annotation_keys.synapseclient.table.CsvFileTable <- function(x, annotation
 #' file, or Synapse file view.
 #'
 #' @inheritParams check_annotation_keys
-#' @inheritParams get_synapse_annotations
+#' @param syn Synapse client object
 #' @return A vector of valid annotation keys present in `x`.
 #' @export
-valid_annotation_keys <- function(x, annotations, syn, ...) {
+valid_annotation_keys <- function(x, annotations, ...) {
   UseMethod("valid_annotation_keys", x)
 }
 

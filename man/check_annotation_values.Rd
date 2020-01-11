@@ -4,7 +4,7 @@
 \alias{check_annotation_values}
 \title{Check annotation values}
 \usage{
-check_annotation_values(x, annotations, syn, ...)
+check_annotation_values(x, annotations, ...)
 }
 \arguments{
 \item{x}{An object to check.}
@@ -12,9 +12,9 @@ check_annotation_values(x, annotations, syn, ...)
 \item{annotations}{A data frame of annotation definitions. Must contain at
 least three columns: \code{key}, \code{value}, and \code{columnType}.}
 
-\item{syn}{Synapse client object}
-
 \item{...}{Additional options to \code{\link[=check_values]{check_values()}}}
+
+\item{syn}{Synapse client object}
 }
 \value{
 A condition object indicating whether all annotation values are

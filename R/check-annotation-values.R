@@ -11,8 +11,8 @@
 #' as valid (see [can_coerce()]).
 #'
 #' @inheritParams check_annotation_keys
-#' @inheritParams get_synapse_annotations
 #' @param ... Additional options to [`check_values()`]
+#' @param syn Synapse client object
 #' @return A condition object indicating whether all annotation values are
 #'   valid. Invalid annotation values are included as data within the object.
 #' @export
@@ -53,7 +53,7 @@
 #'   syn = syn
 #' )
 #' }
-check_annotation_values <- function(x, annotations, syn, ...) {
+check_annotation_values <- function(x, annotations, ...) {
   UseMethod("check_annotation_values", x)
 }
 
@@ -120,10 +120,10 @@ check_annotation_values.synapseclient.table.CsvFileTable <- function(x, annotati
 #' file, or Synapse file view.
 #'
 #' @inheritParams check_annotation_values
-#' @inheritParams get_synapse_annotations
+#' @param syn Synapse client object
 #' @return A named list of valid annotation values.
 #' @export
-valid_annotation_values <- function(x, annotations, syn, ...) {
+valid_annotation_values <- function(x, annotations, ...) {
   UseMethod("valid_annotation_values", x)
 }
 
