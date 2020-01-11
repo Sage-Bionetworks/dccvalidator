@@ -69,7 +69,7 @@ results_boxes_server <- function(input, output, session, results) {
       inherits(x, "check_pass")
     })
     output$successes <- renderUI({
-      report_results(results[successes], emoji_prefix = "check")
+      report_results(results[successes], emoji_prefix = "\u2705")
     })
     reporting_titles$success <- glue::glue("Successes ({sum(successes)})")
 
@@ -80,7 +80,7 @@ results_boxes_server <- function(input, output, session, results) {
     output$warnings <- renderUI({
       report_results(
         results[warnings],
-        emoji_prefix = "warning",
+        emoji_prefix = "\u26A0\uFE0F",
         verbose = TRUE
       )
     })
@@ -93,7 +93,7 @@ results_boxes_server <- function(input, output, session, results) {
     output$failures <- renderUI({
       report_results(
         results[failures],
-        emoji_prefix = "x",
+        emoji_prefix = "\u274c",
         verbose = TRUE
       )
     })

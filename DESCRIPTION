@@ -27,7 +27,6 @@ Depends:
 Imports:
     config,
     DT,
-    emo,
     ggplot2,
     glue,
     golem,
@@ -59,7 +58,6 @@ VignetteBuilder:
     knitr
 Remotes:
     daattali/shinyjs,
-    hadley/emo,
     ropensci/jsonvalidate
 ByteCompile: true
 Encoding: UTF-8
