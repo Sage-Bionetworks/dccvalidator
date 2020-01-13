@@ -28,6 +28,8 @@ Author: Dean Attali
 From https://github.com/daattali/advanced-shiny/blob/master/busy-indicator/helpers.R #nolint
 
 Hint for making this work with modules by mmoise in PR#11
-Wrap the button in this function to attach visual features
+
+Wrap the button in this function to attach visual features. This will only
+work with the current development version of shinyjs (>= 1.0.1.9006).
 }
 \keyword{internal}
