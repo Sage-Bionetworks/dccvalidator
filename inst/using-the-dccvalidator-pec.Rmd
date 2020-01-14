@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 We've built the dccvalidator tool to streamline the process of data validation
 and QA/QC. As the PsychENCODE (PEC) Knowledge Portal has grown to more than 39 contributing labs and over 90,000 data files, we've realized a need to be more standardized in our approaches to data curation. Thus, we built an application that performs many of the routine data quality checks we previously conducted by hand, with the hopes that it will help you, the data contributor, get your data checked, validated,nand shared easily and quickly.
 
-The application is hosted on a Shiny server [here](https://shinypro.synapse.org/users/kmontgomery/dccvalidator-app/).
+The application is hosted on a Shiny server [here](https://shinypro.synapse.org/users/kmontgomery/dccvalidator).
 
 # Instructions
 
