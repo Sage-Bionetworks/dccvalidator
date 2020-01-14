@@ -21,7 +21,7 @@ report_result <- function(result, emoji_prefix = NULL, verbose = FALSE) {
       class = "result",
       div(
         class = "wide",
-        emo::ji(emoji_prefix),
+        emoji_prefix,
         result$message,
         ## Include details drawer for verbose == TRUE
         tags$details(
@@ -42,7 +42,7 @@ report_result <- function(result, emoji_prefix = NULL, verbose = FALSE) {
       class = "result",
       div(
         class = "wide",
-        emo::ji(emoji_prefix),
+        emoji_prefix,
         result$message
       ),
       popify(

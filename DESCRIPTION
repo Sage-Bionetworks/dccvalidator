@@ -27,12 +27,11 @@ Depends:
 Imports:
     config,
     DT,
-    emo,
     ggplot2,
     glue,
     golem,
     jsonlite,
-    jsonvalidate (>= 1.2.2),
+    jsonvalidate,
     knitr,
     markdown,
     pkgload,
@@ -42,7 +41,7 @@ Imports:
     rlang,
     shiny,
     shinydashboard,
-    shinyjs (>= 1.0.1.9006),
+    shinyjs,
     skimr,
     stats,
     stringr,
@@ -57,10 +56,6 @@ Suggests:
     withr
 VignetteBuilder: 
     knitr
-Remotes:
-    daattali/shinyjs,
-    hadley/emo,
-    ropensci/jsonvalidate
 ByteCompile: true
 Encoding: UTF-8
 LazyData: true
