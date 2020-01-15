@@ -12,3 +12,8 @@ app_ui(request)
 \description{
 Create the UI component of the dccvalidator Shiny app.
 }
+\examples{
+\dontrun{
+shinyApp(ui = app_ui, server = app_server)
+}
+}

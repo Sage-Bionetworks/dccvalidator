@@ -4,6 +4,11 @@
 #' @export
 #' @importFrom shiny shinyApp
 #' @importFrom golem with_golem_options
+#' @examples
+#' \dontrun{
+#' library("dccvalidator")
+#' run_app()
+#' }
 run_app <- function(...) {
   with_golem_options(
     app = shinyApp(ui = app_ui, server = app_server),

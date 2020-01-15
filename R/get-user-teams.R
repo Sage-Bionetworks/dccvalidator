@@ -4,7 +4,7 @@
 #' current logged in user. You must be logged in to Synapse to use this
 #' function.
 #'
-#' @keywords internal
+#' @noRd
 #' @inheritParams get_synapse_annotations
 #' @param user Synapse user object (e.g. output from syn$getUserProfile())
 #' @return Character vector of team IDs the user belongs to

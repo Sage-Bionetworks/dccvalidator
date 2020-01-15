@@ -8,6 +8,10 @@
 #' @param output Shiny output
 #' @param session Shiny session
 #' @export
+#' @examples
+#' \dontrun{
+#' shinyApp(ui = app_ui, server = app_server)
+#' }
 app_server <- function(input, output, session) {
   syn <- synapse$Synapse()
 

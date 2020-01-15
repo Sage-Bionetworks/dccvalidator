@@ -31,8 +31,8 @@ This function will also return \code{TRUE} if the values are integers and the
 desired class is numeric.
 
 This function will \emph{not} affect validation of enumerated values, regardless
-of their class. It is only used by the \code{\link[=check_type]{check_type()}} function, which
-validates annotations that have a required type but no enumerated values.
+of their class. It is only used when validating annotations that have a
+required type but no enumerated values.
 }
 \examples{
 # Not run because function is not exported
@@ -50,6 +50,5 @@ can_coerce(2.5, "integer")
 }
 }
 \seealso{
-\code{\link[=check_annotation_values]{check_annotation_values()}}, \code{\link[=check_type]{check_type()}}
+\code{\link[=check_annotation_values]{check_annotation_values()}}
 }
-\keyword{internal}

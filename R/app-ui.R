@@ -6,6 +6,10 @@
 #' @import shinydashboard
 #' @param request Shiny request
 #' @export
+#' @examples
+#' \dontrun{
+#' shinyApp(ui = app_ui, server = app_server)
+#' }
 app_ui <- function(request) {
   dashboardPage(
     dashboardHeader(title = "Metadata Validation"),

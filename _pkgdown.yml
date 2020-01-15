@@ -10,6 +10,11 @@ reference:
   contents:
     - check_annotation_keys
     - check_annotation_values
+    - valid_annotation_keys
+    - valid_annotation_values
+    - check_keys
+    - check_values
+    - can_coerce
     - check_col_names
     - check_cols_manifest
     - check_cols_individual
@@ -23,11 +28,10 @@ reference:
     - check_specimen_ids_match
     - check_indiv_ids_dup
     - check_specimen_ids_dup
-    - check_keys
     - check_schema_json
     - check_schema_df
-    - valid_annotation_keys
-    - valid_annotation_values
+    - get_synapse_annotations
+    - get_synapse_table
     - get_template
     - df_to_json_list
 
@@ -39,12 +43,8 @@ reference:
     - app_server
     - app_ui
     - run_app
-    - get_study_ui
-    - get_study_server
     - with_busy_indicator_ui
     - with_busy_indicator_server
-    - upload_documents_ui
-    - upload_documents_server
     - results_boxes_ui
     - results_boxes_server
 
@@ -55,8 +55,6 @@ reference:
   contents:
     - check_certified_user
     - check_team_membership
-    - get_user_teams
-    - instructions
 
 - title: Validation helpers
   desc: >

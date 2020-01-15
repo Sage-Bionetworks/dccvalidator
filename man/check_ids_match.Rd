@@ -41,6 +41,9 @@ Ensure that all specimen IDS in two data frames match
 \examples{
 a <- data.frame(individualID = LETTERS[1:3])
 b <- data.frame(individualID = LETTERS[1:4])
+check_ids_match(a, b, idcol = "individualID", xname = "a", yname = "b")
+a <- data.frame(individualID = LETTERS[1:3])
+b <- data.frame(individualID = LETTERS[1:4])
 check_specimen_ids_match(a, b, "individual", "biospecimen")
 a <- data.frame(specimenID = LETTERS[1:3])
 b <- data.frame(specimenID = LETTERS[1:4])

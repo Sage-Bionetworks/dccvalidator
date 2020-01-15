@@ -12,3 +12,9 @@ run_app(...)
 \description{
 Run the Shiny application
 }
+\examples{
+\dontrun{
+library("dccvalidator")
+run_app()
+}
+}

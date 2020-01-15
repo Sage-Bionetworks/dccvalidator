@@ -7,7 +7,7 @@
 #' what the check was looking for (in the check object this message is stored in
 #' "behavior").
 #'
-#' @keywords internal
+#' @noRd
 #' @param result An object of type `check_pass`, `check_warn`, or `check_fail`
 #'   to report
 #' @param emoji_prefix Emoji prefix to accompany reported result
@@ -56,7 +56,7 @@ report_result <- function(result, emoji_prefix = NULL, verbose = FALSE) {
   }
 }
 
-#' @keywords internal
+#' @noRd
 #' @param results A list of condition objects
 #' @param ... Additional parameters passed to [report_result()]
 #' @rdname report_result
@@ -71,19 +71,19 @@ report_results <- function(results, ...) {
 #' data is a list, it creates an HTML table with two columns: one containing the
 #' list elements' names, and the other containing comma-separated values.
 #'
-#' @keywords internal
+#' @noRd
 #' @param x Content to be displayed
 show_details <- function(x) {
   UseMethod("show_details", x)
 }
 
-#' @keywords internal
+#' @noRd
 #' @rdname show_details
 show_details.default <- function(x) {
   paste0(x, collapse = ", ")
 }
 
-#' @keywords internal
+#' @noRd
 #' @rdname show_details
 show_details.list <- function(x) {
   dat <- purrr::map_dfr(x, function(x) {
@@ -99,7 +99,7 @@ show_details.list <- function(x) {
 #' If the user is not in the required teams or certified, creates a modal dialog
 #' indicating which teams they need to belong to and how to request access.
 #'
-#' @keywords internal
+#' @noRd
 #' @inheritParams get_synapse_table
 #' @param membership Output from [check_team_membership()]
 #' @param certified Output from [check_certified_user()]

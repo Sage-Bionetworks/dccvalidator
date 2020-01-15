@@ -37,3 +37,14 @@ A named list of valid annotation values.
 Checks for and returns the valid annotation valaues in a data frame, Synapse
 file, or Synapse file view.
 }
+\examples{
+annots <- data.frame(
+  key = c("assay", "fileFormat", "fileFormat", "fileFormat", "species"),
+  value = c("rnaSeq", "fastq", "txt", "csv", "Human"),
+  columnType = c("STRING", "STRING", "STRING", "STRING", "STRING")
+)
+dat1 <- data.frame(assay = "not a valid assay")
+dat2 <- data.frame(assay = "rnaSeq")
+valid_annotation_values(dat1, annots)
+valid_annotation_values(dat2, annots)
+}

@@ -10,6 +10,10 @@
 #'   present (`"check_pass"`) or absent (`"check_fail"`).
 #' @export
 #' @seealso [dccvalidator::get_template()]
+#' @examples
+#' template <- c("individualID", "specimenID", "assay")
+#' dat <- data.frame(individualID = c("a", "b"), specimenID = c("a1", "b1"))
+#' check_col_names(dat, template)
 check_col_names <- function(data, template, success_msg = NULL, fail_msg = NULL,
                             behavior = NULL) {
   if (is.null(data)) {
@@ -144,6 +148,12 @@ check_cols_biospecimen <- function(data, id,
 #' @param ... Additional arguments passed to syn$get()
 #' @return Character vector of template column names
 #' @export
+#' @examples
+#' \dontrun{
+#' syn <- synapse$Synapse()
+#' syn$login()
+#' get_template("syn12973252", syn = syn)
+#' }
 get_template <- function(synID, syn, ...) {
   template <- try(syn$get(synID, ...), silent = TRUE)
   if (inherits(template, "try-error")) {
