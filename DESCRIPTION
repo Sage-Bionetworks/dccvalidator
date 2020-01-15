@@ -39,6 +39,7 @@ Imports:
     markdown,
     pkgload,
     purrr,
+    readr,
     readxl,
     reticulate,
     rlang,

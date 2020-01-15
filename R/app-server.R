@@ -127,43 +127,25 @@ app_server <- function(input, output, session) {
       if (is.null(files$manifest)) {
         return(NULL)
       }
-      utils::read.table(
-        files$manifest$datapath,
-        sep = "\t",
-        header = TRUE,
-        na.strings = "",
-        stringsAsFactors = FALSE
-      )
+      readr::read_tsv(files$manifest$datapath)
     })
     indiv <- reactive({
       if (is.null(files$indiv)) {
         return(NULL)
       }
-      utils::read.csv(
-        files$indiv$datapath,
-        na.strings = "",
-        stringsAsFactors = FALSE
-      )
+      readr::read_csv(files$indiv$datapath)
     })
     biosp <- reactive({
       if (is.null(files$biosp)) {
         return(NULL)
       }
-      utils::read.csv(
-        files$biosp$datapath,
-        na.strings = "",
-        stringsAsFactors = FALSE
-      )
+      readr::read_csv(files$biosp$datapath)
     })
     assay <- reactive({
       if (is.null(files$assay)) {
         return(NULL)
       }
-      utils::read.csv(
-        files$assay$datapath,
-        na.strings = "",
-        stringsAsFactors = FALSE
-      )
+      readr::read_csv(files$assay$datapath)
     })
 
     # Location of templates
