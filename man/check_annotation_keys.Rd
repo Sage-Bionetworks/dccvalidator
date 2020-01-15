@@ -2,9 +2,23 @@
 % Please edit documentation in R/check-annotation-keys.R
 \name{check_annotation_keys}
 \alias{check_annotation_keys}
+\alias{check_annotation_keys.NULL}
+\alias{check_annotation_keys.synapseclient.entity.File}
+\alias{check_annotation_keys.data.frame}
+\alias{check_annotation_keys.synapseclient.table.CsvFileTable}
 \title{Check annotation keys}
 \usage{
-check_annotation_keys(x, annotations, syn, ...)
+check_annotation_keys(x, annotations, ...)
+
+\method{check_annotation_keys}{NULL}(x, annotations, ...)
+
+\method{check_annotation_keys}{synapseclient.entity.File}(x, annotations,
+  syn, ...)
+
+\method{check_annotation_keys}{data.frame}(x, annotations, ...)
+
+\method{check_annotation_keys}{synapseclient.table.CsvFileTable}(x,
+  annotations, ...)
 }
 \arguments{
 \item{x}{An object to check.}
@@ -12,9 +26,9 @@ check_annotation_keys(x, annotations, syn, ...)
 \item{annotations}{A data frame of annotation definitions. Must contain at
 least three columns: \code{key}, \code{value}, and \code{columnType}.}
 
-\item{syn}{Synapse client object}
-
 \item{...}{Additional parameters passed to \code{\link[=check_keys]{check_keys()}}}
+
+\item{syn}{Synapse client object}
 }
 \value{
 A condition object indicating whether keys match the given annotation

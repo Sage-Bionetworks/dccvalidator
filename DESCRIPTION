@@ -1,5 +1,5 @@
 Package: dccvalidator
-Title: Validate Data and Metadata
+Title: Metadata Validation for Data Coordinating Centers
 Version: 0.0.0.9011
 Authors@R:
     c(person(given = "Kara",
@@ -16,10 +16,13 @@ Authors@R:
              family = "Montgomery",
              role = "aut",
              email = "kelsey.montgomery@sagebase.org"))
-Description: Performs automatic checks for common data/metadata quality
-    issues.
+Description: Performs checks for common metadata quality issues. Used by the
+    data coordinating centers for the 'AMP-AD' consortium
+    (<https://adknowledgeportal.synapse.org>), 'PsychENCODE' consortium
+    (<http://www.psychencode.org>), and others to validate metadata prior to
+    data releases.
 License: MIT + file LICENSE
-URL: https://sage-bionetworks.github.io/dccvalidator/,
+URL: https://sage-bionetworks.github.io/dccvalidator,
     https://github.com/Sage-Bionetworks/dccvalidator
 Depends:
     R (>= 3.4),
@@ -27,12 +30,11 @@ Depends:
 Imports:
     config,
     DT,
-    emo,
     ggplot2,
     glue,
     golem,
     jsonlite,
-    jsonvalidate (>= 1.2.2),
+    jsonvalidate,
     knitr,
     markdown,
     pkgload,
@@ -42,7 +44,7 @@ Imports:
     rlang,
     shiny,
     shinydashboard,
-    shinyjs (>= 1.0.1.9006),
+    shinyjs,
     skimr,
     stats,
     stringr,
@@ -55,12 +57,8 @@ Suggests:
     rmarkdown (>= 1.16.2),
     testthat,
     withr
-VignetteBuilder: 
+VignetteBuilder:
     knitr
-Remotes:
-    daattali/shinyjs,
-    hadley/emo,
-    ropensci/jsonvalidate
 ByteCompile: true
 Encoding: UTF-8
 LazyData: true

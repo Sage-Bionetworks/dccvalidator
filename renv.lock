@@ -197,15 +197,15 @@
     },
     "dccvalidator": {
       "Package": "dccvalidator",
-      "Version": "0.0.0.9010",
+      "Version": "0.0.0.9011",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "Sage-Bionetworks",
       "RemoteRepo": "dccvalidator",
       "RemoteRef": "master",
-      "RemoteSha": "c02818a55a4a42b7e97588635a8c51b087c2c102",
-      "Hash": "7790b79a599abd4301553c191abc15b8"
+      "RemoteSha": "531375ccbc2e323d2c2f5bc4d70b02880c6b362d",
+      "Hash": "0efbac7c78190be952b066c0a4bcc47b"
     },
     "desc": {
       "Package": "desc",
@@ -253,18 +253,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "d9e858795a1a4ebfe6960e4514449d40"
-    },
-    "emo": {
-      "Package": "emo",
-      "Version": "0.0.0.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteUsername": "hadley",
-      "RemoteRepo": "emo",
-      "RemoteRef": "master",
-      "RemoteSha": "3f03b11491ce3d6fc5601e210927eff73bf8e350",
-      "RemoteHost": "api.github.com",
-      "Hash": "694ecb79904d7337aa366e09be9be791"
     },
     "evaluate": {
       "Package": "evaluate",
@@ -452,13 +440,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "670a552ae202a4f69e2e644f524dfffd"
-    },
-    "lubridate": {
-      "Package": "lubridate",
-      "Version": "1.7.4",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "d55fdb3732a8f047e49b86064dd78984"
     },
     "magrittr": {
       "Package": "magrittr",

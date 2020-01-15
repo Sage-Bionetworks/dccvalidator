@@ -24,6 +24,8 @@ test_that("check_col_names returns missing columns in the data", {
 })
 
 test_that("get_template fails when not logged in to Synapse", {
+  skip_if(is.null(syn))
+
   syn$logout()
   expect_error(get_template("syn12973252", syn))
 })
