@@ -24,14 +24,6 @@
 #'   behavior = "Files should be complete",
 #'   data = c("specimenID", "assay") # columns with missing data
 #' )
-#'
-#' strict <- TRUE
-#' check_condition(
-#'   msg = "Some data is missing",
-#'   behavior = "Files should be complete",
-#'   data = c("specimenID", "assay"),
-#'   type = ifelse(strict, "check_fail", "check_warn")
-#' )
 check_pass <- function(msg, behavior, data = NULL) {
   rlang::message_cnd(
     "check_pass",
@@ -70,6 +62,14 @@ check_fail <- function(msg, behavior, data = NULL) {
 #' @inheritParams check_pass
 #' @param type One of "check_pass", "check_warn", "check_fail"
 #' @export
+#' @examples
+#' strict <- TRUE
+#' check_condition(
+#'   msg = "Some data is missing",
+#'   behavior = "Files should be complete",
+#'   data = c("specimenID", "assay"),
+#'   type = ifelse(strict, "check_fail", "check_warn")
+#' )
 check_condition <- function(msg, behavior, data, type) {
   switch(
     type,
