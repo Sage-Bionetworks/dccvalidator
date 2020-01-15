@@ -2,12 +2,26 @@
 % Please edit documentation in R/mod-results-boxes.R
 \name{results_boxes_ui}
 \alias{results_boxes_ui}
+\alias{results_boxes_server}
 \title{UI function for results boxes module}
 \usage{
 results_boxes_ui(id)
+
+results_boxes_server(input, output, session, results)
 }
 \arguments{
 \item{id}{The module id.}
+
+\item{input}{The input from \code{\link[shiny:callModule]{shiny::callModule()}}.}
+
+\item{output}{The output from \code{\link[shiny:callModule]{shiny::callModule()}}.}
+
+\item{session}{The session from \code{\link[shiny:callModule]{shiny::callModule()}}.}
+
+\item{results}{List of the validation results. If \code{NULL},
+box titles will be default strings (i.e. "Successess (0)");
+otherwise, the boxes will be populated with the
+results.}
 }
 \value{
 The html UI for the module.
@@ -16,6 +30,10 @@ The html UI for the module.
 This function outputs the html tags needed to
 create UI for the successes, warnings, and
 failures results boxes.
+
+This gives functionality to the results boxes module
+UI, attaching titles and populating
+the validation results.
 }
 \examples{
 library("shiny")
