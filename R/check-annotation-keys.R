@@ -8,7 +8,7 @@
 #' @param annotations A data frame of annotation definitions. Must contain at
 #'   least three columns: `key`, `value`, and `columnType`.
 #' @param ... Additional parameters passed to [`check_keys()`]
-#' @inheritParams get_synapse_annotations
+#' @param syn Synapse client object
 #' @return A condition object indicating whether keys match the given annotation
 #'   dictionary. Erroneous keys are included as data within the object.
 #' @export
@@ -34,16 +34,18 @@
 #' my_file <- syn$get("syn11931757", downloadFile = FALSE)
 #' check_annotation_keys(my_file, syn = syn)
 #' }
-check_annotation_keys <- function(x, annotations, syn, ...) {
+check_annotation_keys <- function(x, annotations, ...) {
   UseMethod("check_annotation_keys", x)
 }
 
 #' @export
+#' @rdname check_annotation_keys
 check_annotation_keys.NULL <- function(x, annotations, ...) {
   return(NULL)
 }
 
 #' @export
+#' @rdname check_annotation_keys
 check_annotation_keys.synapseclient.entity.File <- function(x, annotations, syn, ...) { # nolint
   file_annots <- dict_to_list(syn$getAnnotations(x))
   check_keys(
@@ -55,11 +57,13 @@ check_annotation_keys.synapseclient.entity.File <- function(x, annotations, syn,
 }
 
 #' @export
+#' @rdname check_annotation_keys
 check_annotation_keys.data.frame <- function(x, annotations, ...) {
   check_keys(names(x), annotations, ..., return_valid = FALSE)
 }
 
 #' @export
+#' @rdname check_annotation_keys
 check_annotation_keys.synapseclient.table.CsvFileTable <- function(x, annotations, ...) { # nolint
   dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE)
   fv_synapse_cols <- c(
@@ -90,19 +94,21 @@ check_annotation_keys.synapseclient.table.CsvFileTable <- function(x, annotation
 #' file, or Synapse file view.
 #'
 #' @inheritParams check_annotation_keys
-#' @inheritParams get_synapse_annotations
+#' @param syn Synapse client object
 #' @return A vector of valid annotation keys present in `x`.
 #' @export
-valid_annotation_keys <- function(x, annotations, syn, ...) {
+valid_annotation_keys <- function(x, annotations, ...) {
   UseMethod("valid_annotation_keys", x)
 }
 
 #' @export
+#' @rdname valid_annotation_keys
 valid_annotation_keys.NULL <- function(x, annotations, ...) {
   return(NULL)
 }
 
 #' @export
+#' @rdname valid_annotation_keys
 valid_annotation_keys.synapseclient.entity.File <- function(x, annotations, syn, ...) { # nolint
   file_annots <- dict_to_list(syn$getAnnotations(x))
   check_keys(
@@ -114,11 +120,13 @@ valid_annotation_keys.synapseclient.entity.File <- function(x, annotations, syn,
 }
 
 #' @export
+#' @rdname valid_annotation_keys
 valid_annotation_keys.data.frame <- function(x, annotations, ...) {
   check_keys(names(x), annotations, ..., return_valid = TRUE)
 }
 
 #' @export
+#' @rdname valid_annotation_keys
 valid_annotation_keys.synapseclient.table.CsvFileTable <- function(x, annotations, ...) { # nolint
   dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE)
   fv_synapse_cols <- c(

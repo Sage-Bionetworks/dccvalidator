@@ -2,9 +2,23 @@
 % Please edit documentation in R/check-annotation-keys.R
 \name{valid_annotation_keys}
 \alias{valid_annotation_keys}
+\alias{valid_annotation_keys.NULL}
+\alias{valid_annotation_keys.synapseclient.entity.File}
+\alias{valid_annotation_keys.data.frame}
+\alias{valid_annotation_keys.synapseclient.table.CsvFileTable}
 \title{Valid annotation keys}
 \usage{
-valid_annotation_keys(x, annotations, syn, ...)
+valid_annotation_keys(x, annotations, ...)
+
+\method{valid_annotation_keys}{NULL}(x, annotations, ...)
+
+\method{valid_annotation_keys}{synapseclient.entity.File}(x, annotations,
+  syn, ...)
+
+\method{valid_annotation_keys}{data.frame}(x, annotations, ...)
+
+\method{valid_annotation_keys}{synapseclient.table.CsvFileTable}(x,
+  annotations, ...)
 }
 \arguments{
 \item{x}{An object to check.}
@@ -12,9 +26,9 @@ valid_annotation_keys(x, annotations, syn, ...)
 \item{annotations}{A data frame of annotation definitions. Must contain at
 least three columns: \code{key}, \code{value}, and \code{columnType}.}
 
-\item{syn}{Synapse client object}
-
 \item{...}{Additional parameters passed to \code{\link[=check_keys]{check_keys()}}}
+
+\item{syn}{Synapse client object}
 }
 \value{
 A vector of valid annotation keys present in \code{x}.

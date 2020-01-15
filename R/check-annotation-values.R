@@ -11,8 +11,8 @@
 #' as valid (see [can_coerce()]).
 #'
 #' @inheritParams check_annotation_keys
-#' @inheritParams get_synapse_annotations
 #' @param ... Additional options to [`check_values()`]
+#' @param syn Synapse client object
 #' @return A condition object indicating whether all annotation values are
 #'   valid. Invalid annotation values are included as data within the object.
 #' @export
@@ -53,16 +53,18 @@
 #'   syn = syn
 #' )
 #' }
-check_annotation_values <- function(x, annotations, syn, ...) {
+check_annotation_values <- function(x, annotations, ...) {
   UseMethod("check_annotation_values", x)
 }
 
 #' @export
+#' @rdname check_annotation_values
 check_annotation_values.NULL <- function(x, annotations, ...) {
   return(NULL)
 }
 
 #' @export
+#' @rdname check_annotation_values
 check_annotation_values.synapseclient.entity.File <- function(x, annotations, syn, ...) { # nolint
   annots <- dict_to_list(syn$getAnnotations(x))
   check_values(
@@ -75,6 +77,7 @@ check_annotation_values.synapseclient.entity.File <- function(x, annotations, sy
 }
 
 #' @export
+#' @rdname check_annotation_values
 check_annotation_values.data.frame <- function(x, annotations, ...) {
   check_values(
     x,
@@ -85,6 +88,7 @@ check_annotation_values.data.frame <- function(x, annotations, ...) {
 }
 
 #' @export
+#' @rdname check_annotation_values
 check_annotation_values.synapseclient.table.CsvFileTable <- function(x, annotations, ...) { # nolint
   dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE, na.strings = "")
   fv_synapse_cols <- c(
@@ -120,19 +124,21 @@ check_annotation_values.synapseclient.table.CsvFileTable <- function(x, annotati
 #' file, or Synapse file view.
 #'
 #' @inheritParams check_annotation_values
-#' @inheritParams get_synapse_annotations
+#' @param syn Synapse client object
 #' @return A named list of valid annotation values.
 #' @export
-valid_annotation_values <- function(x, annotations, syn, ...) {
+valid_annotation_values <- function(x, annotations, ...) {
   UseMethod("valid_annotation_values", x)
 }
 
 #' @export
+#' @rdname valid_annotation_values
 valid_annotation_values.NULL <- function(x, annotations, ...) {
   return(NULL)
 }
 
 #' @export
+#' @rdname valid_annotation_values
 valid_annotation_values.synapseclient.entity.File <- function(x, annotations, syn, ...) { # nolint
   annots <- dict_to_list(syn$getAnnotations(x))
   check_values(
@@ -144,6 +150,7 @@ valid_annotation_values.synapseclient.entity.File <- function(x, annotations, sy
 }
 
 #' @export
+#' @rdname valid_annotation_values
 valid_annotation_values.data.frame <- function(x, annotations, ...) {
   check_values(
     x,
@@ -154,6 +161,7 @@ valid_annotation_values.data.frame <- function(x, annotations, ...) {
 }
 
 #' @export
+#' @rdname valid_annotation_values
 valid_annotation_values.synapseclient.table.CsvFileTable <- function(x, annotations, ...) { # nolint
   dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE)
   fv_synapse_cols <- c(
