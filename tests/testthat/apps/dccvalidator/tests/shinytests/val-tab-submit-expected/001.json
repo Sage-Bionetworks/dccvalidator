@@ -1,0 +1,31 @@
+{
+  "input": {
+    "assay_meta": null,
+    "assay_name": "rnaSeq",
+    "biosp_meta": null,
+    "cookie": "",
+    "documentation-assay_doc": null,
+    "documentation-doc_study-study_choice": "",
+    "documentation-doc_study-study_exists": "Yes",
+    "documentation-doc_study-study_text": "",
+    "documentation-study_doc": null,
+    "documentation-upload_docs": 0,
+    "file_to_summarize": "",
+    "indiv_meta": null,
+    "instructions": 0,
+    "manifest": null,
+    "sidebarCollapsed": false,
+    "sidebarItemExpanded": null,
+    "species": "mouse or other animal model",
+    "study-study_choice": "",
+    "study-study_exists": "Yes",
+    "study-study_text": "",
+    "validate_btn": 1
+  },
+  "output": {
+
+  },
+  "export": {
+
+  }
+}

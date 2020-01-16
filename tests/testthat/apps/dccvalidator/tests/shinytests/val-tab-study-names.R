@@ -1,0 +1,13 @@
+app <- ShinyDriver$new("../../")
+app$snapshotInit("val-tab-study-names")
+
+app$waitFor("false", timeout = 5000)
+app$snapshot()
+app$setInputs(`study-study_exists` = "No")
+app$snapshot()
+app$setInputs(`study-study_text` = "test")
+app$snapshot()
+app$setInputs(`study-study_exists` = "Yes")
+app$snapshot()
+app$setInputs(`study-study_choice` = "ACT")
+app$snapshot()

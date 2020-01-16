@@ -1,0 +1,13 @@
+app <- ShinyDriver$new("../../")
+app$snapshotInit("val-tab-species")
+
+app$waitFor("false", timeout = 5000)
+app$snapshot()
+app$setInputs(species = "human")
+app$snapshot()
+app$setInputs(species = "drosophila")
+app$snapshot()
+app$setInputs(species = "human")
+app$snapshot()
+app$setInputs(species = "mouse or other animal model")
+app$snapshot()

@@ -1,0 +1,10 @@
+app <- ShinyDriver$new("../../")
+app$snapshotInit("docs-tab-submit")
+
+app$waitFor("false", timeout = 5000)
+app$setInputs(`documentation-upload_docs` = "click")
+app$snapshot()
+app$setInputs(`documentation-doc_study-study_exists` = "No")
+app$setInputs(`documentation-doc_study-study_text` = "test")
+app$setInputs(`documentation-upload_docs` = "click")
+app$snapshot()
