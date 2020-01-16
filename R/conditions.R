@@ -33,7 +33,6 @@ check_pass <- function(msg, behavior, data = NULL) {
   )
 }
 
-#' @inheritParams check_pass
 #' @export
 #' @rdname check_pass
 check_warn <- function(msg, behavior, data = NULL) {
@@ -45,7 +44,6 @@ check_warn <- function(msg, behavior, data = NULL) {
   )
 }
 
-#' @inheritParams check_pass
 #' @export
 #' @rdname check_pass
 check_fail <- function(msg, behavior, data = NULL) {
