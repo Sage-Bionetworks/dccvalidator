@@ -37,6 +37,17 @@ A named list of valid annotation values.
 Checks for and returns the valid annotation valaues in a data frame, Synapse
 file, or Synapse file view.
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{NULL}: Return NULL
+
+\item \code{synapseclient.entity.File}: Valid annotation values on a Synapse file
+
+\item \code{data.frame}: Valid annotation values in a data frame
+
+\item \code{synapseclient.table.CsvFileTable}: Valid annotation values in a Synapse table
+}}
+
 \examples{
 annots <- data.frame(
   key = c("assay", "fileFormat", "fileFormat", "fileFormat", "species"),
