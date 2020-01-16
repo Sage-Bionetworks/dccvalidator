@@ -6,12 +6,19 @@
 #' @import shinydashboard
 #' @param request Shiny request
 #' @export
+#' @examples
+#' \dontrun{
+#' shinyApp(ui = app_ui, server = app_server)
+#' }
 app_ui <- function(request) {
   dashboardPage(
     dashboardHeader(title = "Metadata Validation"),
 
     dashboardSidebar(
       sidebarMenu(
+        if (!is.na(config::get("path_to_markdown"))) {
+          menuItem("Using the App", tabName = "vignette")
+        },
         menuItem("Documentation", tabName = "documentation"),
         menuItem("Validator", tabName = "validator")
       ),
@@ -165,7 +172,13 @@ app_ui <- function(request) {
               )
             )
           ),
-
+          # Embedd How To Use App vignette
+          if (!is.na(config::get("path_to_markdown"))) {
+            tabItem(
+              tabName = "vignette",
+              get_markdown()
+            )
+          },
           # Documentation tab UI
           upload_documents_ui(
             id = "documentation",

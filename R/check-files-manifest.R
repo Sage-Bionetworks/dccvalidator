@@ -6,6 +6,8 @@
 #'
 #' @param manifest The manifest as a data frame or tibble
 #' @param filenames File names to look for in the `path` column of the manifest
+#' @param strict If `FALSE`, return a `"check_warn"` object; if `TRUE`, return a
+#'   `"check_fail"` object
 #' @inheritParams check_values
 #' @return A condition object indicating whether the files are present in the
 #'   `path` column of the manifest
@@ -23,10 +25,10 @@
 #'     "assay_metadata.csv"
 #'   )
 #' )
-check_files_manifest <- function(manifest, filenames,
+check_files_manifest <- function(manifest, filenames, strict = FALSE,
                                  # nolint start
                                  success_msg = "All required files are present in manifest",
-                                 fail_msg = "Some files are missing from manifest") {
+                                 fail_msg = "Some files may be missing from manifest") {
   # nolint end
   if (is.null(manifest) || is.null(filenames)) {
     return(NULL)
@@ -44,14 +46,15 @@ check_files_manifest <- function(manifest, filenames,
   }
   names_collapsed <- glue::glue_collapse(filenames, sep = ", ")
   behavior <- glue::glue(
-    "The following files should be present in the manifest: {names_collapsed}"
+    "The following files should be present in the manifest: {names_collapsed}. However, if this is an update to an existing study and the files have not changed since they were last released, this warning can be ignored." # nolint
   )
   missing <- setdiff(filenames, basename(manifest$path))
   if (length(missing) > 0) {
-    check_fail(
+    check_condition(
       msg = fail_msg,
       behavior = behavior,
-      data = missing
+      data = missing,
+      type = ifelse(strict, "check_fail", "check_warn")
     )
   } else {
     check_pass(

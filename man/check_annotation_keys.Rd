@@ -2,9 +2,23 @@
 % Please edit documentation in R/check-annotation-keys.R
 \name{check_annotation_keys}
 \alias{check_annotation_keys}
+\alias{check_annotation_keys.NULL}
+\alias{check_annotation_keys.synapseclient.entity.File}
+\alias{check_annotation_keys.data.frame}
+\alias{check_annotation_keys.synapseclient.table.CsvFileTable}
 \title{Check annotation keys}
 \usage{
-check_annotation_keys(x, annotations, syn, ...)
+check_annotation_keys(x, annotations, ...)
+
+\method{check_annotation_keys}{NULL}(x, annotations, ...)
+
+\method{check_annotation_keys}{synapseclient.entity.File}(x, annotations,
+  syn, ...)
+
+\method{check_annotation_keys}{data.frame}(x, annotations, ...)
+
+\method{check_annotation_keys}{synapseclient.table.CsvFileTable}(x,
+  annotations, ...)
 }
 \arguments{
 \item{x}{An object to check.}
@@ -12,9 +26,9 @@ check_annotation_keys(x, annotations, syn, ...)
 \item{annotations}{A data frame of annotation definitions. Must contain at
 least three columns: \code{key}, \code{value}, and \code{columnType}.}
 
-\item{syn}{Synapse client object}
-
 \item{...}{Additional parameters passed to \code{\link[=check_keys]{check_keys()}}}
+
+\item{syn}{Synapse client object}
 }
 \value{
 A condition object indicating whether keys match the given annotation
@@ -26,6 +40,16 @@ are valid annotations. \code{check_annotation_keys()} returns any invalid
 annotation keys; \code{valid_annotation_keys()} returns \emph{valid} annotation keys.
 }
 \examples{
+annots <- data.frame(
+  key = c("assay", "fileFormat", "fileFormat", "fileFormat", "species"),
+  value = c("rnaSeq", "fastq", "txt", "csv", "Human"),
+  columnType = c("STRING", "STRING", "STRING", "STRING", "STRING")
+)
+dat1 <- data.frame(x = 1)
+dat2 <- data.frame(assay = "rnaSeq")
+check_annotation_keys(dat1, annots)
+check_annotation_keys(dat2, annots)
+
 \dontrun{
 syn <- synapse$Synapse()
 syn$login()

@@ -20,3 +20,10 @@ Character vector of template column names
 \description{
 Get a template
 }
+\examples{
+\dontrun{
+syn <- synapse$Synapse()
+syn$login()
+get_template("syn12973252", syn = syn)
+}
+}

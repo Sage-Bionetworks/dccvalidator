@@ -4,9 +4,43 @@
 #' create UI for the successes, warnings, and
 #' failures results boxes.
 #'
+#' @rdname results_boxes
 #' @export
 #' @param id The module id.
 #' @return The html UI for the module.
+#' @examples
+#' library("shiny")
+#' library("shinydashboard")
+#'
+#' server <- function(input, output) {
+#'   # Create some sample results
+#'   res <- list(
+#'     check_pass(msg = "All good!", behavior = "Values should be >10"),
+#'     check_fail(
+#'       msg = "Some values are too small",
+#'       behavior = "Values should be > 10",
+#'       data = c(5.5, 1.3)
+#'     )
+#'   )
+#'   # Show results in boxes
+#'   callModule(results_boxes_server, "Validation Results", res)
+#' }
+#'
+#' ui <- function(request) {
+#'   dashboardPage(
+#'     header = dashboardHeader(),
+#'     sidebar = dashboardSidebar(),
+#'     body = dashboardBody(
+#'       includeCSS(
+#'         system.file("app/www/custom.css", package = "dccvalidator")
+#'       ),
+#'       results_boxes_ui("Validation Results")
+#'     )
+#'   )
+#' }
+#' \dontrun{
+#' shinyApp(ui, server)
+#' }
 results_boxes_ui <- function(id) {
   ns <- NS(id)
   tagList(
@@ -43,6 +77,7 @@ results_boxes_ui <- function(id) {
 #' UI, attaching titles and populating
 #' the validation results.
 #'
+#' @rdname results_boxes
 #' @export
 #' @param input The input from [shiny::callModule()].
 #' @param output The output from [shiny::callModule()].
@@ -69,7 +104,7 @@ results_boxes_server <- function(input, output, session, results) {
       inherits(x, "check_pass")
     })
     output$successes <- renderUI({
-      report_results(results[successes], emoji_prefix = "check")
+      report_results(results[successes], emoji_prefix = "\u2705")
     })
     reporting_titles$success <- glue::glue("Successes ({sum(successes)})")
 
@@ -80,7 +115,7 @@ results_boxes_server <- function(input, output, session, results) {
     output$warnings <- renderUI({
       report_results(
         results[warnings],
-        emoji_prefix = "warning",
+        emoji_prefix = "\u26A0\uFE0F",
         verbose = TRUE
       )
     })
@@ -93,7 +128,7 @@ results_boxes_server <- function(input, output, session, results) {
     output$failures <- renderUI({
       report_results(
         results[failures],
-        emoji_prefix = "x",
+        emoji_prefix = "\u274c",
         verbose = TRUE
       )
     })

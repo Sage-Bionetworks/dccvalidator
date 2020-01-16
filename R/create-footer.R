@@ -2,7 +2,7 @@
 #'
 #' The app footer shows a link to the issue tracker and a contact link.
 #'
-#' @keywords internal
+#' @noRd
 #' @param email Email address to contact
 #' @return A footer tag
 create_footer <- function(email) {

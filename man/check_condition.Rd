@@ -19,3 +19,12 @@ function was checking for)}
 \description{
 Create a condition of the given type
 }
+\examples{
+strict <- TRUE
+check_condition(
+  msg = "Some data is missing",
+  behavior = "Files should be complete",
+  data = c("specimenID", "assay"),
+  type = ifelse(strict, "check_fail", "check_warn")
+)
+}

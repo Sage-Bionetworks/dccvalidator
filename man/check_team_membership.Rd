@@ -16,3 +16,16 @@ check_team_membership(teams, user, syn)
 \description{
 Check if a user is a member of any of the given teams.
 }
+\examples{
+\dontrun{
+syn <- synapse$Synapse()
+syn$login()
+user <- syn$getUserProfile("dcctravistest")
+check_team_membership(teams = "3396691", user = user, syn = syn)
+check_team_membership(
+  teams = c("3397398", "3377637"),
+  user = user,
+  syn = syn
+)
+}
+}

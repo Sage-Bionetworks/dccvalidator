@@ -11,21 +11,31 @@
 #' as valid (see [can_coerce()]).
 #'
 #' @inheritParams check_annotation_keys
-#' @inheritParams get_synapse_annotations
 #' @param ... Additional options to [`check_values()`]
+#' @param syn Synapse client object
 #' @return A condition object indicating whether all annotation values are
 #'   valid. Invalid annotation values are included as data within the object.
 #' @export
 #' @seealso [valid_annotation_values()], [can_coerce()]
 #'
 #' @examples
+#' annots <- data.frame(
+#'   key = c("assay", "fileFormat", "fileFormat", "fileFormat", "species"),
+#'   value = c("rnaSeq", "fastq", "txt", "csv", "Human"),
+#'   columnType = c("STRING", "STRING", "STRING", "STRING", "STRING")
+#' )
+#' dat1 <- data.frame(assay = "not a valid assay")
+#' dat2 <- data.frame(assay = "rnaSeq")
+#' check_annotation_values(dat1, annots)
+#' check_annotation_values(dat2, annots)
+#'
 #' \dontrun{
 #' syn <- synapse$Synapse()
 #' syn$login()
 #'
-#' annots <- get_synapse_annotations()
+#' annots <- get_synapse_annotations(syn = syn)
 #' my_file <- syn$get("syn11931757", downloadFile = FALSE)
-#' check_annotation_values(my_file, annots, syn)
+#' check_annotation_values(my_file, annots)
 #'
 #' dat <- data.frame(
 #'   non_annotation = 5:7,
@@ -53,16 +63,18 @@
 #'   syn = syn
 #' )
 #' }
-check_annotation_values <- function(x, annotations, syn, ...) {
+check_annotation_values <- function(x, annotations, ...) {
   UseMethod("check_annotation_values", x)
 }
 
 #' @export
+#' @rdname check_annotation_values
 check_annotation_values.NULL <- function(x, annotations, ...) {
   return(NULL)
 }
 
 #' @export
+#' @rdname check_annotation_values
 check_annotation_values.synapseclient.entity.File <- function(x, annotations, syn, ...) { # nolint
   annots <- dict_to_list(syn$getAnnotations(x))
   check_values(
@@ -75,6 +87,7 @@ check_annotation_values.synapseclient.entity.File <- function(x, annotations, sy
 }
 
 #' @export
+#' @rdname check_annotation_values
 check_annotation_values.data.frame <- function(x, annotations, ...) {
   check_values(
     x,
@@ -85,6 +98,7 @@ check_annotation_values.data.frame <- function(x, annotations, ...) {
 }
 
 #' @export
+#' @rdname check_annotation_values
 check_annotation_values.synapseclient.table.CsvFileTable <- function(x, annotations, ...) { # nolint
   dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE, na.strings = "")
   fv_synapse_cols <- c(
@@ -120,19 +134,31 @@ check_annotation_values.synapseclient.table.CsvFileTable <- function(x, annotati
 #' file, or Synapse file view.
 #'
 #' @inheritParams check_annotation_values
-#' @inheritParams get_synapse_annotations
+#' @param syn Synapse client object
 #' @return A named list of valid annotation values.
 #' @export
-valid_annotation_values <- function(x, annotations, syn, ...) {
+#' @examples
+#' annots <- data.frame(
+#'   key = c("assay", "fileFormat", "fileFormat", "fileFormat", "species"),
+#'   value = c("rnaSeq", "fastq", "txt", "csv", "Human"),
+#'   columnType = c("STRING", "STRING", "STRING", "STRING", "STRING")
+#' )
+#' dat1 <- data.frame(assay = "not a valid assay")
+#' dat2 <- data.frame(assay = "rnaSeq")
+#' valid_annotation_values(dat1, annots)
+#' valid_annotation_values(dat2, annots)
+valid_annotation_values <- function(x, annotations, ...) {
   UseMethod("valid_annotation_values", x)
 }
 
 #' @export
+#' @rdname valid_annotation_values
 valid_annotation_values.NULL <- function(x, annotations, ...) {
   return(NULL)
 }
 
 #' @export
+#' @rdname valid_annotation_values
 valid_annotation_values.synapseclient.entity.File <- function(x, annotations, syn, ...) { # nolint
   annots <- dict_to_list(syn$getAnnotations(x))
   check_values(
@@ -144,6 +170,7 @@ valid_annotation_values.synapseclient.entity.File <- function(x, annotations, sy
 }
 
 #' @export
+#' @rdname valid_annotation_values
 valid_annotation_values.data.frame <- function(x, annotations, ...) {
   check_values(
     x,
@@ -154,6 +181,7 @@ valid_annotation_values.data.frame <- function(x, annotations, ...) {
 }
 
 #' @export
+#' @rdname valid_annotation_values
 valid_annotation_values.synapseclient.table.CsvFileTable <- function(x, annotations, ...) { # nolint
   dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE)
   fv_synapse_cols <- c(
@@ -187,15 +215,23 @@ valid_annotation_values.synapseclient.table.CsvFileTable <- function(x, annotati
 #'
 #' Given a vector of values, checks that they match the columnType as defined in
 #' the annotations dictionary. This check is somewhat permissive in that values
-#' that are coercible to the type are also treated as valid (see
-#' [can_coerce()]).
+#' that are coercible to the type are also treated as valid (see can_coerce()).
 #'
-#' @keywords internal
-#' @inheritParams check_value
+#' @inheritParams check_values
 #' @return A vector of invalid values (if `return_valid = FALSE`; otherwise a
 #'   vector of valid values).
-#' @rdname check_values
-#' @seealso [can_coerce()]
+#' @noRd
+#' @examples
+#' annotations <- data.frame(
+#'   key = "x",
+#'   columnType = "STRING",
+#'   value = NA,
+#'   stringsAsFactors = FALSE
+#' )
+#' a <- c("a", "b")
+#' b <- c(1, 2)
+#' check_type(a, "x", annotations)
+#' check_type(b, "x", annotations)
 check_type <- function(values, key, annotations, whitelist_values = NULL,
                        return_valid = FALSE) {
   coltype <- annotations[annotations$key == key, "columnType"]
@@ -203,8 +239,18 @@ check_type <- function(values, key, annotations, whitelist_values = NULL,
     ## need to be sure to get a vector if annotations is a tibble
     coltype <- unlist(coltype)
   }
+  coltype <- unique(as.character(coltype))
+  # coltype should be unique, if not then switch() will fail, so let's stop with
+  # an informative error
+  if (length(coltype) != 1) {
+    stop(
+      glue::glue("Cannot validate values for key '{key}' because multiple valid types were found. Please contact an administrator to fix the data dictionary."), # nolint
+      call. = FALSE
+    )
+  }
+
   correct_class <- switch(
-    unique(as.character(coltype)),
+    coltype,
     "STRING" = "character",
     "BOOLEAN" = "logical",
     "INTEGER" = "integer",
@@ -247,15 +293,15 @@ check_type <- function(values, key, annotations, whitelist_values = NULL,
 #' desired class is numeric.
 #'
 #' This function will *not* affect validation of enumerated values, regardless
-#' of their class. It is only used by the [check_type()] function, which
-#' validates annotations that have a required type but no enumerated values.
+#' of their class. It is only used when validating annotations that have a
+#' required type but no enumerated values.
 #'
-#' @keywords internal
 #' @param values Vector of values to check
 #' @param class Class of interest
 #' @return Boolean value; TRUE if `values` are coercible to `class`, `FALSE`
 #'   otherwise.
-#' @seealso [check_annotation_values()], [check_type()]
+#' @seealso [check_annotation_values()]
+#' @export
 #' @examples
 #' # Not run because function is not exported
 #' \dontrun{
@@ -284,13 +330,12 @@ can_coerce <- function(values, class) {
 
 #' Check values for one key
 #'
-#' @keywords internal
+#' @noRd
 #' @inheritParams get_synapse_annotations
 #' @param values The values of an annotation
 #' @param key An annotation key
 #' @inheritParams check_values
 #' @return A character vector of valid or invalid values
-#' @rdname check_values
 check_value <- function(values, key, annotations, whitelist_keys = NULL,
                         whitelist_values = NULL, return_valid = FALSE,
                         syn) {
@@ -329,7 +374,6 @@ check_value <- function(values, key, annotations, whitelist_keys = NULL,
 
 #' Check a set of keys and their values
 #'
-#' @keywords internal
 #' @inheritParams get_synapse_annotations
 #' @param x A data frame of annotation data
 #' @param annotations A data frame of annotations to check against
@@ -347,6 +391,19 @@ check_value <- function(values, key, annotations, whitelist_keys = NULL,
 #'   that contains invalid values, and the contents of each element is a vector
 #'   of invalid values. If `return_valid = TRUE`: a named list of the valid
 #'   annotation keys and values.
+#' @export
+#' @examples
+#' annots <- data.frame(
+#'   key = c("fileFormat", "fileFormat"),
+#'   value = c("txt", "csv"),
+#'   columnType = c("STRING", "STRING"),
+#'   stringsAsFactors = FALSE
+#' )
+#' dat <- data.frame(
+#'   fileFormat = c("wrong", "txt", "csv", "wrong again"),
+#'   stringsAsFactors = FALSE
+#' )
+#' check_values(dat, annots)
 check_values <- function(x, annotations, whitelist_keys = NULL,
                          whitelist_values = NULL,
                          success_msg = "All annotation values are valid",

@@ -2,7 +2,7 @@
 #'
 #' Creates and stores a folder on Synapse under the given parent.
 #'
-#' @keywords internal
+#' @noRd
 #' @inheritParams get_synapse_annotations
 #' @param parent Synapse ID of the parent where the folder should be created
 #' @param name Name of the folder to be created

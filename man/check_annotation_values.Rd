@@ -2,9 +2,23 @@
 % Please edit documentation in R/check-annotation-values.R
 \name{check_annotation_values}
 \alias{check_annotation_values}
+\alias{check_annotation_values.NULL}
+\alias{check_annotation_values.synapseclient.entity.File}
+\alias{check_annotation_values.data.frame}
+\alias{check_annotation_values.synapseclient.table.CsvFileTable}
 \title{Check annotation values}
 \usage{
-check_annotation_values(x, annotations, syn, ...)
+check_annotation_values(x, annotations, ...)
+
+\method{check_annotation_values}{NULL}(x, annotations, ...)
+
+\method{check_annotation_values}{synapseclient.entity.File}(x, annotations,
+  syn, ...)
+
+\method{check_annotation_values}{data.frame}(x, annotations, ...)
+
+\method{check_annotation_values}{synapseclient.table.CsvFileTable}(x,
+  annotations, ...)
 }
 \arguments{
 \item{x}{An object to check.}
@@ -12,9 +26,9 @@ check_annotation_values(x, annotations, syn, ...)
 \item{annotations}{A data frame of annotation definitions. Must contain at
 least three columns: \code{key}, \code{value}, and \code{columnType}.}
 
-\item{syn}{Synapse client object}
-
 \item{...}{Additional options to \code{\link[=check_values]{check_values()}}}
+
+\item{syn}{Synapse client object}
 }
 \value{
 A condition object indicating whether all annotation values are
@@ -33,13 +47,23 @@ against that type, with values that are coercible to the correct type treated
 as valid (see \code{\link[=can_coerce]{can_coerce()}}).
 }
 \examples{
+annots <- data.frame(
+  key = c("assay", "fileFormat", "fileFormat", "fileFormat", "species"),
+  value = c("rnaSeq", "fastq", "txt", "csv", "Human"),
+  columnType = c("STRING", "STRING", "STRING", "STRING", "STRING")
+)
+dat1 <- data.frame(assay = "not a valid assay")
+dat2 <- data.frame(assay = "rnaSeq")
+check_annotation_values(dat1, annots)
+check_annotation_values(dat2, annots)
+
 \dontrun{
 syn <- synapse$Synapse()
 syn$login()
 
-annots <- get_synapse_annotations()
+annots <- get_synapse_annotations(syn = syn)
 my_file <- syn$get("syn11931757", downloadFile = FALSE)
-check_annotation_values(my_file, annots, syn)
+check_annotation_values(my_file, annots)
 
 dat <- data.frame(
   non_annotation = 5:7,

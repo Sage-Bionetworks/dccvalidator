@@ -4,15 +4,18 @@
 \name{dccvalidator-package}
 \alias{dccvalidator}
 \alias{dccvalidator-package}
-\title{dccvalidator: Validate Data and Metadata}
+\title{dccvalidator: Metadata Validation for Data Coordinating Centers}
 \description{
-Performs automatic checks for common data/metadata quality
-    issues.
+Performs checks for common metadata quality issues. Used by the
+    data coordinating centers for the 'AMP-AD' consortium
+    (<https://adknowledgeportal.synapse.org>), 'PsychENCODE' consortium
+    (<http://www.psychencode.org>), and others to validate metadata prior to
+    data releases.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://sage-bionetworks.github.io/dccvalidator/}
+  \item \url{https://sage-bionetworks.github.io/dccvalidator}
   \item \url{https://github.com/Sage-Bionetworks/dccvalidator}
 }
 
