@@ -59,6 +59,7 @@ report_result <- function(result, emoji_prefix = NULL, verbose = FALSE) {
 #' @noRd
 #' @param results A list of condition objects
 #' @param ... Additional parameters passed to [report_result()]
+#' @return A list of HTML elements showing the results of multiple checks
 #' @rdname report_result
 report_results <- function(results, ...) {
   purrr::map(results, report_result, ...)
@@ -73,6 +74,9 @@ report_results <- function(results, ...) {
 #'
 #' @noRd
 #' @param x Content to be displayed
+#' @return Additional information to be displayed within the details drawer. If
+#'   `x` is an atomic vector, each element will be displayed separated by a
+#'   comma. If `x` is a list, it will be converted to a table for display.
 show_details <- function(x) {
   UseMethod("show_details", x)
 }
@@ -103,6 +107,8 @@ show_details.list <- function(x) {
 #' @inheritParams get_synapse_table
 #' @param membership Output from [check_team_membership()]
 #' @param certified Output from [check_certified_user()]
+#' @return If user is not certified or in the required teams, a modal dialog
+#'   describing which requirements are not met.
 report_unsatisfied_requirements <- function(membership, certified, syn) {
   member_message <- tagList()
   certified_message <- tagList()

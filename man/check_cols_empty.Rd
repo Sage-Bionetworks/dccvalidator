@@ -4,9 +4,14 @@
 \alias{check_cols_empty}
 \title{Check for empty columns}
 \usage{
-check_cols_empty(data, empty_values = c(NA, ""), required_cols = NULL,
-  strict = FALSE, success_msg = "No columns are empty",
-  fail_msg = "Some columns are empty")
+check_cols_empty(
+  data,
+  empty_values = c(NA, ""),
+  required_cols = NULL,
+  strict = FALSE,
+  success_msg = "No columns are empty",
+  fail_msg = "Some columns are empty"
+)
 }
 \arguments{
 \item{data}{Data to check}

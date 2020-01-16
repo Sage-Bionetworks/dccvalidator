@@ -11,6 +11,10 @@ check_certified_user(id, syn)
 
 \item{syn}{Synapse client object}
 }
+\value{
+A condition object indicating whether or not the given user is a
+certified Synapse user.
+}
 \description{
 Check if user has completed and passed the Certified User Quiz.
 }

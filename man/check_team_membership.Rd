@@ -13,6 +13,10 @@ check_team_membership(teams, user, syn)
 
 \item{syn}{Synapse client object}
 }
+\value{
+A condition object indicating whether the Synapse user is a member of
+the given team(s).
+}
 \description{
 Check if a user is a member of any of the given teams.
 }

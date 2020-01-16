@@ -40,6 +40,7 @@
 #' @author Dean Attali <dean@attalitech.com>
 #' @export
 #' @param button A Shiny actionButton
+#' @return Shiny UI and server logic
 #' @examples
 #' library("shiny")
 #'

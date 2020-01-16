@@ -4,9 +4,12 @@
 \alias{check_schema_df}
 \title{Check a data frame of data against a JSON Schema}
 \usage{
-check_schema_df(df, schema,
+check_schema_df(
+  df,
+  schema,
   success_msg = "Data is valid against the schema",
-  fail_msg = "Data is invalid against the schema")
+  fail_msg = "Data is invalid against the schema"
+)
 }
 \arguments{
 \item{df}{A data frame whose rows will be converted into JSON and validated}

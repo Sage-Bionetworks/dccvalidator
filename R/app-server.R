@@ -7,6 +7,7 @@
 #' @param input Shiny input
 #' @param output Shiny output
 #' @param session Shiny session
+#' @return none
 #' @export
 #' @examples
 #' \dontrun{

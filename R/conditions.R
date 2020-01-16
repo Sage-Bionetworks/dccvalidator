@@ -62,6 +62,7 @@ check_fail <- function(msg, behavior, data = NULL) {
 #' @inheritParams check_pass
 #' @param type One of "check_pass", "check_warn", "check_fail"
 #' @export
+#' @inherit check_pass return
 #' @examples
 #' strict <- TRUE
 #' check_condition(
