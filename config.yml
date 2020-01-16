@@ -122,3 +122,6 @@ pec:
       - "libraryPreparationMethod"
       - "runType"
   contact_email: "kelsey@synapse.org"
+
+shinytest:
+  path_to_markdown: "../../../../inst/using-the-dccvalidator-app-amp-ad.Rmd"
