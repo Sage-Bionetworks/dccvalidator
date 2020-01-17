@@ -4,7 +4,7 @@
 
 [![Travis-CI Build
 Status](https://travis-ci.org/Sage-Bionetworks/dccvalidator.svg?branch=master)](https://travis-ci.org/Sage-Bionetworks/dccvalidator)
-[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 
 dccvalidator is a package and Shiny app to perform data validation and
 QA/QC. It’s used in the [AMP-AD](https://ampadportal.org/) and
