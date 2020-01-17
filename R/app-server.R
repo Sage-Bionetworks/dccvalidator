@@ -268,8 +268,7 @@ app_server <- function(input, output, session) {
           )
         )
 
-        ## Individual
-        res <- check_all(all_data, annots, config::get(), syn)
+        res <- check_all(all_data, annots, syn)
 
         callModule(results_boxes_server, "Validation Results", res)
       })

@@ -1,6 +1,11 @@
 #' Run all validation checks
 #'
-#' Runs all validation checks.
+#' Runs all validation checks. Proper function requires an
+#' environment configuration (config) to be set. The config
+#' is expected to have templates for each metadata_type,
+#' where individual and biospecimen depend on species and
+#' assay depends on the assay type. Additionally, there
+#' should be complete_columns for each metadata_type.
 #'
 #' @param data A tibble or dataframe with the columns:
 #'   file_name, metadata_type, species, assay, file_data.
@@ -11,13 +16,35 @@
 #'   assay, manifest. If file_data is `NULL` for a given
 #'   metadata_type, the metadata_type should still be
 #'   present.
-#' @param configuration A list with the configuration settings.
-#'   It is expected to have templates for each metadata_type,
-#'   where individual and biospecimen depend on species and
-#'   assay depends on the assay type. Additionally, there
-#'   should be required_columns for each metadata_type.
 #' @inheritParams check_annotation_keys
-check_all <- function(data, annotations, configuration, syn) {
+#' @export
+#' @example
+#' \dontrun{
+#' syn <- synapse$Synapse()
+#' syn$login()
+#'
+#' annots <- get_synapse_annotations(syn = syn)
+#'
+#' data <- tibble::tibble(
+#'   metadata_type = c(
+#'     "manifest",
+#'     "individual",
+#'     "biospecimen",
+#'     "assay"
+#'   ),
+#'   file_name = c("a", NA, NA, "c"),
+#'   species = "human",
+#'   assay = "rnaSeq",
+#'   file_data = c(
+#'     list(data.frame(a = c(TRUE, FALSE), b = c(1, 3))),
+#'     list(NULL),
+#'     list(NULL),
+#'     list(data.frame(a = c(TRUE, FALSE), b = c(1, 3)))
+#'   )
+#' )
+#' res <- check_all(data, annots, syn)
+#' }
+check_all <- function(data, annotations, syn) {
 
   # Get indices by type
   indiv_index <- which(data$metadata_type == "individual")
@@ -25,31 +52,32 @@ check_all <- function(data, annotations, configuration, syn) {
   assay_index <- which(data$metadata_type == "assay")
   manifest_index <- which(data$metadata_type == "manifest")
 
+
   # Missing columns ----------------------------------------------------------
   missing_cols_indiv <- check_cols_individual(
     data$file_data[indiv_index][[1]],
-    configuration$templates$individual_templates[[
-    data$species[indiv_index]
+    config::get("templates")$individual_templates[[
+      data$species[indiv_index]
     ]],
     syn = syn
   )
   missing_cols_biosp <- check_cols_biospecimen(
     data$file_data[biosp_index][[1]],
-    configuration$templates$biospecimen_templates[[
-    data$species[biosp_index]
+    config::get("templates")$biospecimen_templates[[
+      data$species[biosp_index]
     ]],
     syn = syn
   )
   missing_cols_assay <- check_cols_assay(
     data$file_data[assay_index][[1]],
-    configuration$templates$assay_templates[[
-    data$assay[assay_index]
+    config::get("templates")$assay_templates[[
+      data$assay[assay_index]
     ]],
     syn = syn
   )
   missing_cols_manifest <- check_cols_manifest(
     data$file_data[manifest_index][[1]],
-    configuration$templates$manifest_template,
+    config::get("templates")$manifest_template,
     syn = syn
   )
 
@@ -140,25 +168,25 @@ check_all <- function(data, annotations, configuration, syn) {
   # Empty columns produce warnings -------------------------------------------
   empty_cols_manifest <- check_cols_empty(
     data$file_data[manifest_index][[1]],
-    required_cols = configuration$complete_columns$manifest,
+    required_cols = config::get("complete_columns")$manifest,
     success_msg = "No columns are empty in the manifest",
     fail_msg = "Some columns are empty in the manifest"
   )
   empty_cols_indiv <- check_cols_empty(
     data$file_data[indiv_index][[1]],
-    required_cols = configuration$complete_columns$individual,
+    required_cols = config::get("complete_columns")$individual,
     success_msg = "No columns are empty in the individual metadata",
     fail_msg = "Some columns are empty in the individual metadata"
   )
   empty_cols_biosp <- check_cols_empty(
     data$file_data[biosp_index][[1]],
-    required_cols = configuration$complete_columns$biospecimen,
+    required_cols = config::get("complete_columns")$biospecimen,
     success_msg = "No columns are empty in the biospecimen metadata",
     fail_msg = "Some columns are empty in the biospecimen metadata"
   )
   empty_cols_assay <- check_cols_empty(
     data$file_data[assay_index][[1]],
-    required_cols = configuration$complete_columns$assay,
+    required_cols = config::get("complete_columns")$assay,
     success_msg = "No columns are empty in the assay metadata",
     fail_msg = "Some columns are empty in the assay metadata"
   )
@@ -166,25 +194,25 @@ check_all <- function(data, annotations, configuration, syn) {
   # Incomplete required columns produce failures -----------------------------
   complete_cols_manifest <- check_cols_complete(
     data$file_data[manifest_index][[1]],
-    required_cols = configuration$complete_columns$manifest,
+    required_cols = config::get("complete_columns")$manifest,
     success_msg = "All required columns present are complete in the manifest", # nolint
     fail_msg = "Some required columns are incomplete in the manifest"
   )
   complete_cols_indiv <- check_cols_complete(
     data$file_data[indiv_index][[1]],
-    required_cols = configuration$complete_columns$individual,
+    required_cols = config::get("complete_columns")$individual,
     success_msg = "All required columns present are complete in the individual metadata", # nolint
     fail_msg = "Some required columns are incomplete in the individual metadata" # nolint
   )
   complete_cols_biosp <- check_cols_complete(
     data$file_data[biosp_index][[1]],
-    required_cols = configuration$complete_columns$biospecimen,
+    required_cols = config::get("complete_columns")$biospecimen,
     success_msg = "All required columns present are complete in the biospecimen metadata", # nolint
     fail_msg = "Some required columns are incomplete in the biospecimen metadata" # nolint
   )
   complete_cols_assay <- check_cols_complete(
     data$file_data[assay_index][[1]],
-    required_cols = configuration$complete_columns$assay,
+    required_cols = config::get("complete_columns")$assay,
     success_msg = "All required columns present are complete in the assay metadata", # nolint
     fail_msg = "Some required columns are incomplete in the assay metadata" # nolint
   )
@@ -230,3 +258,22 @@ check_all <- function(data, annotations, configuration, syn) {
   )
   res
 }
+
+ data <- tibble::tibble(
+   metadata_type = c(
+     "manifest",
+     "individual",
+     "biospecimen",
+     "assay"
+   ),
+   file_name = c("a", NA, NA, "c"),
+   species = "human",
+   assay = "rnaSeq",
+   file_data = c(
+     list(data.frame(a = c(TRUE, FALSE), b = c(1, 3))),
+     list(NULL),
+     list(NULL),
+     list(data.frame(a = c(TRUE, FALSE), b = c(1, 3)))
+   )
+ )
+ 
