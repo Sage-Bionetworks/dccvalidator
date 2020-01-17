@@ -244,76 +244,31 @@ app_server <- function(input, output, session) {
           )
         }
 
-        ## Load in data to table
-        all_data <- tibble::tribble(
-          ~file_name, ~metadata_type, ~species, ~assay, ~file_data,
+        ## Load in data to table for validation checks
+        all_data <- tibble::tibble(
+          "metadata_type" = c(
+            "manifest",
+            "individual",
+            "biospecimen",
+            "assay"
+          ),
+          "file_name" = c(
+            files$manifest$name %||% NA,
+            files$indiv$name %||% NA,
+            files$biosp$name %||% NA,
+            files$assay$name %||% NA
+          ),
+          "species" = species_name(),
+          "assay" = assay_name(),
+          "file_data" = c(
+            list(manifest()),
+            list(indiv()),
+            list(biosp()),
+            list(assay())
+          )
         )
-        ## Manifest
-        if (is.null(files$manifest)) {
-          all_data <- tibble::add_row(
-            all_data,
-            metadata_type = "manifest",
-            file_data = list(NULL)
-          )
-        } else {
-          all_data <- tibble::add_row(
-            all_data,
-            file_name = files$manifest$name,
-            metadata_type = "manifest",
-            species = species_name(),
-            file_data = list(manifest())
-          )
-        }
 
         ## Individual
-        if (is.null(files$indiv)) {
-          all_data <- tibble::add_row(
-            all_data,
-            metadata_type = "individual"
-          )
-        } else {
-          all_data <- tibble::add_row(
-            all_data,
-            file_name = files$indiv$name,
-            metadata_type = "individual",
-            species = species_name(),
-            file_data = list(indiv())
-          )
-        }
-
-        ## Biospecimen
-        if (is.null(files$biosp)) {
-          all_data <- tibble::add_row(
-            all_data,
-            metadata_type = "biospecimen"
-          )
-        } else {
-          all_data <- tibble::add_row(
-            all_data,
-            file_name = files$biosp$name,
-            metadata_type = "biospecimen",
-            species = species_name(),
-            file_data = list(biosp())
-          )
-        }
-
-        ## Assay
-        if (is.null(files$assay)) {
-          all_data <- tibble::add_row(
-            all_data,
-            metadata_type = "assay"
-          )
-        } else {
-          all_data <- tibble::add_row(
-            all_data,
-            file_name = files$assay$name,
-            metadata_type = "assay",
-            species = species_name(),
-            assay = assay_name(),
-            file_data = list(assay())
-          )
-        }
-
         res <- check_all(all_data, annots, config::get(), syn)
 
         callModule(results_boxes_server, "Validation Results", res)
