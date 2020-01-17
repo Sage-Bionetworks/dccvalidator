@@ -15,7 +15,10 @@ Authors@R:
       person(given = "Kelsey",
              family = "Montgomery",
              role = "aut",
-             email = "kelsey.montgomery@sagebase.org"))
+             email = "kelsey.montgomery@sagebase.org"),
+      person(given = "Dean",
+             family = "Attali",
+             role = "cph"))
 Description: Performs checks for common metadata quality issues. Used by the
     data coordinating centers for the 'AMP-AD' consortium
     (<https://adknowledgeportal.synapse.org>), 'PsychENCODE' consortium
