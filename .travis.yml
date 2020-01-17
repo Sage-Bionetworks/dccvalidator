@@ -13,7 +13,8 @@ matrix:
   - r: release
   - r: 3.5
   - r: 3.4
-  - stage: deploy
+  - if: branch = master
+    stage: deploy
     r: release
     before_cache:
     - Rscript -e 'remotes::install_cran("pkgdown")'
@@ -21,6 +22,9 @@ matrix:
       provider: script
       script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
       skip_cleanup: true
+      on:
+        repo: Sage-Bionetworks/dccvalidator
+        branch: master
   - if: type = pull_request
     stage: lint
     r: release
