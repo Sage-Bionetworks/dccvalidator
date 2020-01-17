@@ -6,6 +6,8 @@
 #' @inheritParams get_synapse_annotations
 #' @param teams Team IDs to check membership in
 #' @param user User to check (e.g. output from syn$getUserProfile())
+#' @return A condition object indicating whether the Synapse user is a member of
+#'   the given team(s).
 #' @examples
 #' \dontrun{
 #' syn <- synapse$Synapse()

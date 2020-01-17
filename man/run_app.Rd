@@ -9,6 +9,9 @@ run_app(...)
 \arguments{
 \item{...}{Additional golem options passed to \code{\link[golem:with_golem_options]{golem::with_golem_options()}}}
 }
+\value{
+Shiny app with additional golem options passed via \code{...}
+}
 \description{
 Run the Shiny application
 }

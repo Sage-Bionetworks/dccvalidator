@@ -10,15 +10,13 @@
 \usage{
 check_annotation_values(x, annotations, ...)
 
-\method{check_annotation_values}{NULL}(x, annotations, ...)
+\method{check_annotation_values}{`NULL`}(x, annotations, ...)
 
-\method{check_annotation_values}{synapseclient.entity.File}(x, annotations,
-  syn, ...)
+\method{check_annotation_values}{synapseclient.entity.File}(x, annotations, syn, ...)
 
 \method{check_annotation_values}{data.frame}(x, annotations, ...)
 
-\method{check_annotation_values}{synapseclient.table.CsvFileTable}(x,
-  annotations, ...)
+\method{check_annotation_values}{synapseclient.table.CsvFileTable}(x, annotations, ...)
 }
 \arguments{
 \item{x}{An object to check.}

@@ -10,15 +10,13 @@
 \usage{
 valid_annotation_keys(x, annotations, ...)
 
-\method{valid_annotation_keys}{NULL}(x, annotations, ...)
+\method{valid_annotation_keys}{`NULL`}(x, annotations, ...)
 
-\method{valid_annotation_keys}{synapseclient.entity.File}(x, annotations,
-  syn, ...)
+\method{valid_annotation_keys}{synapseclient.entity.File}(x, annotations, syn, ...)
 
 \method{valid_annotation_keys}{data.frame}(x, annotations, ...)
 
-\method{valid_annotation_keys}{synapseclient.table.CsvFileTable}(x,
-  annotations, ...)
+\method{valid_annotation_keys}{synapseclient.table.CsvFileTable}(x, annotations, ...)
 }
 \arguments{
 \item{x}{An object to check.}

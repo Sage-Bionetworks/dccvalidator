@@ -6,14 +6,24 @@
 \alias{check_specimen_ids_match}
 \title{Check ids}
 \usage{
-check_ids_match(x, y, idcol = c("individualID", "specimenID"),
-  xname = NULL, yname = NULL, bidirectional = TRUE)
+check_ids_match(
+  x,
+  y,
+  idcol = c("individualID", "specimenID"),
+  xname = NULL,
+  yname = NULL,
+  bidirectional = TRUE
+)
 
-check_indiv_ids_match(x, y, xname = NULL, yname = NULL,
-  bidirectional = TRUE)
+check_indiv_ids_match(x, y, xname = NULL, yname = NULL, bidirectional = TRUE)
 
-check_specimen_ids_match(x, y, xname = NULL, yname = NULL,
-  bidirectional = TRUE)
+check_specimen_ids_match(
+  x,
+  y,
+  xname = NULL,
+  yname = NULL,
+  bidirectional = TRUE
+)
 }
 \arguments{
 \item{x, y}{Data frames to compare}

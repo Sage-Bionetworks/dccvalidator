@@ -4,9 +4,13 @@
 \alias{check_files_manifest}
 \title{Check that files are present in manifest}
 \usage{
-check_files_manifest(manifest, filenames, strict = FALSE,
+check_files_manifest(
+  manifest,
+  filenames,
+  strict = FALSE,
   success_msg = "All required files are present in manifest",
-  fail_msg = "Some files may be missing from manifest")
+  fail_msg = "Some files may be missing from manifest"
+)
 }
 \arguments{
 \item{manifest}{The manifest as a data frame or tibble}

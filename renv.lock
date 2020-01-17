@@ -700,10 +700,10 @@
     },
     "roxygen2": {
       "Package": "roxygen2",
-      "Version": "6.1.1",
+      "Version": "7.0.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "5c44ac973ec9b56efd7990e4b4464699"
+      "Hash": "2170a321eb6f0ade69a006bf22c656c8"
     },
     "rprojroot": {
       "Package": "rprojroot",

@@ -4,10 +4,15 @@
 \alias{check_keys}
 \title{Check that a given set of keys are all present in an annotations dictionary}
 \usage{
-check_keys(x, annotations, whitelist_keys = NULL,
+check_keys(
+  x,
+  annotations,
+  whitelist_keys = NULL,
   success_msg = "All annotation keys are valid",
-  fail_msg = "Some annotation keys are invalid", return_valid = FALSE,
-  syn)
+  fail_msg = "Some annotation keys are invalid",
+  return_valid = FALSE,
+  syn
+)
 }
 \arguments{
 \item{x}{A data frame of annotation data}

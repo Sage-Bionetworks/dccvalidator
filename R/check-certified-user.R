@@ -5,6 +5,8 @@
 #' @param id User ID
 #' @inheritParams get_synapse_annotations
 #' @export
+#' @return A condition object indicating whether or not the given user is a
+#'   certified Synapse user.
 #' @examples
 #' \dontrun{
 #' syn <- synapse$Synapse()
