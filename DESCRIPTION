@@ -29,7 +29,6 @@ Depends:
     shinyBS
 Imports:
     config,
-    DT,
     ggplot2,
     glue,
     golem,
@@ -37,7 +36,6 @@ Imports:
     jsonvalidate,
     knitr,
     markdown,
-    pkgload,
     purrr,
     readr,
     readxl,
