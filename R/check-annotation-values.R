@@ -97,8 +97,10 @@ check_annotation_values.data.frame <- function(x, annotations, ...) {
   )
 }
 
+# nolint start
 #' @export
 #' @describeIn check_annotation_values Check annotation values in a Synapse table
+# nolint end
 check_annotation_values.synapseclient.table.CsvFileTable <- function(x, annotations, ...) { # nolint
   dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE, na.strings = "")
   fv_synapse_cols <- c(
@@ -180,8 +182,10 @@ valid_annotation_values.data.frame <- function(x, annotations, ...) {
   )
 }
 
+# nolint start
 #' @export
 #' @describeIn valid_annotation_values Valid annotation values in a Synapse table
+# nolint end
 valid_annotation_values.synapseclient.table.CsvFileTable <- function(x, annotations, ...) { # nolint
   dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE)
   fv_synapse_cols <- c(
