@@ -1,3 +1,8 @@
+## Resubmission
+
+This is a resubmission. I have replaced the relative URI in README.md with a
+complete one.
+
 ## Test environments
 
 * local macOS install, R 3.6.2

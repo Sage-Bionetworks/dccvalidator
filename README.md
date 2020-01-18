@@ -85,5 +85,6 @@ checks. Or, you can skip certain hooks by their ID (as shown in the file
 -----
 
 Please note that the dccvalidator project is released with a
-[Contributor Code of Conduct](.github/CODE_OF_CONDUCT.md). By
-contributing to this project, you agree to abide by its terms.
+[Contributor Code of
+Conduct](https://sage-bionetworks.github.io/dccvalidator/CODE_OF_CONDUCT).
+By contributing to this project, you agree to abide by its terms.
