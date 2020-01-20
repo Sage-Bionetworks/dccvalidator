@@ -17,8 +17,9 @@
 #'   metadata_type, the metadata_type should still be
 #'   present.
 #' @inheritParams check_annotation_keys
+#' @return List of conditions
 #' @export
-#' @example
+#' @examples
 #' \dontrun{
 #' syn <- synapse$Synapse()
 #' syn$login()

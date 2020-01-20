@@ -4,7 +4,7 @@
 \alias{check_all}
 \title{Run all validation checks}
 \usage{
-check_all(data, annotations, configuration, syn)
+check_all(data, annotations, syn)
 }
 \arguments{
 \item{data}{A tibble or dataframe with the columns:
@@ -20,14 +20,43 @@ present.}
 \item{annotations}{A data frame of annotation definitions. Must contain at
 least three columns: \code{key}, \code{value}, and \code{columnType}.}
 
-\item{configuration}{A list with the configuration settings.
-It is expected to have templates for each metadata_type,
-where individual and biospecimen depend on species and
-assay depends on the assay type. Additionally, there
-should be required_columns for each metadata_type.}
-
 \item{syn}{Synapse client object}
 }
+\value{
+List of conditions
+}
 \description{
-Runs all validation checks.
+Runs all validation checks. Proper function requires an
+environment configuration (config) to be set. The config
+is expected to have templates for each metadata_type,
+where individual and biospecimen depend on species and
+assay depends on the assay type. Additionally, there
+should be complete_columns for each metadata_type.
+}
+\examples{
+\dontrun{
+syn <- synapse$Synapse()
+syn$login()
+
+annots <- get_synapse_annotations(syn = syn)
+
+data <- tibble::tibble(
+  metadata_type = c(
+    "manifest",
+    "individual",
+    "biospecimen",
+    "assay"
+  ),
+  file_name = c("a", NA, NA, "c"),
+  species = "human",
+  assay = "rnaSeq",
+  file_data = c(
+    list(data.frame(a = c(TRUE, FALSE), b = c(1, 3))),
+    list(NULL),
+    list(NULL),
+    list(data.frame(a = c(TRUE, FALSE), b = c(1, 3)))
+  )
+)
+res <- check_all(data, annots, syn)
+}
 }

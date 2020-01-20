@@ -8,6 +8,7 @@ reference:
     Functions to perform data validation and QA/QC checks, and report results as
     successes, warnings, or failures.
   contents:
+    - check_all
     - check_annotation_keys
     - check_annotation_values
     - valid_annotation_keys
