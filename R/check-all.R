@@ -52,7 +52,6 @@ check_all <- function(data, annotations, syn) {
   assay_index <- which(data$metadata_type == "assay")
   manifest_index <- which(data$metadata_type == "manifest")
 
-
   # Missing columns ----------------------------------------------------------
   missing_cols_indiv <- check_cols_individual(
     data$file_data[indiv_index][[1]],
@@ -258,22 +257,3 @@ check_all <- function(data, annotations, syn) {
   )
   res
 }
-
- data <- tibble::tibble(
-   metadata_type = c(
-     "manifest",
-     "individual",
-     "biospecimen",
-     "assay"
-   ),
-   file_name = c("a", NA, NA, "c"),
-   species = "human",
-   assay = "rnaSeq",
-   file_data = c(
-     list(data.frame(a = c(TRUE, FALSE), b = c(1, 3))),
-     list(NULL),
-     list(NULL),
-     list(data.frame(a = c(TRUE, FALSE), b = c(1, 3)))
-   )
- )
- 
