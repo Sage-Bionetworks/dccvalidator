@@ -29,7 +29,7 @@ test_that("check_all() returns a list of check conditions", {
     purrr::map(
       res,
       function(x) {
-        inherits(x, "check_fail") | inherits(x, "check_pass") | inherits(x, "check_warn")
+        inherits(x, "check_fail") | inherits(x, "check_pass") | inherits(x, "check_warn") # nolint
       }
     )
   )))
@@ -108,25 +108,33 @@ test_that("check_all() returns NULL for checks with missing data", {
   res2 <- check_all(data2, annots, syn)
   res3 <- check_all(data3, annots, syn)
   res4 <- check_all(data4, annots, syn)
-  
+
   expect_true(all(unlist(
-    purrr::map(res1, function(x) {is.null(x)})
+    purrr::map(res1, function(x) {
+      is.null(x)
+    })
   )))
   expect_equal(
     sum(unlist(
-      purrr::map(res2, function(x) {!is.null(x)})
+      purrr::map(res2, function(x) {
+        !is.null(x)
+      })
     )),
     6
   )
   expect_equal(
     sum(unlist(
-      purrr::map(res3, function(x) {!is.null(x)})
+      purrr::map(res3, function(x) {
+        !is.null(x)
+      })
     )),
     9
   )
   expect_equal(
     sum(unlist(
-      purrr::map(res4, function(x) {!is.null(x)})
+      purrr::map(res4, function(x) {
+        !is.null(x)
+      })
     )),
     19
   )
