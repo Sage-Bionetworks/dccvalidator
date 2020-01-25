@@ -245,6 +245,7 @@ app_server <- function(input, output, session) {
         }
 
         ## Load in data to table for validation checks
+        ## If file_name is NULL, pass in NA.
         all_data <- tibble::tibble(
           "metadata_type" = c(
             "manifest",
