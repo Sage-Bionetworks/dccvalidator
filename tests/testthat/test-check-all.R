@@ -184,3 +184,25 @@ test_that("check_all() returns expected conditions", {
   # Invalid tissue annotation values
   expect_equal(res[[12]]$data$tissue, c("kleenex", "puffs"))
 })
+
+test_that("check_all() throws error if not exactly 1 of each metadata type present", {
+  # Missing biospecimen
+  data1 <- tibble::tibble(
+    metadata_type = c(
+      "manifest",
+      "individual",
+      "assay"
+    )
+  )
+  # Duplicate assay
+  data2 <- tibble::tibble(
+    metadata_type = c(
+      "manifest",
+      "individual",
+      "assay",
+      "assay"
+    )
+  )
+  expect_error(check_all(data1, annots, syn))
+  expect_error(check_all(data2, annots, syn))
+})

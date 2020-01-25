@@ -53,6 +53,16 @@ check_all <- function(data, annotations, syn) {
   assay_index <- which(data$metadata_type == "assay")
   manifest_index <- which(data$metadata_type == "manifest")
 
+  # Must have 1 and only 1 index per metadata type
+  purrr::walk(
+    list(indiv_index, biosp_index, assay_index, manifest_index),
+    function(x) {
+      if (length(x) != 1) {
+        stop("There must be exactly row 1 of each metadata type to check: biospecimen, individual, assay, manifest") # nolint
+      }
+    }
+  )
+
   # Missing columns ----------------------------------------------------------
   missing_cols_indiv <- check_cols_individual(
     data$file_data[indiv_index][[1]],
