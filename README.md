@@ -4,6 +4,8 @@
 
 [![Travis-CI Build
 Status](https://travis-ci.org/Sage-Bionetworks/dccvalidator.svg?branch=master)](https://travis-ci.org/Sage-Bionetworks/dccvalidator)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/dccvalidator)](https://CRAN.R-project.org/package=dccvalidator)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 
 dccvalidator is a package and Shiny app to perform data validation and
@@ -13,7 +15,13 @@ prior to data releases.
 
 ## Installation
 
-You can install dccvalidator with the following command:
+You can install dccvalidator from CRAN:
+
+``` r
+install.packages("dccvalidator")
+```
+
+To install the development version from GitHub, run:
 
 ``` r
 devtools::install_github("Sage-Bionetworks/dccvalidator")
