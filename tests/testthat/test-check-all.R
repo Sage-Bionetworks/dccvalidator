@@ -3,7 +3,14 @@ context("test-check-all.R")
 library("tibble")
 syn <- attempt_instantiate()
 attempt_login(syn)
-annots <- get_synapse_annotations(syn = syn)
+annots <- tribble(
+  ~key, ~value, ~columnType,
+  "assay", "rnaSeq", "STRING",
+  "fileFormat", "fastq", "STRING",
+  "fileFormat", "txt", "STRING",
+  "fileFormat", "csv", "STRING",
+  "species", "Human", "STRING"
+)
 
 test_that("check_all() returns a list of check conditions", {
   skip_if_not(logged_in(syn = syn))
@@ -147,7 +154,7 @@ test_that("check_all() returns expected conditions", {
       list(data.frame(
         individualID = c("a", "b"),
         specimenID = c("1", "3"),
-        tissue = c("kleenex", "puffs"),
+        fileFormat = c("xlsx", "tex"),
         stringsAsFactors = FALSE
       )),
       list(data.frame(
@@ -163,7 +170,7 @@ test_that("check_all() returns expected conditions", {
   # Missing individualID "c" from individual metadata
   expect_equal(res[[6]]$data$`Missing from individual`[1], "c")
   # Invalid tissue annotation values
-  expect_equal(res[[12]]$data$tissue, c("kleenex", "puffs"))
+  expect_equal(res[[12]]$data$fileFormat, c("xlsx", "tex"))
 })
 
 test_that("check_all() throws error if not exactly 1 metadata type each", {
