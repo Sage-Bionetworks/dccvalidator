@@ -66,23 +66,17 @@ check_all <- function(data, annotations, syn) {
   # Missing columns ----------------------------------------------------------
   missing_cols_indiv <- check_cols_individual(
     data$file_data[indiv_index][[1]],
-    config::get("templates")$individual_templates[[
-      data$species[indiv_index]
-    ]],
+    config::get("templates")$individual_templates[[data$species[indiv_index]]],
     syn = syn
   )
   missing_cols_biosp <- check_cols_biospecimen(
     data$file_data[biosp_index][[1]],
-    config::get("templates")$biospecimen_templates[[
-      data$species[biosp_index]
-    ]],
+    config::get("templates")$biospecimen_templates[[data$species[biosp_index]]],
     syn = syn
   )
   missing_cols_assay <- check_cols_assay(
     data$file_data[assay_index][[1]],
-    config::get("templates")$assay_templates[[
-      data$assay[assay_index]
-    ]],
+    config::get("templates")$assay_templates[[data$assay[assay_index]]],
     syn = syn
   )
   missing_cols_manifest <- check_cols_manifest(
