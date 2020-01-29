@@ -6,6 +6,7 @@ attempt_login(syn)
 annots <- get_synapse_annotations(syn = syn)
 
 test_that("check_all() returns a list of check conditions", {
+  skip_if_not(logged_in(syn = syn))
   data <- tibble::tibble(
     metadata_type = c(
       "manifest",
@@ -36,6 +37,7 @@ test_that("check_all() returns a list of check conditions", {
 })
 
 test_that("check_all() returns NULL for checks with missing data", {
+  skip_if_not(logged_in(syn = syn))
   data1 <- tibble::tibble(
     metadata_type = c(
       "manifest",
@@ -119,6 +121,7 @@ test_that("check_all() returns NULL for checks with missing data", {
 })
 
 test_that("check_all() returns expected conditions", {
+  skip_if_not(logged_in(syn = syn))
   data <- tibble::tibble(
     metadata_type = c(
       "manifest",
@@ -164,6 +167,7 @@ test_that("check_all() returns expected conditions", {
 })
 
 test_that("check_all() throws error if not exactly 1 metadata type each", {
+  skip_if_not(logged_in(syn = syn))
   # Missing biospecimen
   data1 <- tibble::tibble(
     metadata_type = c(
