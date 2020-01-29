@@ -109,34 +109,28 @@ test_that("check_all() returns NULL for checks with missing data", {
   res3 <- check_all(data3, annots, syn)
   res4 <- check_all(data4, annots, syn)
 
-  expect_true(all(unlist(
-    purrr::map(res1, function(x) {
+  # Some checks should be NULL based on which data is missing
+  # Since all of these have missing data, the # of checks done
+  # should be less than the total # of checks possible
+  expect_true(all(
+    purrr::map_lgl(res1, function(x) {
       is.null(x)
     })
-  )))
-  expect_equal(
-    sum(unlist(
-      purrr::map(res2, function(x) {
-        !is.null(x)
-      })
-    )),
-    6
+  ))
+  expect_true(
+    sum(purrr::map_lgl(res2, function(x) {
+      !is.null(x)
+    })) < length(res2)
   )
-  expect_equal(
-    sum(unlist(
-      purrr::map(res3, function(x) {
-        !is.null(x)
-      })
-    )),
-    9
+  expect_true(
+    sum(purrr::map_lgl(res3, function(x) {
+      !is.null(x)
+    })) < length(res3)
   )
-  expect_equal(
-    sum(unlist(
-      purrr::map(res4, function(x) {
-        !is.null(x)
-      })
-    )),
-    19
+  expect_true(
+    sum(purrr::map_lgl(res4, function(x) {
+      !is.null(x)
+    })) < length(res4)
   )
 })
 
@@ -185,7 +179,7 @@ test_that("check_all() returns expected conditions", {
   expect_equal(res[[12]]$data$tissue, c("kleenex", "puffs"))
 })
 
-test_that("check_all() throws error if not exactly 1 of each metadata type present", {
+test_that("check_all() throws error if not exactly 1 metadata type each", {
   # Missing biospecimen
   data1 <- tibble::tibble(
     metadata_type = c(
