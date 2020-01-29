@@ -112,26 +112,10 @@ test_that("check_all() returns NULL for checks with missing data", {
   # Some checks should be NULL based on which data is missing
   # Since all of these have missing data, the # of checks done
   # should be less than the total # of checks possible
-  expect_true(all(
-    purrr::map_lgl(res1, function(x) {
-      is.null(x)
-    })
-  ))
-  expect_true(
-    sum(purrr::map_lgl(res2, function(x) {
-      !is.null(x)
-    })) < length(res2)
-  )
-  expect_true(
-    sum(purrr::map_lgl(res3, function(x) {
-      !is.null(x)
-    })) < length(res3)
-  )
-  expect_true(
-    sum(purrr::map_lgl(res4, function(x) {
-      !is.null(x)
-    })) < length(res4)
-  )
+  expect_true(all(purrr::map_lgl(res1, ~ is.null(.x))))
+  expect_true(sum(purrr::map_lgl(res2, ~ !is.null(.x))) < length(res2))
+  expect_true(sum(purrr::map_lgl(res3, ~ !is.null(.x))) < length(res3))
+  expect_true(sum(purrr::map_lgl(res4, ~ !is.null(.x))) < length(res4))
 })
 
 test_that("check_all() returns expected conditions", {
