@@ -166,11 +166,14 @@ test_that("check_all() returns expected conditions", {
   )
   res <- check_all(data, annots, syn)
   # All metadata filenames in manifest passes
-  expect_true(inherits(res[[24]], "check_pass"))
+  expect_true(inherits(res$meta_files_in_manifest, "check_pass"))
   # Missing individualID "c" from individual metadata
-  expect_equal(res[[6]]$data$`Missing from individual`[1], "c")
+  expect_equal(
+    res$individual_ids_indiv_manifest$data$`Missing from individual`[1],
+    "c"
+  )
   # Invalid tissue annotation values
-  expect_equal(res[[12]]$data$fileFormat, c("xlsx", "tex"))
+  expect_equal(res$annotation_values_biosp$data$fileFormat, c("xlsx", "tex"))
 })
 
 test_that("check_all() throws error if not exactly 1 metadata type each", {
