@@ -8,7 +8,7 @@
 #' should be complete_columns for each metadata_type.
 #'
 #' @param data A tibble or dataframe with the columns:
-#'   file_name, metadata_type, species, assay, file_data.
+#'   name, metadata_type, species, assay, file_data.
 #'   The file_data column should be a list column containing
 #'   a dataframe with the file data or `NULL` if the data
 #'   does not exist. `data` is expected to have four rows,
@@ -33,7 +33,7 @@
 #'     "biospecimen",
 #'     "assay"
 #'   ),
-#'   file_name = c("a", NA, NA, "c"),
+#'   name = c("a", NA, NA, "c"),
 #'   species = "human",
 #'   assay = "rnaSeq",
 #'   file_data = c(
@@ -225,9 +225,9 @@ check_all <- function(data, annotations, syn) {
   meta_files_in_manifest <- check_files_manifest(
     data$file_data[manifest_index][[1]],
     c(
-      data$file_name[indiv_index],
-      data$file_name[biosp_index],
-      data$file_name[assay_index]
+      data$name[indiv_index],
+      data$name[biosp_index],
+      data$name[assay_index]
     ),
     success_msg = "Manifest file contains all metadata files",
     fail_msg = "Manifest file does not contain all metadata files"

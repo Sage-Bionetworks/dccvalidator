@@ -8,7 +8,7 @@ check_all(data, annotations, syn)
 }
 \arguments{
 \item{data}{A tibble or dataframe with the columns:
-file_name, metadata_type, species, assay, file_data.
+name, metadata_type, species, assay, file_data.
 The file_data column should be a list column containing
 a dataframe with the file data or \code{NULL} if the data
 does not exist. \code{data} is expected to have four rows,
@@ -47,7 +47,7 @@ data <- tibble::tibble(
     "biospecimen",
     "assay"
   ),
-  file_name = c("a", NA, NA, "c"),
+  name = c("a", NA, NA, "c"),
   species = "human",
   assay = "rnaSeq",
   file_data = c(

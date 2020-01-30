@@ -189,7 +189,6 @@ app_server <- function(input, output, session) {
           )
         )
 
-
         ## Upload only the files that have been given
         if (!is.null(indiv())) {
           save_to_synapse(
@@ -245,7 +244,7 @@ app_server <- function(input, output, session) {
         }
 
         ## Load in data to table for validation checks
-        ## If file_name is NULL, pass in NA.
+        ## If file name is NULL, pass in NA.
         all_data <- tibble::tibble(
           "metadata_type" = c(
             "manifest",
@@ -253,7 +252,7 @@ app_server <- function(input, output, session) {
             "biospecimen",
             "assay"
           ),
-          "file_name" = c(
+          "name" = c(
             files$manifest$name %||% NA,
             files$indiv$name %||% NA,
             files$biosp$name %||% NA,

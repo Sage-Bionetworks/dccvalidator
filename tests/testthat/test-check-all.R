@@ -21,7 +21,7 @@ test_that("check_all() returns a list of check conditions", {
       "biospecimen",
       "assay"
     ),
-    file_name = c("file1", "file2", "file3", "file4"),
+    name = c("file1", "file2", "file3", "file4"),
     species = "human",
     assay = "rnaSeq",
     file_data = c(
@@ -52,7 +52,7 @@ test_that("check_all() returns NULL for checks with missing data", {
       "biospecimen",
       "assay"
     ),
-    file_name = c(NA, NA, NA, NA),
+    name = c(NA, NA, NA, NA),
     species = "human",
     assay = "rnaSeq",
     file_data = c(
@@ -69,7 +69,7 @@ test_that("check_all() returns NULL for checks with missing data", {
       "biospecimen",
       "assay"
     ),
-    file_name = c("file1", NA, NA, NA),
+    name = c("file1", NA, NA, NA),
     species = "human",
     assay = "rnaSeq",
     file_data = c(
@@ -86,7 +86,7 @@ test_that("check_all() returns NULL for checks with missing data", {
       "biospecimen",
       "assay"
     ),
-    file_name = c(NA, "file2", NA, "file4"),
+    name = c(NA, "file2", NA, "file4"),
     species = "human",
     assay = "rnaSeq",
     file_data = c(
@@ -103,7 +103,7 @@ test_that("check_all() returns NULL for checks with missing data", {
       "biospecimen",
       "assay"
     ),
-    file_name = c("file1", "file2", "file3", NA),
+    name = c("file1", "file2", "file3", NA),
     species = "human",
     assay = "rnaSeq",
     file_data = c(
@@ -136,7 +136,7 @@ test_that("check_all() returns expected conditions", {
       "biospecimen",
       "assay"
     ),
-    file_name = c("file1", "file2", "file3", "file4"),
+    name = c("file1", "file2", "file3", "file4"),
     species = "human",
     assay = "rnaSeq",
     file_data = c(
