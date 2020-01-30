@@ -8,13 +8,13 @@ check_all(data, annotations, syn)
 }
 \arguments{
 \item{data}{A tibble or dataframe with the columns:
-name, metadata_type, species, assay, file_data.
+name, metadataType, species, assay, file_data.
 The file_data column should be a list column containing
 a dataframe with the file data or \code{NULL} if the data
 does not exist. \code{data} is expected to have four rows,
-one for each metadata_type: individual, biospecimen,
+one for each metadataType: individual, biospecimen,
 assay, manifest. If file_data is \code{NULL} for a given
-metadata_type, the metadata_type should still be
+metadataType, the metadataType should still be
 present.}
 
 \item{annotations}{A data frame of annotation definitions. Must contain at
@@ -28,10 +28,10 @@ List of conditions
 \description{
 Runs all validation checks. Proper function requires an
 environment configuration (config) to be set. The config
-is expected to have templates for each metadata_type,
+is expected to have templates for each metadataType,
 where individual and biospecimen depend on species and
 assay depends on the assay type. Additionally, there
-should be complete_columns for each metadata_type.
+should be complete_columns for each metadataType.
 }
 \examples{
 \dontrun{
@@ -41,7 +41,7 @@ syn$login()
 annots <- get_synapse_annotations(syn = syn)
 
 data <- tibble::tibble(
-  metadata_type = c(
+  metadataType = c(
     "manifest",
     "individual",
     "biospecimen",

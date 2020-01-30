@@ -2,19 +2,19 @@
 #'
 #' Runs all validation checks. Proper function requires an
 #' environment configuration (config) to be set. The config
-#' is expected to have templates for each metadata_type,
+#' is expected to have templates for each metadataType,
 #' where individual and biospecimen depend on species and
 #' assay depends on the assay type. Additionally, there
-#' should be complete_columns for each metadata_type.
+#' should be complete_columns for each metadataType.
 #'
 #' @param data A tibble or dataframe with the columns:
-#'   name, metadata_type, species, assay, file_data.
+#'   name, metadataType, species, assay, file_data.
 #'   The file_data column should be a list column containing
 #'   a dataframe with the file data or `NULL` if the data
 #'   does not exist. `data` is expected to have four rows,
-#'   one for each metadata_type: individual, biospecimen,
+#'   one for each metadataType: individual, biospecimen,
 #'   assay, manifest. If file_data is `NULL` for a given
-#'   metadata_type, the metadata_type should still be
+#'   metadataType, the metadataType should still be
 #'   present.
 #' @inheritParams check_annotation_keys
 #' @return List of conditions
@@ -27,7 +27,7 @@
 #' annots <- get_synapse_annotations(syn = syn)
 #'
 #' data <- tibble::tibble(
-#'   metadata_type = c(
+#'   metadataType = c(
 #'     "manifest",
 #'     "individual",
 #'     "biospecimen",
@@ -48,10 +48,10 @@
 check_all <- function(data, annotations, syn) {
 
   # Get indices by type
-  indiv_index <- which(data$metadata_type == "individual")
-  biosp_index <- which(data$metadata_type == "biospecimen")
-  assay_index <- which(data$metadata_type == "assay")
-  manifest_index <- which(data$metadata_type == "manifest")
+  indiv_index <- which(data$metadataType == "individual")
+  biosp_index <- which(data$metadataType == "biospecimen")
+  assay_index <- which(data$metadataType == "assay")
+  manifest_index <- which(data$metadataType == "manifest")
 
   # Must have 1 and only 1 index per metadata type
   purrr::walk(

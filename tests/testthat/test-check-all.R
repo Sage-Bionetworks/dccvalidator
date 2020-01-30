@@ -15,7 +15,7 @@ annots <- tribble(
 test_that("check_all() returns a list of check conditions", {
   skip_if_not(logged_in(syn = syn))
   data <- tibble::tibble(
-    metadata_type = c(
+    metadataType = c(
       "manifest",
       "individual",
       "biospecimen",
@@ -46,7 +46,7 @@ test_that("check_all() returns a list of check conditions", {
 test_that("check_all() returns NULL for checks with missing data", {
   skip_if_not(logged_in(syn = syn))
   data1 <- tibble::tibble(
-    metadata_type = c(
+    metadataType = c(
       "manifest",
       "individual",
       "biospecimen",
@@ -63,7 +63,7 @@ test_that("check_all() returns NULL for checks with missing data", {
     )
   )
   data2 <- tibble::tibble(
-    metadata_type = c(
+    metadataType = c(
       "manifest",
       "individual",
       "biospecimen",
@@ -80,7 +80,7 @@ test_that("check_all() returns NULL for checks with missing data", {
     )
   )
   data3 <- tibble::tibble(
-    metadata_type = c(
+    metadataType = c(
       "manifest",
       "individual",
       "biospecimen",
@@ -97,7 +97,7 @@ test_that("check_all() returns NULL for checks with missing data", {
     )
   )
   data4 <- tibble::tibble(
-    metadata_type = c(
+    metadataType = c(
       "manifest",
       "individual",
       "biospecimen",
@@ -130,7 +130,7 @@ test_that("check_all() returns NULL for checks with missing data", {
 test_that("check_all() returns expected conditions", {
   skip_if_not(logged_in(syn = syn))
   data <- tibble::tibble(
-    metadata_type = c(
+    metadataType = c(
       "manifest",
       "individual",
       "biospecimen",
@@ -180,7 +180,7 @@ test_that("check_all() throws error if not exactly 1 metadata type each", {
   skip_if_not(logged_in(syn = syn))
   # Missing biospecimen
   data1 <- tibble::tibble(
-    metadata_type = c(
+    metadataType = c(
       "manifest",
       "individual",
       "assay"
@@ -188,7 +188,7 @@ test_that("check_all() throws error if not exactly 1 metadata type each", {
   )
   # Duplicate assay
   data2 <- tibble::tibble(
-    metadata_type = c(
+    metadataType = c(
       "manifest",
       "individual",
       "assay",
