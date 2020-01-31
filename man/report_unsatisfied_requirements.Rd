@@ -13,8 +13,26 @@ report_unsatisfied_requirements(membership, certified, syn)
 
 \item{syn}{Synapse client object}
 }
+\value{
+If user is not certified or in the required teams, a modal dialog
+describing which requirements are not met.
+}
 \description{
 Takes the output from \code{\link[=check_team_membership]{check_team_membership()}} and \code{\link[=check_certified_user]{check_certified_user()}}.
 If the user is not in the required teams or certified, creates a modal dialog
 indicating which teams they need to belong to and how to request access.
+}
+\examples{
+\dontrun{
+syn <- synapse$Synapse()
+syn$login()
+user <- syn$getUserProfile("dcctravistest")
+membership <- check_team_membership(
+  teams = "3396691",
+  user = user,
+  syn = syn
+ )
+certified <- check_certified_user(user$ownerId, syn = syn)
+report_unsatisfied_requirements(membership, certified, syn = syn)
+}
 }
