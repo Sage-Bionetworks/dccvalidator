@@ -103,7 +103,7 @@ show_details.list <- function(x) {
 #' If the user is not in the required teams or certified, creates a modal dialog
 #' indicating which teams they need to belong to and how to request access.
 #'
-#' @noRd
+#' @export
 #' @inheritParams get_synapse_table
 #' @param membership Output from [check_team_membership()]
 #' @param certified Output from [check_certified_user()]

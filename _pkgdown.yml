@@ -47,6 +47,7 @@ reference:
     - with_busy_indicator_server
     - results_boxes_ui
     - results_boxes_server
+    - report_unsatisfied_requirements
 
 - title: App-supporting functions
   desc: >
