@@ -327,6 +327,11 @@ check_type <- function(values, key, annotations, whitelist_values = NULL,
 #' }
 can_coerce <- function(values, class) {
   if (class == "character" &
+  ## If the values are already the correct class, then obviously the answer
+  ## should be yes
+  if (inherits(values, class)) {
+    return(TRUE)
+  } else if (class == "character" &
     (inherits(values, "numeric") | inherits(values, "integer") |
       inherits(values, "logical"))) {
     return(TRUE)

@@ -445,3 +445,12 @@ test_that("can_coerce() returns FALSE for values that aren't true/false", {
   expect_false(can_coerce(1, "logical"))
   expect_false(can_coerce(0, "logical"))
 })
+
+test_that("a value can be coerced to its own type", {
+  expect_true(can_coerce(1L, "integer"))
+  expect_true(can_coerce(1, "numeric"))
+  expect_true(can_coerce("foo", "character"))
+  expect_true(can_coerce(TRUE, "logical"))
+  expect_true(can_coerce(factor("foo"), "factor"))
+})
+
