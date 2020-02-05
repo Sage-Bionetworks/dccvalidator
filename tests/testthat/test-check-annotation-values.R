@@ -424,3 +424,24 @@ test_that("can_coerce() returns FALSE if values aren't coercible", {
   expect_false(can_coerce("a", "logical"))
   expect_false(can_coerce(2.1, "integer"))
 })
+
+test_that("can_coerce() returns TRUE for any capitalization of true/false", {
+  expect_true(can_coerce("true", "logical"))
+  expect_true(can_coerce("True", "logical"))
+  expect_true(can_coerce("TRUE", "logical"))
+  expect_true(can_coerce(TRUE, "logical"))
+  expect_true(can_coerce("false", "logical"))
+  expect_true(can_coerce("False", "logical"))
+  expect_true(can_coerce("FALSE", "logical"))
+  expect_true(can_coerce(FALSE, "logical"))
+})
+
+test_that("can_coerce() returns FALSE for values that aren't true/false", {
+  expect_false(can_coerce("foo", "logical"))
+  expect_false(can_coerce("T", "logical"))
+  expect_false(can_coerce("F", "logical"))
+  expect_false(can_coerce(c("foo", "True"), "logical"))
+  expect_false(can_coerce(c("foo", "True", "FALSE"), "logical"))
+  expect_false(can_coerce(1, "logical"))
+  expect_false(can_coerce(0, "logical"))
+})
