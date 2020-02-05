@@ -20,4 +20,3 @@ default:
       - "specimenID"
     assay:
       - "specimenID"
-      
