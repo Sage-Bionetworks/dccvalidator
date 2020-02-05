@@ -1,11 +1,10 @@
 #' Run all validation checks
 #'
-#' Runs all validation checks. Proper function requires an
-#' environment configuration (config) to be set. The config
-#' is expected to have templates for each metadataType,
-#' where individual and biospecimen depend on species and
-#' assay depends on the assay type. Additionally, there
-#' should be complete_columns for each metadataType.
+#' Runs all validation checks. Requires an environment configuration
+#' (config) to be set. The config is expected to have templates for
+#' each metadataType, where individual and biospecimen depend on species and
+#' assay depends on the assay type. Additionally, there should be
+#' complete_columns for each metadataType.
 #'
 #' @param data A tibble or dataframe with the columns:
 #'   name, metadataType, species, assay, file_data.

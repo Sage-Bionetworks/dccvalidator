@@ -26,12 +26,11 @@ least three columns: \code{key}, \code{value}, and \code{columnType}.}
 List of conditions
 }
 \description{
-Runs all validation checks. Proper function requires an
-environment configuration (config) to be set. The config
-is expected to have templates for each metadataType,
-where individual and biospecimen depend on species and
-assay depends on the assay type. Additionally, there
-should be complete_columns for each metadataType.
+Runs all validation checks. Requires an environment configuration
+(config) to be set. The config is expected to have templates for
+each metadataType, where individual and biospecimen depend on species and
+assay depends on the assay type. Additionally, there should be
+complete_columns for each metadataType.
 }
 \examples{
 \dontrun{
