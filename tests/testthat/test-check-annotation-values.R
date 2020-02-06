@@ -455,7 +455,6 @@ test_that("a value can be coerced to its own type", {
 })
 
 test_that("factors are converted to string before checking coercibility", {
-  can_coerce(factor("TRUE"), "logical")
-  can_coerce(factor("foo"), "character")
-  can_coerce("foo", "character")
+  expect_true(can_coerce(factor("TRUE"), "logical"))
+  expect_true(can_coerce(factor("foo"), "character"))
 })
