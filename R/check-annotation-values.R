@@ -332,14 +332,9 @@ can_coerce <- function(values, class) {
     return(TRUE)
   }
 
-  ## Convert factors to strings
-  if (inherits(values, "factor")) {
-    values <- as.character(values)
-  }
-
   if (class == "character" &
     (inherits(values, "numeric") | inherits(values, "integer") |
-      inherits(values, "logical"))) {
+      inherits(values, "logical") | inherits(values, "factor"))) {
     return(TRUE)
   } else if (class == "numeric" & inherits(values, "integer")) {
     return(TRUE)
