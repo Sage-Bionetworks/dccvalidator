@@ -109,7 +109,7 @@ The [Data Analysis Core](https://www.synapse.org/#!Synapse:syn20959298) will rep
   
 ## Uploading data to Synapse after validation
 
-Once data has passed validation, and the PEC data curators permit edit permissions to the **Staging** folder, you will use your newly created manifest file to upload data using `syncToSynapse`. You can execute `synToSynapse` in the [Python client](https://python-docs.synapse.org/build/html/synapseutils.html#synapseutils.sync.syncToSynapse) and [R client](https://github.com/Sage-Bionetworks/synapserutils#upload-data-in-bulk). For getting started with the Synapse programmatic clients, please visit our [Synapse docs](https://docs.synapse.org/articles/api_documentation.html).
+Once data has passed validation, and the PEC data curators permit edit permissions to the **Staging** folder, you will use your newly created manifest file to upload data using `syncToSynapse`. You can execute `syncToSynapse` in the [Python client](https://python-docs.synapse.org/build/html/synapseutils.html#synapseutils.sync.syncToSynapse) and [R client](https://github.com/Sage-Bionetworks/synapserutils#upload-data-in-bulk). For getting started with the Synapse programmatic clients, please visit our [Synapse docs](https://docs.synapse.org/articles/api_documentation.html).
 
 ## Data Release
 
