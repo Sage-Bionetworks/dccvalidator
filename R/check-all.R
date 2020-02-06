@@ -120,7 +120,8 @@ check_all <- function(data, annotations, syn) {
     annotations,
     whitelist_keys = c("path", "parent", "name", "used", "executed"),
     success_msg = "All keys (column names) in the manifest are valid",
-    fail_msg = "Some keys (column names) in the manifest are invalid"
+    fail_msg = "Some keys (column names) in the manifest are invalid",
+    annots_link = config::get("annotations_link")
   )
 
   # Annotation values in manifest and metadata are valid ---------------------
@@ -128,28 +129,32 @@ check_all <- function(data, annotations, syn) {
     data$file_data[manifest_index][[1]],
     annotations,
     success_msg = "All values in the manifest are valid",
-    fail_msg = "Some values in the manifest are invalid"
+    fail_msg = "Some values in the manifest are invalid",
+    annots_link = config::get("annotations_link")
   )
   annotation_values_indiv <- check_annotation_values(
     data$file_data[indiv_index][[1]],
     annotations,
     whitelist_keys = c("individualID"),
     success_msg = "All values in the individual metadata are valid",
-    fail_msg = "Some values in the individual metadata are invalid"
+    fail_msg = "Some values in the individual metadata are invalid",
+    annots_link = config::get("annotations_link")
   )
   annotation_values_biosp <- check_annotation_values(
     data$file_data[biosp_index][[1]],
     annotations,
     whitelist_keys = c("specimenID", "individualID"),
     success_msg = "All values in the biospecimen metadata are valid",
-    fail_msg = "Some values in the biospecimen metadata are invalid"
+    fail_msg = "Some values in the biospecimen metadata are invalid",
+    annots_link = config::get("annotations_link")
   )
   annotation_values_assay <- check_annotation_values(
     data$file_data[assay_index][[1]],
     annotations,
     whitelist_keys = c("specimenID"),
     success_msg = "All values in the assay metadata are valid",
-    fail_msg = "Some values in the assay metadata are invalid"
+    fail_msg = "Some values in the assay metadata are invalid",
+    annots_link = config::get("annotations_link")
   )
 
   # Individual and specimen IDs are not duplicated ---------------------------
