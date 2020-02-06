@@ -8,6 +8,7 @@ reference:
     Functions to perform data validation and QA/QC checks, and report results as
     successes, warnings, or failures.
   contents:
+    - check_all
     - check_annotation_keys
     - check_annotation_values
     - valid_annotation_keys
@@ -47,6 +48,7 @@ reference:
     - with_busy_indicator_server
     - results_boxes_ui
     - results_boxes_server
+    - report_unsatisfied_requirements
 
 - title: App-supporting functions
   desc: >
