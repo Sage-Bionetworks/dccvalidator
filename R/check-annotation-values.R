@@ -287,14 +287,19 @@ check_type <- function(values, key, annotations, whitelist_values = NULL,
 #' in R's built-in coercion functions (e.g. `as.numeric()` warns when it
 #' introduces NAs but `as.logical()` doesn't; `as.integer()` will silently
 #' remove decimal places from numeric inputs) we check only for the specific
-#' coercions we want to allow, currently: numeric, integer, or logical to string
+#' coercions we want to allow, primarily allowing numeric, integer, or logical
+#' values to be considered valid even when the required type is character.
 #'
 #' This function is mainly in place so that we can automatically allow numeric
 #' read lengths, pH values, etc., which are defined as strings in our annotation
 #' vocabulary but can reasonably be numbers.
 #'
-#' This function will also return `TRUE` if the values are integers and the
-#' desired class is numeric.
+#' Additionally, this function will return `TRUE` if the values are integers and
+#' the desired class is numeric.
+#'
+#' It will also allow the following capitalizations of boolean values: true,
+#' True, TRUE, false, False, FALSE. These are all treated as valid booleans by
+#' Synapse.
 #'
 #' This function will *not* affect validation of enumerated values, regardless
 #' of their class. It is only used when validating annotations that have a
@@ -321,12 +326,24 @@ check_type <- function(values, key, annotations, whitelist_values = NULL,
 #' can_coerce(2.5, "integer")
 #' }
 can_coerce <- function(values, class) {
+  ## If the values are already the correct class, then obviously the answer
+  ## should be yes
+  if (inherits(values, class)) {
+    return(TRUE)
+  }
+
   if (class == "character" &
     (inherits(values, "numeric") | inherits(values, "integer") |
-      inherits(values, "logical"))) {
+      inherits(values, "logical") | inherits(values, "factor"))) {
     return(TRUE)
   } else if (class == "numeric" & inherits(values, "integer")) {
     return(TRUE)
+  } else if (class == "logical") {
+    if (all(values %in% c("true", "True", "TRUE", "false", "False", "FALSE"))) {
+      return(TRUE)
+    } else {
+      return(FALSE)
+    }
   } else {
     return(FALSE)
   }
