@@ -283,6 +283,12 @@ test_that("check_values false back to get_synapse_annotations()", {
   expect_identical(res1, res2)
 })
 
+test_that("can customize link in check_values()", {
+  dat <- tibble(fileFormat = c("wrong", "txt", "csv", "wrong again"))
+  res <- check_values(dat, annots, annots_link = "foo.com")
+  expect_true(stringr::str_detect(res$behavior, "foo\\.com"))
+})
+
 ## check_type() ----------------------------------------------------------------
 
 test_that("check_type returns right value depending on class/`return_valid`", {

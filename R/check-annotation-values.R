@@ -406,6 +406,8 @@ check_value <- function(values, key, annotations, whitelist_keys = NULL,
 #' @param fail_msg Message indicating the check failed.
 #' @param return_valid Should the function return valid values? Defaults to
 #'   `FALSE` (i.e. the function will return invalid values).
+#' @param annots_link Link to a definition of the annotations being used in the
+#'   project
 #' @return If `return_valid = FALSE`: a condition object indicating whether all
 #'   annotation values are valid. Invalid annotation values are included as data
 #'   within the object: a named list where each element corresponds to a key
@@ -429,7 +431,9 @@ check_values <- function(x, annotations, whitelist_keys = NULL,
                          whitelist_values = NULL,
                          success_msg = "All annotation values are valid",
                          fail_msg = "Some annotation values are invalid",
-                         return_valid = FALSE, syn) {
+                         return_valid = FALSE,
+                         annots_link = "https://shinypro.synapse.org/users/nsanati/annotationUI/", # nolint
+                         syn) {
   if (length(names(x)) == 0) {
     stop("No annotations present to check", call. = FALSE)
   }
@@ -454,7 +458,7 @@ check_values <- function(x, annotations, whitelist_keys = NULL,
   if (isTRUE(return_valid)) {
     return(values)
   }
-  behavior <- "All annotation values should conform to the vocabulary. Refer to the <a target=\"_blank\" href=\"https://shinypro.synapse.org/users/nsanati/annotationUI/\">annotation dictionary</a> for accepted values." # nolint
+  behavior <- glue::glue("All annotation values should conform to the vocabulary. Refer to the <a target=\"_blank\" href=\"{annots_link}\">annotation dictionary</a> for accepted values.") # nolint
   if (length(values) == 0) {
     check_pass(
       msg = success_msg,
