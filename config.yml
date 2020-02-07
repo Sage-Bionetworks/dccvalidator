@@ -88,7 +88,8 @@ pec:
       human: "syn20781820"
       animal: "syn21053116"
     biospecimen_templates:
-      general: "syn20768131"
+      animal model: "syn20768131"
+      human: "syn20768131"
     assay_templates:
       wholeGenomeSeq: "syn20980993"
       rnaSeq: "syn20768650"
