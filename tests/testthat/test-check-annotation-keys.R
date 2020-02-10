@@ -164,3 +164,8 @@ test_that("check_keys allows whitelisting keys", {
   expect_equal(rese, c("assay", "foo"))
   expect_equal(resf, c("assay", "foo"))
 })
+
+test_that("can customize link in check_keys()", {
+  res <- check_keys("foo", annots, annots_link = "foo.com")
+  expect_true(stringr::str_detect(res$behavior, "foo\\.com"))
+})

@@ -16,6 +16,9 @@ with_busy_indicator_server(button_id, expr)
 
 \item{expr}{the code to run when the button is clicked}
 }
+\value{
+Shiny UI and server logic
+}
 \description{
 These functions add button feedback features including: disabling the button
 while processing requested function, showing a spinning wheel while

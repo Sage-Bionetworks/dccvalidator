@@ -5,6 +5,7 @@
 #' @import shiny
 #' @import shinydashboard
 #' @param request Shiny request
+#' @return A shinydashboard page
 #' @export
 #' @examples
 #' \dontrun{

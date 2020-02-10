@@ -16,6 +16,9 @@ function was checking for)}
 
 \item{type}{One of "check_pass", "check_warn", "check_fail"}
 }
+\value{
+An S3 object of class "check_pass", "check_warn", or "check_fail"
+}
 \description{
 Create a condition of the given type
 }

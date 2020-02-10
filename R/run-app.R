@@ -2,6 +2,7 @@
 #'
 #' @param ... Additional golem options passed to [golem::with_golem_options()]
 #' @export
+#' @return Shiny app with additional golem options passed via `...`
 #' @importFrom shiny shinyApp
 #' @importFrom golem with_golem_options
 #' @examples

@@ -10,15 +10,13 @@
 \usage{
 check_annotation_keys(x, annotations, ...)
 
-\method{check_annotation_keys}{NULL}(x, annotations, ...)
+\method{check_annotation_keys}{`NULL`}(x, annotations, ...)
 
-\method{check_annotation_keys}{synapseclient.entity.File}(x, annotations,
-  syn, ...)
+\method{check_annotation_keys}{synapseclient.entity.File}(x, annotations, syn, ...)
 
 \method{check_annotation_keys}{data.frame}(x, annotations, ...)
 
-\method{check_annotation_keys}{synapseclient.table.CsvFileTable}(x,
-  annotations, ...)
+\method{check_annotation_keys}{synapseclient.table.CsvFileTable}(x, annotations, ...)
 }
 \arguments{
 \item{x}{An object to check.}
@@ -39,6 +37,17 @@ Checks that all annotation keys on a file, in a file view, or in a data frame
 are valid annotations. \code{check_annotation_keys()} returns any invalid
 annotation keys; \code{valid_annotation_keys()} returns \emph{valid} annotation keys.
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{NULL}: Return NULL
+
+\item \code{synapseclient.entity.File}: Check annotation keys in a Synapse file
+
+\item \code{data.frame}: Check annotation keys in a data frame
+
+\item \code{synapseclient.table.CsvFileTable}: Check annotation keys for a Synapse table
+}}
+
 \examples{
 annots <- data.frame(
   key = c("assay", "fileFormat", "fileFormat", "fileFormat", "species"),

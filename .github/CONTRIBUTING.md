@@ -33,6 +33,37 @@ for documentation.
 *  We use [testthat](https://cran.r-project.org/package=testthat). Contributions
 with test cases included are easier to accept.  
 
+### Local development
+
+`dccvalidator` uses pre-commit hooks to check for common issues, such as code
+style (which should conform to [tidyverse style](https://style.tidyverse.org/)),
+code parsability, and up-to-date .Rd documentation. To use, you will need to
+install [pre-commit](https://pre-commit.com/#intro). If on a Mac, I recommend
+using [homebrew](https://brew.sh/):
+
+```
+brew install pre-commit
+```
+
+Then, within this git repo, run:
+
+```
+pre-commit install
+```
+
+When you commit your changes, pre-commit will run the checks described above,
+and the commit will fail if the checks do not pass. If you are experiencing
+issues with the checks and want to commit your work and worry about them later,
+you can run `git commit --no-verify` to skip all checks. Or, you can skip
+certain hooks by their ID (as shown in the file `.pre-commit-config.yaml`), e.g.
+`SKIP=roxygenize git commit -m "foo"`.
+
+---
+
+Please note that the dccvalidator project is released with a [Contributor Code of Conduct](https://sage-bionetworks.github.io/dccvalidator/CODE_OF_CONDUCT).
+By contributing to this project, you agree to abide by its terms.
+
+
 ### Code of Conduct
 
 Please note that the dccvalidator project is released with a

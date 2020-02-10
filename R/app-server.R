@@ -7,6 +7,7 @@
 #' @param input Shiny input
 #' @param output Shiny output
 #' @param session Shiny session
+#' @return none
 #' @export
 #' @examples
 #' \dontrun{
@@ -108,20 +109,15 @@ app_server <- function(input, output, session) {
       biosp = NULL,
       assay = NULL
     )
-    ## Upload files to Synapse (after renaming them so they keep their original
-    ## names)
     observeEvent(input$manifest, {
       files$manifest <- input$manifest
     })
-
     observeEvent(input$indiv_meta, {
       files$indiv <- input$indiv_meta
     })
-
     observeEvent(input$biosp_meta, {
       files$biosp <- input$biosp_meta
     })
-
     observeEvent(input$assay_meta, {
       files$assay <- input$assay_meta
     })
@@ -152,24 +148,6 @@ app_server <- function(input, output, session) {
       readr::read_csv(files$assay$datapath)
     })
 
-    # Location of templates
-    indiv_template <- reactive({
-      if (input$species == "human") {
-        config::get("templates")$individual_templates[["human"]]
-      } else {
-        config::get("templates")$individual_templates[["animal"]]
-      }
-    })
-    biosp_template <- reactive({
-      if (input$species == "drosophila") {
-        config::get("templates")$biospecimen_templates[["drosophila"]]
-      } else {
-        config::get("templates")$biospecimen_templates[["general"]]
-      }
-    })
-    assay_template <- reactive({
-      config::get("templates")$assay_templates[[input$assay_name]]
-    })
     species_name <- reactive({
       input$species
     })
@@ -192,214 +170,6 @@ app_server <- function(input, output, session) {
       )
     })
 
-    ##############################
-    ####  Validation Results  ####
-    ##############################
-
-    ## Perform checks
-
-    # Missing columns ----------------------------------------------------------
-    missing_cols_indiv <- reactive({
-      check_cols_individual(indiv(), indiv_template(), syn = syn)
-    })
-    missing_cols_biosp <- reactive({
-      check_cols_biospecimen(biosp(), biosp_template(), syn = syn)
-    })
-    missing_cols_assay <- reactive({
-      check_cols_assay(assay(), assay_template(), syn = syn)
-    })
-    missing_cols_manifest <- reactive({
-      check_cols_manifest(
-        manifest(),
-        config::get("templates")$manifest_template,
-        syn = syn
-      )
-    })
-
-    # Individual and specimen IDs match ----------------------------------------
-    individual_ids_indiv_biosp <- reactive({
-      check_indiv_ids_match(
-        indiv(),
-        biosp(),
-        "individual",
-        "biospecimen",
-        bidirectional = FALSE
-      )
-    })
-    individual_ids_indiv_manifest <- reactive({
-      check_indiv_ids_match(
-        indiv(),
-        manifest(),
-        "individual",
-        "manifest",
-        bidirectional = FALSE
-      )
-    })
-    specimen_ids_biosp_assay <- reactive({
-      check_specimen_ids_match(
-        biosp(),
-        assay(),
-        "biospecimen",
-        "assay",
-        bidirectional = FALSE
-      )
-    })
-    specimen_ids_biosp_manifest <- reactive({
-      check_specimen_ids_match(
-        biosp(),
-        manifest(),
-        "biospecimen",
-        "manifest",
-        bidirectional = FALSE
-      )
-    })
-
-    # Annotation keys in manifest are valid ------------------------------------
-    annotation_keys_manifest <- reactive({
-      check_annotation_keys(
-        manifest(),
-        annots,
-        whitelist_keys = c("path", "parent", "name", "used", "executed"),
-        success_msg = "All keys (column names) in the manifest are valid",
-        fail_msg = "Some keys (column names) in the manifest are invalid"
-      )
-    })
-
-    # Annotation values in manifest and metadata are valid ---------------------
-    annotation_values_manifest <- reactive({
-      check_annotation_values(
-        manifest(),
-        annots,
-        success_msg = "All values in the manifest are valid",
-        fail_msg = "Some values in the manifest are invalid"
-      )
-    })
-    annotation_values_indiv <- reactive({
-      check_annotation_values(
-        indiv(),
-        annots,
-        whitelist_keys = c("individualID"),
-        success_msg = "All values in the individual metadata are valid",
-        fail_msg = "Some values in the individual metadata are invalid"
-      )
-    })
-    annotation_values_biosp <- reactive({
-      check_annotation_values(
-        biosp(),
-        annots,
-        whitelist_keys = c("specimenID", "individualID"),
-        success_msg = "All values in the biospecimen metadata are valid",
-        fail_msg = "Some values in the biospecimen metadata are invalid"
-      )
-    })
-    annotation_values_assay <- reactive({
-      check_annotation_values(
-        assay(),
-        annots,
-        whitelist_keys = c("specimenID"),
-        success_msg = "All values in the assay metadata are valid",
-        fail_msg = "Some values in the assay metadata are invalid"
-      )
-    })
-
-    # Individual and specimen IDs are not duplicated ---------------------------
-    duplicate_indiv_ids <- reactive({
-      check_indiv_ids_dup(
-        indiv(),
-        # nolint start
-        success_msg = "Individual IDs in the individual metadata file are unique",
-        fail_msg = "Duplicate individual IDs found in the individual metadata file"
-        # nolint end
-      )
-    })
-    duplicate_specimen_ids <- reactive({
-      check_specimen_ids_dup(
-        biosp(),
-        # nolint start
-        success_msg = "Specimen IDs in the biospecimen metadata file are unique",
-        fail_msg = "Duplicate specimen IDs found in the biospecimen metadata file"
-        # nolint end
-      )
-    })
-
-    # Empty columns produce warnings -------------------------------------------
-    empty_cols_manifest <- reactive({
-      check_cols_empty(
-        manifest(),
-        required_cols = config::get("complete_columns")$manifest,
-        success_msg = "No columns are empty in the manifest",
-        fail_msg = "Some columns are empty in the manifest"
-      )
-    })
-    empty_cols_indiv <- reactive({
-      check_cols_empty(
-        indiv(),
-        required_cols = config::get("complete_columns")$individual,
-        success_msg = "No columns are empty in the individual metadata",
-        fail_msg = "Some columns are empty in the individual metadata"
-      )
-    })
-    empty_cols_biosp <- reactive({
-      check_cols_empty(
-        biosp(),
-        required_cols = config::get("complete_columns")$biospecimen,
-        success_msg = "No columns are empty in the biospecimen metadata",
-        fail_msg = "Some columns are empty in the biospecimen metadata"
-      )
-    })
-    empty_cols_assay <- reactive({
-      check_cols_empty(
-        assay(),
-        required_cols = config::get("complete_columns")$assay,
-        success_msg = "No columns are empty in the assay metadata",
-        fail_msg = "Some columns are empty in the assay metadata"
-      )
-    })
-
-    # Incomplete required columns produce failures -----------------------------
-    complete_cols_manifest <- reactive({
-      check_cols_complete(
-        manifest(),
-        required_cols = config::get("complete_columns")$manifest,
-        success_msg = "All required columns present are complete in the manifest", # nolint
-        fail_msg = "Some required columns are incomplete in the manifest"
-      )
-    })
-    complete_cols_indiv <- reactive({
-      check_cols_complete(
-        indiv(),
-        required_cols = config::get("complete_columns")$individual,
-        success_msg = "All required columns present are complete in the individual metadata", # nolint
-        fail_msg = "Some required columns are incomplete in the individual metadata" # nolint
-      )
-    })
-    complete_cols_biosp <- reactive({
-      check_cols_complete(
-        biosp(),
-        required_cols = config::get("complete_columns")$biospecimen,
-        success_msg = "All required columns present are complete in the biospecimen metadata", # nolint
-        fail_msg = "Some required columns are incomplete in the biospecimen metadata" # nolint
-      )
-    })
-    complete_cols_assay <- reactive({
-      check_cols_complete(
-        assay(),
-        required_cols = config::get("complete_columns")$assay,
-        success_msg = "All required columns present are complete in the assay metadata", # nolint
-        fail_msg = "Some required columns are incomplete in the assay metadata" # nolint
-      )
-    })
-
-    # Metadata files appear in manifest ----------------------------------------
-    meta_files_in_manifest <- reactive({
-      check_files_manifest(
-        manifest(),
-        c(files$indiv$name, files$biosp$name, files$assay$name),
-        success_msg = "Manifest file contains all metadata files",
-        fail_msg = "Manifest file does not contain all metadata files"
-      )
-    })
-
     ## Show validation results on clicking "validate"
     ## Require that the study name is given; give error if not
     observeEvent(input$"validate_btn", {
@@ -417,6 +187,10 @@ app_server <- function(input, output, session) {
               !is.null(manifest())
             ),
             message = "Please upload some data to validate"
+          ),
+          need(
+            tolower(tools::file_ext(input$manifest$name)) != "csv",
+            "Manifest file must be .tsv or .txt, not .csv"
           )
         )
 
@@ -474,33 +248,32 @@ app_server <- function(input, output, session) {
           )
         }
 
-        ## List results
-        res <- list(
-          missing_cols_indiv(),
-          missing_cols_biosp(),
-          missing_cols_assay(),
-          missing_cols_manifest(),
-          individual_ids_indiv_biosp(),
-          individual_ids_indiv_manifest(),
-          specimen_ids_biosp_assay(),
-          specimen_ids_biosp_manifest(),
-          annotation_keys_manifest(),
-          annotation_values_manifest(),
-          annotation_values_indiv(),
-          annotation_values_biosp(),
-          annotation_values_assay(),
-          duplicate_indiv_ids(),
-          duplicate_specimen_ids(),
-          empty_cols_manifest(),
-          empty_cols_indiv(),
-          empty_cols_biosp(),
-          empty_cols_assay(),
-          complete_cols_manifest(),
-          complete_cols_indiv(),
-          complete_cols_biosp(),
-          complete_cols_assay(),
-          meta_files_in_manifest()
+        ## Load in data to table for validation checks
+        ## If file name is NULL, pass in NA.
+        all_data <- tibble::tibble(
+          "metadataType" = c(
+            "manifest",
+            "individual",
+            "biospecimen",
+            "assay"
+          ),
+          "name" = c(
+            files$manifest$name %||% NA,
+            files$indiv$name %||% NA,
+            files$biosp$name %||% NA,
+            files$assay$name %||% NA
+          ),
+          "species" = species_name(),
+          "assay" = assay_name(),
+          "file_data" = c(
+            list(manifest()),
+            list(indiv()),
+            list(biosp()),
+            list(assay())
+          )
         )
+
+        res <- check_all(all_data, annots, syn)
 
         callModule(results_boxes_server, "Validation Results", res)
       })

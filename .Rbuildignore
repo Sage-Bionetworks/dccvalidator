@@ -16,3 +16,4 @@
 ^config\.yml$
 ^_pkgdown\.yml$
 ^requirements\.txt$
+^cran-comments\.md$

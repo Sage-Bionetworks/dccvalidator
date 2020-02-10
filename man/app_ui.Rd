@@ -9,6 +9,9 @@ app_ui(request)
 \arguments{
 \item{request}{Shiny request}
 }
+\value{
+A shinydashboard page
+}
 \description{
 Create the UI component of the dccvalidator Shiny app.
 }

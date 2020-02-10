@@ -4,11 +4,17 @@
 \alias{check_values}
 \title{Check a set of keys and their values}
 \usage{
-check_values(x, annotations, whitelist_keys = NULL,
+check_values(
+  x,
+  annotations,
+  whitelist_keys = NULL,
   whitelist_values = NULL,
   success_msg = "All annotation values are valid",
   fail_msg = "Some annotation values are invalid",
-  return_valid = FALSE, syn)
+  return_valid = FALSE,
+  annots_link = "https://shinypro.synapse.org/users/nsanati/annotationUI/",
+  syn
+)
 }
 \arguments{
 \item{x}{A data frame of annotation data}
@@ -27,6 +33,9 @@ vectors) to whitelist}
 
 \item{return_valid}{Should the function return valid values? Defaults to
 \code{FALSE} (i.e. the function will return invalid values).}
+
+\item{annots_link}{Link to a definition of the annotations being used in the
+project}
 
 \item{syn}{Synapse client object}
 }

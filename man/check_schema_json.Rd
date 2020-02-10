@@ -4,9 +4,12 @@
 \alias{check_schema_json}
 \title{Check data against a JSON Schema}
 \usage{
-check_schema_json(json, schema,
+check_schema_json(
+  json,
+  schema,
   success_msg = "Data is valid against the schema",
-  fail_msg = "Data is invalid against the schema")
+  fail_msg = "Data is invalid against the schema"
+)
 }
 \arguments{
 \item{json}{Contents of a json object, or a filename containing

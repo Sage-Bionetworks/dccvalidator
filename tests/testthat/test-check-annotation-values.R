@@ -283,6 +283,12 @@ test_that("check_values false back to get_synapse_annotations()", {
   expect_identical(res1, res2)
 })
 
+test_that("can customize link in check_values()", {
+  dat <- tibble(fileFormat = c("wrong", "txt", "csv", "wrong again"))
+  res <- check_values(dat, annots, annots_link = "foo.com")
+  expect_true(stringr::str_detect(res$behavior, "foo\\.com"))
+})
+
 ## check_type() ----------------------------------------------------------------
 
 test_that("check_type returns right value depending on class/`return_valid`", {
@@ -423,4 +429,38 @@ test_that("can_coerce() returns FALSE if values aren't coercible", {
   expect_false(can_coerce("a", "numeric"))
   expect_false(can_coerce("a", "logical"))
   expect_false(can_coerce(2.1, "integer"))
+})
+
+test_that("can_coerce() returns TRUE for any capitalization of true/false", {
+  expect_true(can_coerce("true", "logical"))
+  expect_true(can_coerce("True", "logical"))
+  expect_true(can_coerce("TRUE", "logical"))
+  expect_true(can_coerce(TRUE, "logical"))
+  expect_true(can_coerce("false", "logical"))
+  expect_true(can_coerce("False", "logical"))
+  expect_true(can_coerce("FALSE", "logical"))
+  expect_true(can_coerce(FALSE, "logical"))
+})
+
+test_that("can_coerce() returns FALSE for values that aren't true/false", {
+  expect_false(can_coerce("foo", "logical"))
+  expect_false(can_coerce("T", "logical"))
+  expect_false(can_coerce("F", "logical"))
+  expect_false(can_coerce(c("foo", "True"), "logical"))
+  expect_false(can_coerce(c("foo", "True", "FALSE"), "logical"))
+  expect_false(can_coerce(1, "logical"))
+  expect_false(can_coerce(0, "logical"))
+})
+
+test_that("a value can be coerced to its own type", {
+  expect_true(can_coerce(1L, "integer"))
+  expect_true(can_coerce(1, "numeric"))
+  expect_true(can_coerce("foo", "character"))
+  expect_true(can_coerce(TRUE, "logical"))
+  expect_true(can_coerce(factor("foo"), "factor"))
+})
+
+test_that("factors are converted to string before checking coercibility", {
+  expect_true(can_coerce(factor("TRUE"), "logical"))
+  expect_true(can_coerce(factor("foo"), "character"))
 })

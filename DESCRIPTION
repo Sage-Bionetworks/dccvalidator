@@ -1,6 +1,6 @@
 Package: dccvalidator
 Title: Metadata Validation for Data Coordinating Centers
-Version: 0.0.0.9011
+Version: 0.1.0.9000
 Authors@R:
     c(person(given = "Kara",
              family = "Woo",
@@ -15,7 +15,10 @@ Authors@R:
       person(given = "Kelsey",
              family = "Montgomery",
              role = "aut",
-             email = "kelsey.montgomery@sagebase.org"))
+             email = "kelsey.montgomery@sagebase.org"),
+      person(given = "Dean",
+             family = "Attali",
+             role = "cph"))
 Description: Performs checks for common metadata quality issues. Used by the
     data coordinating centers for the 'AMP-AD' consortium
     (<https://adknowledgeportal.synapse.org>), 'PsychENCODE' consortium
@@ -29,7 +32,6 @@ Depends:
     shinyBS
 Imports:
     config,
-    DT,
     ggplot2,
     glue,
     golem,
@@ -37,7 +39,6 @@ Imports:
     jsonvalidate,
     knitr,
     markdown,
-    pkgload,
     purrr,
     readr,
     readxl,
@@ -65,5 +66,5 @@ ByteCompile: true
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 SystemRequirements: synapseclient (pypi.org/project/synapseclient)

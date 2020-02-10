@@ -93,7 +93,6 @@ check_ids_match <- function(x, y, idcol = c("individualID", "specimenID"),
 #'
 #' Ensure that all individual IDs in two data frames match.
 #'
-#' @inheritParams check_ids_match
 #' @export
 #' @rdname check_ids_match
 #' @examples
@@ -109,7 +108,6 @@ check_indiv_ids_match <- function(x, y, xname = NULL, yname = NULL,
 #'
 #' Ensure that all specimen IDS in two data frames match
 #'
-#' @inheritParams check_ids_match
 #' @export
 #' @rdname check_ids_match
 #' @examples

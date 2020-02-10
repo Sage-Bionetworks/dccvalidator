@@ -20,15 +20,20 @@ Checks if values are coercible to a given class. Because of inconsistencies
 in R's built-in coercion functions (e.g. \code{as.numeric()} warns when it
 introduces NAs but \code{as.logical()} doesn't; \code{as.integer()} will silently
 remove decimal places from numeric inputs) we check only for the specific
-coercions we want to allow, currently: numeric, integer, or logical to string
+coercions we want to allow, primarily allowing numeric, integer, or logical
+values to be considered valid even when the required type is character.
 }
 \details{
 This function is mainly in place so that we can automatically allow numeric
 read lengths, pH values, etc., which are defined as strings in our annotation
 vocabulary but can reasonably be numbers.
 
-This function will also return \code{TRUE} if the values are integers and the
-desired class is numeric.
+Additionally, this function will return \code{TRUE} if the values are integers and
+the desired class is numeric.
+
+It will also allow the following capitalizations of boolean values: true,
+True, TRUE, false, False, FALSE. These are all treated as valid booleans by
+Synapse.
 
 This function will \emph{not} affect validation of enumerated values, regardless
 of their class. It is only used when validating annotations that have a

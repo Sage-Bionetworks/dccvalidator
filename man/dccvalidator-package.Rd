@@ -32,6 +32,7 @@ Authors:
 Other contributors:
 \itemize{
   \item Sage Bionetworks [copyright holder]
+  \item Dean Attali [copyright holder]
 }
 
 }

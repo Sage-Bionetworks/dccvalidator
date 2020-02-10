@@ -8,24 +8,45 @@
 \alias{check_cols_biospecimen}
 \title{Check column names against their corresponding template}
 \usage{
-check_col_names(data, template, success_msg = NULL, fail_msg = NULL,
-  behavior = NULL)
+check_col_names(
+  data,
+  template,
+  success_msg = NULL,
+  fail_msg = NULL,
+  behavior = NULL
+)
 
-check_cols_manifest(data, id,
+check_cols_manifest(
+  data,
+  id,
   success_msg = "All manifest columns present",
-  fail_msg = "Missing columns in the manifest", ...)
+  fail_msg = "Missing columns in the manifest",
+  ...
+)
 
-check_cols_individual(data, id,
+check_cols_individual(
+  data,
+  id,
   success_msg = "All individual metadata columns present",
-  fail_msg = "Missing columns in the individual metadata file", ...)
+  fail_msg = "Missing columns in the individual metadata file",
+  ...
+)
 
-check_cols_assay(data, id,
+check_cols_assay(
+  data,
+  id,
   success_msg = "All assay metadata columns present",
-  fail_msg = "Missing columns in the assay metadata file", ...)
+  fail_msg = "Missing columns in the assay metadata file",
+  ...
+)
 
-check_cols_biospecimen(data, id,
+check_cols_biospecimen(
+  data,
+  id,
   success_msg = "All biospecimen columns present",
-  fail_msg = "Missing columns in the biospecimen metadata file", ...)
+  fail_msg = "Missing columns in the biospecimen metadata file",
+  ...
+)
 }
 \arguments{
 \item{data}{Data frame to check against template (manifest, individual

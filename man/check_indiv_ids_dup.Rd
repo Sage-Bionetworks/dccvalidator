@@ -5,13 +5,19 @@
 \alias{check_specimen_ids_dup}
 \title{Check uniqueness of individual and specimen IDs}
 \usage{
-check_indiv_ids_dup(data, empty_values = c(NA, ""),
+check_indiv_ids_dup(
+  data,
+  empty_values = c(NA, ""),
   success_msg = "Individual IDs are unique",
-  fail_msg = "Duplicate individual IDs found")
+  fail_msg = "Duplicate individual IDs found"
+)
 
-check_specimen_ids_dup(data, empty_values = c(NA, ""),
+check_specimen_ids_dup(
+  data,
+  empty_values = c(NA, ""),
   success_msg = "Specimen IDs are unique",
-  fail_msg = "Duplicate specimen IDs found")
+  fail_msg = "Duplicate specimen IDs found"
+)
 }
 \arguments{
 \item{data}{Individual metadata file}

@@ -49,13 +49,13 @@ check_annotation_keys <- function(x, annotations, ...) {
 }
 
 #' @export
-#' @rdname check_annotation_keys
+#' @describeIn check_annotation_keys Return NULL
 check_annotation_keys.NULL <- function(x, annotations, ...) {
   return(NULL)
 }
 
 #' @export
-#' @rdname check_annotation_keys
+#' @describeIn check_annotation_keys Check annotation keys in a Synapse file
 check_annotation_keys.synapseclient.entity.File <- function(x, annotations, syn, ...) { # nolint
   file_annots <- dict_to_list(syn$getAnnotations(x))
   check_keys(
@@ -67,13 +67,13 @@ check_annotation_keys.synapseclient.entity.File <- function(x, annotations, syn,
 }
 
 #' @export
-#' @rdname check_annotation_keys
+#' @describeIn check_annotation_keys Check annotation keys in a data frame
 check_annotation_keys.data.frame <- function(x, annotations, ...) {
   check_keys(names(x), annotations, ..., return_valid = FALSE)
 }
 
 #' @export
-#' @rdname check_annotation_keys
+#' @describeIn check_annotation_keys Check annotation keys for a Synapse table
 check_annotation_keys.synapseclient.table.CsvFileTable <- function(x, annotations, ...) { # nolint
   dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE)
   fv_synapse_cols <- c(
@@ -122,13 +122,13 @@ valid_annotation_keys <- function(x, annotations, ...) {
 }
 
 #' @export
-#' @rdname valid_annotation_keys
+#' @describeIn valid_annotation_keys Return NULL
 valid_annotation_keys.NULL <- function(x, annotations, ...) {
   return(NULL)
 }
 
 #' @export
-#' @rdname valid_annotation_keys
+#' @describeIn valid_annotation_keys Valid annotation keys on a Synapse file
 valid_annotation_keys.synapseclient.entity.File <- function(x, annotations, syn, ...) { # nolint
   file_annots <- dict_to_list(syn$getAnnotations(x))
   check_keys(
@@ -140,13 +140,13 @@ valid_annotation_keys.synapseclient.entity.File <- function(x, annotations, syn,
 }
 
 #' @export
-#' @rdname valid_annotation_keys
+#' @describeIn valid_annotation_keys Valid annotation keys in a data frame
 valid_annotation_keys.data.frame <- function(x, annotations, ...) {
   check_keys(names(x), annotations, ..., return_valid = TRUE)
 }
 
 #' @export
-#' @rdname valid_annotation_keys
+#' @describeIn valid_annotation_keys Valid annotation keys in a Synapse table
 valid_annotation_keys.synapseclient.table.CsvFileTable <- function(x, annotations, ...) { # nolint
   dat <- utils::read.csv(x$filepath, stringsAsFactors = FALSE)
   fv_synapse_cols <- c(
@@ -189,6 +189,7 @@ valid_annotation_keys.synapseclient.table.CsvFileTable <- function(x, annotation
 check_keys <- function(x, annotations, whitelist_keys = NULL,
                        success_msg = "All annotation keys are valid",
                        fail_msg = "Some annotation keys are invalid",
+                       annots_link = "https://shinypro.synapse.org/users/nsanati/annotationUI/", # nolint
                        return_valid = FALSE, syn) {
   ## Need to provide data to check
   if (length(x) == 0) {
@@ -212,7 +213,7 @@ check_keys <- function(x, annotations, whitelist_keys = NULL,
     ## If return_valid is FALSE, return condition object
     keys <- setdiff(x, annotations$key)
     keys <- setdiff(keys, whitelist_keys)
-    behavior <- "All annotation keys should conform to the vocabulary. Refer to the <a target=\"_blank\" href=\"https://shinypro.synapse.org/users/nsanati/annotationUI/\">annotation dictionary</a> for accepted keys." # nolint
+    behavior <- glue::glue("All annotation keys should conform to the vocabulary. Refer to the <a target=\"_blank\" href=\"{annots_link}\">annotation dictionary</a> for accepted keys.") # nolint
 
     if (length(keys) == 0) {
       check_pass(

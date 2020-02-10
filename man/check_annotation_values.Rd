@@ -10,15 +10,13 @@
 \usage{
 check_annotation_values(x, annotations, ...)
 
-\method{check_annotation_values}{NULL}(x, annotations, ...)
+\method{check_annotation_values}{`NULL`}(x, annotations, ...)
 
-\method{check_annotation_values}{synapseclient.entity.File}(x, annotations,
-  syn, ...)
+\method{check_annotation_values}{synapseclient.entity.File}(x, annotations, syn, ...)
 
 \method{check_annotation_values}{data.frame}(x, annotations, ...)
 
-\method{check_annotation_values}{synapseclient.table.CsvFileTable}(x,
-  annotations, ...)
+\method{check_annotation_values}{synapseclient.table.CsvFileTable}(x, annotations, ...)
 }
 \arguments{
 \item{x}{An object to check.}
@@ -46,6 +44,17 @@ definition merely specifies a required type, then the values are checked
 against that type, with values that are coercible to the correct type treated
 as valid (see \code{\link[=can_coerce]{can_coerce()}}).
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{NULL}: Return NULL
+
+\item \code{synapseclient.entity.File}: Check annotation values on a Synapse file
+
+\item \code{data.frame}: Check annotation values in a data frame
+
+\item \code{synapseclient.table.CsvFileTable}: Check annotation values in a Synapse table
+}}
+
 \examples{
 annots <- data.frame(
   key = c("assay", "fileFormat", "fileFormat", "fileFormat", "species"),

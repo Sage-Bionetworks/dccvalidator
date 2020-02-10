@@ -10,15 +10,13 @@
 \usage{
 valid_annotation_keys(x, annotations, ...)
 
-\method{valid_annotation_keys}{NULL}(x, annotations, ...)
+\method{valid_annotation_keys}{`NULL`}(x, annotations, ...)
 
-\method{valid_annotation_keys}{synapseclient.entity.File}(x, annotations,
-  syn, ...)
+\method{valid_annotation_keys}{synapseclient.entity.File}(x, annotations, syn, ...)
 
 \method{valid_annotation_keys}{data.frame}(x, annotations, ...)
 
-\method{valid_annotation_keys}{synapseclient.table.CsvFileTable}(x,
-  annotations, ...)
+\method{valid_annotation_keys}{synapseclient.table.CsvFileTable}(x, annotations, ...)
 }
 \arguments{
 \item{x}{An object to check.}
@@ -37,6 +35,17 @@ A vector of valid annotation keys present in \code{x}.
 Checks for and returns the valid annotation keys in a data framae, Synapse
 file, or Synapse file view.
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{NULL}: Return NULL
+
+\item \code{synapseclient.entity.File}: Valid annotation keys on a Synapse file
+
+\item \code{data.frame}: Valid annotation keys in a data frame
+
+\item \code{synapseclient.table.CsvFileTable}: Valid annotation keys in a Synapse table
+}}
+
 \examples{
 annots <- data.frame(
   key = c("assay", "fileFormat", "fileFormat", "fileFormat", "species"),
