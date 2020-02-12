@@ -189,7 +189,8 @@ app_server <- function(input, output, session) {
             message = "Please upload some data to validate"
           ),
           need(
-            tolower(tools::file_ext(input$manifest$name)) != "csv",
+            is.null(manifest()) ||
+              tolower(tools::file_ext(input$manifest$name)) != "csv",
             "Manifest file must be .tsv or .txt, not .csv"
           )
         )
