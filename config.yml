@@ -46,6 +46,7 @@ amp-ad:
   annotations_link: "https://shinypro.synapse.org/users/kwoo/amp-ad-metadata-dictionary/"
   teams:
     - "3320424"
+    - "3405451"
   study_link_ref: "https://adknowledgeportal.synapse.org/#/DataAccess/AcknowledgementStatements"
   templates:
     assay_templates:
