@@ -47,3 +47,10 @@ syn$setPermissions(
   principalId = "3320424",
   accessType = list("CREATE", "READ", "UPDATE")
 )
+
+## Give AD_PortalContributor team CREATE, UPDATE, and READ
+syn$setPermissions(
+  entity = new_proj_id$properties$id,
+  principalId = "3405451",
+  accessType = list("CREATE", "READ", "UPDATE")
+)
