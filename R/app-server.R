@@ -320,90 +320,34 @@ app_server <- function(input, output, session) {
       )
     })
 
-    ## Placeholder for uploaded data that will be used to determine selectInput
-    ## options for the data summary
-    inputs <- reactiveVal(c())
-
-    ## Reactive list of data
-    vals <- reactive({
-      validate(
-        need(
-          any(
-            !is.null(indiv()),
-            !is.null(biosp()),
-            !is.null(assay()),
-            !is.null(manifest())
-          ),
-          message = "Please upload some data to view a summary"
-        )
-      )
-      list(
-        "Individual metadata" = indiv(),
-        "Biospecimen metadata" = biosp(),
-        "Assay metadata" = assay(),
-        "Manifest file" = manifest()
-      )
-    })
-
-    ## Update selectInput options for which data files to summarize
     observe({
-      ## Find which ones are not null
-      non_null <- vapply(
-        vals(),
-        function(x) !is.null(x),
-        logical(1)
-      )
-      inputs(names(which(non_null)))
-
-      updateSelectInput(
-        session,
-        "file_to_summarize",
-        label = "Choose file to view",
-        choices = inputs()
+      ## Reactive list of data
+      vals <- reactive({
+        validate(
+          need(
+            any(
+              !is.null(indiv()),
+              !is.null(biosp()),
+              !is.null(assay()),
+              !is.null(manifest())
+            ),
+            message = "Please upload some data to view a summary"
+          )
+        )
+        list(
+          "Individual metadata" = indiv(),
+          "Biospecimen metadata" = biosp(),
+          "Assay metadata" = assay(),
+          "Manifest file" = manifest()
+        )
+      })
+      
+      callModule(
+        file_summary_server,
+        "file_summary",
+        vals
       )
     })
-
-    ## skimr summary of data
-    output$datafileskim <- renderPrint({
-      skimr::skim_with(
-        numeric = list(
-          p0 = NULL,
-          p25 = NULL,
-          p50 = NULL,
-          p75 = NULL,
-          p100 = NULL
-        ),
-        integer = list(
-          p0 = NULL,
-          p25 = NULL,
-          p50 = NULL,
-          p75 = NULL,
-          p100 = NULL
-        )
-      )
-      ## Validate the data again, otherwise when the user first inputs data an
-      ## error will flash briefly
-      validate(
-        need(
-          !is.null(vals()[[input$file_to_summarize]]),
-          message = FALSE
-        )
-      )
-      skimr::skim(vals()[[input$file_to_summarize]])
-    })
-
-    ## visdat summary figure
-    output$datafilevisdat <- renderPlot({
-      ## Validate the data again, otherwise when the user first inputs data an
-      ## error will flash briefly
-      validate(
-        need(
-          !is.null((vals()[[input$file_to_summarize]])),
-          message = FALSE
-        )
-      )
-      visdat::vis_dat(vals()[[input$file_to_summarize]]) +
-        ggplot2::theme(text = ggplot2::element_text(size = 16))
-    })
+    
   })
 }
