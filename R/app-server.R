@@ -341,13 +341,13 @@ app_server <- function(input, output, session) {
           "Manifest file" = manifest()
         )
       })
-      
+
       callModule(
         file_summary_server,
         "file_summary",
         vals
       )
     })
-    
+
   })
 }

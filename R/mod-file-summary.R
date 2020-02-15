@@ -14,19 +14,21 @@
 #'
 #' server <- function(input, output) {
 #'   # Create some simple file dataa
-#'   data <- reactive({list(
-#'     "individual" = data.frame(
-#'       individualID = c("a", "b", "c"),
-#'       age = c(23, 24, 24),
-#'       stringsAsFactors = FALSE
-#'     ),
-#'     "biospecimen" = data.frame(
-#'       individualID = c("a", "b", "c"),
-#'       specimenID = c("a1", "b1", "c1"),
-#'       isReal = c(FALSE, FALSE, FALSE),
-#'       stringsAsFactors = FALSE
+#'   data <- reactive({
+#'     list(
+#'       "individual" = data.frame(
+#'         individualID = c("a", "b", "c"),
+#'         age = c(23, 24, 24),
+#'         stringsAsFactors = FALSE
+#'       ),
+#'       "biospecimen" = data.frame(
+#'         individualID = c("a", "b", "c"),
+#'         specimenID = c("a1", "b1", "c1"),
+#'         isReal = c(FALSE, FALSE, FALSE),
+#'         stringsAsFactors = FALSE
+#'       )
 #'     )
-#'   )})
+#'   })
 #'   # Show file summary
 #'   callModule(file_summary_server, "summary", file_data = data)
 #' }
@@ -96,7 +98,7 @@ file_summary_server <- function(input, output, session, file_data) {
       logical(1)
     )
     inputs(names(which(non_null)))
-  
+
     updateSelectInput(
       session,
       "file_to_summarize",
@@ -174,9 +176,9 @@ file_summary_server <- function(input, output, session, file_data) {
                       br(),
                       br(),
                       width = 12,
-                      color = "gray")
-                  )
-                  )
+                      color = "gray"
+                    )
+                  ))
                 } else {
                   return(NULL)
                 }
@@ -215,8 +217,8 @@ visualize_data_types <- function(data) {
 #' @param data Dataframe or tibble with file data.
 #' @return Tibble with summary information.
 data_summary <- function(data) {
-  if (!inherits(data, "tbl_df") && !inherits(data, "data.frame") 
-      || nrow(data) == 0) {
+  if (!inherits(data, "tbl_df") && !inherits(data, "data.frame")
+  || nrow(data) == 0) {
     return(NULL)
   }
   data_sum <- tibble::as_tibble(skimr::skim_to_wide(data))
