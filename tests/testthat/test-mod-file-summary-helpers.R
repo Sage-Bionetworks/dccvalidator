@@ -102,3 +102,79 @@ test_that("summarize_values returns NULL if values = NULL", {
   res <- summarize_values(NULL)
   expect_null(res)
 })
+
+test_that("get_column_definitions returns list of column definitions", {
+  dat <- data.frame(
+    skim_variable = "a",
+    skim_type = "b",
+    n_missing = 1,
+    complete_rate = 0.5,
+    value_occurrences = "stuff"
+  )
+  res <- get_column_definitions(dat)
+  expect_true(inherits(res, "list"))
+  expect_true(all(purrr::map_lgl(res, function (x) {
+    inherits(x, "colDef")
+  })))
+})
+
+test_that("get_column_definitions returns correct list of column definitions", {
+  # No character or numeric data
+  dat1 <- data.frame(
+    skim_variable = "a",
+    skim_type = "b",
+    n_missing = 1,
+    complete_rate = 0.5,
+    value_occurrences = "stuff"
+  )
+  # Character data
+  dat2 <- data.frame(
+    skim_variable = "a",
+    skim_type = "character",
+    n_missing = 1,
+    complete_rate = 0.5,
+    character.n_unique = 1,
+    value_occurrences = "stuff"
+  )
+  # Numeric data
+  dat3 <- data.frame(
+    skim_variable = "a",
+    skim_type = "numeric",
+    n_missing = 1,
+    complete_rate = 0.5,
+    numeric.mean = .8,
+    numeric.sd = .01,
+    numeric.hist = "histogram",
+    value_occurrences = "stuff"
+  )
+  # Character and numeric data
+  dat4 <- data.frame(
+    skim_variable = c("a", "b"),
+    skim_type = c("numeric", "character"),
+    n_missing = c(1, 1),
+    complete_rate = c(0.5, 0.5),
+    character.n_unique = c(1, 1),
+    numeric.mean = c(.8, .8),
+    numeric.sd = c(.01, .01),
+    numeric.hist = c("histogram", "otherhistogram"),
+    value_occurrences = c("stuff", "morestuff")
+  )
+  res1 <- get_column_definitions(dat1)
+  res2 <- get_column_definitions(dat2)
+  res3 <- get_column_definitions(dat3)
+  res4 <- get_column_definitions(dat4)
+  # Columns expected based on present columns
+  in_all_lists <- c(
+    "skim_variable",
+    "skim_type",
+    "n_missing",
+    "complete_rate",
+    "value_occurrence"
+  )
+  in_character_lists <- "character.n_unique"
+  in_numeric_lists <- c("numeric.mean", "numeric.sd" ,"numeric.hist")
+  expect_true(all(names(res1) %in% in_all_lists))
+  expect_true(all(names(res2) %in% c(in_all_lists, in_character_lists)))
+  expect_true(all(names(res3) %in% c(in_all_lists, in_numeric_lists)))
+  expect_true(all(names(res4) %in% c(in_all_lists, in_character_lists, in_numeric_lists)))
+})

@@ -1,8 +1,8 @@
-#' UI for the file summary module
+#' @title UI for the file summary module
 #'
-#' Creates the UI for the file summary module, complete with a drop-down
-#' selection box, and two tabs, one for a file overview and one for file
-#' details.
+#' @description Creates the UI for the file summary module, complete with a
+#' drop-down selection box, and two tabs, one for a file overview and one for
+#' file details.
 #'
 #' @export
 #' @rdname file_summary
@@ -70,9 +70,9 @@ file_summary_ui <- function(id) {
   )
 }
 
-#' Server function for the file summary module
+#' @title Server function for the file summary module
 #'
-#' Gives functionality to the file summary UI, populating the drop-down
+#' @description Gives functionality to the file summary UI, populating the drop-down
 #' menu with available files to choose from, and showing both an overview
 #' and detailed summary of a chosen file.
 #'
@@ -113,78 +113,14 @@ file_summary_server <- function(input, output, session, file_data) {
         visualize_data_types(file_data()[[input$file_to_summarize]])
       })
       file_summary <- data_summary(file_data()[[input$file_to_summarize]])
+      column_defs <- get_column_definitions(file_summary)
       output$data_details <- reactable::renderReactable({
         reactable::reactable(
           file_summary,
           highlight = TRUE,
           searchable = TRUE,
           resizable = TRUE,
-          columns = list(
-            variable = reactable::colDef(
-              name = "Variable",
-              width = 125
-            ),
-            type = reactable::colDef(
-              name = "Type",
-              width = 75
-            ),
-            missing = reactable::colDef(
-              name = "Missing",
-              maxWidth = 60
-            ),
-            complete = reactable::colDef(
-              name = "Complete",
-              maxWidth = 75
-            ),
-            n = reactable::colDef(
-              name = "n",
-              maxWidth = 40
-            ),
-            min = reactable::colDef(
-              name = "Min",
-              maxWidth = 40
-            ),
-            max = reactable::colDef(
-              name = "Max",
-              maxWidth = 45
-            ),
-            empty = reactable::colDef(
-              name = "# Empty",
-              maxWidth = 70
-            ),
-            n_unique = reactable::colDef(
-              name = "# Unique",
-              maxWidth = 70
-            ),
-            value_occurrence = reactable::colDef(
-              name = "Value (# Occurrences)",
-              cell = function(value) {
-                if (nchar(value) > 40) {
-                  return(glue::glue("{substr(value, 1, 40)}..."))
-                } else {
-                  return(value)
-                }
-              },
-              details = function(index) {
-                # browser()
-                value <- file_summary[index, "value_occurrence"]
-                if (nchar(value) > 40) {
-                  return(htmltools::div(
-                    shinydashboardPlus::boxPad(
-                      br(),
-                      glue::glue("{value[[1]]}"),
-                      br(),
-                      br(),
-                      width = 12,
-                      color = "gray"
-                    )
-                  ))
-                } else {
-                  return(NULL)
-                }
-              }
-            )
-          )
+          columns = column_defs
         )
       })
     }
@@ -197,7 +133,9 @@ file_summary_server <- function(input, output, session, file_data) {
 #' missing data, using the visdat and ggplot
 #' packages.
 #'
+#' @noRd
 #' @param data Dataframe or tibble with file data.
+#' @return ggplot from [visdata::vis_dat()]
 visualize_data_types <- function(data) {
   if (!inherits(data, "tbl_df") && !inherits(data, "data.frame")) {
     return(NULL)
@@ -214,6 +152,7 @@ visualize_data_types <- function(data) {
 #' a given variable and the number of times the value
 #' appears. Returns a tibble with the data.
 #'
+#' @noRd
 #' @param data Dataframe or tibble with file data.
 #' @return Tibble with summary information.
 data_summary <- function(data) {
@@ -221,25 +160,25 @@ data_summary <- function(data) {
   || nrow(data) == 0) {
     return(NULL)
   }
-  data_sum <- tibble::as_tibble(skimr::skim_to_wide(data))
+  data_sum <- tibble::as_tibble(skimr::skim(data))
+
   # Cut out excess info from skimr results
   # Different classes result in different columns; get only ones that exist
   desired_cols <- c(
-    "variable",
-    "type",
-    "missing",
-    "complete",
-    "n",
-    "min",
-    "max",
-    "empty",
-    "n_unique"
+    "skim_variable",
+    "skim_type",
+    "n_missing",
+    "complete_rate",
+    "character.n_unique",
+    "numeric.mean",
+    "numeric.sd",
+    "numeric.hist"
   )
   data_sum <- data_sum[, names(data_sum) %in% desired_cols]
   data_sum <- tibble::add_column(data_sum, value_occurrence = NA)
-  for (var in data_sum$variable) {
+  for (var in data_sum$skim_variable) {
     var_col <- which(names(data) == var)
-    data_sum$value_occurrence[data_sum$variable == var] <-
+    data_sum$value_occurrence[data_sum$skim_variable == var] <-
       summarize_values(data[[var_col]])
   }
   data_sum
@@ -250,6 +189,7 @@ data_summary <- function(data) {
 #' @description Get a list of values present and
 #' the number of times each variable appeared.
 #'
+#' @noRd
 #' @param values The values to summarize in a list.
 #' @return String with the form "value1 (2), value2 (4)",
 #'   where the value is given with the number of
@@ -268,4 +208,119 @@ summarize_values <- function(values) {
   }
   val_sum_string <- glue::glue_collapse(val_sum, sep = ",  ")
   val_sum_string
+}
+
+#' @title Get the file summary column definitions
+#'
+#' @description Get the file summary column definitions to be used for making the
+#' reactable table.
+#'
+#' @noRd
+#' @param data data frame or tibble with the file summary as given
+#'   by [data_summary()].
+#' @return named list of column definition objects from [reactable::colDef()]
+get_column_definitions <- function(data) {
+  # data should always have these column names
+  columns <- list(
+    skim_variable = reactable::colDef(
+      name = "Variable",
+      width = 125
+    ),
+    skim_type = reactable::colDef(
+      name = "Type",
+      width = 80
+    ),
+    n_missing = reactable::colDef(
+      name = "Missing",
+      maxWidth = 60,
+      align = "center"
+    ),
+    complete_rate = reactable::colDef(
+      name = "% Complete",
+      maxWidth = 90,
+      align = "center",
+      cell = function(value) {
+        percentage <- value * 100
+        format(percentage, digits = 3)
+      }
+    )
+  )
+  # Get unique types in data
+  types <- unique(data$skim_type)
+  # Add columns specific to character if character types exist
+  if ("character" %in% types) {
+    columns$character.n_unique <- reactable::colDef(
+      name = "Unique",
+      maxWidth = 70,
+      align = "center",
+      cell = function(value) {
+        if (is.na(value)) {
+          "-"
+        } else {
+          format(value, digits = 3)
+        }
+      }
+    )
+  }
+  # Add columns specific to numeric if numeric types exist
+  if ("numeric" %in% types) {
+    columns$numeric.mean <- reactable::colDef(
+      name = "Mean",
+      maxWidth = 60,
+      align = "center",
+      cell = function(value) {
+        if (is.na(value)) {
+          "-"
+        } else {
+          format(value, digits = 3)
+        }
+      }
+    )
+    columns$numeric.sd <- reactable::colDef(
+      name = "\U3C3",
+      maxWidth = 60,
+      align = "center",
+      cell = function(value) {
+        if (is.na(value)) {
+          "-"
+        } else {
+          format(value, digits = 3)
+        }
+      }
+    )
+    columns$numeric.hist <- reactable::colDef(
+      name = "Histogram",
+      maxWidth = 80,
+      align = "center"
+    )
+  }
+  # Add last column for the values and number of occurrences
+  columns$value_occurrence <- reactable::colDef(
+    name = "Value (# Occurrences)",
+    cell = function(value) {
+      if (nchar(value) > 40) {
+        return(glue::glue("{substr(value, 1, 40)}..."))
+      } else {
+        return(value)
+      }
+    },
+    details = function(index) {
+      value <- data[index, "value_occurrence"]
+      if (nchar(value) > 40) {
+        return(htmltools::div(
+          shinydashboardPlus::boxPad(
+            br(),
+            glue::glue("{value[[1]]}"),
+            br(),
+            br(),
+            width = 12,
+            color = "blue"
+          )
+        ))
+      } else {
+        return(NULL)
+      }
+    }
+  )
+  columns
 }
