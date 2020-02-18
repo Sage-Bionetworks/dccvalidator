@@ -113,7 +113,7 @@ test_that("get_column_definitions returns list of column definitions", {
   )
   res <- get_column_definitions(dat)
   expect_true(inherits(res, "list"))
-  expect_true(all(purrr::map_lgl(res, function (x) {
+  expect_true(all(purrr::map_lgl(res, function(x) {
     inherits(x, "colDef")
   })))
 })
@@ -172,9 +172,13 @@ test_that("get_column_definitions returns correct list of column definitions", {
     "value_occurrence"
   )
   in_character_lists <- "character.n_unique"
-  in_numeric_lists <- c("numeric.mean", "numeric.sd" ,"numeric.hist")
+  in_numeric_lists <- c("numeric.mean", "numeric.sd", "numeric.hist")
   expect_true(all(names(res1) %in% in_all_lists))
   expect_true(all(names(res2) %in% c(in_all_lists, in_character_lists)))
   expect_true(all(names(res3) %in% c(in_all_lists, in_numeric_lists)))
-  expect_true(all(names(res4) %in% c(in_all_lists, in_character_lists, in_numeric_lists)))
+  expect_true(all(names(res4) %in% c(
+    in_all_lists,
+    in_character_lists,
+    in_numeric_lists
+  )))
 })
