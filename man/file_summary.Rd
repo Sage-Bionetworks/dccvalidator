@@ -31,9 +31,9 @@ Creates the UI for the file summary module, complete with a
 drop-down selection box, and two tabs, one for a file overview and one for
 file details.
 
-Gives functionality to the file summary UI, populating the drop-down
-menu with available files to choose from, and showing both an overview
-and detailed summary of a chosen file.
+Gives functionality to the file summary UI, populating the
+drop-down menu with available files to choose from, and showing both an
+overview and detailed summary of a chosen file.
 }
 \examples{
 library("shiny")
