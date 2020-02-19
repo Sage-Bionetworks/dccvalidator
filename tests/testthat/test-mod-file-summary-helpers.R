@@ -31,14 +31,14 @@ test_that("data_summary returns NULL if data is wrong class", {
 })
 
 test_that("data_summary returns table with custom value column", {
-  expected <- list(
-    "a (1),  b (1),  c (1)",
-    "TRUE (1),  FALSE (2)",
-    "1 (2),  2 (1)"
+  expected <- c(
+    "a (1), b (1), c (1)",
+    "FALSE (2), TRUE (1)",
+    "1 (2), 2 (1)"
   )
   res <- data_summary(data)
   expect_true(inherits(res, "tbl_df"))
-  expect_equal(as.list(res$value_occurrence), expected)
+  expect_equal(res$value_occurrence, expected)
 })
 
 test_that("data_summary returns NULL if no rows in data", {
@@ -84,18 +84,18 @@ test_that("data_summary keeps only desired, existing columns", {
 })
 
 test_that("summarize_values returns string summary", {
-  val1 <- list("a", "a", "a")
-  val2 <- list("a", "b", "b")
-  val3 <- list("a", "b", "c")
-  val4 <- list(1, 2, 2, 1)
+  val1 <- c("a", "a", "a")
+  val2 <- c("a", "b", "b")
+  val3 <- c("a", "b", "c")
+  val4 <- c(1, 2, 2, 1)
   res1 <- summarize_values(val1)
   res2 <- summarize_values(val2)
   res3 <- summarize_values(val3)
   res4 <- summarize_values(val4)
   expect_equal(res1, "a (3)")
-  expect_equal(res2, "a (1),  b (2)")
-  expect_equal(res3, "a (1),  b (1),  c (1)")
-  expect_equal(res4, "1 (2),  2 (2)")
+  expect_equal(res2, "a (1), b (2)")
+  expect_equal(res3, "a (1), b (1), c (1)")
+  expect_equal(res4, "1 (2), 2 (2)")
 })
 
 test_that("summarize_values returns NULL if values = NULL", {
