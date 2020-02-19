@@ -72,9 +72,9 @@ file_summary_ui <- function(id) {
 
 #' @title Server function for the file summary module
 #'
-#' @description Gives functionality to the file summary UI, populating the drop-down
-#' menu with available files to choose from, and showing both an overview
-#' and detailed summary of a chosen file.
+#' @description Gives functionality to the file summary UI, populating the
+#' drop-down menu with available files to choose from, and showing both an
+#' overview and detailed summary of a chosen file.
 #'
 #' @export
 #' @rdname file_summary
@@ -135,7 +135,7 @@ file_summary_server <- function(input, output, session, file_data) {
 #'
 #' @noRd
 #' @param data Dataframe or tibble with file data.
-#' @return ggplot from [visdata::vis_dat()]
+#' @return ggplot from [visdat::vis_dat()]
 visualize_data_types <- function(data) {
   if (!inherits(data, "tbl_df") && !inherits(data, "data.frame")) {
     return(NULL)
@@ -198,22 +198,16 @@ summarize_values <- function(values) {
   if (is.null(values)) {
     return(NULL)
   }
-  val_sum <- list()
-  for (value in unique(values)) {
-    x_appeared <- length(which(values == value))
-    val_sum <- append(
-      val_sum,
-      glue::glue("{value} ({x_appeared})")
-    )
-  }
-  val_sum_string <- glue::glue_collapse(val_sum, sep = ",  ")
-  val_sum_string
+  glue::glue_collapse(
+    purrr::imap_chr(table(values), ~ glue::glue("{.y} ({.x})")),
+    sep = ", "
+  )
 }
 
 #' @title Get the file summary column definitions
 #'
-#' @description Get the file summary column definitions to be used for making the
-#' reactable table.
+#' @description Get the file summary column definitions to be used for making
+#' the reactable table.
 #'
 #' @noRd
 #' @param data data frame or tibble with the file summary as given
