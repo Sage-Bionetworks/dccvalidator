@@ -1,6 +1,6 @@
 Package: dccvalidator
 Title: Metadata Validation for Data Coordinating Centers
-Version: 0.1.0.9000
+Version: 0.1.0.9001
 Authors@R:
     c(person(given = "Kara",
              family = "Woo",
@@ -35,17 +35,20 @@ Imports:
     ggplot2,
     glue,
     golem,
+    htmltools,
     jsonlite,
     jsonvalidate,
     knitr,
     markdown,
     purrr,
+    reactable,
     readr,
     readxl,
     reticulate,
     rlang,
     shiny,
     shinydashboard,
+    shinydashboardPlus,
     shinyjs,
     skimr,
     stats,

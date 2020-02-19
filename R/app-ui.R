@@ -151,20 +151,8 @@ app_ui <- function(request) {
                         valueBoxOutput("nindividuals"),
                         valueBoxOutput("nspecimens"),
                         valueBoxOutput("ndatafiles"),
-                        width = 12
-                      )
-                    ),
-                    fluidRow(
-                      shinydashboard::box(
-                        title = "File-level summary",
-                        selectInput(
-                          "file_to_summarize",
-                          label = "Choose file to view",
-                          choices = c("")
-                        ),
                         hr(),
-                        plotOutput("datafilevisdat"),
-                        verbatimTextOutput("datafileskim"),
+                        file_summary_ui("file_summary"),
                         width = 12
                       )
                     )

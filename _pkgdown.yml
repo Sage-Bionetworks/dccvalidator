@@ -48,6 +48,8 @@ reference:
     - with_busy_indicator_server
     - results_boxes_ui
     - results_boxes_server
+    - file_summary_ui
+    - file_summary_server
     - report_unsatisfied_requirements
 
 - title: App-supporting functions

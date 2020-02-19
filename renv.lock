@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "3.6.1",
+    "Version": "3.6.2",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -504,13 +504,6 @@
       "Repository": "CRAN",
       "Hash": "aa1fbebb6ca276f933b9f77da6d02ef3"
     },
-    "pander": {
-      "Package": "pander",
-      "Version": "0.6.3",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "ccc723b9d7b4db7ef57a6109d7835380"
-    },
     "pillar": {
       "Package": "pillar",
       "Version": "1.4.2",
@@ -616,6 +609,20 @@
       "Repository": "CRAN",
       "Hash": "577b91be8aea851ea27aad3585adef05"
     },
+    "reactR": {
+      "Package": "reactR",
+      "Version": "0.4.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "9404abda6e04f778ce19f9676e2f0bcb"
+    },
+    "reactable": {
+      "Package": "reactable",
+      "Version": "0.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "2b787f910ee041d148abc72f5159c688"
+    },
     "readr": {
       "Package": "readr",
       "Version": "1.3.1",
@@ -662,6 +669,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "0b45cd1dfa978e60de94abd7084079a0"
+    },
+    "repr": {
+      "Package": "repr",
+      "Version": "1.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "77db4456045b059917f30805b16f724f"
     },
     "reshape2": {
       "Package": "reshape2",
@@ -768,6 +782,13 @@
       "Repository": "CRAN",
       "Hash": "12f87658587a6ea64a67e7d559d6491d"
     },
+    "shinydashboardPlus": {
+      "Package": "shinydashboardPlus",
+      "Version": "0.7.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "0d76b9a82ab3a31baf578d7da887205a"
+    },
     "shinyjs": {
       "Package": "shinyjs",
       "Version": "1.0.1.9006",
@@ -782,10 +803,10 @@
     },
     "skimr": {
       "Package": "skimr",
-      "Version": "1.0.7",
+      "Version": "2.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "9f6f41df5ca0786682825edd0eb84a3e"
+      "Hash": "32c7137a2fe4314339c3568af97d4009"
     },
     "sourcetools": {
       "Package": "sourcetools",
