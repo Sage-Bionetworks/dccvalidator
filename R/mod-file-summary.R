@@ -179,11 +179,7 @@ data_summary <- function(data) {
   for (var in data_sum$skim_variable) {
     var_col <- which(names(data) == var)
     val_summary <- summarize_values(data[[var_col]])
-    if (!is.null(val_summary) && length(val_summary) > 0) {
-      data_sum$value_occurrence[data_sum$skim_variable == var] <- val_summary
-    } else {
-      data_sum$value_occurrence[data_sum$skim_variable == var] <- NA
-    }
+    data_sum$value_occurrence[data_sum$skim_variable == var] <- val_summary
   }
   data_sum
 }
@@ -199,8 +195,10 @@ data_summary <- function(data) {
 #'   where the value is given with the number of
 #'   occurrences in parenthesis.
 summarize_values <- function(values) {
-  if (is.null(values)) {
-    return(NULL)
+  if (all(purrr::map_lgl(values, function(x) {
+    is.na(x) || is.null(x)}))
+  ) {
+    return(NA)
   }
   glue::glue_collapse(
     purrr::imap_chr(table(values), ~ glue::glue("{.y} ({.x})")),
@@ -296,7 +294,7 @@ get_column_definitions <- function(data) {
   columns$value_occurrence <- reactable::colDef(
     name = "Value (# Occurrences)",
     cell = function(value) {
-      if (nchar(value) > 40) {
+      if (!is.na(value) && nchar(value) > 40) {
         return(glue::glue("{substr(value, 1, 40)}..."))
       } else {
         return(value)
@@ -304,7 +302,7 @@ get_column_definitions <- function(data) {
     },
     details = function(index) {
       value <- data[index, "value_occurrence"]
-      if (nchar(value) > 40) {
+      if (!is.na(value) && nchar(value) > 40) {
         return(htmltools::div(
           shinydashboardPlus::boxPad(
             br(),
