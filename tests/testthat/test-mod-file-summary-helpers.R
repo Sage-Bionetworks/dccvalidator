@@ -83,6 +83,23 @@ test_that("data_summary keeps only desired, existing columns", {
   expect_true(all(names(res3 %in% desired_cols)))
 })
 
+test_that("data_summary doesn't fail if column is empty", {
+  dat1 <- tibble::tribble(
+    ~col1, ~col2, ~col3,
+    "a", NULL, "b",
+    "c", NULL, "d"
+  )
+  dat2 <- tibble::tribble(
+    ~col1, ~col2, ~col3,
+    "a", NA, "b",
+    "c", NA, "d"
+  )
+  res1 <- data_summary(dat1)
+  res2 <- data_summary(dat2)
+  expect_true(inherits(res1, "tbl_df"))
+  expect_true(inherits(res2, "tbl_df"))
+})
+
 test_that("summarize_values returns string summary", {
   val1 <- c("a", "a", "a")
   val2 <- c("a", "b", "b")
