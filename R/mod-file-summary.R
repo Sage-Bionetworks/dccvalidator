@@ -179,10 +179,10 @@ data_summary <- function(data) {
   for (var in data_sum$skim_variable) {
     var_col <- which(names(data) == var)
     val_summary <- summarize_values(data[[var_col]])
-    if(!is.null(val_summary) && length(val_summary) > 0) {
+    if (!is.null(val_summary) && length(val_summary) > 0) {
       data_sum$value_occurrence[data_sum$skim_variable == var] <- val_summary
     } else {
-      data_sum$value_occurrence[data_sum$skim_variable == var] <-NA
+      data_sum$value_occurrence[data_sum$skim_variable == var] <- NA
     }
   }
   data_sum
