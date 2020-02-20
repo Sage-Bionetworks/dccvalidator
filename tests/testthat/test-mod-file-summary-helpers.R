@@ -83,6 +83,47 @@ test_that("data_summary keeps only desired, existing columns", {
   expect_true(all(names(res3 %in% desired_cols)))
 })
 
+test_that("data_summary returns NA if column is empty", {
+  dat1 <- tibble::tribble(
+    ~col1, ~col2, ~col3,
+    "a", NULL, "b",
+    "c", NULL, "d"
+  )
+  dat2 <- tibble::tribble(
+    ~col1, ~col2, ~col3,
+    "a", NA, "b",
+    "c", NA, "d"
+  )
+  dat3 <- tibble::tribble(
+    ~col1, ~col2, ~col3,
+    "a", NULL, "b"
+  )
+  dat4 <- tibble::tribble(
+    ~col1, ~col2, ~col3,
+    "a", NA, "b"
+  )
+  res1 <- data_summary(dat1)
+  res2 <- data_summary(dat2)
+  res3 <- data_summary(dat3)
+  res4 <- data_summary(dat4)
+  expect_equal(
+    res1$value_occurrence[res1$skim_variable == "col2"],
+    as.character(NA)
+  )
+  expect_equal(
+    res2$value_occurrence[res2$skim_variable == "col2"],
+    as.character(NA)
+  )
+  expect_equal(
+    res3$value_occurrence[res3$skim_variable == "col2"],
+    as.character(NA)
+  )
+  expect_equal(
+    res4$value_occurrence[res4$skim_variable == "col2"],
+    as.character(NA)
+  )
+})
+
 test_that("summarize_values returns string summary", {
   val1 <- c("a", "a", "a")
   val2 <- c("a", "b", "b")
@@ -98,9 +139,15 @@ test_that("summarize_values returns string summary", {
   expect_equal(res4, "1 (2), 2 (2)")
 })
 
-test_that("summarize_values returns NULL if values = NULL", {
-  res <- summarize_values(NULL)
-  expect_null(res)
+test_that("summarize_values returns NA if values are all NULL or NA", {
+  res1 <- summarize_values(NULL)
+  res2 <- summarize_values(NA)
+  res3 <- summarize_values(list(NULL, NULL, NULL))
+  res4 <- summarize_values(list(NA, NA, NA))
+  expect_equal(res1, NA)
+  expect_equal(res2, NA)
+  expect_equal(res3, NA)
+  expect_equal(res4, NA)
 })
 
 test_that("get_column_definitions returns list of column definitions", {
