@@ -89,3 +89,10 @@ test_that("manifest can have full paths", {
   expect_true(inherits(res1, "check_pass"))
   expect_true(inherits(res2, "check_warn"))
 })
+
+test_that("check_files_manifest returns all filenames if path is empty", {
+  manifest <- tibble::tibble(path = c(NA, NA, NA))
+  res <- check_files_manifest(manifest, "file.csv")
+  expect_true(inherits(res, "check_warn"))
+  expect_equal(res$data, "file.csv")
+})
