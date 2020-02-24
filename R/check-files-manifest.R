@@ -48,7 +48,11 @@ check_files_manifest <- function(manifest, filenames, strict = FALSE,
   behavior <- glue::glue(
     "The following files should be present in the manifest: {names_collapsed}. However, if this is an update to an existing study and the files have not changed since they were last released, this warning can be ignored." # nolint
   )
-  missing <- setdiff(filenames, basename(manifest$path))
+  if (all(is.na(manifest$path))) {
+    missing <- filenames
+  } else {
+    missing <- setdiff(filenames, basename(manifest$path))
+  }
   if (length(missing) > 0) {
     check_condition(
       msg = fail_msg,
