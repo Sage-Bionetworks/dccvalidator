@@ -72,7 +72,7 @@ them blank (but do not remove the column header).
 
 If you don't see a template for the assay(s) in your study, or if not all of the
 metadata types above seem relevant to your study, please get in touch with us at
-<AMPAD_SageAdmin@synapse.org>.
+AMPAD_SageAdmin@synapse.org.
 
 ### Validating metadata
 
