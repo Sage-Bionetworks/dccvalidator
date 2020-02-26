@@ -39,7 +39,7 @@ default:
   contact_email: "karawoo@synapse.org"
 
 amp-ad:
-  parent: "syn20506363"
+  parent: "syn21643404"
   annotations_table:
     - "syn10242922"
     - "syn21459391"
