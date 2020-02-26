@@ -95,3 +95,15 @@ We also provide a summary of the files you have uploaded, showing the number of
 individuals, specimens, and files. We visualize the data in each column by its
 data type to help spot unexpected missing values.
 ![A screenshot showing a summary of several data files uploaded, including how many specimens, individuals, and data files were included, and a breakdown of the types of data in the file](../man/figures/amp-summary.png)
+
+## Uploading data
+
+Once data has passed validation, and the AMP-AD data curators permit edit
+permissions to the staging folder for your study, you will use your newly
+created manifest file to upload your data and metadata using `syncToSynapse`.
+You can execute `syncToSynapse` in the 
+[Python client](https://python-docs.synapse.org/build/html/synapseutils.html#synapseutils.sync.syncToSynapse)
+or 
+[R client](https://github.com/Sage-Bionetworks/synapserutils#upload-data-in-bulk).
+For getting started with the Synapse programmatic clients, please visit our
+[Synapse docs](https://docs.synapse.org/articles/api_documentation.html).
