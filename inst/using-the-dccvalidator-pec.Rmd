@@ -33,6 +33,16 @@ Some portions of the app submit data to Synapse. This allows curators at Sage to
 troubleshoot issues if needed. No one outside the Sage curation team will be
 able to download the data.
 
+## Data Submission Agreement 
+
+You are the expert of the content of your data. As a data contributor, you are responsible for ensuring your data is compliant with relevant policies and does not disclose the identity of research participants.
+
+If you discover you have released sensitive information in error, please follow the [process in Synapse to flag](https://docs.synapse.org/articles/contribute_and_access_controlled_use_data.html#flagging-inappropriate-data-use) affected data. 
+
+We are also interested in rapidly identifiying data that does not conform to our quality control standards. If you discover data is contaminated or sample identity is questionable due to a concordance analysis, for example, please reach out to the curation team -[PEC_SageAdmin@synaspse.org](mailto:PEC__SageAdmin@synapse.org).
+
+In order to contribute data to the PsychENCODE Knowledge Portal, [signing this agreement](https://www.synapse.org/#!Synapse:syn18420555) is required.
+
 ## Terminology
 
 #### What is a biospecimen? 
