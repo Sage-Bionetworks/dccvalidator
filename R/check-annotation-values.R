@@ -295,7 +295,9 @@ check_type <- function(values, key, annotations, whitelist_values = NULL,
 #' vocabulary but can reasonably be numbers.
 #'
 #' Additionally, this function will return `TRUE` if the values are integers and
-#' the desired class is numeric.
+#' the desired class is numeric, and will return `TRUE` if the values are
+#' numeric but are whole numbers. `2.0` is considered coercible to integer, but
+#' `2.1` is not.
 #'
 #' It will also allow the following capitalizations of boolean values: true,
 #' True, TRUE, false, False, FALSE. These are all treated as valid booleans by
@@ -319,6 +321,7 @@ check_type <- function(values, key, annotations, whitelist_values = NULL,
 #' can_coerce(TRUE, "character")
 #' can_coerce(1L, "character")
 #' can_coerce(1L, "numeric")
+#' can_coerce(1.0, "integer")
 #'
 #' # Not coercible:
 #' can_coerce("foo", "numeric")
@@ -332,14 +335,21 @@ can_coerce <- function(values, class) {
     return(TRUE)
   }
 
-  if (class == "character" &
+  if (class == "character" &&
     (inherits(values, "numeric") | inherits(values, "integer") |
       inherits(values, "logical") | inherits(values, "factor"))) {
+    ## Anything is coercible to character
     return(TRUE)
-  } else if (class == "numeric" & inherits(values, "integer")) {
+  } else if (class == "numeric" && inherits(values, "integer")) {
+    ## Integers are coercible to numeric
+    return(TRUE)
+  } else if (class == "integer" && inherits(values, "numeric") &&
+               isTRUE(all.equal(values, as.integer(values)))) {
+    ## Whole numbers are coercible to integers
     return(TRUE)
   } else if (class == "logical") {
     if (all(values %in% c("true", "True", "TRUE", "false", "False", "FALSE"))) {
+      ## All capitalizations of logicals are valid
       return(TRUE)
     } else {
       return(FALSE)

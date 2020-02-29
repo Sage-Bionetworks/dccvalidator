@@ -29,7 +29,9 @@ read lengths, pH values, etc., which are defined as strings in our annotation
 vocabulary but can reasonably be numbers.
 
 Additionally, this function will return \code{TRUE} if the values are integers and
-the desired class is numeric.
+the desired class is numeric, and will return \code{TRUE} if the values are
+numeric but are whole numbers. \code{2.0} is considered coercible to integer, but
+\code{2.1} is not.
 
 It will also allow the following capitalizations of boolean values: true,
 True, TRUE, false, False, FALSE. These are all treated as valid booleans by
@@ -47,6 +49,7 @@ can_coerce(1, "character")
 can_coerce(TRUE, "character")
 can_coerce(1L, "character")
 can_coerce(1L, "numeric")
+can_coerce(1.0, "integer")
 
 # Not coercible:
 can_coerce("foo", "numeric")

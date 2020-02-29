@@ -464,3 +464,10 @@ test_that("factors are converted to string before checking coercibility", {
   expect_true(can_coerce(factor("TRUE"), "logical"))
   expect_true(can_coerce(factor("foo"), "character"))
 })
+
+test_that("whole numbers that aren't integer type are considered coercible", {
+  expect_true(can_coerce(1.0, "integer"))
+  expect_true(can_coerce(2.0, "integer"))
+  expect_true(can_coerce(c(1.0, 2.0), "integer"))
+  expect_false(can_coerce(c(1.0, 2.5), "integer"))
+})
