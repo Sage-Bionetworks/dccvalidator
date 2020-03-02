@@ -44,15 +44,18 @@ To install the dccvalidator instead of forking the repository:
 
 1. Create an `app.R` file containing the following:
 
-```
-library("dccvalidator")
-run_app()
-```
+    ```
+    library("dccvalidator")
+    run_app()
+    ```
+    
 1. Create a `config.yml` file using the configuration options specified below and name the parameters "default".
-```
-default:
-  parent: "syn20400157"
-```
+    
+    ```
+    default:
+    parent: "syn20400157"
+    ```
+    
 1. Create a Synapse project or folder with the appropriate permissions to store
    uploaded files. In AMP-AD, we created a folder to which consortium members
    have permissions to read and write, but *not* download. Only the curation
