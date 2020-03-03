@@ -30,6 +30,8 @@ Each row of the data frame will be converted to JSON and validated against
 the given schema.
 }
 \examples{
+if (requireNamespace("jsonvalidate", quietly = TRUE) &
+      requireNamespace("jsonlite", quietly = TRUE)) {
 dat <- data.frame(
   x = c(NA, 1, NA),
   y = c(NA, NA, "foo")
@@ -48,4 +50,5 @@ schema <- '{
 }
 '
 check_schema_df(dat, schema)
+}
 }

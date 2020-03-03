@@ -30,6 +30,7 @@ schema.
 Check a JSON blob against a JSON Schema.
 }
 \examples{
+if (requireNamespace("jsonvalidate", quietly = TRUE)) {
 schema <- '{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "properties": {
@@ -48,4 +49,5 @@ json_invalid <- '{
 }'
 check_schema_json(json_valid, schema)
 check_schema_json(json_invalid, schema)
+}
 }
