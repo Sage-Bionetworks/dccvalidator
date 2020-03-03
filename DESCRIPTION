@@ -52,7 +52,6 @@ Imports:
     shinyjs,
     skimr,
     stats,
-    stringr,
     tibble,
     tools,
     utils,
@@ -60,6 +59,7 @@ Imports:
 Suggests:
     covr,
     rmarkdown (>= 1.16.2),
+    stringr,
     testthat,
     withr
 VignetteBuilder:
