@@ -95,6 +95,9 @@ pec:
       wholeGenomeSeq: "syn20980993"
       rnaSeq: "syn20768650"
       ATACSeq: "syn20768526"
+      TMT quantitation: "syn21680761"
+      HI-C: "syn21680758"
+      snpArray: "syn21680759"
   species_list:
     - "human"
     - "animal model"
