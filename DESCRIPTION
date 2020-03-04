@@ -48,7 +48,6 @@ Imports:
     rlang,
     shiny,
     shinydashboard,
-    shinydashboardPlus,
     shinyjs,
     skimr,
     stats,

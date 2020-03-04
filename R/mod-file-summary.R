@@ -196,7 +196,8 @@ data_summary <- function(data) {
 #'   occurrences in parenthesis.
 summarize_values <- function(values) {
   if (all(purrr::map_lgl(values, function(x) {
-    is.na(x) || is.null(x)}))
+    is.na(x) || is.null(x)
+  }))
   ) {
     return(NA)
   }
@@ -304,14 +305,9 @@ get_column_definitions <- function(data) {
       value <- data[index, "value_occurrence"]
       if (!is.na(value) && nchar(value) > 40) {
         return(htmltools::div(
-          shinydashboardPlus::boxPad(
-            br(),
-            glue::glue("{value[[1]]}"),
-            br(),
-            br(),
-            width = 12,
-            color = "blue"
-          )
+          glue::glue("{value[[1]]}"),
+          width = 12,
+          class = "detailbox"
         ))
       } else {
         return(NULL)

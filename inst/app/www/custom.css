@@ -42,3 +42,10 @@ summary {
 img {
   max-width: 100%;
 }
+
+/* Used in file summary mod */
+.detailbox {
+  color: #FFFFFF;
+  background-color: #367FA8;
+  padding: 3%;
+}
