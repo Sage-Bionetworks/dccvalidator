@@ -8,6 +8,7 @@
 #'   schema.
 #' @export
 #' @examples
+#' if (requireNamespace("jsonvalidate", quietly = TRUE)) {
 #' schema <- '{
 #'   "$schema": "http://json-schema.org/draft-04/schema#",
 #'   "properties": {
@@ -26,9 +27,16 @@
 #' }'
 #' check_schema_json(json_valid, schema)
 #' check_schema_json(json_invalid, schema)
+#' }
 check_schema_json <- function(json, schema,
                               success_msg = "Data is valid against the schema",
                               fail_msg = "Data is invalid against the schema") {
+  if (!requireNamespace("jsonvalidate", quietly = TRUE)) {
+    stop(
+      "Package \"jsonvalidate\" needed for this function to work. Please install it.", # nolint
+      call. = FALSE
+    )
+  }
   result <- suppressWarnings(
     # (using suppressWarnings to avoid warning about "schema $id ignored")
     jsonvalidate::json_validate(

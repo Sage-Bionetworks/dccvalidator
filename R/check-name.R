@@ -17,11 +17,7 @@ is_name_valid <- function(name) {
     valid <- FALSE
   } else {
     # Check if study name has inappropriate characters
-    temp_string <- stringr::str_replace_all(
-      name,
-      " |\\.|_|-|\\+|\\(|\\)",
-      ""
-    )
+    temp_string <- gsub(" |\\.|_|-|\\+|\\(|\\)", "", name)
     if (grepl("[[:punct:]]", temp_string)) {
       valid <- FALSE
     }

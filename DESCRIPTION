@@ -36,8 +36,6 @@ Imports:
     glue,
     golem,
     htmltools,
-    jsonlite,
-    jsonvalidate,
     knitr,
     markdown,
     purrr,
@@ -52,14 +50,16 @@ Imports:
     shinyjs,
     skimr,
     stats,
-    stringr,
     tibble,
     tools,
     utils,
     visdat
 Suggests:
     covr,
+    jsonlite,
+    jsonvalidate,
     rmarkdown (>= 1.16.2),
+    stringr,
     testthat,
     withr
 VignetteBuilder:

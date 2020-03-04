@@ -9,11 +9,19 @@
 #' @export
 #' @seealso check_schema
 #' @examples
+#' if (requireNamespace("jsonlite", quietly = TRUE)) {
 #' dat <- data.frame(
 #'   x = c(NA, 1L)
 #' )
 #' df_to_json_list(dat)
+#' }
 df_to_json_list <- function(df) {
+  if (!requireNamespace("jsonlite", quietly = TRUE)) {
+    stop(
+      "Package \"jsonlite\" needed for this function to work. Please install it.", # nolint
+      call. = FALSE
+    )
+  }
   result <- vector("list", nrow(df))
   for (i in seq_len(nrow(df))) {
     result[[i]] <- jsonlite::toJSON(jsonlite::unbox(df[i, , drop = FALSE]))

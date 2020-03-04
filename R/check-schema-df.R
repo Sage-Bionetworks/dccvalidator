@@ -9,6 +9,8 @@
 #'   schema.
 #' @export
 #' @examples
+#' if (requireNamespace("jsonvalidate", quietly = TRUE) &
+#'       requireNamespace("jsonlite", quietly = TRUE)) {
 #' dat <- data.frame(
 #'   x = c(NA, 1, NA),
 #'   y = c(NA, NA, "foo")
@@ -27,9 +29,16 @@
 #' }
 #' '
 #' check_schema_df(dat, schema)
+#' }
 check_schema_df <- function(df, schema,
                             success_msg = "Data is valid against the schema",
                             fail_msg = "Data is invalid against the schema") {
+  if (!requireNamespace("jsonvalidate", quietly = TRUE)) {
+    stop(
+      "Package \"jsonvalidate\" needed for this function to work. Please install it.", # nolint
+      call. = FALSE
+    )
+  }
   json_list <- df_to_json_list(df)
   results <- purrr::map(json_list, function(x) {
     jsonvalidate::json_validate(
