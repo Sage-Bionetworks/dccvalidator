@@ -18,7 +18,7 @@
 df_to_json_list <- function(df) {
   if (!requireNamespace("jsonlite", quietly = TRUE)) {
     stop(
-      "Package \"jsonlite\" needed for this function to work. Please install it.",
+      "Package \"jsonlite\" needed for this function to work. Please install it.", # nolint
       call. = FALSE
     )
   }

@@ -35,7 +35,7 @@ check_schema_df <- function(df, schema,
                             fail_msg = "Data is invalid against the schema") {
   if (!requireNamespace("jsonvalidate", quietly = TRUE)) {
     stop(
-      "Package \"jsonvalidate\" needed for this function to work. Please install it.",
+      "Package \"jsonvalidate\" needed for this function to work. Please install it.", # nolint
       call. = FALSE
     )
   }
