@@ -21,11 +21,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Kara Woo \email{kara.woo@sagebase.org}
+\strong{Maintainer}: Nicole Kauer \email{nicole.kauer@sagebase.org}
 
 Authors:
 \itemize{
-  \item Nicole Kauer \email{nicole.kauer@sagebase.org}
+  \item Kara Woo
   \item Kelsey Montgomery \email{kelsey.montgomery@sagebase.org}
 }
 
