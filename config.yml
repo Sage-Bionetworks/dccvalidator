@@ -29,6 +29,7 @@ default:
   complete_columns:
     manifest:
       - "parent"
+      - "path"
     individual:
       - "individualID"
     biospecimen:
@@ -64,6 +65,7 @@ amp-ad:
       - "grant"
       - "fileFormat"
       - "parent"
+      - "path"
     individual:
       - "individualID"
     biospecimen:
@@ -108,6 +110,7 @@ pec:
       - "grant"
       - "fileFormat"
       - "parent"
+      - "path"
     individual:
       - "individualID"
       - "individualIdSource"
