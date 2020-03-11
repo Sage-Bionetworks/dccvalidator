@@ -1,0 +1,6 @@
+﻿individualID,individualIdSource,species,sex,genotype,genotypeBackground,room,litter,matingID,dateBirth,dateDeath,treatmentType
+P01,,Mouse,female,,,,,,5/6/19,,
+P02,,Mouse,male,,,,,,5/12/19,,
+P03,JAX,Mouse,male,,,,,,5/6/19,,
+P04,JAX,Mouse,female,,,,,,5/12/19,,
+P05,JAX,Mouse,female,,,,,,5/14/19,,
