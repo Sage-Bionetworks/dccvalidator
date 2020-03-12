@@ -14,8 +14,27 @@ knitr::opts_chunk$set(
 )
 ```
 
-dccvalidator is intended to be customizable for different settings. The Shiny
-application uses a [configuration file](https://github.com/Sage-Bionetworks/dccvalidator/blob/master/config.yml)
+dccvalidator is intended customizable for different settings, however the
+built-in Shiny application is designed to ensure that data conforms to a
+specific project organization structure in which data is organized into studies
+that are described with a combination of metadata files. These metadata files
+document the individuals, specimens, and assay(s) that were performed in the
+study. Documenting the data in this way allows researchers to describe the study
+at different levels while minimizing repetition. These metadata files can later
+be joined on the `individualID` and `specimenID` columns to create a table of
+all of the metadata for the study.
+
+For projects like AMP-AD, PsychENCODE, and others that follow the same
+structure, see the next section ("Customizing the Shiny application") for how
+configure an instance of the application for the project.
+
+For projects that do not follow the same structure but wish to use some elements
+of dccvalidator's data validation capabilities, see "Extending dccvalidator"
+below.
+
+## Customizing the Shiny application
+
+The Shiny app uses a [configuration file](https://github.com/Sage-Bionetworks/dccvalidator/blob/master/config.yml)
 to set details such as where to store uploaded files, which metadata templates
 to validate against, whom to contact with questions, etc.
 
@@ -63,7 +82,7 @@ To install the dccvalidator instead of forking the repository:
    See this
    [example of how to create a project with appropriate permissions](https://github.com/Sage-Bionetworks/dccvalidator/blob/master/inst/app/create_project.R).
    
-## Configuration options
+### Configuration options
 
 * `parent`: The Synapse project or folder where files will be stored
 * `path_to_markdown`: Location of an R Markdown document with app instructions. If you wish to omit instructions, insert `!expr NA`.
@@ -93,7 +112,173 @@ To install the dccvalidator instead of forking the repository:
   biospecimen template the app validates against.
 * `complete_columns`: For each metadata file and the manifest, a list of the
   columns that must be complete (i.e. not contain any missing values or empty
-  strings)
+  strings). For metadata files, this should typically include `"individualID"`
+  and/or `"specimenID"`.
 * `contact_email`: Email address linked in footer for users to contact if they
   have questions
 
+## Extending dccvalidator
+
+Users who wish to use dccvalidator for projects that do not follow the same
+structure as AMP-AD and PsychENCODE can do so by reusing the existing validation
+functions in their own R code, implementing new checks as needed, and reusing
+Shiny modules from dccvalidator.
+
+### Using validation functions in scripts
+
+Functions to check data for common quality issues are at the core of
+dccvalidator. These functions in dccvalidator are all named with the pattern
+`check_*()`: `check_annotation_keys()`, `check_annotation_values()`,
+`check_cols_empty()`, etc. 
+See the [function reference](https://sage-bionetworks.github.io/dccvalidator/reference/index.html#section-data-validation-functions) for a complete list.
+
+These functions are used in the dccvalidator Shiny app, but they can also be
+used in scripts or reports. Each function takes data as input and returns
+results in the form of custom condition objects. The condition objects inherit
+from R's `"message"`, `"warning"`, and `"error"` classes. However, rather than
+raising a message/warning/error, the check functions in dccvalidator return the
+condition objects themselves.
+
+```{r demo-check-function, message = FALSE}
+library("dccvalidator")
+library("readr")
+
+## Load a sample manifest
+manifest <- read_tsv(
+  system.file("extdata", "test_manifest.txt", package = "dccvalidator")
+)
+
+manifest
+
+## Check that required columns are complete in the manifest
+result <- check_cols_complete(
+  manifest,
+  required_cols = c("path", "parent", "grant")
+)
+
+result
+```
+
+The condition objects contain several useful pieces of information. There is a
+message describing the result of the check, as well as a message describing the
+expected outcome. For warnings and errors, the data that caused the warning or
+error is included.
+
+```{r see-result-details}
+result$message
+result$behavior
+result$data
+```
+
+### Creating new validation functions
+
+While we have functions for many data validation tasks, users may wish to create
+their own custom checking functions. The functions `check_pass()`,
+`check_warn()`, and `check_fail()` will create condition objects from the
+provided arguments. Here is an example of how one could write a custom function
+that checks if pH values are within an appropriate range.
+
+```{r custom-function}
+dat <- data.frame(pH = c(2, 6, 3, -2, 0, 15))
+
+check_values_ph <- function(data, ph_col = "pH",
+                            success_msg = "All pH values are valid",
+                            fail_msg = "Some pH values are outside the range 0-14",
+                            behavior_msg = "pH values should be between 0-14") {
+  values <- data[, ph_col, drop = TRUE]
+  if (all(values >= 0 & values <= 14)) {
+    check_pass(
+      msg = success_msg,
+      behavior = behavior_msg
+    )
+  } else {
+    check_fail(
+      msg = fail_msg,
+      behavior = behavior_msg,
+      data = values[values > 14 | values < 0]
+    )
+  }
+}
+
+check_values_ph(dat)
+```
+
+The `check_condition()` function can make the above a little more concise:
+
+```{r check-condition-example}
+check_values_ph <- function(data, ph_col = "pH",
+                            success_msg = "All pH values are valid",
+                            fail_msg = "Some pH values are outside the range 0-14",
+                            behavior_msg = "pH values should be between 0-14") {
+  values <- na.omit(data[, ph_col, drop = TRUE])
+  all_valid <- all(values >= 0 & values <= 14)
+  
+  check_condition(
+    msg = ifelse(all_valid, success_msg, fail_msg),
+    behavior = behavior_msg,
+    data = if (!all_valid) values[values > 14 | values < 0],
+    type = ifelse(all_valid, "check_pass", "check_fail")
+  )
+}
+```
+
+### Reusing app modules
+
+The Shiny app that dccvalidator provides allows users to see the results of data
+validation. This module (`results_boxes_server()`/`results_boxes_ui()`) is
+exported from dccvalidator and can be reused in other Shiny applications like so:
+
+```{r show-module-demo, eval = FALSE}
+library("shiny")
+library("shinydashboard")
+
+server <- function(input, output) {
+  # Load sample data
+  manifest <- read_tsv(
+    system.file("extdata", "test_manifest.txt", package = "dccvalidator")
+  )
+  biosp <- read_csv(
+    system.file("extdata", "test_biospecimen.csv", package = "dccvalidator")
+  )
+  
+  # Add logic to run the checks you are interested in and store the results in a
+  # list. Here is an example:
+  res <- list(
+    check_cols_complete(
+      manifest,
+      c("path", "parent", "grant"),
+      success_msg = "All required columns present are complete in the manifest",
+      fail_msg = "Some required columns are incomplete in the manifest"
+    ),
+    check_cols_complete(
+      biosp,
+      "specimenID",
+      success_msg = "All required columns present are complete in the biospecimen metadata",
+      fail_msg = "Some required columns are incomplete in the biospecimen metadata"
+    ),
+    check_specimen_ids_dup(
+      biosp,
+      success_msg = "Specimen IDs in the biospecimen metadata file are unique",
+      fail_msg = "Duplicate specimen IDs found in the biospecimen metadata file"
+    )
+  )
+  
+  # Show results in boxes
+  callModule(results_boxes_server, "Validation Results", res)
+}
+
+ui <- function(request) {
+  dashboardPage(
+    header = dashboardHeader(),
+    sidebar = dashboardSidebar(),
+    body = dashboardBody(
+      includeCSS(
+        system.file("app/www/custom.css", package = "dccvalidator")
+      ),
+      results_boxes_ui("Validation Results")
+    )
+  )
+}
+
+shinyApp(ui, server)
+```

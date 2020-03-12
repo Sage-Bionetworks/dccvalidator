@@ -1,0 +1,8 @@
+﻿individualID,specimenID,specimenIdSource,samplingDate,organ,tissue,BrodmannArea,sampleStatus,tissueWeight,tissueVolume,nucleicAcidSource,cellType,fastingState
+P01,a1,,,brain,whole brain,,,,,bulk cell,cool cell,
+P01,a2,,,brain,whole brain,,,,,bulk cell,boring cell,
+P02,b1,,,brain,whole brain,,,,,bulk cell,fancy cell,
+P02,b2,,,brain,whole brain,,,,,bulk cell,cool cell,
+P03,c1,JAX,,brain,whole brain,,,,,bulk cell,boring cell,
+P04,d1,JAX,,brain,whole brain,,,,,bulk cell,fancy cell,
+P06,f1,JAX,,brain,whole brain,,,,,bulk cell,cool cell,

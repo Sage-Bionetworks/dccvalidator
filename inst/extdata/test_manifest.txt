@@ -1,0 +1,4 @@
+path	parent	specimenID	individualID	assay	fakeAnnotation	tissue	organ	metadataType	isMultiSpecimen	grant	consortium
+/foo/bar	syn20400157	a1	P01	rnaSeq	1	kleenex	wrong organ				
+/foo/baz	syn20400157	a2	P02	rnaSeq	2	puffs	another wrong organ				
+test_individual.csv	syn20400157							individual	TRUE		
