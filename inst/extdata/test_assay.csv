@@ -1,0 +1,7 @@
+﻿specimenID,assay,platform,RIN,libraryBatch,sequencingBatch,libraryPrep,libraryPreparationMethod,isStranded,runType,readLength
+a1,rnaSeq,HiSeq3000,,,,,,True,,75
+a2,rnaSeq,HiSeq3000,,,,,,True,,75
+b1,rnaSeq,HiSeq3000,,,,,,True,,100
+b2,rnaSeq,HiSeq3000,,,,,,,,100
+c1,rnaSeq,HiSeq3000,,,,,,True,,100
+d1,rnaSeq,HiSeq3000,,,,,,True,,100

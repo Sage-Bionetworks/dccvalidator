@@ -31,6 +31,11 @@ reference:
     - check_specimen_ids_dup
     - check_schema_json
     - check_schema_df
+
+- title: Validation helpers
+  desc: >
+    Functions used by the data validation functions above.
+  contents:
     - get_synapse_annotations
     - get_synapse_table
     - get_template
@@ -60,7 +65,7 @@ reference:
     - check_certified_user
     - check_team_membership
 
-- title: Validation helpers
+- title: Constructors for validation results
   desc: >
     These functions generate custom conditions for reporting check failures,
     warnings, and successes.
