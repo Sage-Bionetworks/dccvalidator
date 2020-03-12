@@ -19,7 +19,10 @@ built-in Shiny application is designed to ensure that data conforms to a
 specific project organization structure in which data is organized into studies
 that are described with a combination of metadata files. These metadata files
 document the individuals, specimens, and assay(s) that were performed in the
-study.
+study. Documenting the data in this way allows researchers to describe the study
+at different levels while minimizing repetition. These metadata files can later
+be joined on the `individualID` and `specimenID` columns to create a table of
+all of the metadata for the study.
 
 For projects like AMP-AD, PsychENCODE, and others that follow the same
 structure, see the next section ("Customizing the Shiny application") for how
@@ -109,7 +112,8 @@ To install the dccvalidator instead of forking the repository:
   biospecimen template the app validates against.
 * `complete_columns`: For each metadata file and the manifest, a list of the
   columns that must be complete (i.e. not contain any missing values or empty
-  strings)
+  strings). For metadata files, this should typically include `"individualID"`
+  and/or `"specimenID"`.
 * `contact_email`: Email address linked in footer for users to contact if they
   have questions
 
