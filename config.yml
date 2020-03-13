@@ -75,7 +75,7 @@ amp-ad:
       - "specimenID"
 
 pec:
-  parent: "syn20825282"
+  parent: "syn21763123"
   path_to_markdown: "inst/using-the-dccvalidator-pec.Rmd"
   study_table: "syn20968992"
   annotations_table: "syn20981788"
