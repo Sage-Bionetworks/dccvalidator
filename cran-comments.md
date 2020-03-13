@@ -1,8 +1,3 @@
-## Resubmission
-
-This is a resubmission. I have replaced the relative URI in README.md with a
-complete one.
-
 ## Test environments
 
 * local macOS install, R 3.6.2
@@ -14,4 +9,6 @@ complete one.
 
 0 errors | 0 warnings | 1 note
 
-This is a new submission
+New maintainer: Nicole Kauer will take over maintainership of dccvalidator going
+forward. Previous maintainer Kara Woo has contacted CRAN from the email address
+on file to confirm that this is an agreed upon change.
