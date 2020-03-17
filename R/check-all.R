@@ -237,6 +237,9 @@ check_all <- function(data, annotations, syn) {
     fail_msg = "Manifest file does not contain all metadata files"
   )
 
+  # Parent column in manifest is valid synID -----------------------------------
+  valid_parent_syn <- check_parent_syn(data$file_data[manifest_index][[1]])
+
   ## List results
   res <- list(
     missing_cols_indiv = missing_cols_indiv,
@@ -262,7 +265,8 @@ check_all <- function(data, annotations, syn) {
     complete_cols_indiv = complete_cols_indiv,
     complete_cols_biosp = complete_cols_biosp,
     complete_cols_assay = complete_cols_assay,
-    meta_files_in_manifest = meta_files_in_manifest
+    meta_files_in_manifest = meta_files_in_manifest,
+    valid_parent_syn = valid_parent_syn
   )
   res
 }
