@@ -31,6 +31,7 @@ reference:
     - check_specimen_ids_dup
     - check_schema_json
     - check_schema_df
+    - check_parent_syn
 
 - title: Validation helpers
   desc: >
