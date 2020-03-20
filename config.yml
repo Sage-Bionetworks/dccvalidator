@@ -9,7 +9,6 @@ default:
   study_link_human: "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn3159438"
   study_link_ref: ""
   teams:
-    - "3320424"
     - "273957"
   templates:
     manifest_template: "syn20820080"
