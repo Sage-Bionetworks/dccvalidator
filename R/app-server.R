@@ -32,8 +32,10 @@ app_server <- function(input, output, session) {
   })
 
   observeEvent(input$cookie, {
+    is_logged_in <- FALSE
     tryCatch({
       syn$login(sessionToken = input$cookie)
+      is_logged_in <- TRUE
     }, error = function(err) {
       showModal(
         modalDialog(
@@ -43,6 +45,7 @@ app_server <- function(input, output, session) {
         )
       )
     })
+    req(is_logged_in)
 
     ## Check if user is in AMP-AD Consortium team (needed in order to create
     ## folder at the next step), and if they are a certified user.
