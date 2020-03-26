@@ -32,7 +32,20 @@ app_server <- function(input, output, session) {
   })
 
   observeEvent(input$cookie, {
-    syn$login(sessionToken = input$cookie)
+    is_logged_in <- FALSE
+    tryCatch({
+      syn$login(sessionToken = input$cookie)
+      is_logged_in <- TRUE
+    }, error = function(err) {
+      showModal(
+        modalDialog(
+          title = "Login error",
+          HTML("There was an error with the login process. Please refresh your Synapse session by logging out of and back in to <a target=\"_blank\" href=\"https://www.synapse.org/\">Synapse</a>. Then refresh this page to use the application."), # nolint
+          footer = NULL
+        )
+      )
+    })
+    req(is_logged_in)
 
     ## Check if user is in AMP-AD Consortium team (needed in order to create
     ## folder at the next step), and if they are a certified user.
