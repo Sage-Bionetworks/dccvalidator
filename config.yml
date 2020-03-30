@@ -99,6 +99,7 @@ pec:
       TMT quantitation: "syn21680761"
       HI-C: "syn21680758"
       snpArray: "syn21680759"
+      ChIPSeq: "syn21861858"
   species_list:
     - "human"
     - "animal model"
