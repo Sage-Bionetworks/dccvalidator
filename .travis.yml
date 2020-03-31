@@ -22,7 +22,7 @@ jobs:
     - Rscript -e 'remotes::install_cran("pkgdown")'
     deploy:
       provider: script
-      script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
+      script: Rscript -e 'pkgdown::deploy_site_github(ssh_id = Sys.getenv("TRAVIS_DEPLOY_KEY", ""), verbose = TRUE)'
       on:
         repo: Sage-Bionetworks/dccvalidator
         branch: master
