@@ -58,6 +58,11 @@ amp-ad:
       human: "syn12973254"
       other mouse or animal model: "syn12973253"
       MODEL-AD mouse model: "syn21084071"
+    biospecimen_templates:
+      human: "syn12973252"
+      other mouse or animal model: "syn12973252"
+      MODEL-AD mouse model: "syn12973252"
+      drosophila: "syn20673251"
     assay_templates:
       proteomics: "syn12973255"
       single cell RNAseq: "syn21018360"
