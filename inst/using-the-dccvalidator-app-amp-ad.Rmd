@@ -63,9 +63,9 @@ a single file, or you can upload multiple files to the assay description
 section.
 ![A screenshot of a website with instructions on how to provide documentation of a study, and a space to upload documentation files](../man/figures/amp-documentation.png)
 
-## Data validation
+## Data Validation
 
-### Metadata requirements
+### Metadata Requirements
 
 Each study should include metadata that would help a new researcher understand
 and reuse the data. In most cases, we will expect 4 files:
@@ -90,7 +90,7 @@ If you don't see a template for the assay(s) in your study, or if not all of the
 metadata types above seem relevant to your study, please get in touch with us at
 AMPAD_SageAdmin@synapse.org.
 
-### Validating metadata
+### Validating the Metadata and Manifest
 
 The data validation portion of the app allows you to upload metadata files (as
 .csv) and the manifest (as .tsv or .txt) and view the results of a series of
@@ -105,7 +105,7 @@ Examples of the types of checks we perform are:
 ![A screenshot showing three boxes on a webpage. Each box depicts successes, warnings, or failures that occurred when validating the data](../man/figures/amp-results.png)
 ![A screenshot showing three boxes on a webpage. Each box depicts successes, warnings, or failures that occurred when validating the data. Some of the failures have additional information describing the source of the problem.](../man/figures/amp-results-details.png)
 
-### Viewing data summary
+### Viewing Data Summary
 
 We also provide a summary of the files you have uploaded, showing the number of
 individuals, specimens, and files. We visualize the data in each column by its
@@ -114,7 +114,7 @@ data type to help spot unexpected missing values.
 ![A screenshot showing a summary of several data files uploaded, including how many specimens, individuals, and data files were included, and a breakdown of the types of data in the file](../man/figures/amp-summary.png)
 
 
-## Uploading data
+## Uploading Data
 
 Once data has passed validation, and the AMP-AD data curators permit edit
 permissions to the staging folder for your study, you will use your newly
