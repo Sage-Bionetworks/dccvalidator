@@ -40,6 +40,10 @@ able to download the data.
 
 # Instructions
 
+This topic has a general overview of the data contribution process and
+detailed instructions for each step, including uploading documentation, metadata
+requirements, validating and reviewing the metadata, and uploading the dataset.
+
 ## General Process Overview
 
 1. Contact the AMP-AD team to discuss the study and the expected data. Receive
