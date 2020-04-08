@@ -198,3 +198,30 @@ test_that("check_all() throws error if not exactly 1 metadata type each", {
   expect_error(check_all(data1, annots, syn))
   expect_error(check_all(data2, annots, syn))
 })
+
+test_that("check_all runs check_ages_over_90 for human data", {
+  skip_if_not(logged_in(syn = syn))
+  data_human <- tibble::tibble(
+    metadataType = c(
+      "manifest",
+      "individual",
+      "biospecimen",
+      "assay"
+    ),
+    name = c("file1", "file2", "file3", "file4"),
+    species = "human",
+    assay = "rnaSeq",
+    file_data = c(
+      list(data.frame(a = 1)),
+      list(data.frame(ageDeath = 95)),
+      list(data.frame(a = 1)),
+      list(data.frame(a = 1))
+    )
+  )
+  data_animal <- data_human
+  data_animal$species <- "mouse or other animal model"
+  res1 <- check_all(data_human, annots, syn)
+  res2 <- check_all(data_animal, annots, syn)
+  expect_true(inherits(res1$ages_over_90, "check_warn"))
+  expect_null(res2$ages_over_90)
+})
