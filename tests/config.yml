@@ -3,7 +3,7 @@ default:
     manifest_template: "syn20820080"
     individual_templates:
       human: "syn12973254"
-      animal: "syn12973253"
+      mouse or other animal model: "syn12973253"
     biospecimen_templates:
       mouse or other animal model: "syn12973252"
       human: "syn12973252"
