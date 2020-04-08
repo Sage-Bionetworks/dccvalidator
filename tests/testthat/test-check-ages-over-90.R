@@ -25,7 +25,7 @@ test_that("check_ages_over_90 returns NULL if data is NULL", {
   expect_null(check_ages_over_90(NULL))
 })
 
-test_that("check_ages_over_90 returns check_pass if no age columns are present", {
+test_that("check_ages_over_90 returns check_pass if no age columns present", {
   dat <- data.frame(foo = 1)
   res <- check_ages_over_90(dat, col = "ageDeath")
   expect_true(inherits(res, "check_pass"))
