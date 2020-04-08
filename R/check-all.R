@@ -241,7 +241,7 @@ check_all <- function(data, annotations, syn) {
   valid_parent_syn <- check_parent_syn(data$file_data[manifest_index][[1]])
 
   # Ages over 90 are censored in human individual metadata ---------------------
-  if (all(data$species == "human")) {
+  if (any(data$species == "human")) {
     ages_over_90 <- check_ages_over_90(data$file_data[indiv_index][[1]])
   } else {
     ages_over_90 <- NULL
