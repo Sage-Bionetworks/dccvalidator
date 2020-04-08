@@ -9,3 +9,4 @@ restart.txt
 scratch.R
 inst/doc
 inst/*.md
+inst/*.html
