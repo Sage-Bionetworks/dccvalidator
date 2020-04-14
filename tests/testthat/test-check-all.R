@@ -220,8 +220,12 @@ test_that("check_all runs check_ages_over_90 for human data", {
   )
   data_animal <- data_human
   data_animal$species <- "mouse or other animal model"
+  data_has_na <- data_human
+  data_has_na$species <- c(NA, "human", "human", NA)
   res1 <- check_all(data_human, annots, syn)
   res2 <- check_all(data_animal, annots, syn)
+  res3 <- check_all(data_has_na, annots, syn)
   expect_true(inherits(res1$ages_over_90, "check_warn"))
   expect_null(res2$ages_over_90)
+  expect_true(inherits(res3$ages_over_90, "check_warn"))
 })
