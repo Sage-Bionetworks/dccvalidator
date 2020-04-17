@@ -41,7 +41,7 @@ check_duplicate_paths <- function(data,
     check_fail(
       msg = fail_msg,
       behavior = behavior,
-      data = data$path[duplicated(data$path)]
+      data = as.character(stats::na.omit(data$path[duplicated(data$path)]))
     )
   } else {
     check_pass(
