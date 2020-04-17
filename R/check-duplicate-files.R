@@ -37,7 +37,7 @@ check_duplicate_files <- function(data,
       )
     )
   }
-  if (anyDuplicated(na.omit(data$path))) {
+  if (anyDuplicated(stats::na.omit(data$path))) {
     check_fail(
       msg = fail_msg,
       behavior = behavior,
