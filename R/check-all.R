@@ -247,8 +247,10 @@ check_all <- function(data, annotations, syn) {
     ages_over_90 <- NULL
   }
 
-  # No file paths are duplicated in the manifest ---------------------------------
-  duplicate_file_paths <- check_duplicate_files(data$file_data[manifest_index][[1]])
+  # No file paths are duplicated in the manifest -------------------------------
+  duplicate_file_paths <- check_duplicate_files(
+    data$file_data[manifest_index][[1]]
+  )
 
   ## List results
   res <- list(
