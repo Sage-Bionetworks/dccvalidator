@@ -20,8 +20,8 @@
 #'   path = c("/path/to/file.txt", "/path/to/file.txt"),
 #'   parent = c("syn123", "syn123")
 #' )
-#' check_duplicate_files(manifest)
-check_duplicate_files <- function(data,
+#' check_duplicate_paths(manifest)
+check_duplicate_paths <- function(data,
                                   success_msg = "No duplicate file paths detected", # nolint
                                   fail_msg = "Duplicate file paths detected") {
   if (is.null(data)) {

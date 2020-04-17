@@ -248,7 +248,7 @@ check_all <- function(data, annotations, syn) {
   }
 
   # No file paths are duplicated in the manifest -------------------------------
-  duplicate_file_paths <- check_duplicate_files(
+  duplicate_file_paths <- check_duplicate_paths(
     data$file_data[manifest_index][[1]]
   )
 

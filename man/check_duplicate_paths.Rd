@@ -38,5 +38,5 @@ manifest <- data.frame(
   path = c("/path/to/file.txt", "/path/to/file.txt"),
   parent = c("syn123", "syn123")
 )
-check_duplicate_paths(manifest)
+check_duplicate_files(manifest)
 }
