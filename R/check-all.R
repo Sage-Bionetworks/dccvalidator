@@ -247,6 +247,9 @@ check_all <- function(data, annotations, syn) {
     ages_over_90 <- NULL
   }
 
+  # No file paths are duplicated in the manifest ---------------------------------
+  duplicate_file_paths <- check_duplicate_files(data$file_data[manifest_index][[1]])
+
   ## List results
   res <- list(
     missing_cols_indiv = missing_cols_indiv,
@@ -274,7 +277,8 @@ check_all <- function(data, annotations, syn) {
     complete_cols_assay = complete_cols_assay,
     meta_files_in_manifest = meta_files_in_manifest,
     valid_parent_syn = valid_parent_syn,
-    ages_over_90 = ages_over_90
+    ages_over_90 = ages_over_90,
+    duplicate_file_paths = duplicate_file_paths
   )
   res
 }
