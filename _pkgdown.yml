@@ -33,6 +33,7 @@ reference:
     - check_schema_df
     - check_parent_syn
     - check_ages_over_90
+    - check_duplicate_files
 
 - title: Validation helpers
   desc: >
