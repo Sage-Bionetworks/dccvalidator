@@ -37,6 +37,15 @@ check_duplicate_paths <- function(data,
       )
     )
   }
+  if (all(is.na(data$path))) {
+    return(
+      check_warn(
+        msg = "Could not check for duplicate file paths because all file paths are missing", # nolint
+        behavior = behavior,
+        data = NULL
+      )
+    )
+  }
   if (anyDuplicated(stats::na.omit(data$path))) {
     check_fail(
       msg = fail_msg,

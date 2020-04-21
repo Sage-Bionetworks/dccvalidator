@@ -33,7 +33,7 @@ test_that("check_duplicate_paths() does not include NAs in resulting data", {
   expect_equal(res$data, "foo.txt")
 })
 
-test_that("check_duplicate_paths() returns check_pass if all NAs", {
+test_that("check_duplicate_paths() returns check_warn if all NAs", {
   dat <- data.frame(path = c(NA, NA))
-  expect_true(inherits(check_duplicate_paths(dat), "check_pass"))
+  expect_true(inherits(check_duplicate_paths(dat), "check_warn"))
 })
