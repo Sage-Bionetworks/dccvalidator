@@ -1,4 +1,4 @@
-context("test-check-duplicate-files.R")
+context("test-check-duplicate-paths.R")
 
 test_that("check_duplicate_paths() finds duplicates", {
   dat1 <- data.frame(
