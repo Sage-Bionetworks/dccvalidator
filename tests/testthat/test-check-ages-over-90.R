@@ -65,3 +65,14 @@ test_that("check_ages_over_90 doesn't fail if all NA", {
   expect_true(inherits(res1, "check_pass"))
   expect_true(inherits(res2, "check_pass"))
 })
+
+test_that("check_ages_over_90 doesn't return NAs in data", {
+  dat <- data.frame(ageDeath = c(NA, 95))
+  res <- check_ages_over_90(dat)
+  expect_equal(res$data, list(ageDeath = 95))
+})
+
+test_that("is_over_90 considers NAs not greater than 90", {
+  x <- c(NA, 95, NA, 90)
+  expect_equal(is_over_90(x), c(FALSE, TRUE, FALSE, FALSE))
+})

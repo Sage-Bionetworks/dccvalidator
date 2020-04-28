@@ -36,7 +36,7 @@ check_ages_over_90 <- function(data, col = "ageDeath", strict = FALSE,
   cols_in_data <- intersect(col, names(data))
   age_data <- data[, cols_in_data, drop = FALSE]
 
-  if (!any(purrr::map_lgl(age_data, ~ isTRUE(any(is_over_90(.x)))))) {
+  if (!any(purrr::map_lgl(age_data, ~ any(is_over_90(.x))))) {
     check_pass(
       msg = success_msg,
       behavior = behavior
@@ -55,8 +55,8 @@ check_ages_over_90 <- function(data, col = "ageDeath", strict = FALSE,
 }
 
 # Does the column (after removing non-numeric characters) contain any values
-# >90?
+# >90? NAs are not considered over 90 and will evaluate to FALSE.
 is_over_90 <- function(x) {
   col_numeric <- gsub("[^0-9]", "", x)
-  as.numeric(as.character(col_numeric)) > 90
+  (as.numeric(as.character(col_numeric)) > 90) %in% TRUE
 }
