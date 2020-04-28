@@ -36,7 +36,7 @@ check_ages_over_90 <- function(data, col = "ageDeath", strict = FALSE,
   cols_in_data <- intersect(col, names(data))
   age_data <- data[, cols_in_data, drop = FALSE]
 
-  if (!any(purrr::map_lgl(age_data, ~ any(is_over_90(.x))))) {
+  if (!any(purrr::map_lgl(age_data, ~ isTRUE(any(is_over_90(.x)))))) {
     check_pass(
       msg = success_msg,
       behavior = behavior

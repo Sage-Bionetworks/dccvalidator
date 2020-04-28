@@ -56,3 +56,12 @@ test_that("check_ages_over_90 can handle tibbles", {
   expect_true(inherits(res1, "check_warn"))
   expect_true(inherits(res2, "check_warn"))
 })
+
+test_that("check_ages_over_90 doesn't fail if all NA", {
+  dat1 <- data.frame(ageDeath = NA)
+  dat2 <- data.frame(age1 = c(NA, NA), age2 = c(NA, NA))
+  res1 <- check_ages_over_90(dat1)
+  res2 <- check_ages_over_90(dat2, col = c("age1", "age2"))
+  expect_true(inherits(res1, "check_pass"))
+  expect_true(inherits(res2, "check_pass"))
+})
