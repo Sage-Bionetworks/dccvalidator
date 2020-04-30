@@ -57,6 +57,12 @@ check_ages_over_90 <- function(data, col = "ageDeath", strict = FALSE,
 # Does the column (after removing non-numeric characters) contain any values
 # >90? NAs are not considered over 90 and will evaluate to FALSE.
 is_over_90 <- function(x) {
-  col_numeric <- gsub("[^0-9]", "", x)
-  (as.numeric(as.character(col_numeric)) > 90) %in% TRUE
+  if (inherits(x, "character") || inherits(x, "factor")) {
+    col_numeric <- as.numeric(gsub("[^0-9|\\.]", "", x))
+  } else if (inherits(x, "numeric") || inherits(x, "integer")) {
+    col_numeric <- x
+  } else {
+    col_numeric <- as.numeric(x)
+  }
+  (col_numeric > 90) %in% TRUE
 }

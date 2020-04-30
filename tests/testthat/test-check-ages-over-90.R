@@ -76,3 +76,17 @@ test_that("is_over_90 considers NAs not greater than 90", {
   x <- c(NA, 95, NA, 90)
   expect_equal(is_over_90(x), c(FALSE, TRUE, FALSE, FALSE))
 })
+
+test_that("is_over_90() preserves decimal ages in characters and factor", {
+  x <- c(89.9, 90.9)
+  y <- c("89.9", "90+", "95.5")
+  z <- factor(c("99.9", "90+"))
+  expect_equal(is_over_90(x), c(FALSE, TRUE))
+  expect_equal(is_over_90(y), c(FALSE, FALSE, TRUE))
+  expect_equal(is_over_90(z), c(TRUE, FALSE))
+})
+
+test_that("is_over_90 coerces non-character or numeric values to numeric", {
+  expect_false(is_over_90(TRUE))
+  expect_false(is_over_90(FALSE))
+})
