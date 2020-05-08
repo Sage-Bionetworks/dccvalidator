@@ -2,6 +2,7 @@ default:
   parent: "syn20400157"
   path_to_markdown: "inst/using-the-dccvalidator-app-amp-ad.Rmd"
   study_table: "syn11363298"
+  samples_table: "syn21578908"
   annotations_table: "syn10242922"
   annotations_link: "https://shinypro.synapse.org/users/nsanati/annotationUI/"
   templates_link: "https://www.synapse.org/#!Synapse:syn18512044"
