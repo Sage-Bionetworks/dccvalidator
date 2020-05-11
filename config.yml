@@ -64,6 +64,7 @@ amp-ad:
       MODEL-AD mouse model: "syn12973252"
       drosophila: "syn20673251"
     assay_templates:
+      ATACseq: "syn22024364"
       proteomics: "syn12973255"
       single cell RNAseq: "syn21018360"
       wholeGenomeSeq: "syn21018358"
