@@ -72,6 +72,7 @@ amp-ad:
       NanoString: "syn21082744"
       snpArray: "syn21372586"
       TMT quantitation: "syn21433357"
+      methylationArray: "syn22036881"
   complete_columns:
     manifest:
       - "consortium"
