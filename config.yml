@@ -65,6 +65,7 @@ amp-ad:
       drosophila: "syn20673251"
     assay_templates:
       ATACseq: "syn22024364"
+      autorad: "syn22087295"
       proteomics: "syn12973255"
       single cell RNAseq: "syn21018360"
       wholeGenomeSeq: "syn21018358"
@@ -73,6 +74,8 @@ amp-ad:
       snpArray: "syn21372586"
       TMT quantitation: "syn21433357"
       methylationArray: "syn22036881"
+      mri: "syn22087332"
+      pet: "syn22087299"
   complete_columns:
     manifest:
       - "consortium"
