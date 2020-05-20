@@ -74,8 +74,8 @@ amp-ad:
       snpArray: "syn21372586"
       TMT quantitation: "syn21433357"
       methylationArray: "syn22036881"
-      mri: "syn22087332"
-      pet: "syn22087299"
+      MRI: "syn22087332"
+      PET: "syn22087299"
   complete_columns:
     manifest:
       - "consortium"
