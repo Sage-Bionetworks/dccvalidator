@@ -1,4 +1,5 @@
 default:
+  samples_table: "syn22089767"
   templates:
     manifest_template: "syn20820080"
     individual_templates:
