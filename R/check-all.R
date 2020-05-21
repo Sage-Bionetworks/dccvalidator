@@ -15,6 +15,9 @@
 #'   assay, manifest. If file_data is `NULL` for a given
 #'   metadataType, the metadataType should still be
 #'   present.
+#' @param study_exists `TRUE` if study already exists, `FALSE` if this is a new
+#'   study.
+#' @param study A string containing the name of the study.
 #' @inheritParams check_annotation_keys
 #' @return List of conditions
 #' @export
@@ -44,7 +47,7 @@
 #' )
 #' res <- check_all(data, annots, syn)
 #' }
-check_all <- function(data, annotations, syn) {
+check_all <- function(data, annotations, study_exists, study, syn) {
 
   # Get indices by type
   indiv_index <- which(data$metadataType == "individual")
@@ -252,6 +255,37 @@ check_all <- function(data, annotations, syn) {
     data$file_data[manifest_index][[1]]
   )
 
+  # Additions to existing studies have complete IDs ----------------------------
+  if (isTRUE(study_exists)) {
+    samples_table <- syn$tableQuery(
+      glue::glue("SELECT * FROM {config::get('samples_table')} WHERE study = '{study}'"), # nolint
+      includeRowIdAndRowVersion = FALSE
+    )
+    samples_table <- readr::read_csv(samples_table$filepath)
+    assay <- data[assay_index, "assay", drop = TRUE]
+    complete_ids_indiv <- check_complete_ids(
+      data$file_data[indiv_index][[1]],
+      master_table = samples_table,
+      study = study,
+      id_type = "individualID"
+    )
+    complete_ids_biosp <- check_complete_ids(
+      data$file_data[biosp_index][[1]],
+      master_table = samples_table,
+      study = study,
+      id_type = "specimenID"
+    )
+    complete_ids_assay <- check_complete_ids(
+      data$file_data[assay_index][[1]],
+      master_table = samples_table,
+      study = study,
+      id_type = "specimenID",
+      assay = assay
+    )
+  } else {
+    complete_ids_indiv <- complete_ids_biosp <- complete_ids_assay <- NULL
+  }
+
   ## List results
   res <- list(
     missing_cols_indiv = missing_cols_indiv,
@@ -280,7 +314,10 @@ check_all <- function(data, annotations, syn) {
     meta_files_in_manifest = meta_files_in_manifest,
     valid_parent_syn = valid_parent_syn,
     ages_over_90 = ages_over_90,
-    duplicate_file_paths = duplicate_file_paths
+    duplicate_file_paths = duplicate_file_paths,
+    complete_ids_indiv = complete_ids_indiv,
+    complete_ids_biosp = complete_ids_biosp,
+    complete_ids_assay = complete_ids_assay
   )
   res
 }

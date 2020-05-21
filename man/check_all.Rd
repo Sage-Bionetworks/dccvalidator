@@ -4,7 +4,7 @@
 \alias{check_all}
 \title{Run all validation checks}
 \usage{
-check_all(data, annotations, syn)
+check_all(data, annotations, study_exists, study, syn)
 }
 \arguments{
 \item{data}{A tibble or dataframe with the columns:
@@ -19,6 +19,11 @@ present.}
 
 \item{annotations}{A data frame of annotation definitions. Must contain at
 least three columns: \code{key}, \code{value}, and \code{columnType}.}
+
+\item{study_exists}{\code{TRUE} if study already exists, \code{FALSE} if this is a new
+study.}
+
+\item{study}{A string containing the name of the study.}
 
 \item{syn}{Synapse client object}
 }

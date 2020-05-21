@@ -287,7 +287,13 @@ app_server <- function(input, output, session) {
           )
         )
 
-        res <- check_all(all_data, annots, syn)
+        res <- check_all(
+          data = all_data,
+          annotations = annots,
+          study_exists = ifelse(input$study_exists == "Yes", TRUE, FALSE),
+          study = study_name(),
+          syn
+        )
 
         callModule(results_boxes_server, "Validation Results", res)
       })
