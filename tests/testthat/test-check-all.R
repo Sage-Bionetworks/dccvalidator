@@ -329,3 +329,36 @@ test_that("check_all catches duplicate file paths in manifest", {
   )
   expect_true(inherits(res1$duplicate_file_paths, "check_fail"))
 })
+
+test_that("check_all() catches missing IDs from existing studies", {
+  skip_if_not(logged_in(syn = syn))
+  data <- tibble::tibble(
+    metadataType = c(
+      "manifest",
+      "individual",
+      "biospecimen",
+      "assay"
+    ),
+    name = c("file1", "file2", "file3", "file4"),
+    species = "human",
+    assay = "rnaSeq",
+    file_data = c(
+      list(data.frame(path = c("/file.txt", "/file.txt"))),
+      list(data.frame(individualID = "B")),
+      list(data.frame(individualID = "B", specimenID = "b1")),
+      list(data.frame(specimenID = "b1"))
+    )
+  )
+  res <- check_all(
+    data = data,
+    annotations = annots,
+    study_exists = TRUE,
+    study = "study1",
+    syn = syn
+  )
+  expect_true(inherits(res$complete_ids_indiv, "check_fail"))
+  expect_equal(res$complete_ids_indiv$data, "A")
+  expect_true(inherits(res$complete_ids_biosp, "check_fail"))
+  expect_equal(res$complete_ids_biosp$data, c("a1", "a2", "b2"))
+  expect_true(inherits(res$complete_ids_assay, "check_pass"))
+})
