@@ -12,7 +12,7 @@ annots <- tribble(
   "species", "Human", "STRING"
 )
 
-test_that("check_all() returns a list of check conditions", {
+test_that("check_all() returns a list of check conditions or NULLs", {
   skip_if_not(logged_in(syn = syn))
   data <- tibble::tibble(
     metadataType = c(
@@ -43,7 +43,7 @@ test_that("check_all() returns a list of check conditions", {
     purrr::map(
       res,
       function(x) {
-        inherits(x, "check_fail") | inherits(x, "check_pass") | inherits(x, "check_warn") # nolint
+        inherits(x, "check_fail") | inherits(x, "check_pass") | inherits(x, "check_warn") | is.null(x) # nolint
       }
     )
   )))
