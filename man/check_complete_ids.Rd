@@ -44,3 +44,27 @@ individual IDs against the master table of existing IDs. Contributors should
 upload the complete metadata files, so all IDs in the master table should be
 present in the uploaded data.
 }
+\examples{
+samples_table <- tibble::tribble(
+  ~individualID, ~specimenID,   ~study,   ~assay,
+             "A",        "a1", "study1", "rnaSeq",
+             "A",        "a2", "study1", "rnaSeq",
+             "B",        "b1", "study1", "rnaSeq",
+             "B",        "b2", "study1", "rnaSeq",
+             "B",        "b1", "study1", "rnaSeq",
+             "B",        "b1", "study1", "rnaSeq",
+             "C",        "c1", "study1",  "LC-MS",
+             "D",        "d1", "study2", "rnaSeq",
+             "D",        "d2", "study2", "rnaSeq"
+)
+dat <- tibble::tribble(
+  ~individualID, ~specimenID,
+             "A",        "a1",
+             "A",        "a2"
+)
+check_complete_ids(
+  data = dat,
+  master_table = samples_table,
+  id_type = "individualID"
+)
+}
