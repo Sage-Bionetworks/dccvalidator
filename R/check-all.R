@@ -265,7 +265,7 @@ check_all <- function(data, annotations, study_exists, study, syn) {
     assay <- data[assay_index, "assay", drop = TRUE]
     complete_ids_indiv <- check_complete_ids(
       data$file_data[indiv_index][[1]],
-      master_table = samples_table,
+      samples_table = samples_table,
       study = study,
       id_type = "individualID",
       success_msg = "All pre-existing individual IDs are present in the individual file", # nolint
@@ -273,7 +273,7 @@ check_all <- function(data, annotations, study_exists, study, syn) {
     )
     complete_ids_biosp <- check_complete_ids(
       data$file_data[biosp_index][[1]],
-      master_table = samples_table,
+      samples_table = samples_table,
       study = study,
       id_type = "specimenID",
       success_msg = "All pre-existing specimen IDs are present in the biospecimen file", # nolint
@@ -281,7 +281,7 @@ check_all <- function(data, annotations, study_exists, study, syn) {
     )
     complete_ids_assay <- check_complete_ids(
       data$file_data[assay_index][[1]],
-      master_table = samples_table,
+      samples_table = samples_table,
       study = study,
       id_type = "specimenID",
       assay = assay,

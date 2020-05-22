@@ -7,7 +7,7 @@
 #'
 #' @inheritParams check_values
 #' @param data Data frame of data to be checked
-#' @param master_table Data frame containing master table of all individual and
+#' @param samples_table Data frame containing master table of all individual and
 #'   specimen IDs per study
 #' @param study Name of the study
 #' @param id_type `"individualID"` or `"specimenID"`
@@ -39,10 +39,10 @@
 #' )
 #' check_complete_ids(
 #'   data = dat,
-#'   master_table = samples_table,
+#'   samples_table = samples_table,
 #'   id_type = "individualID"
 #' )
-check_complete_ids <- function(data, master_table, study,
+check_complete_ids <- function(data, samples_table, study,
                                id_type = c("individualID", "specimenID"),
                                assay = NULL,
                                success_msg = "Data includes a complete set of IDs", # nolint
@@ -51,7 +51,7 @@ check_complete_ids <- function(data, master_table, study,
     return(NULL)
   }
   behavior <- "If the data being validated is an addition to an existing study, all IDs that were previously shared for this study should be included in the metadata" # nolint
-  if (!study %in% master_table$study) {
+  if (!study %in% samples_table$study) {
     return(
       check_warn(
         msg = glue::glue("Can't check for complete IDs because master table does not contain study {study}"), # nolint
@@ -69,12 +69,12 @@ check_complete_ids <- function(data, master_table, study,
       )
     )
   }
-  master_table <- master_table[master_table$study == study, ]
+  samples_table <- samples_table[samples_table$study == study, ]
   if (!is.null(assay)) {
-    master_table <- master_table[master_table$study == assay, ]
+    samples_table <- samples_table[samples_table$study == assay, ]
   }
   missing <- setdiff(
-    master_table[, id_type, drop = TRUE],
+    samples_table[, id_type, drop = TRUE],
     data[, id_type, drop = TRUE]
   )
   if (length(missing) > 0) {

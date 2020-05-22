@@ -1,6 +1,6 @@
 context("test-check-existing-ids.R")
 
-master_table <- tibble::tribble(
+samples_table <- tibble::tribble(
   ~individualID, ~specimenID,   ~study,   ~assay,
             "A",        "a1", "study1", "rnaSeq",
             "A",        "a2", "study1", "rnaSeq",
@@ -21,7 +21,7 @@ test_that("check_complete_ids fails if study is not present in master table", {
   dat <- data.frame(individualID = c("x", "y", "z"))
   res <- check_complete_ids(
     dat,
-    master_table,
+    samples_table,
     study = "foo",
     id_type = "individualID"
   )
@@ -32,7 +32,7 @@ test_that("check_complete_ids fails if ID column is not present in data", {
   dat <- data.frame(individualID = c("x", "y", "z"))
   res <- check_complete_ids(
     dat,
-    master_table,
+    samples_table,
     study = "study1",
     id_type = "specimenID"
   )
@@ -43,13 +43,13 @@ test_that("check_complete_ids looks at assay of interest", {
   dat <- data.frame(specimenID = "c1")
   res1 <- check_complete_ids(
     dat,
-    master_table,
+    samples_table,
     study = "study1",
     id_type = "specimenID"
   )
   res2 <- check_complete_ids(
     dat,
-    master_table,
+    samples_table,
     study = "study1",
     id_type = "specimenID",
     assay = "LC-MS"
@@ -63,25 +63,25 @@ test_that("check_complete_ids looks at IDs in study of interest", {
   dat2 <- data.frame(individualID = "D")
   res1 <- check_complete_ids(
     dat1,
-    master_table,
+    samples_table,
     study = "study1",
     id_type = "individualID"
   )
   res2 <- check_complete_ids(
     dat2,
-    master_table,
+    samples_table,
     study = "study2",
     id_type = "individualID"
   )
   res3 <- check_complete_ids(
     dat1,
-    master_table,
+    samples_table,
     study = "study2",
     id_type = "individualID"
   )
   res4 <- check_complete_ids(
     dat2,
-    master_table,
+    samples_table,
     study = "study1",
     id_type = "individualID"
   )
@@ -95,7 +95,7 @@ test_that("missing IDs are included in data", {
   dat <- data.frame(individualID = c("A", "B"))
   res <- check_complete_ids(
     dat,
-    master_table,
+    samples_table,
     study = "study1",
     id_type = "individualID"
   )

@@ -6,7 +6,7 @@
 \usage{
 check_complete_ids(
   data,
-  master_table,
+  samples_table,
   study,
   id_type = c("individualID", "specimenID"),
   assay = NULL,
@@ -17,7 +17,7 @@ check_complete_ids(
 \arguments{
 \item{data}{Data frame of data to be checked}
 
-\item{master_table}{Data frame containing master table of all individual and
+\item{samples_table}{Data frame containing master table of all individual and
 specimen IDs per study}
 
 \item{study}{Name of the study}
@@ -64,7 +64,7 @@ dat <- tibble::tribble(
 )
 check_complete_ids(
   data = dat,
-  master_table = samples_table,
+  samples_table = samples_table,
   id_type = "individualID"
 )
 }
