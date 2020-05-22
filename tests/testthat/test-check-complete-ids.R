@@ -7,7 +7,6 @@ samples_table <- tibble::tribble(
             "B",        "b1", "study1", "rnaSeq",
             "B",        "b2", "study1", "rnaSeq",
             "B",        "b1", "study1", "rnaSeq",
-            "B",        "b1", "study1", "rnaSeq",
             "C",        "c1", "study1",  "LC-MS",
             "D",        "d1", "study2", "rnaSeq",
             "D",        "d2", "study2", "rnaSeq"
@@ -40,12 +39,14 @@ test_that("check_complete_ids fails if ID column is not present in data", {
 })
 
 test_that("check_complete_ids looks at assay of interest", {
-  dat <- data.frame(specimenID = "c1")
+  dat1 <- data.frame(specimenID = c("a1", "a2", "b1", "b2"))
+  dat2 <- data.frame(specimenID = "c1")
   res1 <- check_complete_ids(
-    dat,
+    dat1,
     samples_table,
     study = "study1",
-    id_type = "specimenID"
+    id_type = "specimenID",
+    assay = "rnaSeq"
   )
   res2 <- check_complete_ids(
     dat,
@@ -54,7 +55,7 @@ test_that("check_complete_ids looks at assay of interest", {
     id_type = "specimenID",
     assay = "LC-MS"
   )
-  expect_true(inherits(res1, "check_fail"))
+  expect_true(inherits(res1, "check_pass"))
   expect_true(inherits(res2, "check_pass"))
 })
 

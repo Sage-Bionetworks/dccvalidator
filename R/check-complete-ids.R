@@ -48,6 +48,7 @@ check_complete_ids <- function(data, samples_table, study,
                                assay = NULL,
                                success_msg = "Data includes a complete set of IDs", # nolint
                                fail_msg = "Some IDs are missing from the data") { # nolint
+
   if (is.null(data)) {
     return(NULL)
   }
@@ -72,7 +73,7 @@ check_complete_ids <- function(data, samples_table, study,
   }
   samples_table <- samples_table[samples_table$study == study, ]
   if (!is.null(assay)) {
-    samples_table <- samples_table[samples_table$study == assay, ]
+    samples_table <- samples_table[samples_table$assay == assay, ]
   }
   missing <- setdiff(
     samples_table[, id_type, drop = TRUE],
