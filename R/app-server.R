@@ -71,7 +71,7 @@ app_server <- function(input, output, session) {
         )
       )
 
-      study_name <- callModule(
+      study <- callModule(
         get_study_server,
         "study",
         study_table_id = reactive(config::get("study_table")),
@@ -187,7 +187,7 @@ app_server <- function(input, output, session) {
     ## Require that the study name is given; give error if not
     observeEvent(input$"validate_btn", {
       with_busy_indicator_server("validate_btn", {
-        if (!is_name_valid(study_name())) {
+        if (!is_name_valid(study$study_name)) {
           stop("Please check that study name is entered and only contains: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
         }
         ## Require at least one file input
@@ -214,7 +214,7 @@ app_server <- function(input, output, session) {
             files$indiv,
             parent = created_folder,
             annotations = list(
-              study = study_name(),
+              study = study$study_name,
               metadataType = "individual",
               species = species_name()
             ),
@@ -227,7 +227,7 @@ app_server <- function(input, output, session) {
             files$biosp,
             parent = created_folder,
             annotations = list(
-              study = study_name(),
+              study = study$study_name,
               metadataType = "biospecimen",
               species = species_name()
             ),
@@ -240,7 +240,7 @@ app_server <- function(input, output, session) {
             files$assay,
             parent = created_folder,
             annotations = list(
-              study = study_name(),
+              study = study$study_name,
               metadataType = "assay",
               assay = assay_name(),
               species = species_name()
@@ -254,7 +254,7 @@ app_server <- function(input, output, session) {
             files$manifest,
             parent = created_folder,
             annotations = list(
-              study = study_name(),
+              study = study$study_name,
               metadataType = "manifest"
             ),
             synapseclient = synapse,
@@ -290,8 +290,8 @@ app_server <- function(input, output, session) {
         res <- check_all(
           data = all_data,
           annotations = annots,
-          study_exists = ifelse(input$study_exists == "Yes", TRUE, FALSE),
-          study = study_name(),
+          study_exists = study$study_exists,
+          study = study$study_name,
           syn
         )
 
