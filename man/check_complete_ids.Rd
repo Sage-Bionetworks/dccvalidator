@@ -65,6 +65,7 @@ dat <- tibble::tribble(
 check_complete_ids(
   data = dat,
   samples_table = samples_table,
-  id_type = "individualID"
+  id_type = "individualID",
+  study = "study1"
 )
 }

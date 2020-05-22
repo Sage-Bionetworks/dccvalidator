@@ -40,7 +40,8 @@
 #' check_complete_ids(
 #'   data = dat,
 #'   samples_table = samples_table,
-#'   id_type = "individualID"
+#'   id_type = "individualID",
+#'   study = "study1"
 #' )
 check_complete_ids <- function(data, samples_table, study,
                                id_type = c("individualID", "specimenID"),
