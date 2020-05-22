@@ -360,5 +360,6 @@ test_that("check_all() catches missing IDs from existing studies", {
   expect_equal(res$complete_ids_indiv$data, "A")
   expect_true(inherits(res$complete_ids_biosp, "check_fail"))
   expect_equal(res$complete_ids_biosp$data, c("a1", "a2", "b2"))
-  expect_true(inherits(res$complete_ids_assay, "check_pass"))
+  expect_true(inherits(res$complete_ids_assay, "check_fail"))
+  expect_equal(res$complete_ids_assay$data, c("a1", "a2"))
 })

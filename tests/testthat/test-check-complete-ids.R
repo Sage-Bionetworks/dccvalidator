@@ -49,7 +49,7 @@ test_that("check_complete_ids looks at assay of interest", {
     assay = "rnaSeq"
   )
   res2 <- check_complete_ids(
-    dat,
+    dat2,
     samples_table,
     study = "study1",
     id_type = "specimenID",
