@@ -86,23 +86,20 @@ get_study_server <- function(input, output, session, study_table_id, syn) {
   )
   purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
 
-  study <- reactiveValues()
-  # Even though study is a reactive values list,
+  study_name <- reactiveVal(NULL)
+  # Even though study_name is a reactive value,
   # need observe to make sure it updates based on input
   observe({
     if (input$study_exists == "Yes") {
-      study$study_name <- input$study_choice
-      study$study_exists <- TRUE
+      study_name(input$study_choice)
     } else {
-      study$study_name <- input$study_text
-      study$study_exists <- FALSE
+      study_name(input$study_text)
     }
   })
   observeEvent(input$study_exists, {
     if (input$study_exists == "No") {
-      study$study_name <- ""
-      study$study_exists <- FALSE
+      study_name("")
     }
   })
-  return(study)
+  return(study_name)
 }
