@@ -53,15 +53,7 @@ check_complete_ids <- function(data, samples_table, study,
     return(NULL)
   }
   behavior <- "If the data being validated is an addition to an existing study, all IDs that were previously shared for this study should be included in the metadata" # nolint
-  if (!study %in% samples_table$study) {
-    return(
-      check_warn(
-        msg = glue::glue("Can't check for complete IDs because master table does not contain study {study}"), # nolint
-        behavior = behavior,
-        data = NULL
-      )
-    )
-  }
+  stopifnot(study %in% samples_table$study)
   if (!id_type %in% names(data)) {
     return(
       check_fail(

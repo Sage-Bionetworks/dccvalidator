@@ -34,7 +34,6 @@ test_that("check_all() returns a list of check conditions or NULLs", {
   res <- check_all(
     data = data,
     annotations = annots,
-    study_exists = FALSE,
     study = "foo",
     syn = syn
   )
@@ -122,28 +121,24 @@ test_that("check_all() returns NULL for checks with missing data", {
   res1 <- check_all(
     data = data1,
     annotations = annots,
-    study_exists = FALSE,
     study = "foo",
     syn = syn
   )
   res2 <- check_all(
     data = data2,
     annotations = annots,
-    study_exists = FALSE,
     study = "foo",
     syn = syn
   )
   res3 <- check_all(
     data = data3,
     annotations = annots,
-    study_exists = FALSE,
     study = "foo",
     syn = syn
   )
   res4 <- check_all(
     data = data4,
     annotations = annots,
-    study_exists = FALSE,
     study = "foo",
     syn = syn
   )
@@ -197,7 +192,6 @@ test_that("check_all() returns expected conditions", {
   res <- check_all(
     data = data,
     annotations = annots,
-    study_exists = FALSE,
     study = "foo",
     syn = syn
   )
@@ -235,7 +229,6 @@ test_that("check_all() throws error if not exactly 1 metadata type each", {
     check_all(
       data = data1,
       annotations = annots,
-      study_exists = FALSE,
       study = "foo",
       syn = syn
     )
@@ -244,7 +237,6 @@ test_that("check_all() throws error if not exactly 1 metadata type each", {
     check_all(
       data = data2,
       annotations = annots,
-      study_exists = FALSE,
       study = "foo",
       syn = syn
     )
@@ -277,21 +269,18 @@ test_that("check_all runs check_ages_over_90 for human data", {
   res1 <- check_all(
     data = data_human,
     annotations = annots,
-    study_exists = FALSE,
     study = "foo",
     syn = syn
   )
   res2 <- check_all(
     data = data_animal,
     annotations = annots,
-    study_exists = FALSE,
     study = "foo",
     syn = syn
   )
   res3 <- check_all(
     data = data_has_na,
     annotations = annots,
-    study_exists = FALSE,
     study = "foo",
     syn = syn
   )
@@ -323,7 +312,6 @@ test_that("check_all catches duplicate file paths in manifest", {
   res1 <- check_all(
     data = data,
     annotations = annots,
-    study_exists = FALSE,
     study = "foo",
     syn = syn
   )
@@ -352,7 +340,6 @@ test_that("check_all() catches missing IDs from existing studies", {
   res <- check_all(
     data = data,
     annotations = annots,
-    study_exists = TRUE,
     study = "study1",
     syn = syn
   )
@@ -362,4 +349,34 @@ test_that("check_all() catches missing IDs from existing studies", {
   expect_equal(res$complete_ids_biosp$data, c("a1", "a2", "b2"))
   expect_true(inherits(res$complete_ids_assay, "check_fail"))
   expect_equal(res$complete_ids_assay$data, c("a1", "a2"))
+})
+
+test_that("check_all() doesn't run check_complete_ids if study isn't in table", {
+  skip_if_not(logged_in(syn = syn))
+  data <- tibble::tibble(
+    metadataType = c(
+      "manifest",
+      "individual",
+      "biospecimen",
+      "assay"
+    ),
+    name = c("file1", "file2", "file3", "file4"),
+    species = "human",
+    assay = "rnaSeq",
+    file_data = c(
+      list(data.frame(path = c("/file.txt", "/file.txt"))),
+      list(data.frame(individualID = "B")),
+      list(data.frame(individualID = "B", specimenID = "b1")),
+      list(data.frame(specimenID = "b1"))
+    )
+  )
+  res <- check_all(
+    data = data,
+    annotations = annots,
+    study = "not a study in this table",
+    syn = syn
+  )
+  expect_null(res$complete_ids_indiv)
+  expect_null(res$complete_ids_biosp)
+  expect_null(res$complete_ids_assay)
 })

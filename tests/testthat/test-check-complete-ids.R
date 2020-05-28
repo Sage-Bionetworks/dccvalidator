@@ -16,15 +16,16 @@ test_that("check_complete_ids returns NULL if no data provided", {
   expect_null(check_complete_ids(NULL))
 })
 
-test_that("check_complete_ids fails if study is not present in master table", {
+test_that("check_complete_ids errors if study is not present in master table", {
   dat <- data.frame(individualID = c("x", "y", "z"))
-  res <- check_complete_ids(
-    dat,
-    samples_table,
-    study = "foo",
-    id_type = "individualID"
+  expect_error(
+    check_complete_ids(
+      dat,
+      samples_table,
+      study = "foo",
+      id_type = "individualID"
+    )
   )
-  expect_true(inherits(res, "check_warn"))
 })
 
 test_that("check_complete_ids fails if ID column is not present in data", {

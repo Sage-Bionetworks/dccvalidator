@@ -15,8 +15,6 @@
 #'   assay, manifest. If file_data is `NULL` for a given
 #'   metadataType, the metadataType should still be
 #'   present.
-#' @param study_exists `TRUE` if study already exists, `FALSE` if this is a new
-#'   study.
 #' @param study A string containing the name of the study.
 #' @inheritParams check_annotation_keys
 #' @return List of conditions
@@ -47,7 +45,7 @@
 #' )
 #' res <- check_all(data, annots, syn)
 #' }
-check_all <- function(data, annotations, study_exists, study, syn) {
+check_all <- function(data, annotations, study, syn) {
 
   # Get indices by type
   indiv_index <- which(data$metadataType == "individual")
@@ -256,12 +254,12 @@ check_all <- function(data, annotations, study_exists, study, syn) {
   )
 
   # Additions to existing studies have complete IDs ----------------------------
-  if (isTRUE(study_exists)) {
-    samples_table <- syn$tableQuery(
-      glue::glue("SELECT * FROM {config::get('samples_table')} WHERE study = '{study}'"), # nolint
-      includeRowIdAndRowVersion = FALSE
-    )
-    samples_table <- readr::read_csv(samples_table$filepath)
+  samples_table <- syn$tableQuery(
+    glue::glue("SELECT * FROM {config::get('samples_table')} WHERE study = '{study}'"), # nolint
+    includeRowIdAndRowVersion = FALSE
+  )
+  samples_table <- readr::read_csv(samples_table$filepath)
+  if (study %in% samples_table$study) {
     assay <- data[assay_index, "assay", drop = TRUE]
     complete_ids_indiv <- check_complete_ids(
       data$file_data[indiv_index][[1]],
