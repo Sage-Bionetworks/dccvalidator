@@ -351,7 +351,7 @@ test_that("check_all() catches missing IDs from existing studies", {
   expect_equal(res$complete_ids_assay$data, c("a1", "a2"))
 })
 
-test_that("check_all() doesn't run check_complete_ids if study isn't in table", {
+test_that("check_all() doesn't run check_complete_ids if study isn't in table", { # nolint
   skip_if_not(logged_in(syn = syn))
   data <- tibble::tibble(
     metadataType = c(
