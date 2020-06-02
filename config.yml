@@ -66,6 +66,7 @@ amp-ad:
     assay_templates:
       ATACseq: "syn22024364"
       autorad: "syn22087295"
+      immunoassay: "syn22117582"
       proteomics: "syn12973255"
       single cell RNAseq: "syn21018360"
       wholeGenomeSeq: "syn21018358"
