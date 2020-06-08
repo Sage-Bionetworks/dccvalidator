@@ -335,11 +335,8 @@ can_coerce <- function(values, class) {
     return(TRUE)
   }
 
-  if (class == "character" &&
-    (inherits(values, "numeric") | inherits(values, "integer") |
-      inherits(values, "logical") | inherits(values, "factor"))) {
-    ## Anything is coercible to character
-    return(TRUE)
+  if (class == "character") {
+    return(TRUE) # Anything is coercible to character
   } else if (class == "numeric" && inherits(values, "integer")) {
     ## Integers are coercible to numeric
     return(TRUE)
