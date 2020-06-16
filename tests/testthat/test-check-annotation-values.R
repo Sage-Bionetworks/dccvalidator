@@ -415,10 +415,14 @@ test_that("Multiple column types produces an error", {
 
 ## can_coerce() ----------------------------------------------------------------
 
-test_that("can_coerce() returns TRUE for numeric/integer/boolean->character", {
+test_that("anything is coercible to character", {
   expect_true(can_coerce(1, "character"))
   expect_true(can_coerce(1L, "character"))
   expect_true(can_coerce(TRUE, "character"))
+  expect_true(can_coerce(as.Date("2020-05-01"), "character"))
+  expect_true(can_coerce(as.POSIXct("2020-05-01"), "character"))
+  expect_true(can_coerce(as.POSIXlt("2020-05-01"), "character"))
+  expect_true(can_coerce(as.complex(-1), "character"))
 })
 
 test_that("can_coerce() returns TRUE for integer->numeric", {
@@ -462,7 +466,6 @@ test_that("a value can be coerced to its own type", {
 
 test_that("factors are converted to string before checking coercibility", {
   expect_true(can_coerce(factor("TRUE"), "logical"))
-  expect_true(can_coerce(factor("foo"), "character"))
 })
 
 test_that("whole numbers that aren't integer type are considered coercible", {
