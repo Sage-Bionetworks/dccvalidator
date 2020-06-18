@@ -1,14 +1,14 @@
 ## Test environments
 
-* local macOS install, R 3.6.2
-* Windows Server 2008 R2 SP1, R-devel, 32/64 bit (rhub)
-* Windows Server 2008 R2 SP1, R-release, 32/64 bit (rhub)
+* macOS 10.13.6 High Sierra, R-release, CRAN setup (rhub)
+* Windows Server 2008, R-release, 32/64 bit (winbuilder)
 * Ubuntu 16.04 R 3.4 through R devel (travis-ci)
+* local Ubuntu 18.04 R 3.6.3 build
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 0 note
 
-New maintainer: Nicole Kauer will take over maintainership of dccvalidator going
-forward. Previous maintainer Kara Woo has contacted CRAN from the email address
-on file to confirm that this is an agreed upon change.
+Added conditional requirement in json schema tests that will skip test if
+`jsonvalidate` is not available. This is to avoid the problem with Fedora-clang
+not having the V8 package.
