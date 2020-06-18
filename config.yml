@@ -146,10 +146,6 @@ pec:
       - "nucleicAcidSource"
     assay:
       - "specimenID"
-      - "platform"
-      - "libraryPrep"
-      - "libraryPreparationMethod"
-      - "runType"
   contact_email: "kelsey@synapse.org"
 
 annotations-research:
