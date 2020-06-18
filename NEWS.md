@@ -1,7 +1,3 @@
-# dccvalidator (development version)
-
-- (develop branch) Add `check_complete_ids()`, which includes new config option designating the table to compare against for existing specimen and individual IDs
-
 # dccvalidator v0.3.0
 
 - Add `check_parent_syn()`
