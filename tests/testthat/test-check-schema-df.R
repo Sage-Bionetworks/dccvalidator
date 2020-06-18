@@ -1,6 +1,7 @@
 context("test-check-schema-df.R")
 
 test_that("check_schema_df passes if all rows valid", {
+  skip_if_not_installed("jsonvalidate")
   dat <- data.frame(x = 1:2)
   schema <- '{
   "$schema": "http://json-schema.org/draft-04/schema#",
@@ -17,6 +18,7 @@ test_that("check_schema_df passes if all rows valid", {
 })
 
 test_that("check_schema_df fails if all rows invalid", {
+  skip_if_not_installed("jsonvalidate")
   dat <- data.frame(x = c("a", "b"))
   schema <- '{
   "$schema": "http://json-schema.org/draft-04/schema#",
@@ -33,6 +35,7 @@ test_that("check_schema_df fails if all rows invalid", {
 })
 
 test_that("check_schema_df fails if some rows invalid", {
+  skip_if_not_installed("jsonvalidate")
   dat <- data.frame(x = c(1, NA))
   schema <- '{
   "$schema": "http://json-schema.org/draft-04/schema#",
@@ -49,6 +52,7 @@ test_that("check_schema_df fails if some rows invalid", {
 })
 
 test_that("check_schema_df catches multiple invalid columns in a row", {
+  skip_if_not_installed("jsonvalidate")
   dat <- data.frame(x = NA, y = "foo")
   schema <- '{
   "$schema": "http://json-schema.org/draft-04/schema#",

@@ -1,6 +1,7 @@
 context("test-check-schema-json.R")
 
 test_that("Valid schemas return check_pass", {
+  skip_if_not_installed("jsonvalidate")
   json <- "{}"
   schema <- '{
   "$schema": "http://json-schema.org/draft-04/schema#",
@@ -16,6 +17,7 @@ test_that("Valid schemas return check_pass", {
 })
 
 test_that("check_schema_json fails for missing property", {
+  skip_if_not_installed("jsonvalidate")
   json <- "{}"
   schema <- '{
   "$schema": "http://json-schema.org/draft-04/schema#",
@@ -32,6 +34,7 @@ test_that("check_schema_json fails for missing property", {
 })
 
 test_that("check_schema_json fails for wrong type", {
+  skip_if_not_installed("jsonvalidate")
   json <- '{
   "x": "foo"
 }'
@@ -51,6 +54,7 @@ test_that("check_schema_json fails for wrong type", {
 
 
 test_that("check_schema_json catches multiple errors", {
+  skip_if_not_installed("jsonvalidate")
   json <- '{
   "x": "foo",
   "y": "bar"
