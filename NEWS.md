@@ -1,5 +1,7 @@
 # dccvalidator (development version)
 
+- Add `check_complete_ids()` and `samples_table` configuration option
+
 # dccvalidator v0.3.0
 
 - Add `check_parent_syn()`
