@@ -15,6 +15,7 @@
 #'   assay, manifest. If file_data is `NULL` for a given
 #'   metadataType, the metadataType should still be
 #'   present.
+#' @param study A string containing the name of the study.
 #' @inheritParams check_annotation_keys
 #' @return List of conditions
 #' @export
@@ -44,7 +45,7 @@
 #' )
 #' res <- check_all(data, annots, syn)
 #' }
-check_all <- function(data, annotations, syn) {
+check_all <- function(data, annotations, study, syn) {
 
   # Get indices by type
   indiv_index <- which(data$metadataType == "individual")
@@ -252,6 +253,43 @@ check_all <- function(data, annotations, syn) {
     data$file_data[manifest_index][[1]]
   )
 
+  # Additions to existing studies have complete IDs ----------------------------
+  samples_table <- syn$tableQuery(
+    glue::glue("SELECT * FROM {config::get('samples_table')} WHERE study = '{study}'"), # nolint
+    includeRowIdAndRowVersion = FALSE
+  )
+  samples_table <- readr::read_csv(samples_table$filepath)
+  if (study %in% samples_table$study) {
+    assay <- data[assay_index, "assay", drop = TRUE]
+    complete_ids_indiv <- check_complete_ids(
+      data$file_data[indiv_index][[1]],
+      samples_table = samples_table,
+      study = study,
+      id_type = "individualID",
+      success_msg = "All pre-existing individual IDs are present in the individual file", # nolint
+      fail_msg = "Some individual IDs that were previously part of this study are missing from the individual file" # nolint
+    )
+    complete_ids_biosp <- check_complete_ids(
+      data$file_data[biosp_index][[1]],
+      samples_table = samples_table,
+      study = study,
+      id_type = "specimenID",
+      success_msg = "All pre-existing specimen IDs are present in the biospecimen file", # nolint
+      fail_msg = "Some specimen IDs that were previously part of this study are missing from the biospecimen file" # nolint
+    )
+    complete_ids_assay <- check_complete_ids(
+      data$file_data[assay_index][[1]],
+      samples_table = samples_table,
+      study = study,
+      id_type = "specimenID",
+      assay = assay,
+      success_msg = "All pre-existing specimen IDs for this assay are present in the assay file", # nolint
+      fail_msg = "Some specimen IDs that were previously part of this study and assay are missing from the assay file" # nolint
+    )
+  } else {
+    complete_ids_indiv <- complete_ids_biosp <- complete_ids_assay <- NULL
+  }
+
   ## List results
   res <- list(
     missing_cols_indiv = missing_cols_indiv,
@@ -280,7 +318,10 @@ check_all <- function(data, annotations, syn) {
     meta_files_in_manifest = meta_files_in_manifest,
     valid_parent_syn = valid_parent_syn,
     ages_over_90 = ages_over_90,
-    duplicate_file_paths = duplicate_file_paths
+    duplicate_file_paths = duplicate_file_paths,
+    complete_ids_indiv = complete_ids_indiv,
+    complete_ids_biosp = complete_ids_biosp,
+    complete_ids_assay = complete_ids_assay
   )
   res
 }

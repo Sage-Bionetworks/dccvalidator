@@ -87,7 +87,10 @@ To install the dccvalidator instead of forking the repository:
 * `parent`: The Synapse project or folder where files will be stored
 * `path_to_markdown`: Location of an R Markdown document with app instructions. If you wish to omit instructions, insert `!expr NA`.
 * `study_table`: Synapse ID of a table that lists all of the existing studies in
-  the consortium. It should have a column called `StudyName`.
+  the consortium. It should have a column called `StudyName`
+* `samples_table`: Synapse ID of a table that lists the key-value pairs of `study`, `individualID`,
+  `specimenID`, `assay`, `species` to validate that additions to existing studies retain all IDs
+  that were previously shared.
 * `annotations_table`: Synapse ID of a table that lists allowable annotation
   keys and values for the consortium. This should follow the same basic format
   as our Synapse Annotations table, e.g. there must be the following columns:

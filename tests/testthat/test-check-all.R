@@ -12,7 +12,7 @@ annots <- tribble(
   "species", "Human", "STRING"
 )
 
-test_that("check_all() returns a list of check conditions", {
+test_that("check_all() returns a list of check conditions or NULLs", {
   skip_if_not(logged_in(syn = syn))
   data <- tibble::tibble(
     metadataType = c(
@@ -31,13 +31,18 @@ test_that("check_all() returns a list of check conditions", {
       list(data.frame(a = c(TRUE, FALSE), b = c(1, 3)))
     )
   )
-  res <- check_all(data, annots, syn)
+  res <- check_all(
+    data = data,
+    annotations = annots,
+    study = "foo",
+    syn = syn
+  )
   expect_equal(class(res), "list")
   expect_true(all(unlist(
     purrr::map(
       res,
       function(x) {
-        inherits(x, "check_fail") | inherits(x, "check_pass") | inherits(x, "check_warn") # nolint
+        inherits(x, "check_fail") | inherits(x, "check_pass") | inherits(x, "check_warn") | is.null(x) # nolint
       }
     )
   )))
@@ -113,10 +118,30 @@ test_that("check_all() returns NULL for checks with missing data", {
       list(NULL)
     )
   )
-  res1 <- check_all(data1, annots, syn)
-  res2 <- check_all(data2, annots, syn)
-  res3 <- check_all(data3, annots, syn)
-  res4 <- check_all(data4, annots, syn)
+  res1 <- check_all(
+    data = data1,
+    annotations = annots,
+    study = "foo",
+    syn = syn
+  )
+  res2 <- check_all(
+    data = data2,
+    annotations = annots,
+    study = "foo",
+    syn = syn
+  )
+  res3 <- check_all(
+    data = data3,
+    annotations = annots,
+    study = "foo",
+    syn = syn
+  )
+  res4 <- check_all(
+    data = data4,
+    annotations = annots,
+    study = "foo",
+    syn = syn
+  )
 
   # Some checks should be NULL based on which data is missing
   # Since all of these have missing data, the # of checks done
@@ -164,7 +189,12 @@ test_that("check_all() returns expected conditions", {
       ))
     )
   )
-  res <- check_all(data, annots, syn)
+  res <- check_all(
+    data = data,
+    annotations = annots,
+    study = "foo",
+    syn = syn
+  )
   # All metadata filenames in manifest passes
   expect_true(inherits(res$meta_files_in_manifest, "check_pass"))
   # Missing individualID "c" from individual metadata
@@ -195,8 +225,22 @@ test_that("check_all() throws error if not exactly 1 metadata type each", {
       "assay"
     )
   )
-  expect_error(check_all(data1, annots, syn))
-  expect_error(check_all(data2, annots, syn))
+  expect_error(
+    check_all(
+      data = data1,
+      annotations = annots,
+      study = "foo",
+      syn = syn
+    )
+  )
+  expect_error(
+    check_all(
+      data = data2,
+      annotations = annots,
+      study = "foo",
+      syn = syn
+    )
+  )
 })
 
 test_that("check_all runs check_ages_over_90 for human data", {
@@ -222,9 +266,24 @@ test_that("check_all runs check_ages_over_90 for human data", {
   data_animal$species <- "mouse or other animal model"
   data_has_na <- data_human
   data_has_na$species <- c(NA, "human", "human", NA)
-  res1 <- check_all(data_human, annots, syn)
-  res2 <- check_all(data_animal, annots, syn)
-  res3 <- check_all(data_has_na, annots, syn)
+  res1 <- check_all(
+    data = data_human,
+    annotations = annots,
+    study = "foo",
+    syn = syn
+  )
+  res2 <- check_all(
+    data = data_animal,
+    annotations = annots,
+    study = "foo",
+    syn = syn
+  )
+  res3 <- check_all(
+    data = data_has_na,
+    annotations = annots,
+    study = "foo",
+    syn = syn
+  )
   expect_true(inherits(res1$ages_over_90, "check_warn"))
   expect_null(res2$ages_over_90)
   expect_true(inherits(res3$ages_over_90, "check_warn"))
@@ -250,6 +309,74 @@ test_that("check_all catches duplicate file paths in manifest", {
     )
   )
 
-  res1 <- check_all(data, annots, syn)
+  res1 <- check_all(
+    data = data,
+    annotations = annots,
+    study = "foo",
+    syn = syn
+  )
   expect_true(inherits(res1$duplicate_file_paths, "check_fail"))
+})
+
+test_that("check_all() catches missing IDs from existing studies", {
+  skip_if_not(logged_in(syn = syn))
+  data <- tibble::tibble(
+    metadataType = c(
+      "manifest",
+      "individual",
+      "biospecimen",
+      "assay"
+    ),
+    name = c("file1", "file2", "file3", "file4"),
+    species = "human",
+    assay = "rnaSeq",
+    file_data = c(
+      list(data.frame(path = c("/file.txt", "/file.txt"))),
+      list(data.frame(individualID = "B")),
+      list(data.frame(individualID = "B", specimenID = "b1")),
+      list(data.frame(specimenID = "b1"))
+    )
+  )
+  res <- check_all(
+    data = data,
+    annotations = annots,
+    study = "study1",
+    syn = syn
+  )
+  expect_true(inherits(res$complete_ids_indiv, "check_fail"))
+  expect_equal(res$complete_ids_indiv$data, "A")
+  expect_true(inherits(res$complete_ids_biosp, "check_fail"))
+  expect_equal(res$complete_ids_biosp$data, c("a1", "a2", "b2"))
+  expect_true(inherits(res$complete_ids_assay, "check_fail"))
+  expect_equal(res$complete_ids_assay$data, c("a1", "a2"))
+})
+
+test_that("check_all() doesn't run check_complete_ids if study isn't in table", { # nolint
+  skip_if_not(logged_in(syn = syn))
+  data <- tibble::tibble(
+    metadataType = c(
+      "manifest",
+      "individual",
+      "biospecimen",
+      "assay"
+    ),
+    name = c("file1", "file2", "file3", "file4"),
+    species = "human",
+    assay = "rnaSeq",
+    file_data = c(
+      list(data.frame(path = c("/file.txt", "/file.txt"))),
+      list(data.frame(individualID = "B")),
+      list(data.frame(individualID = "B", specimenID = "b1")),
+      list(data.frame(specimenID = "b1"))
+    )
+  )
+  res <- check_all(
+    data = data,
+    annotations = annots,
+    study = "not a study in this table",
+    syn = syn
+  )
+  expect_null(res$complete_ids_indiv)
+  expect_null(res$complete_ids_biosp)
+  expect_null(res$complete_ids_assay)
 })
