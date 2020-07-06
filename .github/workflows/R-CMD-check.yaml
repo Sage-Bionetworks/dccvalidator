@@ -67,11 +67,6 @@ jobs:
         run: |
           brew install V8
 
-      - name: Install Python packages
-        run: |
-          pip install --user pandas
-          pip install --user synapseclient
-
       - name: Install dependencies
         run: |
           library(remotes)
@@ -80,6 +75,22 @@ jobs:
           update(deps)
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
+
+      - name: Install Miniconda
+        run: |
+          Rscript -e "remotes::install_github('rstudio/reticulate')"
+          Rscript -e "reticulate::install_miniconda()"
+
+      - name: Add Miniconda to .Rprofile on macOS
+        if: runner.os == 'macOS'
+        run: echo "options(reticulate.conda_binary = reticulate:::miniconda_conda())" >> .Rprofile
+
+      - name: Install Python deps
+        run: |
+          Rscript -e "reticulate::conda_create('r-reticulate', packages = c('python==3.7.0'))"
+          Rscript -e "remotes::install_local()"
+          Rscript -e "reticulate::py_install('pandas', pip = TRUE)"
+          Rscript -e "reticulate::py_install(synapseclient, pip = TRUE)"
 
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
