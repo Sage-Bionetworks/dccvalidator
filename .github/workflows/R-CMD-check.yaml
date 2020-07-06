@@ -31,6 +31,7 @@ jobs:
       RSPM: ${{ matrix.config.rspm }}
       SYNAPSE_USER: ${{ secrets.SYNAPSE_USER }}
       SYNAPSE_APIKEY: ${{ secrets.SYNAPSE_APIKEY }}
+      RETICULATE_AUTOCONFIGURE: 'FALSE'
 
     steps:
       - uses: actions/checkout@v2
