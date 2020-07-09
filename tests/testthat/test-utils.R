@@ -3,14 +3,14 @@ context("utils.R")
 syn <- attempt_instantiate()
 attempt_login(syn)
 
-test_that("on_travis() returns TRUE on Travis", {
-  expect_equal(on_travis(), isTRUE(as.logical(Sys.getenv("TRAVIS"))))
+test_that("on_ci() returns TRUE on Travis", {
+  expect_equal(on_ci(), isTRUE(as.logical(Sys.getenv("CI"))))
 })
 
 test_that("login works on travis in main repo", {
   ## Lots of other things will fail too if it doesn't, but doesn't hurt to have
   ## a dedicated test
-  skip_if_not(on_travis())
+  skip_if_not(on_ci())
 
   ## In this one we do need to ensure it only runs for builds on upstream repo,
   ## not forks
@@ -20,7 +20,7 @@ test_that("login works on travis in main repo", {
   )
   skip_if_not(owner == "Sage-Bionetworks", "Testing on upstream repo")
 
-  login <- try(syn_travis_login(syn), silent = TRUE)
+  login <- try(syn_ci_login(syn), silent = TRUE)
   expect_false(inherits(login, "try-error"))
 })
 
