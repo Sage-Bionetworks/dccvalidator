@@ -301,13 +301,11 @@ app_server <- function(input, output, session) {
     ## Counts of individuals, specimens, and files
     output$nindividuals <- renderValueBox({
       valueBox(
-        sum(!is.na(unique(
-          c(
-            indiv()$individualID,
-            biosp()$individualID,
-            manifest()$individualID
-          )
-        ))),
+        count_unique_values(
+          indiv()$individualID,
+          biosp()$individualID,
+          manifest()$individiualID
+        ),
         "Individuals",
         icon = icon("users")
       )
@@ -315,9 +313,11 @@ app_server <- function(input, output, session) {
 
     output$nspecimens <- renderValueBox({
       valueBox(
-        sum(!is.na(unique(
-          c(biosp()$specimenID, assay()$specimenID, manifest()$specimenID)
-        ))),
+        count_unique_values(
+          biosp()$specimenID,
+          assay()$specimenID,
+          manifest()$specimenID
+        ),
         "Specimens",
         icon = icon("vial")
       )
@@ -325,9 +325,7 @@ app_server <- function(input, output, session) {
 
     output$ndatafiles <- renderValueBox({
       valueBox(
-        sum(!is.na(unique(
-          manifest()$path
-        ))),
+        count_unique_values(manifest()$path),
         "Data files in manifest",
         icon = icon("file")
       )
