@@ -304,7 +304,7 @@ app_server <- function(input, output, session) {
         count_unique_values(
           indiv()$individualID,
           biosp()$individualID,
-          manifest()$individiualID
+          manifest()$individualID
         ),
         "Individuals",
         icon = icon("users")
