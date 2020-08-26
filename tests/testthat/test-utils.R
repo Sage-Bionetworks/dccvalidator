@@ -41,3 +41,13 @@ test_that("%||% gives b if a is NULL", {
   b <- NULL
   expect_null(a %||% b)
 })
+
+test_that("count_unique_values returns correct number", {
+  expect_equal(count_unique_values(1, 2, 3), 3)
+  expect_equal(count_unique_values(1, 1, 1), 1)
+  expect_equal(count_unique_values("a"), 1)
+  # Should not count NA as a unique value
+  expect_equal(count_unique_values(NA), 0)
+  expect_equal(count_unique_values("a", NA, NA), 1)
+  expect_equal(count_unique_values(c(NA), c(1, 2), c("a", "b")), 4)
+})

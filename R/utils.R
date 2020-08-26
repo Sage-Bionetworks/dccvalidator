@@ -68,3 +68,8 @@ save_to_synapse <- function(input_file,
 "%||%" <- function(a, b) {
   if (!is.null(a)) a else b
 }
+
+## Count unique values
+count_unique_values <- function(...) {
+  sum(!is.na(unique(c(...))))
+}
