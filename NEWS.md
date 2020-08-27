@@ -2,6 +2,8 @@
 
 - Add `check_complete_ids()` and `samples_table` configuration option
 - Fix bug in Data Summary information boxes to not count NA
+- `check_all()` now checks the biospecimen metadata for ages over 90 in the
+  `samplingAge` column
 
 # dccvalidator v0.3.0
 

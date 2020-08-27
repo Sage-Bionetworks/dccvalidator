@@ -243,9 +243,19 @@ check_all <- function(data, annotations, study, syn) {
 
   # Ages over 90 are censored in human individual metadata ---------------------
   if (any(data$species == "human", na.rm = TRUE)) {
-    ages_over_90 <- check_ages_over_90(data$file_data[indiv_index][[1]])
+    ages_over_90_indiv <- check_ages_over_90(
+      data$file_data[indiv_index][[1]],
+      success_msg = "No ages over 90 detected in the individual metadata",
+      fail_msg = "Ages over 90 detected in the individual metadata"
+    )
+    ages_over_90_biosp <- check_ages_over_90(
+      data$file_data[biosp_index][[1]],
+      col = "samplingAge",
+      success_msg = "No ages over 90 detected in the biospecimen metadata",
+      fail_msg = "Ages over 90 detected in the biospecimen metadata"
+    )
   } else {
-    ages_over_90 <- NULL
+    ages_over_90_biosp <- ages_over_90_indiv <- NULL
   }
 
   # No file paths are duplicated in the manifest -------------------------------
@@ -317,7 +327,8 @@ check_all <- function(data, annotations, study, syn) {
     complete_cols_assay = complete_cols_assay,
     meta_files_in_manifest = meta_files_in_manifest,
     valid_parent_syn = valid_parent_syn,
-    ages_over_90 = ages_over_90,
+    ages_over_90_indiv = ages_over_90_indiv,
+    ages_over_90_biosp = ages_over_90_biosp,
     duplicate_file_paths = duplicate_file_paths,
     complete_ids_indiv = complete_ids_indiv,
     complete_ids_biosp = complete_ids_biosp,

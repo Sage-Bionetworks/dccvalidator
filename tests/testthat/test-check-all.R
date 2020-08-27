@@ -284,9 +284,37 @@ test_that("check_all runs check_ages_over_90 for human data", {
     study = "foo",
     syn = syn
   )
-  expect_true(inherits(res1$ages_over_90, "check_warn"))
-  expect_null(res2$ages_over_90)
-  expect_true(inherits(res3$ages_over_90, "check_warn"))
+  expect_true(inherits(res1$ages_over_90_indiv, "check_warn"))
+  expect_null(res2$ages_over_90_indiv)
+  expect_true(inherits(res3$ages_over_90_indiv, "check_warn"))
+})
+
+test_that("check_all runs check_ages_over_90 on biospecimen file", {
+  skip_if_not(logged_in(syn = syn))
+  dat <- tibble::tibble(
+    metadataType = c(
+      "manifest",
+      "individual",
+      "biospecimen",
+      "assay"
+    ),
+    name = c("file1", "file2", "file3", "file4"),
+    species = "human",
+    assay = "rnaSeq",
+    file_data = c(
+      list(data.frame(a = 1)),
+      list(data.frame(a = 1)),
+      list(data.frame(samplingAge = 100)),
+      list(data.frame(a = 1))
+    )
+  )
+  res <- check_all(
+    data = dat,
+    annotations = annots,
+    study = "foo",
+    syn = syn
+  )
+  expect_true(inherits(res$ages_over_90_biosp, "check_warn"))
 })
 
 test_that("check_all catches duplicate file paths in manifest", {
