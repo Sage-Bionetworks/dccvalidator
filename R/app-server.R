@@ -85,7 +85,8 @@ app_server <- function(input, output, session) {
         "manifest",
         "species",
         "assay_name",
-        "validate_btn"
+        "validate_btn",
+        "reset_btn_validate"
       )
       purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
 
@@ -99,6 +100,22 @@ app_server <- function(input, output, session) {
         syn = syn
       )
     }
+    
+    ## Reset fileInputs if reset button pressed
+    ## Need to somehow reset the study name?
+    observeEvent(input$reset_btn_validate, {
+      with_busy_indicator_server("validate_btn", {
+        shinyjs::reset("indiv_meta")
+        shinyjs::reset("biosp_meta")
+        shinyjs::reset("assay_meta")
+        shinyjs::reset("manifest")
+        files$indiv <- NULL
+        files$biosp <- NULL
+        files$assay <- NULL
+        files$manifest <- NULL
+        callModule(results_boxes_server, "Validation Results", list(NULL))
+      })
+    })
 
     ## If drosophila species checked, reset fileInput
     observeEvent(input$species, {
