@@ -48,6 +48,7 @@ results_boxes_ui <- function(id) {
       uiOutput(ns("successes")),
       solidHeader = TRUE,
       collapsible = TRUE,
+      collapsed = TRUE,
       title = textOutput(ns("num_success")),
       status = "success",
       width = 12
