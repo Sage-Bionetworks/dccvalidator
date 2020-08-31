@@ -135,12 +135,10 @@ app_ui <- function(request) {
                 ),
                 hr(),
                 # Add button to reset the form
-                with_busy_indicator_ui(
-                  shinyjs::disabled(
-                    actionButton(
-                      "reset_btn_validate",
-                      "Reset"
-                    )
+                shinyjs::disabled(
+                  actionButton(
+                    "reset_btn_validate",
+                    "Reset"
                   )
                 )
 
