@@ -143,8 +143,7 @@ upload_documents_server <- function(input, output, session,
   observeEvent(input$reset_btn_doc, {
     docs$study <- NULL
     docs$assay <- NULL
-    shinyjs::reset("study_doc")
-    shinyjs::reset("assay_doc")
+    reset_inputs("study_doc", "assay_doc")
   })
 
   # Upload files to Synapse (after renaming them so they keep their original
@@ -171,8 +170,9 @@ upload_documents_server <- function(input, output, session,
             syn = syn
           )
         })
-        shinyjs::reset("study_doc")
-        shinyjs::reset("assay_doc")
+        docs$study <- NULL
+        docs$assay <- NULL
+        reset_inputs("study_doc", "assay_doc")
       })
   })
 }

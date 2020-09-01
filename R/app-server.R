@@ -104,10 +104,7 @@ app_server <- function(input, output, session) {
     ## Reset fileInputs if reset button pressed
     ## Need to somehow reset the study name?
     observeEvent(input$reset_btn_validate, {
-      shinyjs::reset("indiv_meta")
-      shinyjs::reset("biosp_meta")
-      shinyjs::reset("assay_meta")
-      shinyjs::reset("manifest")
+      reset_inputs("indiv_meta", "biosp_meta", "assay_meta", "manifest")
       files$indiv <- NULL
       files$biosp <- NULL
       files$assay <- NULL
@@ -118,7 +115,7 @@ app_server <- function(input, output, session) {
     ## If drosophila species checked, reset fileInput
     observeEvent(input$species, {
       if (input$species == "drosophila") {
-        shinyjs::reset("indiv_meta")
+        reset_inputs("indiv_meta")
         files$indiv <- NULL
       }
     })
