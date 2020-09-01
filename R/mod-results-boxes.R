@@ -50,6 +50,7 @@ results_boxes_ui <- function(id) {
       collapsible = TRUE,
       collapsed = TRUE,
       title = textOutput(ns("num_success")),
+      footer = "Your files passed these checks. Well done!",
       status = "success",
       width = 12
     ),
@@ -58,6 +59,7 @@ results_boxes_ui <- function(id) {
       solidHeader = TRUE,
       collapsible = TRUE,
       title = textOutput(ns("num_warn")),
+      footer = "Warnings highlight possible issues in the data, but they may not be applicable to every dataset. If they are not applicable for your data, you can ignore them. For example, if any columns are completely empty they will generate a warning. If you did not collect data for that column, then you can ignore the warning.", # nolint
       status = "warning",
       width = 12
     ),
@@ -66,6 +68,7 @@ results_boxes_ui <- function(id) {
       solidHeader = TRUE,
       collapsible = TRUE,
       title = textOutput(ns("num_fail")),
+      footer = "Any failures in this box must be corrected. Contact the DCC team if you have any questions.", # nolint
       status = "danger",
       width = 12
     )
