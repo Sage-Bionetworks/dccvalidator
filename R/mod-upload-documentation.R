@@ -63,7 +63,16 @@ upload_documents_ui <- function(id, study_link_human,
               "Submit"
             )
           )
-        )
+        ),
+
+        hr(),
+
+       shinyjs::disabled(
+          actionButton(
+            ns("reset_btn_doc"),
+            "Reset"
+          )
+       )
       ),
 
       mainPanel(
@@ -95,7 +104,8 @@ upload_documents_server <- function(input, output, session,
     "doc_study",
     "study_doc",
     "assay_doc",
-    "upload_docs"
+    "upload_docs",
+    "reset_btn_doc"
   )
   purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
 
@@ -117,17 +127,39 @@ upload_documents_server <- function(input, output, session,
     list(study = study_name())
   })
 
+  # Control inputs by storing in reactiveValues
+  docs <- reactiveValues(
+    study = NULL,
+    assay = NULL
+  )
+  observeEvent(input$study_doc, {
+    docs$study <- input$study_doc
+  })
+  observeEvent(input$assay_doc, {
+    docs$assay <- input$assay_doc
+  })
+
+  # Reset tab
+  observeEvent(input$reset_btn_doc, {
+    docs$study <- NULL
+    docs$assay <- NULL
+    shinyjs::reset("study_doc")
+    shinyjs::reset("assay_doc")
+  })
+
   # Upload files to Synapse (after renaming them so they keep their original
   # names)
   observeEvent(input$upload_docs, {
-    if (!is.null(input$study_doc) || !is.null(input$assay_doc)) {
       # When the button is clicked, wrap the code in the call to the
       # indicator server function
       with_busy_indicator_server("upload_docs", {
+        if (is.null(docs$study) && is.null(docs$assay)) {
+          stop("Please provide files to upload.")
+        }
         if (!is_name_valid(study_name())) {
           stop("Please check that study name is entered and only contains: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
         }
-        all_docs <- rbind(input$study_doc, input$assay_doc)
+        all_docs <- rbind(docs$study, docs$assay)
         all_datapaths <- all_docs$datapath
         all_names <- paste0(study_name(), "_", all_docs$name)
         docs <- purrr::map2(all_datapaths, all_names, function(x, y) {
@@ -142,7 +174,6 @@ upload_documents_server <- function(input, output, session,
         shinyjs::reset("study_doc")
         shinyjs::reset("assay_doc")
       })
-    }
   })
 }
 
