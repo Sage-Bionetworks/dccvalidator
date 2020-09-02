@@ -68,7 +68,7 @@ results_boxes_ui <- function(id) {
       solidHeader = TRUE,
       collapsible = TRUE,
       title = textOutput(ns("num_fail")),
-      footer = "Any failures in this box must be corrected. Contact the DCC team if you have any questions.", # nolint
+      footer = "Any failures in this box must be corrected. A summary of data uploaded can be found in the Data Summary tab, and may help discover the reason behind the failures. Contact the DCC team if you have any questions.", # nolint
       status = "danger",
       width = 12
     )
