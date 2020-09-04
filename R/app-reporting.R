@@ -34,7 +34,7 @@ report_result <- function(result, emoji_prefix = NULL, verbose = FALSE) {
         "Information",
         result$behavior,
         placement = "left",
-        trigger = "click"
+        trigger = "hover"
       )
     )
   } else {
@@ -50,7 +50,7 @@ report_result <- function(result, emoji_prefix = NULL, verbose = FALSE) {
         "Information",
         result$behavior,
         placement = "left",
-        trigger = "click"
+        trigger = "hover"
       )
     )
   }
@@ -118,7 +118,7 @@ show_details.list <- function(x) {
 #'   teams = "3396691",
 #'   user = user,
 #'   syn = syn
-#'  )
+#' )
 #' certified <- check_certified_user(user$ownerId, syn = syn)
 #' report_unsatisfied_requirements(membership, certified, syn = syn)
 #' }
