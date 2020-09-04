@@ -25,34 +25,47 @@ upload_documents_ui <- function(id, study_link_human,
         get_study_ui(ns("doc_study")),
 
         # File import
-        shinyjs::disabled(
-          fileInput(
-            ns("study_doc"),
-            "Upload study description file (.txt, .docx, .md, .pdf, .tex)",
-            accept = c(
-              "application/vnd.openxmlformats-officedocument.wordprocessingml.document", # nolint
-              "application/msword",
-              "application/pdf",
-              "text/plain",
-              "application/x-tex",
-              "text/markdown"
+        popify(
+          shinyjs::disabled(
+            fileInput(
+              ns("study_doc"),
+              "Upload study description file (.txt, .docx, .md, .pdf, .tex)",
+              accept = c(
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document", # nolint
+                "application/msword",
+                "application/pdf",
+                "text/plain",
+                "application/x-tex",
+                "text/markdown"
+              )
             )
-          )
+          ),
+          "Information",
+          "Select the study description file.",
+          placement = "top",
+          trigger = "hover"
         ),
-        shinyjs::disabled(
-          fileInput(
-            ns("assay_doc"),
-            "Upload assay description files (.txt, .docx, .md, .pdf, .tex)",
-            multiple = TRUE,
-            accept = c(
-              "application/vnd.openxmlformats-officedocument.wordprocessingml.document", # nolint
-              "application/msword",
-              "application/pdf",
-              "text/plain",
-              "application/x-tex",
-              "text/markdown"
+
+        popify(
+          shinyjs::disabled(
+            fileInput(
+              ns("assay_doc"),
+              "Upload assay description files (.txt, .docx, .md, .pdf, .tex)",
+              multiple = TRUE,
+              accept = c(
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document", # nolint
+                "application/msword",
+                "application/pdf",
+                "text/plain",
+                "application/x-tex",
+                "text/markdown"
+              )
             )
-          )
+          ),
+          "Information",
+          "Select the assay description file(s).",
+          placement = "top",
+          trigger = "hover"
         ),
 
         # Add an indicator feature to submit button

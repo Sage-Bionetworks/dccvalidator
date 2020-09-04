@@ -71,10 +71,32 @@ app_ui <- function(request) {
                 # Files to be validated
                 conditionalPanel(
                   condition = "input.species != 'drosophila'",
+
+                  popify(
+                    shinyjs::disabled(
+                      fileInput(
+                        "indiv_meta",
+                        "Individual metadata file (.csv)",
+                        width = NULL,
+                        accept = c(
+                          "text/csv",
+                          "text/comma-separated-values,text/plain",
+                          ".csv"
+                        )
+                      )
+                    ),
+                    "Information",
+                    "Select the individual metadata file. This file should have one row per individual, with data about each individual in the experiment. If adding a new dataset to an existing dataset, please include all previous individuals.", # nolint
+                    placement = "top",
+                    trigger = "hover"
+                  )
+                ),
+
+                popify(
                   shinyjs::disabled(
                     fileInput(
-                      "indiv_meta",
-                      "Individual metadata file (.csv)",
+                      "biosp_meta",
+                      "Biospecimen metadata file (.csv)",
                       width = NULL,
                       accept = c(
                         "text/csv",
@@ -82,46 +104,50 @@ app_ui <- function(request) {
                         ".csv"
                       )
                     )
-                  )
+                  ),
+                  "Information",
+                  "Select the biospecimen metadata file. This file should have one row per specimen, with data about each specimen in the experiment. If adding a new dataset to an existing dataset, please include all previous specimens.", # nolint
+                  placement = "top",
+                  trigger = "hover"
                 ),
 
-                shinyjs::disabled(
-                  fileInput(
-                    "biosp_meta",
-                    "Biospecimen metadata file (.csv)",
-                    width = NULL,
-                    accept = c(
-                      "text/csv",
-                      "text/comma-separated-values,text/plain",
-                      ".csv"
+
+                popify(
+                  shinyjs::disabled(
+                    fileInput(
+                      "assay_meta",
+                      "Assay metadata file (.csv)",
+                      width = NULL,
+                      accept = c(
+                        "text/csv",
+                        "text/comma-separated-values,text/plain",
+                        ".csv"
+                      )
                     )
-                  )
+                  ),
+                  "Information",
+                  "Select the assay metadata file. This file should have one row per specimen, with data about the assay performed on each specimen in the experiment. If adding a new dataset to an existing dataset, please include all previous assay specimens.", # nolint
+                  placement = "top",
+                  trigger = "hover"
                 ),
 
-                shinyjs::disabled(
-                  fileInput(
-                    "assay_meta",
-                    "Assay metadata file (.csv)",
-                    width = NULL,
-                    accept = c(
-                      "text/csv",
-                      "text/comma-separated-values,text/plain",
-                      ".csv"
+                popify(
+                  shinyjs::disabled(
+                    fileInput(
+                      "manifest",
+                      "Upload Manifest File (.tsv or .txt)",
+                      multiple = FALSE,
+                      accept = c(
+                        "text/tsv",
+                        "text/tab-separated-values,text/plain",
+                        ".tsv"
+                      )
                     )
-                  )
-                ),
-
-                shinyjs::disabled(
-                  fileInput(
-                    "manifest",
-                    "Upload Manifest File (.tsv or .txt)",
-                    multiple = FALSE,
-                    accept = c(
-                      "text/tsv",
-                      "text/tab-separated-values,text/plain",
-                      ".tsv"
-                    )
-                  )
+                  ),
+                  "Information",
+                  "Select the manifest file. This file should have one row file to be uploaded to Synapse, including the metadata files, with data about the contents of each file, as well as the study itself. The manifest will be used to upload the data.", # nolint
+                  placement = "top",
+                  trigger = "hover"
                 ),
 
                 # Add an indicator feature to validate button
