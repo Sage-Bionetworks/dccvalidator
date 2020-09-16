@@ -145,7 +145,7 @@ app_ui <- function(request) {
                     )
                   ),
                   "Information",
-                  "Select the manifest file. This file should have one row file to be uploaded to Synapse, including the metadata files, with data about the contents of each file, as well as the study itself. The manifest will be used to upload the data.", # nolint
+                  "Select the manifest file. This file should have one row per file to be uploaded to Synapse, including the metadata files, with data about the contents of each file, as well as the study itself. The manifest will be used to upload the data.", # nolint
                   placement = "top",
                   trigger = "hover"
                 ),
