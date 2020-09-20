@@ -179,51 +179,51 @@ check_all <- function(data, annotations, study, syn) {
     data$file_data[manifest_index][[1]],
     required_cols = config::get("complete_columns")$manifest,
     success_msg = "No columns are empty in the manifest",
-    fail_msg = "Some columns are empty in the manifest"
+    fail_msg = "Some columns are completely empty in the manifest"
   )
   empty_cols_indiv <- check_cols_empty(
     data$file_data[indiv_index][[1]],
     required_cols = config::get("complete_columns")$individual,
     success_msg = "No columns are empty in the individual metadata",
-    fail_msg = "Some columns are empty in the individual metadata"
+    fail_msg = "Some columns are completely empty in the individual metadata"
   )
   empty_cols_biosp <- check_cols_empty(
     data$file_data[biosp_index][[1]],
     required_cols = config::get("complete_columns")$biospecimen,
     success_msg = "No columns are empty in the biospecimen metadata",
-    fail_msg = "Some columns are empty in the biospecimen metadata"
+    fail_msg = "Some columns are completely empty in the biospecimen metadata"
   )
   empty_cols_assay <- check_cols_empty(
     data$file_data[assay_index][[1]],
     required_cols = config::get("complete_columns")$assay,
     success_msg = "No columns are empty in the assay metadata",
-    fail_msg = "Some columns are empty in the assay metadata"
+    fail_msg = "Some columns are completely empty in the assay metadata"
   )
 
   # Incomplete required columns produce failures -----------------------------
   complete_cols_manifest <- check_cols_complete(
     data$file_data[manifest_index][[1]],
     required_cols = config::get("complete_columns")$manifest,
-    success_msg = "All required columns present are complete in the manifest", # nolint
-    fail_msg = "Some required columns are incomplete in the manifest"
+    success_msg = "There is no missing data in columns that are required to be complete in the manifest", # nolint
+    fail_msg = "There is missing data in some columns that are required to be completein the manifest"
   )
   complete_cols_indiv <- check_cols_complete(
     data$file_data[indiv_index][[1]],
     required_cols = config::get("complete_columns")$individual,
-    success_msg = "All required columns present are complete in the individual metadata", # nolint
-    fail_msg = "Some required columns are incomplete in the individual metadata" # nolint
+    success_msg = "There is no missing data in columns that are required to be complete in the individual metadata", # nolint
+    fail_msg = "There is missing data in some columns that are required to be complete in the individual metadata" # nolint
   )
   complete_cols_biosp <- check_cols_complete(
     data$file_data[biosp_index][[1]],
     required_cols = config::get("complete_columns")$biospecimen,
-    success_msg = "All required columns present are complete in the biospecimen metadata", # nolint
-    fail_msg = "Some required columns are incomplete in the biospecimen metadata" # nolint
+    success_msg = "There is no missing data in columns that are required to be complete in the biospecimen metadata", # nolint
+    fail_msg = "There is missing data in some columns that are required to be complete in the biospecimen metadata" # nolint
   )
   complete_cols_assay <- check_cols_complete(
     data$file_data[assay_index][[1]],
     required_cols = config::get("complete_columns")$assay,
-    success_msg = "All required columns present are complete in the assay metadata", # nolint
-    fail_msg = "Some required columns are incomplete in the assay metadata" # nolint
+    success_msg = "There is no missing data in columns that are required to be complete in the assay metadata", # nolint
+    fail_msg = "There is missing data in some columns that are required to be complete in the assay metadata" # nolint
   )
 
   # Metadata files appear in manifest ----------------------------------------

@@ -19,8 +19,8 @@
 #' check_cols_complete(dat, c("specimenID", "organ"))
 check_cols_complete <- function(data, required_cols,
                                 empty_values = c(NA, ""), strict = TRUE,
-                                success_msg = "Required columns present are complete", # nolint
-                                fail_msg = "Some required columns are not complete") { # nolint
+                                success_msg = "There is no missing data in columns that are required to be complete", # nolint
+                                fail_msg = "There is missing data in some columns that are required to be complete") { # nolint
   if (is.null(data)) {
     return(NULL)
   }
@@ -33,9 +33,8 @@ check_cols_complete <- function(data, required_cols,
   )
 
   behavior <- paste0(
-    "Columns ",
-    paste(required_cols, collapse = ", "),
-    " should be complete."
+    "There should be no missing values in columns ",
+    paste(required_cols, collapse = ", ")
   )
 
   ## Return success if all required columns have complete data,
