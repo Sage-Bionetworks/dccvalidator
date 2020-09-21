@@ -205,7 +205,7 @@ check_all <- function(data, annotations, study, syn) {
     data$file_data[manifest_index][[1]],
     required_cols = config::get("complete_columns")$manifest,
     success_msg = "There is no missing data in columns that are required to be complete in the manifest", # nolint
-    fail_msg = "There is missing data in some columns that are required to be completein the manifest"
+    fail_msg = "There is missing data in some columns that are required to be complete in the manifest"
   )
   complete_cols_indiv <- check_cols_complete(
     data$file_data[indiv_index][[1]],
