@@ -9,8 +9,8 @@ check_cols_complete(
   required_cols,
   empty_values = c(NA, ""),
   strict = TRUE,
-  success_msg = "Required columns present are complete",
-  fail_msg = "Some required columns are not complete"
+  success_msg = "There is no missing data in columns that are required to be complete",
+  fail_msg = "There is missing data in some columns that are required to be complete"
 )
 }
 \arguments{

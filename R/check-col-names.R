@@ -68,7 +68,7 @@ check_cols_manifest <- function(data, id,
 #' @rdname check_col_names
 check_cols_individual <- function(data, id,
                                   # nolint start
-                                  success_msg = "All individual metadata columns present",
+                                  success_msg = "All individual metadata column names present",
                                   fail_msg = "Missing columns in the individual metadata file",
                                   # nolint end
                                   ...) {
@@ -77,7 +77,7 @@ check_cols_individual <- function(data, id,
   }
   required <- get_template(id, ...)
   behavior <- glue::glue(
-    "Individual file should contain columns: {glue::glue_collapse(required, sep = ', ')}" # nolint
+    "Individual file should contain columns: {glue::glue_collapse(required, sep = ', ')}. If you do not have data related to a column, the column name should be present and the column should be empty." # nolint
   )
   check_col_names(
     data,
@@ -94,7 +94,7 @@ check_cols_individual <- function(data, id,
 #' @rdname check_col_names
 check_cols_assay <- function(data, id,
                              # nolint start
-                             success_msg = "All assay metadata columns present",
+                             success_msg = "All assay metadata column names present",
                              fail_msg = "Missing columns in the assay metadata file",
                              # nolint end
                              ...) {
@@ -103,7 +103,7 @@ check_cols_assay <- function(data, id,
   }
   required <- get_template(id, ...)
   behavior <- glue::glue(
-    "Assay file should contain columns: {glue::glue_collapse(required, sep = ', ')}" # nolint
+    "Assay file should contain columns: {glue::glue_collapse(required, sep = ', ')}. If you do not have data related to a column, the column name should be present and the column should be empty." # nolint
   )
   check_col_names(
     data,
@@ -120,7 +120,7 @@ check_cols_assay <- function(data, id,
 #' @rdname check_col_names
 check_cols_biospecimen <- function(data, id,
                                    # nolint start
-                                   success_msg = "All biospecimen columns present",
+                                   success_msg = "All biospecimen column names present",
                                    fail_msg = "Missing columns in the biospecimen metadata file",
                                    # nolint end
                                    ...) {
@@ -129,7 +129,7 @@ check_cols_biospecimen <- function(data, id,
   }
   required <- get_template(id, ...)
   behavior <- glue::glue(
-    "Biospecimen file should contain columns: {glue::glue_collapse(required, sep = ', ')}" # nolint
+    "Biospecimen file should contain columns: {glue::glue_collapse(required, sep = ', ')}. If you do not have data related to a column, the column name should be present and the column should be empty." # nolint
   )
   check_col_names(
     data,

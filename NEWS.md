@@ -5,6 +5,7 @@
 - `check_all()` now checks the biospecimen metadata for ages over 90 in the
   `samplingAge` column
 - Results boxes now contain explanations of their contents
+- The wording of some check results has been updated and, hopefully, clarified
 - All tooltips now pop-up with hover instead of clicking
 - Add hover tooltips to all fileInputs
 - Fix bug in behavior for `check_ages_over_90()` and `check_parent_syn()`
