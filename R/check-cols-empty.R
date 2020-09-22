@@ -24,7 +24,7 @@
 check_cols_empty <- function(data, empty_values = c(NA, ""),
                              required_cols = NULL, strict = FALSE,
                              success_msg = "No columns are empty",
-                             fail_msg = "Some columns are empty") {
+                             fail_msg = "Some columns are completely empty") {
   if (is.null(data)) {
     return(NULL)
   }

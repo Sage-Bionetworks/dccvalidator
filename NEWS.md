@@ -5,6 +5,7 @@
 - `check_all()` now checks the biospecimen metadata for ages over 90 in the
   `samplingAge` column
 - Results boxes now contain explanations of their contents
+- The wording of some check results has been updated and, hopefully, clarified
 
 # dccvalidator v0.3.0
 
