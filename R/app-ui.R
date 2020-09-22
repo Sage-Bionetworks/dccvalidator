@@ -126,7 +126,7 @@ app_ui <- function(request) {
                     )
                   ),
                   "Information",
-                  "Select the assay metadata file. This file should have one row per specimen, with data about the assay performed on each specimen in the experiment. If adding a new dataset to an existing dataset, please include all previous assay specimens.", # nolint
+                  "Select the assay metadata file. Depending on the assay, this file should have one row per specimen or one row per individual (indicated in the template), with data about the assay performed on each specimen or individual in the experiment. If adding a new dataset to an existing dataset, please include all previous assay specimens or individuals. Please be sure to choose the correct assay type from the drop-down above, as well.", # nolint
                   placement = "top",
                   trigger = "hover"
                 ),
