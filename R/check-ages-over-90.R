@@ -22,7 +22,7 @@ check_ages_over_90 <- function(data, col = "ageDeath", strict = FALSE,
     return(NULL)
   }
 
-  behavior <- "Ages over 90 should be censored and written as '90+'."
+  behavior <- "Ages over 90 should be censored and written as &#39;90+&#39;."
 
   ## If ageDeath column isn't present, then return check_pass
   if (!any(col %in% names(data))) {
