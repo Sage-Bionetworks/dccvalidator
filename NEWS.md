@@ -6,6 +6,7 @@
   `samplingAge` column
 - Results boxes now contain explanations of their contents
 - The wording of some check results has been updated and, hopefully, clarified
+- Add next step message if all validated files have no failures
 
 # dccvalidator v0.3.0
 
