@@ -304,7 +304,11 @@ app_server <- function(input, output, session) {
           showModal(
             modalDialog(
               title = "Great work!",
-              HTML("Your validated file(s) had no failures. Please contact us to proceed with the next step if you have validated all finalized metadata and manifest files at once. For multiple assays, please validate each assay with your other metadata files (individual and/or biospecimen) and manifest."), # nolint
+              HTML(
+                glue::glue(
+                  "Your validated file(s) had no failures. Please contact <a target=\"_blank\" href=\"{config::get('contact_email')}\">{config::get('contact_email')}</a> to proceed with the next step if you have validated all finalized metadata and manifest files at once. For multiple assays, please validate each assay with your other metadata files (individual and/or biospecimen) and manifest." # nolint
+                  )
+                ),
               easyClose = TRUE
             )
           )
