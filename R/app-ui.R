@@ -73,83 +73,86 @@ app_ui <- function(request) {
                   condition = "input.species != 'drosophila'",
 
                   popify(
-                    shinyjs::disabled(
-                      fileInput(
-                        "indiv_meta",
-                        "Individual metadata file (.csv)",
-                        width = NULL,
-                        accept = c(
-                          "text/csv",
-                          "text/comma-separated-values,text/plain",
-                          ".csv"
-                        )
-                      )
-                    ),
+                    tags$a(icon(name = "question-circle"), href = "#"),
                     "Information",
                     "Select the individual metadata file. This file should have one row per individual, with data about each individual in the experiment. If adding a new dataset to an existing dataset, please include all previous individuals.", # nolint
-                    placement = "top",
+                    placement = "right",
                     trigger = "hover"
+                  ),
+                  shinyjs::disabled(
+                    fileInput(
+                      "indiv_meta",
+                      "Individual metadata file (.csv)",
+                      width = NULL,
+                      accept = c(
+                        "text/csv",
+                        "text/comma-separated-values,text/plain",
+                        ".csv"
+                      )
+                    )
                   )
                 ),
 
                 popify(
-                  shinyjs::disabled(
-                    fileInput(
-                      "biosp_meta",
-                      "Biospecimen metadata file (.csv)",
-                      width = NULL,
-                      accept = c(
-                        "text/csv",
-                        "text/comma-separated-values,text/plain",
-                        ".csv"
-                      )
-                    )
-                  ),
+                  tags$a(icon(name = "question-circle"), href = "#"),
                   "Information",
                   "Select the biospecimen metadata file. This file should have one row per specimen, with data about each specimen in the experiment. If adding a new dataset to an existing dataset, please include all previous specimens.", # nolint
-                  placement = "top",
+                  placement = "right",
                   trigger = "hover"
                 ),
-
+                shinyjs::disabled(
+                  fileInput(
+                    "biosp_meta",
+                    "Biospecimen metadata file (.csv)",
+                    width = NULL,
+                    accept = c(
+                      "text/csv",
+                      "text/comma-separated-values,text/plain",
+                      ".csv"
+                    )
+                  )
+                ),
 
                 popify(
-                  shinyjs::disabled(
-                    fileInput(
-                      "assay_meta",
-                      "Assay metadata file (.csv)",
-                      width = NULL,
-                      accept = c(
-                        "text/csv",
-                        "text/comma-separated-values,text/plain",
-                        ".csv"
-                      )
-                    )
-                  ),
+                  tags$a(icon(name = "question-circle"), href = "#"),
                   "Information",
                   "Select the assay metadata file. Depending on the assay, this file should have one row per specimen or one row per individual (indicated in the template), with data about the assay performed on each specimen or individual in the experiment. If adding a new dataset to an existing dataset, please include all previous assay specimens or individuals. Please be sure to choose the correct assay type from the drop-down above, as well.", # nolint
-                  placement = "top",
+                  placement = "right",
                   trigger = "hover"
+                ),
+                shinyjs::disabled(
+                  fileInput(
+                    "assay_meta",
+                    "Assay metadata file (.csv)",
+                    width = NULL,
+                    accept = c(
+                      "text/csv",
+                      "text/comma-separated-values,text/plain",
+                      ".csv"
+                    )
+                  )
                 ),
 
                 popify(
-                  shinyjs::disabled(
-                    fileInput(
-                      "manifest",
-                      "Upload Manifest File (.tsv or .txt)",
-                      multiple = FALSE,
-                      accept = c(
-                        "text/tsv",
-                        "text/tab-separated-values,text/plain",
-                        ".tsv"
-                      )
-                    )
-                  ),
+                  tags$a(icon(name = "question-circle"), href = "#"),
                   "Information",
                   "Select the manifest file. This file should have one row per file to be uploaded to Synapse, including the metadata files, with data about the contents of each file, as well as the study itself. The manifest will be used to upload the data.", # nolint
-                  placement = "top",
+                  placement = "right",
                   trigger = "hover"
                 ),
-
+                shinyjs::disabled(
+                  fileInput(
+                    "manifest",
+                    "Upload Manifest File (.tsv or .txt)",
+                    multiple = FALSE,
+                    accept = c(
+                      "text/tsv",
+                      "text/tab-separated-values,text/plain",
+                      ".tsv"
+                    )
+                  )
+                ),
+                
                 # Add an indicator feature to validate button
                 with_busy_indicator_ui(
                   shinyjs::disabled(
