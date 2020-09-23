@@ -27,7 +27,7 @@ check_parent_syn <- function(manifest,
       )
     )
   }
-  behavior <- as.character("Synapse IDs should follow the format &#39;syn&#39; followed by digits") # nolint
+  behavior <- "Synapse IDs should follow the format &#39;syn&#39; followed by digits" # nolint
   ## Regex pattern to match "syn" + 1 or more digits
   matches <- grepl("^syn[[:digit:]]+", manifest$parent)
   if (!all(matches)) {
