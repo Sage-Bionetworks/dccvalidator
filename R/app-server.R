@@ -295,6 +295,20 @@ app_server <- function(input, output, session) {
         )
 
         callModule(results_boxes_server, "Validation Results", res)
+
+        # Give next step if no failures
+        is_failure <- purrr::map_lgl(res, function(x) {
+          inherits(x, "check_fail")
+        })
+        if (!any(is_failure)) {
+          showModal(
+            modalDialog(
+              title = "Great work!",
+              HTML("Your validated file(s) had no failures. Please contact us to proceed with the next step if you have validated all finalized metadata and manifest files at once. For multiple assays, please validate each assay with your other metadata files (individual and/or biospecimen) and manifest."), # nolint
+              easyClose = TRUE
+            )
+          )
+        }
       })
     })
 
