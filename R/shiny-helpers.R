@@ -4,6 +4,7 @@
 #' of the element, such as a fileInput, but does not reset the input value
 #' of the element.
 #'
+#' @noRd
 #' @param ... The IDs of the elements to reset. If the element is from a module,
 #' do not wrap with `ns()`.
 reset_inputs <- function(...) {

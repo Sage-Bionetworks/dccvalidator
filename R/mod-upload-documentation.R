@@ -67,12 +67,12 @@ upload_documents_ui <- function(id, study_link_human,
 
         hr(),
 
-       shinyjs::disabled(
+        shinyjs::disabled(
           actionButton(
             ns("reset_btn_doc"),
             "Reset"
           )
-       )
+        )
       ),
 
       mainPanel(
@@ -96,9 +96,9 @@ upload_documents_ui <- function(id, study_link_human,
 #' @param output the output from [shiny::callModule()]
 #' @param session the session from [shiny::callModule()]
 #' @param parent_folder the Synapse folder to put a Documentation folder in
-#' @param study_table_id synapse Id for the consortium study table
+#' @param study_names vector of study names
 upload_documents_server <- function(input, output, session,
-                                    parent_folder, study_table_id,
+                                    parent_folder, study_names,
                                     synapseclient, syn) {
   inputs_to_enable <- c(
     "doc_study",
@@ -120,8 +120,7 @@ upload_documents_server <- function(input, output, session,
   study_name <- callModule(
     get_study_server,
     "doc_study",
-    study_table_id = study_table_id,
-    syn = syn
+    study_names = study_names
   )
   doc_annots <- reactive({
     list(study = study_name())
@@ -144,36 +143,42 @@ upload_documents_server <- function(input, output, session,
     docs$study <- NULL
     docs$assay <- NULL
     reset_inputs("study_doc", "assay_doc")
+    study_name <- callModule(
+      get_study_server,
+      "doc_study",
+      study_names = study_names,
+      reset = TRUE
+    )
   })
 
   # Upload files to Synapse (after renaming them so they keep their original
   # names)
   observeEvent(input$upload_docs, {
-      # When the button is clicked, wrap the code in the call to the
-      # indicator server function
-      with_busy_indicator_server("upload_docs", {
-        if (is.null(docs$study) && is.null(docs$assay)) {
-          stop("Please provide files to upload.")
-        }
-        if (!is_name_valid(study_name())) {
-          stop("Please check that study name is entered and only contains: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
-        }
-        all_docs <- rbind(docs$study, docs$assay)
-        all_datapaths <- all_docs$datapath
-        all_names <- paste0(study_name(), "_", all_docs$name)
-        docs <- purrr::map2(all_datapaths, all_names, function(x, y) {
-          save_to_synapse(
-            list(datapath = x, name = y),
-            parent = created_docs_folder,
-            annotations = doc_annots(),
-            synapseclient = synapseclient,
-            syn = syn
-          )
-        })
-        docs$study <- NULL
-        docs$assay <- NULL
-        reset_inputs("study_doc", "assay_doc")
+    # When the button is clicked, wrap the code in the call to the
+    # indicator server function
+    with_busy_indicator_server("upload_docs", {
+      if (is.null(docs$study) && is.null(docs$assay)) {
+        stop("Please provide files to upload.")
+      }
+      if (!is_name_valid(study_name())) {
+        stop("Please check that study name is entered and only contains: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
+      }
+      all_docs <- rbind(docs$study, docs$assay)
+      all_datapaths <- all_docs$datapath
+      all_names <- paste0(study_name(), "_", all_docs$name)
+      docs <- purrr::map2(all_datapaths, all_names, function(x, y) {
+        save_to_synapse(
+          list(datapath = x, name = y),
+          parent = created_docs_folder,
+          annotations = doc_annots(),
+          synapseclient = synapseclient,
+          syn = syn
+        )
       })
+      docs$study <- NULL
+      docs$assay <- NULL
+      reset_inputs("study_doc", "assay_doc")
+    })
   })
 }
 

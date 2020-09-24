@@ -71,11 +71,11 @@ app_server <- function(input, output, session) {
         )
       )
 
+      all_studies <- get_study_names(reactive(config::get("study_table")), syn)
       study_name <- callModule(
         get_study_server,
         "study",
-        study_table_id = reactive(config::get("study_table")),
-        syn = syn
+        study_names = all_studies
       )
 
       inputs_to_enable <- c(
@@ -95,12 +95,12 @@ app_server <- function(input, output, session) {
         upload_documents_server,
         "documentation",
         parent_folder = reactive(created_folder),
-        study_table_id = reactive(config::get("study_table")),
+        study_names = all_studies,
         synapseclient = synapse,
         syn = syn
       )
     }
-    
+
     ## Reset fileInputs if reset button pressed
     ## Need to somehow reset the study name?
     observeEvent(input$reset_btn_validate, {
@@ -110,6 +110,24 @@ app_server <- function(input, output, session) {
       files$assay <- NULL
       files$manifest <- NULL
       callModule(results_boxes_server, "Validation Results", list(NULL))
+      study_name <- callModule(
+        get_study_server,
+        "study",
+        study_names = all_studies,
+        reset = TRUE
+      )
+      updateRadioButtons(
+        session,
+        "species",
+        "Species",
+        config::get("species_list")
+      )
+      updateSelectInput(
+        session,
+        "assay_name",
+        "Assay type",
+        names(config::get("templates")$assay_templates)
+      )
     })
 
     ## If drosophila species checked, reset fileInput
