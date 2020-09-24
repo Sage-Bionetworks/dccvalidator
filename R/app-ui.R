@@ -52,19 +52,45 @@ app_ui <- function(request) {
                 # UI for getting the study name
                 get_study_ui("study"),
 
-                shinyjs::disabled(
-                  radioButtons(
-                    "species",
-                    "Species",
-                    config::get("species_list")
+                div(
+                  class = "result",
+                  div(
+                    class = "wide",
+                    shinyjs::disabled(
+                      radioButtons(
+                        "species",
+                        "Species",
+                        config::get("species_list")
+                      )
+                    )
+                  ),
+                  popify(
+                    tags$a(icon(name = "question-circle"), href = "#"),
+                    "Information",
+                    "Select the species used in the study.",
+                    placement = "left",
+                    trigger = "hover"
                   )
                 ),
 
-                shinyjs::disabled(
-                  selectInput(
-                    "assay_name",
-                    "Assay type",
-                    names(config::get("templates")$assay_templates)
+                div(
+                  class = "result",
+                  div(
+                    class = "wide",
+                    shinyjs::disabled(
+                      selectInput(
+                        "assay_name",
+                        "Assay type",
+                        names(config::get("templates")$assay_templates)
+                      )
+                    )
+                  ),
+                  popify(
+                    tags$a(icon(name = "question-circle"), href = "#"),
+                    "Information",
+                    "Select the type of assay that matches your assay metadata.", # nolint
+                    placement = "left",
+                    trigger = "hover"
                   )
                 ),
 
