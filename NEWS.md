@@ -4,6 +4,9 @@
 - Fix bug in Data Summary information boxes to not count NA
 - `check_all()` now checks the biospecimen metadata for ages over 90 in the
   `samplingAge` column
+- Results boxes now contain explanations of their contents
+- The wording of some check results has been updated and, hopefully, clarified
+- Add next step message if all validated files have no failures
 
 # dccvalidator v0.3.0
 

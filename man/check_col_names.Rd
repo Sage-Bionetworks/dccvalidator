@@ -27,7 +27,7 @@ check_cols_manifest(
 check_cols_individual(
   data,
   id,
-  success_msg = "All individual metadata columns present",
+  success_msg = "All individual metadata column names present",
   fail_msg = "Missing columns in the individual metadata file",
   ...
 )
@@ -35,7 +35,7 @@ check_cols_individual(
 check_cols_assay(
   data,
   id,
-  success_msg = "All assay metadata columns present",
+  success_msg = "All assay metadata column names present",
   fail_msg = "Missing columns in the assay metadata file",
   ...
 )
@@ -43,7 +43,7 @@ check_cols_assay(
 check_cols_biospecimen(
   data,
   id,
-  success_msg = "All biospecimen columns present",
+  success_msg = "All biospecimen column names present",
   fail_msg = "Missing columns in the biospecimen metadata file",
   ...
 )

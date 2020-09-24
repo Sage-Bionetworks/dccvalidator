@@ -153,7 +153,7 @@ app_ui <- function(request) {
                     results_boxes_ui("Validation Results")
                   ),
                   tabPanel(
-                    "Data summary",
+                    "Data Summary",
                     fluidRow(
                       shinydashboard::box(
                         title = "Dataset summary",
