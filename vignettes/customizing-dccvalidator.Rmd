@@ -26,7 +26,7 @@ all of the metadata for the study.
 
 For projects like AMP-AD, PsychENCODE, and others that follow the same
 structure, see the next section ("Customizing the Shiny application") for how
-configure an instance of the application for the project.
+to configure an instance of the application for the project.
 
 For projects that do not follow the same structure but wish to use some elements
 of dccvalidator's data validation capabilities, see "Extending dccvalidator"
