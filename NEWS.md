@@ -7,6 +7,7 @@
 - Results boxes now contain explanations of their contents
 - The wording of some check results has been updated and, hopefully, clarified
 - Add next step message if all validated files have no failures
+- Add reset buttons to documentation and validation sections
 
 # dccvalidator v0.3.0
 

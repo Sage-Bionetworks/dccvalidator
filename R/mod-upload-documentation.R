@@ -63,6 +63,15 @@ upload_documents_ui <- function(id, study_link_human,
               "Submit"
             )
           )
+        ),
+
+        hr(),
+
+        shinyjs::disabled(
+          actionButton(
+            ns("reset_btn_doc"),
+            "Reset"
+          )
         )
       ),
 
@@ -87,15 +96,16 @@ upload_documents_ui <- function(id, study_link_human,
 #' @param output the output from [shiny::callModule()]
 #' @param session the session from [shiny::callModule()]
 #' @param parent_folder the Synapse folder to put a Documentation folder in
-#' @param study_table_id synapse Id for the consortium study table
+#' @param study_names vector of study names
 upload_documents_server <- function(input, output, session,
-                                    parent_folder, study_table_id,
+                                    parent_folder, study_names,
                                     synapseclient, syn) {
   inputs_to_enable <- c(
     "doc_study",
     "study_doc",
     "assay_doc",
-    "upload_docs"
+    "upload_docs",
+    "reset_btn_doc"
   )
   purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
 
@@ -110,39 +120,65 @@ upload_documents_server <- function(input, output, session,
   study_name <- callModule(
     get_study_server,
     "doc_study",
-    study_table_id = study_table_id,
-    syn = syn
+    study_names = study_names
   )
   doc_annots <- reactive({
     list(study = study_name())
   })
 
+  # Control inputs by storing in reactiveValues
+  docs <- reactiveValues(
+    study = NULL,
+    assay = NULL
+  )
+  observeEvent(input$study_doc, {
+    docs$study <- input$study_doc
+  })
+  observeEvent(input$assay_doc, {
+    docs$assay <- input$assay_doc
+  })
+
+  # Reset tab
+  observeEvent(input$reset_btn_doc, {
+    docs$study <- NULL
+    docs$assay <- NULL
+    reset_inputs("study_doc", "assay_doc")
+    study_name <- callModule(
+      get_study_server,
+      "doc_study",
+      study_names = study_names,
+      reset = TRUE
+    )
+  })
+
   # Upload files to Synapse (after renaming them so they keep their original
   # names)
   observeEvent(input$upload_docs, {
-    if (!is.null(input$study_doc) || !is.null(input$assay_doc)) {
-      # When the button is clicked, wrap the code in the call to the
-      # indicator server function
-      with_busy_indicator_server("upload_docs", {
-        if (!is_name_valid(study_name())) {
-          stop("Please check that study name is entered and only contains: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
-        }
-        all_docs <- rbind(input$study_doc, input$assay_doc)
-        all_datapaths <- all_docs$datapath
-        all_names <- paste0(study_name(), "_", all_docs$name)
-        docs <- purrr::map2(all_datapaths, all_names, function(x, y) {
-          save_to_synapse(
-            list(datapath = x, name = y),
-            parent = created_docs_folder,
-            annotations = doc_annots(),
-            synapseclient = synapseclient,
-            syn = syn
-          )
-        })
-        shinyjs::reset("study_doc")
-        shinyjs::reset("assay_doc")
+    # When the button is clicked, wrap the code in the call to the
+    # indicator server function
+    with_busy_indicator_server("upload_docs", {
+      if (is.null(docs$study) && is.null(docs$assay)) {
+        stop("Please provide files to upload.")
+      }
+      if (!is_name_valid(study_name())) {
+        stop("Please check that study name is entered and only contains: letters, numbers, spaces, underscores, hyphens, periods, plus signs, and parentheses.") # nolint
+      }
+      all_docs <- rbind(docs$study, docs$assay)
+      all_datapaths <- all_docs$datapath
+      all_names <- paste0(study_name(), "_", all_docs$name)
+      docs <- purrr::map2(all_datapaths, all_names, function(x, y) {
+        save_to_synapse(
+          list(datapath = x, name = y),
+          parent = created_docs_folder,
+          annotations = doc_annots(),
+          synapseclient = synapseclient,
+          syn = syn
+        )
       })
-    }
+      docs$study <- NULL
+      docs$assay <- NULL
+      reset_inputs("study_doc", "assay_doc")
+    })
   })
 }
 

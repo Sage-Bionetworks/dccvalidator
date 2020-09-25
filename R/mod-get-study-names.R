@@ -65,17 +65,19 @@ get_study_ui <- function(id) {
 #' @param input the input variables from [shiny::callModule()]
 #' @param output the output variables from [shiny::callModule()]
 #' @param session the session from [shiny::callModule()]
-#' @param study_table_id synapse Id for the consortium study table
+#' @param study_names vector of study names
+#' @param reset `TRUE` if reseting components
 #' @return name of the study
-get_study_server <- function(input, output, session, study_table_id, syn) {
-  all_studies <- get_study_names(study_table_id, syn)
+get_study_server <- function(input, output, session,
+                             study_names, reset = FALSE) {
   # The session passed in from callModule() does not work for updating
   # the input selection choices; manually get session
   session <- getDefaultReactiveDomain()
   updateSelectInput(
     session,
     inputId = "study_choice",
-    choices = all_studies
+    choices = c("", study_names),
+    selected = ""
   )
 
   # Enable the inputs
@@ -101,5 +103,18 @@ get_study_server <- function(input, output, session, study_table_id, syn) {
       study_name("")
     }
   })
+
+  if (reset) {
+    reset_inputs("study_text")
+    updateRadioButtons(
+      session,
+      "study_exists",
+      label = "Does the study currently exist?",
+      choices = c("Yes", "No"),
+      selected = "Yes"
+    )
+    study_name("")
+  }
+
   return(study_name)
 }
