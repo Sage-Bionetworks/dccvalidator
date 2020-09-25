@@ -101,8 +101,7 @@ app_server <- function(input, output, session) {
       )
     }
 
-    ## Reset fileInputs if reset button pressed
-    ## Need to somehow reset the study name?
+    ## Reset fileInputs, study name, and other inputs
     observeEvent(input$reset_btn_validate, {
       reset_inputs("indiv_meta", "biosp_meta", "assay_meta", "manifest")
       files$indiv <- NULL
