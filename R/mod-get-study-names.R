@@ -21,14 +21,28 @@ get_study_ui <- function(id) {
 
   tagList(
     # Ability to choose to add to existing study
-    shinyjs::disabled(
-      radioButtons(
-        ns("study_exists"),
-        "Does the study currently exist?",
-        choices = c("Yes", "No"),
-        selected = "Yes"
+    div(
+      class = "result",
+      div(
+        class = "wide",
+        shinyjs::disabled(
+          radioButtons(
+            ns("study_exists"),
+            "Does the study currently exist?",
+            choices = c("Yes", "No"),
+            selected = "Yes"
+          )
+        ),
+      ),
+      popify(
+        tags$a(icon(name = "question-circle"), href = "#"),
+        "Information",
+        "Select your abbreviated study name from the drop-down list. If the name does not appear, select &#39;No&#39; and type in the name.", # nolint
+        placement = "left",
+        trigger = "hover"
       )
     ),
+
     conditionalPanel(
       condition = "input.study_exists == 'Yes'",
       ns = ns,

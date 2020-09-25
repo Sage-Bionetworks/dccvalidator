@@ -25,33 +25,60 @@ upload_documents_ui <- function(id, study_link_human,
         get_study_ui(ns("doc_study")),
 
         # File import
-        shinyjs::disabled(
-          fileInput(
-            ns("study_doc"),
-            "Upload study description file (.txt, .docx, .md, .pdf, .tex)",
-            accept = c(
-              "application/vnd.openxmlformats-officedocument.wordprocessingml.document", # nolint
-              "application/msword",
-              "application/pdf",
-              "text/plain",
-              "application/x-tex",
-              "text/markdown"
+        div(
+          class = "result",
+          div(
+            class = "wide",
+            shinyjs::disabled(
+              fileInput(
+                ns("study_doc"),
+                "Upload study description file (.txt, .docx, .md, .pdf, .tex)",
+                accept = c(
+                  "application/vnd.openxmlformats-officedocument.wordprocessingml.document", # nolint
+                  "application/msword",
+                  "application/pdf",
+                  "text/plain",
+                  "application/x-tex",
+                  "text/markdown"
+                )
+              )
             )
+          ),
+          popify(
+            tags$a(icon(name = "question-circle"), href = "#"),
+            "Information",
+            "Select the study description file. Please refer to the information on this page to learn what should be in the study description.", # nolint
+            placement = "left",
+            trigger = "hover"
           )
         ),
-        shinyjs::disabled(
-          fileInput(
-            ns("assay_doc"),
-            "Upload assay description files (.txt, .docx, .md, .pdf, .tex)",
-            multiple = TRUE,
-            accept = c(
-              "application/vnd.openxmlformats-officedocument.wordprocessingml.document", # nolint
-              "application/msword",
-              "application/pdf",
-              "text/plain",
-              "application/x-tex",
-              "text/markdown"
+
+        div(
+          class = "result",
+          div(
+            class = "wide",
+            shinyjs::disabled(
+              fileInput(
+                ns("assay_doc"),
+                "Upload assay description files (.txt, .docx, .md, .pdf, .tex)",
+                multiple = TRUE,
+                accept = c(
+                  "application/vnd.openxmlformats-officedocument.wordprocessingml.document", # nolint
+                  "application/msword",
+                  "application/pdf",
+                  "text/plain",
+                  "application/x-tex",
+                  "text/markdown"
+                )
+              )
             )
+          ),
+          popify(
+            tags$a(icon(name = "question-circle"), href = "#"),
+            "Information",
+            "Select the assay description file(s). Please refer to the information on this page to learn what should be in the assay description.", # nolint
+            placement = "left",
+            trigger = "hover"
           )
         ),
 
