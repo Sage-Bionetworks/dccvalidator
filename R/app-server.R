@@ -71,11 +71,11 @@ app_server <- function(input, output, session) {
         )
       )
 
+      all_studies <- get_study_names(reactive(config::get("study_table")), syn)
       study_name <- callModule(
         get_study_server,
         "study",
-        study_table_id = reactive(config::get("study_table")),
-        syn = syn
+        study_names = all_studies
       )
 
       inputs_to_enable <- c(
@@ -85,7 +85,8 @@ app_server <- function(input, output, session) {
         "manifest",
         "species",
         "assay_name",
-        "validate_btn"
+        "validate_btn",
+        "reset_btn_validate"
       )
       purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
 
@@ -94,16 +95,44 @@ app_server <- function(input, output, session) {
         upload_documents_server,
         "documentation",
         parent_folder = reactive(created_folder),
-        study_table_id = reactive(config::get("study_table")),
+        study_names = all_studies,
         synapseclient = synapse,
         syn = syn
       )
     }
 
+    ## Reset fileInputs, study name, and other inputs
+    observeEvent(input$reset_btn_validate, {
+      reset_inputs("indiv_meta", "biosp_meta", "assay_meta", "manifest")
+      files$indiv <- NULL
+      files$biosp <- NULL
+      files$assay <- NULL
+      files$manifest <- NULL
+      callModule(results_boxes_server, "Validation Results", list(NULL))
+      study_name <- callModule(
+        get_study_server,
+        "study",
+        study_names = all_studies,
+        reset = TRUE
+      )
+      updateRadioButtons(
+        session,
+        "species",
+        "Species",
+        config::get("species_list")
+      )
+      updateSelectInput(
+        session,
+        "assay_name",
+        "Assay type",
+        names(config::get("templates")$assay_templates)
+      )
+    })
+
     ## If drosophila species checked, reset fileInput
     observeEvent(input$species, {
       if (input$species == "drosophila") {
-        shinyjs::reset("indiv_meta")
+        reset_inputs("indiv_meta")
         files$indiv <- NULL
       }
     })
@@ -295,6 +324,9 @@ app_server <- function(input, output, session) {
         )
 
         callModule(results_boxes_server, "Validation Results", res)
+
+        # Give next step if no failures
+        next_step_modal(res, config::get("contact_email"))
       })
     })
 
@@ -360,4 +392,31 @@ app_server <- function(input, output, session) {
       )
     })
   })
+}
+
+#' Modal with next step
+#'
+#' If none of the checks inherit `check_fail`, then pop up a modal to tell
+#' users what to do next.
+#'
+#' @param results List of conditions
+#' @param email Contact email as a string
+#' @noRd
+next_step_modal <- function(results, email) {
+  is_failure <- purrr::map_lgl(results, function(x) {
+    inherits(x, "check_fail")
+  })
+  if (!any(is_failure)) {
+    showModal(
+      modalDialog(
+        title = "Great work!",
+        HTML(
+          glue::glue(
+            "Your validated file(s) had no failures. Please contact <a target=\"_blank\" href=\"{email}\">{email}</a> to proceed with the next step if you have validated all finalized metadata and manifest files at once. For multiple assays, please validate each assay with your other metadata files (individual and/or biospecimen) and manifest." # nolint
+          )
+        ),
+        easyClose = TRUE
+      )
+    )
+  }
 }

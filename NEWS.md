@@ -6,6 +6,8 @@
   `samplingAge` column
 - Results boxes now contain explanations of their contents
 - The wording of some check results has been updated and, hopefully, clarified
+- Add next step message if all validated files have no failures
+- Add reset buttons to documentation and validation sections
 - All tooltips now pop-up with hover instead of clicking
 - Add hover tooltips to all fileInputs
 - Fix bug in behavior for `check_ages_over_90()` and `check_parent_syn()`
