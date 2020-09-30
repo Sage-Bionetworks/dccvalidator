@@ -94,6 +94,7 @@ amp-ad:
       - "specimenID"
     assay:
       - "specimenID"
+  contact_email: "AMPAD_SageAdmin@synapse.org"
 
 pec:
   parent: "syn21763123"
