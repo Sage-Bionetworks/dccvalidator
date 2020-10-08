@@ -11,8 +11,10 @@ on_ci <- function() {
 
 ## Look up env vars and log in to Synapse
 syn_ci_login <- function(syn) {
-  ## Credentials should be written to config file
-  syn$login()
+  ## Credentials are encrypted
+  user   <- Sys.getenv("SYNAPSE_USER")
+  apikey <- Sys.getenv("SYNAPSE_APIKEY")
+  syn$login(email = user, apiKey = apikey)
 }
 
 attempt_instantiate <- function() {
