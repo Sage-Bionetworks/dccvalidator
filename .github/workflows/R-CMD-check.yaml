@@ -91,17 +91,15 @@ jobs:
           Rscript -e "reticulate::py_install('pandas', pip = TRUE)"
           Rscript -e "reticulate::py_install('synapseclient', pip = TRUE)"
 
-      - name: Setup environment variables
-        if: runner.os != 'Windows'
+      - name: Setup Synapse config file for testing
         run: |
-          echo "SYNAPSE_USER=${{ secrets.SYNAPSE_USERNAME }}" >> $GITHUB_ENV
-          echo "SYNAPSE_APIKEY=${{ secrets.SYNAPSE_API_KEY}}" >> $GITHUB_ENV
-
-      - name: Setup environment variables (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          echo "SYNAPSE_USER=${{ secrets.SYNAPSE_USERNAME }}" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
-          echo "SYNAPSE_APIKEY=${{ secrets.SYNAPSE_API_KEY}}" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          OUTPUT_FILE=/tmp/.synapseConfig
+          cat > "$OUTPUT_FILE" << EOM
+          [authentication]
+          username = "${{ secrets.SYNAPSE_USERNAME }}"
+          apikey = "${{ secrets.SYNAPSE_API_KEY}}"
+          EOM
+          chmod +x "$OUTPUT_FILE"
 
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
