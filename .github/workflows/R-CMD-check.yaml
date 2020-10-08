@@ -105,7 +105,7 @@ jobs:
       - name: Setup Synapse config file for testing (Windows)
         if: runner.os == 'Windows'
         run: |
-          "authentication]`nusername = ${{ secrets.SYNAPSE_USERNAME }}`napikey = ${{ secrets.SYNAPSE_API_KEY}}" | Out-File -FilePath "tmp/.synapseConfig"
+          "authentication]`nusername = ${{ secrets.SYNAPSE_USERNAME }}`napikey = ${{ secrets.SYNAPSE_API_KEY}}" | Out-File -FilePath ".synapseConfig"
 
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
