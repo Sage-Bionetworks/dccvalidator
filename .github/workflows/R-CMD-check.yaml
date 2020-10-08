@@ -92,6 +92,7 @@ jobs:
           Rscript -e "reticulate::py_install('synapseclient', pip = TRUE)"
 
       - name: Setup Synapse config file for testing
+        if: runner.os != 'Windows'
         run: |
           OUTPUT_FILE=/tmp/.synapseConfig
           cat > "$OUTPUT_FILE" << EOM
@@ -100,6 +101,10 @@ jobs:
           apikey = "${{ secrets.SYNAPSE_API_KEY}}"
           EOM
           chmod +x "$OUTPUT_FILE"
+          
+      - name: Setup Synapse config file for testing (Windows)
+        if: runner.os == 'Windows'
+        run: "[authentication]`nusername = ${{ secrets.SYNAPSE_USERNAME }}`napikey = ${{ secrets.SYNAPSE_API_KEY}}" | Out-File -FilePath "/tmp/.synapseConfig"
 
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
