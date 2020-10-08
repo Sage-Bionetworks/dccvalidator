@@ -9,14 +9,6 @@ on_ci <- function() {
   # nocov end
 }
 
-## Look up env vars and log in to Synapse
-syn_ci_login <- function(syn) {
-  ## Credentials are encrypted
-  user   <- Sys.getenv("SYNAPSE_USER")
-  apikey <- Sys.getenv("SYNAPSE_APIKEY")
-  syn$login(email = user, apiKey = apikey)
-}
-
 attempt_instantiate <- function() {
   if (reticulate::py_module_available("synapseclient")) {
     return(synapse$Synapse())
@@ -25,12 +17,12 @@ attempt_instantiate <- function() {
   }
 }
 
-## Attempt to log in using encrypted travis variables if on travis within Sage
-## org, or with regular synLogin() if not on travis. If on travis but not within
-## Sage, do nothing.
+## Attempt to log in using encrypted variables written to .synapseConfig file
+## within Sage org, or with regular synLogin() if not on CI. If on CI but not
+## within Sage, do nothing.
 attempt_login <- function(syn, ...) {
   if (on_ci() & !is.null(syn)) {
-    try(syn_ci_login(syn), silent = TRUE)
+    try(syn$login(), silent = TRUE)
   } else if (reticulate::py_module_available("synapseclient") & !is.null(syn)) {
     syn$login(...)
   } else {

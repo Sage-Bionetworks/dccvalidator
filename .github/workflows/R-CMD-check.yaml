@@ -29,8 +29,6 @@ jobs:
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       RSPM: ${{ matrix.config.rspm }}
-      SYNAPSE_USER: ${{ secrets.SYNAPSE_USER }}
-      SYNAPSE_APIKEY: ${{ secrets.SYNAPSE_APIKEY }}
       RETICULATE_AUTOCONFIGURE: 'FALSE'
 
     steps:
@@ -92,6 +90,22 @@ jobs:
           Rscript -e "remotes::install_local()"
           Rscript -e "reticulate::py_install('pandas', pip = TRUE)"
           Rscript -e "reticulate::py_install('synapseclient', pip = TRUE)"
+
+      - name: Setup Synapse config file for testing
+        if: runner.os != 'Windows'
+        run: |
+          OUTPUT_FILE=/tmp/.synapseConfig
+          cat > "$OUTPUT_FILE" << EOM
+          [authentication]
+          username = "${{ secrets.SYNAPSE_USERNAME }}"
+          apikey = "${{ secrets.SYNAPSE_API_KEY}}"
+          EOM
+          chmod +x "$OUTPUT_FILE"
+          
+      - name: Setup Synapse config file for testing (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          "authentication]`nusername = ${{ secrets.SYNAPSE_USERNAME }}`napikey = ${{ secrets.SYNAPSE_API_KEY}}" | Out-File -FilePath ".synapseConfig"
 
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
