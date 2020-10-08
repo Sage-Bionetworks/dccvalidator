@@ -1,4 +1,4 @@
-## Check if we are running on travis
+## Check if we are running on CI
 on_ci <- function() {
   if (identical(Sys.getenv("CI"), "true")) {
     return(TRUE)
@@ -22,7 +22,12 @@ attempt_instantiate <- function() {
 ## within Sage, do nothing.
 attempt_login <- function(syn, ...) {
   if (on_ci() & !is.null(syn)) {
-    try(syn$login(), silent = TRUE)
+    attempt <- try(syn$login(), silent = TRUE)
+    if (inherits(attempt, "try-error")) {
+      return(NULL)
+    } else {
+      return(syn)
+    }
   } else if (reticulate::py_module_available("synapseclient") & !is.null(syn)) {
     syn$login(...)
   } else {
