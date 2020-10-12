@@ -49,3 +49,7 @@ img {
   background-color: #367FA8;
   padding: 3%;
 }
+
+.shiny-file-input-progress {
+    display: none
+}
