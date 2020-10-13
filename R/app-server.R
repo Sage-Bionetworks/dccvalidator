@@ -42,8 +42,15 @@ app_server <- function(input, output, session) {
         html = tagList(
           img(src = "www/synapse_logo.png", height = "120px"),
           h3("Looks like you're not logged in!"),
-          span("Please ", a("log in", href = "https://www.synapse.org/#!LoginPlace:0", target = "_blank"),
-               " to Synapse, then refresh this page.")
+          span(
+            "Please ",
+            a(
+              "log in",
+              href = "https://www.synapse.org/#!LoginPlace:0",
+              target = "_blank"
+            ),
+            " to Synapse, then refresh this page."
+          )
         )
       )
     })
