@@ -13,6 +13,7 @@
 - Fix bug in behavior for `check_ages_over_90()` and `check_parent_syn()`
 - Remove progress bars for file input boxes
 - Add script and functions for updating metadata template dictionary sheets.
+- App now shows a loading screen while the login process is happening behind the scenes
 
 # dccvalidator v0.3.0
 
