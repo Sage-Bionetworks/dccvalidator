@@ -124,6 +124,7 @@ pec:
       HI-C: "syn21680758"
       snpArray: "syn21680759"
       ChIPSeq: "syn21861858"
+      bisulfiteSeq: "syn23017098"
   species_list:
     - "human"
     - "animal model"
