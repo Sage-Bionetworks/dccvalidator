@@ -22,6 +22,7 @@
 #' of `annotations_table` and `templates`.
 #'
 #' @export
+#' @importFrom magrittr %>%
 #' @examples
 #' \dontrun{
 #' # Need a config file, this has fake synIDs and will not function
@@ -94,6 +95,8 @@ update_template_dictionaries <- function(..., active_config = "default") {
 #' and 'columnType'.
 #'
 #' @export
+#' @importFrom magrittr %>%
+#' @importFrom rlang .data
 #' @examples
 #' # Valid
 #' dat <- data.frame(
@@ -138,11 +141,11 @@ verify_dictionary_structure <- function(dictionary) {
 
   # Check that the dictionary is valid
   dict_summary <- dictionary %>%
-    dplyr::group_by(key) %>%
+    dplyr::group_by(.data$key) %>%
     dplyr::summarise(
-      key = unique(key),
-      n_description = dplyr::n_distinct(description),
-      n_type = dplyr::n_distinct(columnType)
+      key = unique(.data$key),
+      n_description = dplyr::n_distinct(.data$description),
+      n_type = dplyr::n_distinct(.data$columnType)
     )
 
   # Errors if there's > 1 description for a key
@@ -183,6 +186,8 @@ verify_dictionary_structure <- function(dictionary) {
 #' @return template_xlsx_path
 #'
 #' @export
+#' @importFrom magrittr %>%
+#' @importFrom rlang .data
 #' @examples
 #' \dontrun{
 #' # Annotations example
@@ -234,14 +239,14 @@ add_dictionary_sheets <- function(template_xlsx_path, annotations) {
   template <- readxl::read_xlsx(template_xlsx_path, sheet = 1)
 
   ## Filter down to those present in the current template
-  annots_filter <- dplyr::filter(annotations, key %in% names(template))
+  annots_filter <- dplyr::filter(annotations, .data$key %in% names(template))
 
   ## Dictionary of fields
   dictionary <- generate_key_description(annots_filter)
 
   ## Dictionary of values
   values <- annots_filter %>%
-    dplyr::select(key, value, valueDescription, source)
+    dplyr::select(.data$key, .data$value, .data$valueDescription, .data$source)
 
   results <- list(
     template = template,
@@ -263,6 +268,8 @@ add_dictionary_sheets <- function(template_xlsx_path, annotations) {
 #' @return Tibble data frame of unique keys and their descriptions.
 #'
 #' @noRd
+#' @importFrom magrittr %>%
+#' @importFrom rlang .data
 #' @examples
 #' annots <- data.frame(
 #'   key = c("first_name", "last_name", "last_name"),
@@ -278,6 +285,9 @@ generate_key_description <- function(annots) {
     stop("Annotations missing 'key' or 'description' columns.")
   }
   annots %>%
-    dplyr::group_by(key) %>%
-    dplyr::summarize(key = unique(key), description = unique(description))
+    dplyr::group_by(.data$key) %>%
+    dplyr::summarize(
+      key = unique(.data$key),
+      description = unique(.data$description)
+    )
 }
