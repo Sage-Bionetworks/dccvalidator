@@ -25,6 +25,7 @@ attempt_login <- function(syn, ...) {
     try(syn$login(), silent = TRUE)
   } else if (reticulate::py_module_available("synapseclient") & !is.null(syn)) {
     syn$login(...)
+    return(syn)
   } else {
     return(NULL)
   }
