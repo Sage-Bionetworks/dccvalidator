@@ -78,3 +78,12 @@ reference:
     - check_pass
     - check_warn
     - check_fail
+
+- title: Updating metadata template dictionaries
+  desc: >
+    These functions validate annotations data structure, generate new dictionary
+    sheets from the annotations, and upload new versions of the templates.
+  contents:
+    - verify_dictionary_structure
+    - add_dictionary_sheets
+    - update_template_dictionaries
