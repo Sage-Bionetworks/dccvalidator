@@ -66,3 +66,13 @@ save_to_synapse <- function(input_file,
 count_unique_values <- function(...) {
   sum(!is.na(unique(c(...))))
 }
+
+## Do whole login process
+## Making a whole function so it can be more easily mocked for other functions
+full_login_process <- function(...) {
+  # Import synapseclient and login
+  synapse <<- reticulate::import("synapseclient")
+  syn <- attempt_instantiate()
+  syn <- attempt_login(syn, ...)
+  return(syn)
+}
