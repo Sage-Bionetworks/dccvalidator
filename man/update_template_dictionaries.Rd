@@ -4,19 +4,21 @@
 \alias{update_template_dictionaries}
 \title{Update Template Dictionaries}
 \usage{
-update_template_dictionaries(..., active_config = "default")
+update_template_dictionaries(templates, annotations, syn, directory = ".")
 }
 \arguments{
-\item{...}{Login parameters for the synapseclient. If none, assumes there is
-a configuration file in the home directory with login information.
-Optional parameters include combinations of \code{email} plus
-\code{password} OR \code{email} plus \code{apiKey} OR \code{sessionToken}. \code{email} can be the
-synapse username or the email address associated with the Synapse account.}
+\item{templates}{A vector of metadata template synIDs.}
 
-\item{active_config}{The configuration profile that should be active. The
-config will be used to gather the annotation table synIDs and a list of
-existing metadata template synIDs. Due to this, the config requires a minimum
-of \code{annotations_table} and \code{templates}.}
+\item{annotations}{Data frame of annotation dictionary. Required to have
+the columns: key, description, value, valueDescription, source.}
+
+\item{syn}{Synapse client object.}
+
+\item{directory}{The directory to download and save new versions of the
+metadata templates to. Defaults to \code{"."}.}
+}
+\value{
+List of Synapse file objects, one for each metadata synID.
 }
 \description{
 This function acts as a script to update current metadata
@@ -32,14 +34,36 @@ those keys.
 }
 \examples{
 \dontrun{
-# Need a config file, this has fake synIDs and will not function
-config <- list(
-  default = list(
-    annotations_table = "syn123456",
-    templates = c("syn222222", "syn3333333")
-  )
+# Fake templates and annotations
+temps <- c("syn111111", "syn222222")
+annots <- data.frame(
+  key = c("first_name", "last_name", "last_name", "age"),
+  description = c(
+    "A person's given name",
+    "A person's family name",
+    "A person's family name",
+    "A person's age"
+  ),
+  value = c(NA, "Smith", "Robinson", NA),
+  valueDescription = c(
+    NA,
+    "From the Smith family",
+    "From the Robinson family",
+    NA
+  ),
+  source = c(NA, "Self-defined", "Self-defined", NA)
 )
-yaml::write_yaml(config, "./config.yml")
-update_template_dictionaries(active_config = "default")
+
+# Get Synapse client object and login
+synapse <- reticulate::import("synapseclient")
+syn <- synapse$Synapse()
+# This style of login only works with a Synapse config file
+syn$Login()
+
+update_template_dictionaries(
+  templates = temp,
+  annotations = annots,
+  syn = syn
+)
 }
 }

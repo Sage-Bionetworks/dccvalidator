@@ -11,79 +11,57 @@
 #' template sheet and values sheet contains the possible enumerated values for
 #' those keys.
 #'
-#' @param ... Login parameters for the synapseclient. If none, assumes there is
-#' a configuration file in the home directory with login information.
-#' Optional parameters include combinations of `email` plus
-#' `password` OR `email` plus `apiKey` OR `sessionToken`. `email` can be the
-#' synapse username or the email address associated with the Synapse account.
-#' @param active_config The configuration profile that should be active. The
-#' config will be used to gather the annotation table synIDs and a list of
-#' existing metadata template synIDs. Due to this, the config requires a minimum
-#' of `annotations_table` and `templates`.
+#' @param templates A vector of metadata template synIDs.
+#' @param annotations Data frame of annotation dictionary. Required to have
+#' the columns: key, description, value, valueDescription, source.
+#' @param syn Synapse client object.
+#' @param directory The directory to download and save new versions of the
+#' metadata templates to. Defaults to `"."`.
+#' @return List of Synapse file objects, one for each metadata synID.
 #'
 #' @export
-#' @importFrom magrittr %>%
 #' @examples
 #' \dontrun{
-#' # Need a config file, this has fake synIDs and will not function
-#' config <- list(
-#'   default = list(
-#'     annotations_table = "syn123456",
-#'     templates = c("syn222222", "syn3333333")
-#'   )
+#' # Fake templates and annotations
+#' temps <- c("syn111111", "syn222222")
+#' annots <- data.frame(
+#'   key = c("first_name", "last_name", "last_name", "age"),
+#'   description = c(
+#'     "A person's given name",
+#'     "A person's family name",
+#'     "A person's family name",
+#'     "A person's age"
+#'   ),
+#'   value = c(NA, "Smith", "Robinson", NA),
+#'   valueDescription = c(
+#'     NA,
+#'     "From the Smith family",
+#'     "From the Robinson family",
+#'     NA
+#'   ),
+#'   source = c(NA, "Self-defined", "Self-defined", NA)
 #' )
-#' yaml::write_yaml(config, "./config.yml")
-#' update_template_dictionaries(active_config = "default")
+#'
+#' # Get Synapse client object and login
+#' synapse <- reticulate::import("synapseclient")
+#' syn <- synapse$Synapse()
+#' # This style of login only works with a Synapse config file
+#' syn$Login()
+#'
+#' update_template_dictionaries(
+#'   templates = temp,
+#'   annotations = annots,
+#'   syn = syn
+#' )
 #' }
-update_template_dictionaries <- function(..., active_config = "default") {
-  # Set environment config
-  Sys.setenv(R_CONFIG_ACTIVE = active_config)
-
-  # Login
-  syn <- full_login_process(...)
-  if (!logged_in(syn)) {
-    stop("Unable to log into Synapse")
-  }
-
-  # Get all annotations
-  annots <- purrr::map_dfr(
-    config::get("annotations_table"),
-    get_synapse_annotations,
-    syn = syn
-  )
-
-  # Check that dictionary structure is valid
-  valid_results <- verify_dictionary_structure(annots)
-  if (is.null(valid_results)) {
-    stop("Annotation dictionary failed verification check")
-  }
-  if (inherits(valid_results, "check_fail")) {
-    stop(glue::glue("{valid_results$msg}:\n{valid_results$data}"))
-  } # else assume valid structure
-
-  # Get all template synIDs as vector
-  templates <- config::get("templates") %>%
-    purrr::flatten() %>%
-    unname() %>%
-    unlist()
-
+update_template_dictionaries <- function(templates, annotations, syn,
+                                         directory = ".") {
   # Update Excel files
   updated_excel_files <- purrr::map(templates, function(x) {
     local_file <- syn$get(x, downloadLocation = ".")
     updated <- add_dictionary_sheets(local_file$path, annotations = annots)
     local_file
   })
-
-  # Store to Synapse
-  purrr::walk(
-    updated_excel_files,
-    function(x) {
-      syn$store(x, forceVersion = FALSE)
-    }
-  )
-
-  # Clean up leftover files
-  file.remove(list.files(".", pattern = "^template(.+)\\.xlsx"))
 }
 
 #' @title Verify Dictionary Structure
@@ -109,6 +87,7 @@ update_template_dictionaries <- function(..., active_config = "default") {
 #' )
 #' verify_dictionary_structure(dat)
 #'
+#' \dontrun{
 #' # Invalid -- throws error due to descriptions of first_name
 #' dat <- data.frame(
 #'   key = c("first_name", "first_name"),
@@ -119,6 +98,7 @@ update_template_dictionaries <- function(..., active_config = "default") {
 #'   columnType = c("string", "string")
 #' )
 #' verify_dictionary_structure(dat)
+#' }
 verify_dictionary_structure <- function(dictionary) {
   # Check that dictionary exists and has needed elements
   if (is.null(dictionary) || is.na(dictionary)) {
@@ -290,4 +270,47 @@ generate_key_description <- function(annots) {
       key = unique(.data$key),
       description = unique(.data$description)
     )
+}
+
+#' @title Get Template synIDs
+#'
+#' @description Get a vector of template synIDs from either a list or from the
+#' config.yml file.
+#'
+#' @param templates Named or unnamed list of template synIDs. Defaults to
+#' `config::get("templates")`.
+#' @return A vector of synIDs.
+#' @importFrom magrittr %>%
+#' @export
+#' @examples
+#' named_list <- dat1 <- list(
+#'   template1 = "syn111111",
+#'   template2 = "syn222222",
+#'   template_set = list(
+#'    template3 = "syn333333",
+#'    template4 = "syn444444"
+#'   )
+#' )
+#' get_template_synIDs(templates = named_list)
+#'
+#' \dontrun{
+#' # config.yml example
+#' # Write config file; this has fake synIDs and will not function
+#' config <- list(
+#'   default = list(
+#'     templates = list(
+#'       template1 = "syn222222",
+#'       template2 = "syn3333333"
+#'     )
+#'   )
+#' )
+#' yaml::write_yaml(config, "./config.yml")
+#' get_template_synIDs()
+#' }
+get_template_synIDs <- function(templates = config::get("templates")) {
+  # Get all template synIDs as vector
+  templates %>%
+    purrr::flatten() %>%
+    unname() %>%
+    unlist()
 }

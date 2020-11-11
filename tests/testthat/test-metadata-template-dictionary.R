@@ -1,6 +1,6 @@
 context("metadata-template-dictionary.R")
 
-#----- verify_dictionary_structure
+# verify_dictionary_structure -------------------------------------------------
 
 test_that("verify_dictionary_structure throws error if no dictionary", {
   expect_error(verify_dictionary_structure(dictionary = NA))
@@ -144,7 +144,7 @@ test_that("verify_dictionary_structure returns check_pass with no data", {
   expect_true(is.null(res3$data))
 })
 
-#----- generate_key_description
+# generate_key_description ----------------------------------------------------
 
 test_that("generate_key_description errors if missing columns or annots", {
   # source column unnecessary for this function, but allows for testing
@@ -182,7 +182,7 @@ test_that("generate_key_description returns description set", {
   expect_equal(res, expected)
 })
 
-#----- add_dictionary_sheets
+# add_dictionary_sheets -------------------------------------------------------
 
 test_that("add_dictionary_sheets returns error if missing columns or annots", {
   dat <- data.frame(
@@ -202,7 +202,7 @@ test_that("add_dictionary_sheets returns error if missing columns or annots", {
   )
   # Check a few other possible combinations
   expect_error(add_dictionary_sheets(
-    annotations = dat[ , c("key", "description", "source")]
+    annotations = dat[, c("key", "description", "source")]
   ))
   expect_error(add_dictionary_sheets(
     annotations = data[,  c("value", "valueDescription")]
@@ -236,10 +236,11 @@ test_that("add_dictionary_sheets creates correct sheet list", {
   )
 
   # Mock reading and writing the files
-  mockery::stub(add_dictionary_sheets, 'readxl::read_xlsx', temp)
-  # Mock function to capture args sent to writexl
-  mocked <- mockery::mock(TRUE)
-  mockery::stub(add_dictionary_sheets, 'writexl::write_xlsx', mocked)
+  # Need stubbed function to return template
+  mockery::stub(add_dictionary_sheets, "readxl::read_xlsx", temp)
+  # Mock function to primarily capture args sent to writexl
+  mocked <- mockery::mock(TRUE, cycle = TRUE)
+  mockery::stub(add_dictionary_sheets, "writexl::write_xlsx", mocked)
 
   res <- add_dictionary_sheets(
     template_xlsx_path = "my_fake_path.xlsx",
@@ -252,4 +253,53 @@ test_that("add_dictionary_sheets creates correct sheet list", {
   expect_equal(args$template, temp)
   expect_equal(args$dictionary, dictionary)
   expect_equal(args$values, values)
+})
+
+# get_template_synIDs ---------------------------------------------------------
+
+test_that("get_template_synIDs returns vector of synIDs from list", {
+  # Named, nested list
+  dat1 <- list(
+    template1 = "syn111111",
+    template2 = "syn222222",
+    template_set = list(
+      template3 = "syn333333",
+      template4 = "syn444444"
+    )
+  )
+  # Unnamed, nested list
+  dat2 <- list(
+    "syn111111",
+    "syn222222",
+    list(
+      "syn333333",
+      "syn444444"
+    )
+  )
+  # Single ID
+  dat3 <- list("syn111111")
+
+  res1 <- get_template_synIDs(dat1)
+  res2 <- get_template_synIDs(dat2)
+  res3 <- get_template_synIDs(dat3)
+
+  expected <- c("syn111111", "syn222222", "syn333333", "syn444444")
+  expect_equal(res1, expected)
+  expect_equal(res2, expected)
+  expect_equal(res3, "syn111111")
+})
+
+test_that("get_template_synIDs returns vector of synIDs from config", {
+  # config.yml at top level of /tests
+  expected <- c(
+    "syn12973254",
+    "syn12973253",
+    "syn12973252",
+    "syn12973252",
+    "syn20673251",
+    "syn12973256",
+    "syn12973255",
+    "syn20820080"
+  )
+  expect_equal(get_template_synIDs(), expected)
 })

@@ -26,6 +26,7 @@ dat <- data.frame(
 )
 verify_dictionary_structure(dat)
 
+\dontrun{
 # Invalid -- throws error due to descriptions of first_name
 dat <- data.frame(
   key = c("first_name", "first_name"),
@@ -36,4 +37,5 @@ dat <- data.frame(
   columnType = c("string", "string")
 )
 verify_dictionary_structure(dat)
+}
 }
