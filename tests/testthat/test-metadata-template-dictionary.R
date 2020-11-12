@@ -25,7 +25,8 @@ test_that("verify_dictionary_structure error message is correct if missing colum
   dat <- data.frame(
     key = c("foo", "bar"),
     description = c("foo", "bar"),
-    columnType = c("foo", "bar")
+    columnType = c("foo", "bar"),
+    stringsAsFactors = FALSE
   )
   # Missing key
   res1 <- expect_error(
@@ -67,17 +68,20 @@ test_that("verify_dictionary_structure throws error if > 1 key description", {
   dat1 <- data.frame(
     key = c("foo", "foo"),
     description = c("bar", "baz"),
-    columnType = c("boo", "boo")
+    columnType = c("boo", "boo"),
+    stringsAsFactors = FALSE
   )
   dat2 <- data.frame(
     key = c("foo", "foo"),
     description = c(NA, "baz"),
-    columnType = c("boo", "boo")
+    columnType = c("boo", "boo"),
+    stringsAsFactors = FALSE
   )
   dat3 <- data.frame(
     key = c("foo", "foo", "bar", "bar"),
     description = c("foo", "bar", "foo", "bar"),
-    columnType = c("baz", "baz", "baz", "baz")
+    columnType = c("baz", "baz", "baz", "baz"),
+    stringsAsFactors = FALSE
   )
   res1 <- verify_dictionary_structure(dat1)
   res2 <- verify_dictionary_structure(dat2)
@@ -94,17 +98,20 @@ test_that("verify_dictionary_structure throws error if > 1 key columnType", {
   dat1 <- data.frame(
     key = c("foo", "foo"),
     description = c("bar", "bar"),
-    columnType = c("boo", "baz")
+    columnType = c("boo", "baz"),
+    stringsAsFactors = FALSE
   )
   dat2 <- data.frame(
     key = c("foo", "foo"),
     description = c("bar", "bar"),
-    columnType = c("boo", NA)
+    columnType = c("boo", NA),
+    stringsAsFactors = FALSE
   )
   dat3 <- data.frame(
     key = c("foo", "foo", "bar", "bar"),
     description = c("bar", "bar", "foo", "foo"),
-    columnType = c("baz", "boo", "baz", NA)
+    columnType = c("baz", "boo", "baz", NA),
+    stringsAsFactors = FALSE
   )
   res1 <- verify_dictionary_structure(dat1)
   res2 <- verify_dictionary_structure(dat2)
@@ -121,17 +128,20 @@ test_that("verify_dictionary_structure returns check_pass with no data", {
   dat1 <- data.frame(
     key = c("foo", "foo"),
     description = c("bar", "bar"),
-    columnType = c("baz", "baz")
+    columnType = c("baz", "baz"),
+    stringsAsFactors = FALSE
   )
   dat2 <- data.frame(
     key = c("foo", "foo", "bar"),
     description = c("bar", "bar", "foo"),
-    columnType = c("baz", "baz", "baz")
+    columnType = c("baz", "baz", "baz"),
+    stringsAsFactors = FALSE
   )
   dat3 <- data.frame(
     key = c("foo", "foo", "baz", "baz"),
     description = c("bar", "bar", "foo", "foo"),
-    columnType = c("baz", "baz", NA, NA)
+    columnType = c("baz", "baz", NA, NA),
+    stringsAsFactors = FALSE
   )
   res1 <- verify_dictionary_structure(dat1)
   res2 <- verify_dictionary_structure(dat2)
@@ -152,7 +162,8 @@ test_that("generate_key_description errors if missing columns or annots", {
   dat <- data.frame(
     key = c("foo", "foo", "bar", "bar", "bar", "baz"),
     description = c("boo", "boo", "moo", "moo", "moo", "shoo"),
-    source = c(NA, NA, "my mom", "your mom", "their mom", "tim")
+    source = c(NA, NA, "my mom", "your mom", "their mom", "tim"),
+    stringsAsFactors = FALSE
   )
   # Missing key
   expect_error(generate_key_description(dat[, c("description", "source")]))
@@ -172,7 +183,8 @@ test_that("generate_key_description returns description set", {
   dat <- data.frame(
     key = c("foo", "foo", "bar", "bar", "bar", "baz"),
     description = c("boo", "boo", "moo", "moo", "moo", NA),
-    source = c(NA, NA, "my mom", "your mom", "their mom", "tim")
+    source = c(NA, NA, "my mom", "your mom", "their mom", "tim"),
+    stringsAsFactors = FALSE
   )
   expected <- tibble::tibble(
     key = c("bar", "baz", "foo"),
@@ -190,7 +202,8 @@ test_that("add_dictionary_sheets returns error if missing columns or annots", {
     description = c("boo", "boo", "moo", "moo", "moo", NA),
     value = c(NA, NA, "that one", "this one", "the other one", "cereal"),
     valueDescription = c(NA, NA, "that bar", "this bar", "other bar", "yum"),
-    source = c(NA, NA, "my mom", "your mom", "their mom", "tim")
+    source = c(NA, NA, "my mom", "your mom", "their mom", "tim"),
+    stringsAsFactors = FALSE
   )
   res1 <- expect_error(add_dictionary_sheets(
     annotations = dat[, c("key", "description")]
@@ -219,7 +232,8 @@ test_that("add_dictionary_sheets creates correct sheet list", {
     description = c("boo", "moo", "moo", "moo", NA),
     value = c(NA, "that one", "this one", "the other one", "cereal"),
     valueDescription = c(NA, "that bar", "this bar", "other bar", "yum"),
-    source = c(NA, "my mom", "your mom", "their mom", "tim")
+    source = c(NA, "my mom", "your mom", "their mom", "tim"),
+    stringsAsFactors = FALSE
   )
   temp <- data.frame(foo = NA, bar = NA)
 
@@ -232,7 +246,8 @@ test_that("add_dictionary_sheets creates correct sheet list", {
     key = c("foo", "bar", "bar", "bar"),
     value = c(NA, "that one", "this one", "the other one"),
     valueDescription = c(NA, "that bar", "this bar", "other bar"),
-    source = c(NA, "my mom", "your mom", "their mom")
+    source = c(NA, "my mom", "your mom", "their mom"),
+    stringsAsFactors = FALSE
   )
 
   # Mock reading and writing the files
