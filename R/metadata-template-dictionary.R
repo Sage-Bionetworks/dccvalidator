@@ -56,10 +56,9 @@
 #' }
 update_template_dictionaries <- function(templates, annotations, syn,
                                          directory = ".") {
-  # Update Excel files
-  updated_excel_files <- purrr::map(templates, function(x) {
-    local_file <- syn$get(x, downloadLocation = ".")
-    updated <- add_dictionary_sheets(local_file$path, annotations = annots)
+  purrr::map(templates, function(x) {
+    local_file <- syn$get(x, downloadLocation = directory)
+    updated <- add_dictionary_sheets(local_file$path, annotations = annotations)
     local_file
   })
 }
