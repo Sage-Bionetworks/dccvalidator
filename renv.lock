@@ -296,6 +296,13 @@
       "Repository": "CRAN",
       "Hash": "64609bf269bbfdfde462bf6f95144c9f"
     },
+    "getopt": {
+      "Package": "getopt",
+      "Version": "1.20.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "a373c2f83f4d519437bf764c824d0a59"
+    },
     "ggplot2": {
       "Package": "ggplot2",
       "Version": "3.3.2",
@@ -519,6 +526,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "3d28be9ab61db42f6fb9f93c3a14118c"
+    },
+    "optparse": {
+      "Package": "optparse",
+      "Version": "1.6.6",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "645a76b418396f8a16074f9102da3596"
     },
     "pillar": {
       "Package": "pillar",
