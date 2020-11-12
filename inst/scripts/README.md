@@ -37,7 +37,9 @@ A configuration file is required in the working directory. The configuration nee
 ### Running the Script
 
 The script can be run with the following:
-`Rscript <path to script>/update-metadata-template-dictionaries.R [options]`
+```
+Rscript <path to script>/update-metadata-template-dictionaries.R [options]
+```
 
 The options are:
 - `-u` `--username`: Synapse username or email. Required.
