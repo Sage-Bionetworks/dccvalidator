@@ -1,5 +1,55 @@
 context("metadata-template-dictionary.R")
 
+# update_template_dictionaries ------------------------------------------------
+syn <- attempt_instantiate()
+attempt_login(syn)
+
+test_that("update_template_dictionaries returns updated Synapse file list", {
+  skip_if_not(logged_in(syn = syn))
+
+  # Simplistic fake annotations
+  annots <- tibble::tibble(
+    key = c("individualID", "specimenID"),
+    description = c("ID of individual", "ID of specimen"),
+    value = c(NA, NA),
+    valueDescription = c(NA, NA),
+    source = c(NA, NA)
+  )
+
+  # Two AD templates, biospecimen and rnaSeq assay
+  temps <- c("syn12973252", "syn12973256")
+
+  res <- update_template_dictionaries(
+    templates = temps,
+    annotations = annots,
+    syn
+  )
+
+  # Returns as list with 2 elements
+  expect_true(inherits(res, "list"))
+  expect_equal(length(res), 2)
+
+  # File dictionaries have been overwritten correctly
+  temp1_description <- readxl::read_xlsx(res[[1]]$path, sheet = 2)
+  temp1_values <- readxl::read_xlsx(res[[1]]$path, sheet = 3)
+  temp2_description <- readxl::read_xlsx(res[[2]]$path, sheet = 2)
+  temp2_values <- readxl::read_xlsx(res[[2]]$path, sheet = 3)
+
+  expect_equal(temp1_description, annots[, c("key", "description")])
+  expect_equal(
+    temp1_values,
+    annots[, c("key", "value", "valueDescription", "source")]
+  )
+  expect_equal(temp2_description, annots[2, c("key", "description")])
+  expect_equal(
+    temp2_values,
+    annots[2, c("key", "value", "valueDescription", "source")]
+  )
+
+  # Clean up local files
+  file.remove(list.files(".", pattern = "^template(.+)\\.xlsx"))
+})
+
 # verify_dictionary_structure -------------------------------------------------
 
 test_that("verify_dictionary_structure throws error if no dictionary", {
