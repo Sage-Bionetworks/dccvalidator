@@ -12,7 +12,9 @@ This script updates the dictionary sheets in existing metadata template files. A
 #### System
 
 This script requires the dccvalidator package (version >= 0.3.0.9012). Install the latest version with:
-`remotes::install_github("Sage-Bionetworks/dccvalidator")`
+```
+remotes::install_github("Sage-Bionetworks/dccvalidator")
+```
 
 This script requires reticulate and the [Synapse Python
 client](https://pypi.org/project/synapseclient/), as well. See the [reticulate
@@ -23,7 +25,9 @@ Whichever Python installation you choose should have synapseclient
 installed.
 
 Finally, this script requires optparse, which is only a suggested package for dccvalidator. Please ensure this is installed by running:
-`install.packages("optparse")`
+```
+install.packages("optparse")
+```
 
 #### config.yml
 A configuration file is required in the working directory. The configuration needs, at minimum, a 'default' setting with the following options:
