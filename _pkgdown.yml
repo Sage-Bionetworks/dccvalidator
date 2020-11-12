@@ -84,6 +84,7 @@ reference:
     These functions validate annotations data structure, generate new dictionary
     sheets from the annotations, and upload new versions of the templates.
   contents:
-    - verify_dictionary_structure
     - add_dictionary_sheets
+    - get_template_synIDs
     - update_template_dictionaries
+    - verify_dictionary_structure

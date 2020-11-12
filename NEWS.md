@@ -12,6 +12,7 @@
 - Add hover tooltips to all fileInputs
 - Fix bug in behavior for `check_ages_over_90()` and `check_parent_syn()`
 - Remove progress bars for file input boxes
+- Add script and functions for updating metadata template dictionary sheets.
 
 # dccvalidator v0.3.0
 
