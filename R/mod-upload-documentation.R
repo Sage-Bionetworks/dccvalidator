@@ -150,7 +150,10 @@ upload_documents_server <- function(input, output, session,
     study_names = study_names
   )
   doc_annots <- reactive({
-    list(study = study_name())
+    list(
+      study = study_name(),
+      isDocumentation = TRUE
+    )
   })
 
   # Control inputs by storing in reactiveValues
