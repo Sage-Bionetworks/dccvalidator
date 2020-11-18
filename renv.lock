@@ -200,10 +200,10 @@
     },
     "dccvalidator": {
       "Package": "dccvalidator",
-      "Version": "0.3.0.9010",
+      "Version": "0.3.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "6480cd713606397016e68b329e19c339"
+      "Hash": "a20a00c4c7750687de0607c56f4d855a"
     },
     "desc": {
       "Package": "desc",
