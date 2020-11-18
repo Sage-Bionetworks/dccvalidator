@@ -245,7 +245,8 @@ app_server <- function(input, output, session) {
             annotations = list(
               study = study_name(),
               metadataType = "individual",
-              species = species_name()
+              species = species_name(),
+              isDocumentation = FALSE
             ),
             synapseclient = synapse,
             syn = syn
@@ -258,7 +259,8 @@ app_server <- function(input, output, session) {
             annotations = list(
               study = study_name(),
               metadataType = "biospecimen",
-              species = species_name()
+              species = species_name(),
+              isDocumentation = FALSE
             ),
             synapseclient = synapse,
             syn = syn
@@ -272,7 +274,8 @@ app_server <- function(input, output, session) {
               study = study_name(),
               metadataType = "assay",
               assay = assay_name(),
-              species = species_name()
+              species = species_name(),
+              isDocumentation = FALSE
             ),
             synapseclient = synapse,
             syn = syn
@@ -284,7 +287,9 @@ app_server <- function(input, output, session) {
             parent = created_folder,
             annotations = list(
               study = study_name(),
-              metadataType = "manifest"
+              metadataType = "manifest",
+              species = species_name(),
+              isDocumentation = FALSE
             ),
             synapseclient = synapse,
             syn = syn
