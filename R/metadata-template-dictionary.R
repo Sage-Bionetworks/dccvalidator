@@ -100,9 +100,6 @@ update_template_dictionaries <- function(templates, annotations, syn,
 #' }
 verify_dictionary_structure <- function(dictionary) {
   # Check that dictionary exists and has needed elements
-  if (is.null(dictionary) || is.na(dictionary)) {
-    stop("No dictionary provided")
-  }
   if (!inherits(dictionary, "data.frame")) {
     stop("Dictionary not provided as a data frame")
   }
