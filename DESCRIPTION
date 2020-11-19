@@ -31,13 +31,11 @@ Depends:
     shinyBS
 Imports:
     config,
-    dplyr,
     ggplot2,
     glue,
     golem,
     htmltools,
     knitr,
-    magrittr,
     markdown,
     purrr,
     reactable,
@@ -53,18 +51,20 @@ Imports:
     tibble,
     tools,
     utils,
-    visdat,
-    writexl
+    visdat
 Suggests:
     covr,
+    dplyr,
     jsonlite,
     jsonvalidate,
+    magrittr,
     mockery,
     optparse,
     rmarkdown (>= 1.16.2),
     stringr,
     testthat,
-    withr
+    withr,
+    writexl
 VignetteBuilder:
     knitr
 ByteCompile: true
