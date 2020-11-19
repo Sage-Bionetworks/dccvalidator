@@ -72,7 +72,6 @@ update_template_dictionaries <- function(templates, annotations, syn,
 #' and 'columnType'.
 #'
 #' @export
-#' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #' @examples
 #' # Valid
@@ -162,7 +161,6 @@ verify_dictionary_structure <- function(dictionary) {
 #' @return template_xlsx_path
 #'
 #' @export
-#' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #' @examples
 #' \dontrun{
@@ -244,7 +242,6 @@ add_dictionary_sheets <- function(template_xlsx_path, annotations) {
 #' @return Tibble data frame of unique keys and their descriptions.
 #'
 #' @noRd
-#' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #' @examples
 #' annots <- data.frame(
