@@ -18,6 +18,7 @@ Get a vector of template synIDs from either a list or from the
 config.yml file.
 }
 \examples{
+\dontrun{
 named_list <- dat1 <- list(
   template1 = "syn111111",
   template2 = "syn222222",
@@ -28,7 +29,6 @@ named_list <- dat1 <- list(
 )
 get_template_synIDs(templates = named_list)
 
-\dontrun{
 # config.yml example
 # Write config file; this has fake synIDs and will not function
 config <- list(

@@ -15,6 +15,7 @@ Checks that no key has more than one description
 or columnType. Throws error if the dictionary is invalid.
 }
 \examples{
+\dontrun{
 # Valid
 dat <- data.frame(
   key = c("first_name", "first_name"),
@@ -26,7 +27,6 @@ dat <- data.frame(
 )
 verify_dictionary_structure(dat)
 
-\dontrun{
 # Invalid -- throws error due to descriptions of first_name
 dat <- data.frame(
   key = c("first_name", "first_name"),

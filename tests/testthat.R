@@ -1,7 +1,6 @@
 library(testthat)
 library(dccvalidator)
 library(mockery)
-library(magrittr)
 library(writexl)
 library(dplyr)
 

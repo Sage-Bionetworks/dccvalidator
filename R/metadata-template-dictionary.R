@@ -73,7 +73,9 @@ update_template_dictionaries <- function(templates, annotations, syn,
 #'
 #' @export
 #' @importFrom rlang .data
+#' @importFrom magrittr %>%
 #' @examples
+#' \dontrun{
 #' # Valid
 #' dat <- data.frame(
 #'   key = c("first_name", "first_name"),
@@ -85,7 +87,6 @@ update_template_dictionaries <- function(templates, annotations, syn,
 #' )
 #' verify_dictionary_structure(dat)
 #'
-#' \dontrun{
 #' # Invalid -- throws error due to descriptions of first_name
 #' dat <- data.frame(
 #'   key = c("first_name", "first_name"),
@@ -162,6 +163,7 @@ verify_dictionary_structure <- function(dictionary) {
 #'
 #' @export
 #' @importFrom rlang .data
+#' @importFrom magrittr %>%
 #' @examples
 #' \dontrun{
 #' # Annotations example
@@ -243,7 +245,9 @@ add_dictionary_sheets <- function(template_xlsx_path, annotations) {
 #'
 #' @noRd
 #' @importFrom rlang .data
+#' @importFrom magrittr %>%
 #' @examples
+#' \dontrun{
 #' annots <- data.frame(
 #'   key = c("first_name", "last_name", "last_name"),
 #'   description = c(
@@ -253,6 +257,7 @@ add_dictionary_sheets <- function(template_xlsx_path, annotations) {
 #'   )
 #' generate_key_description(annots)
 #' )
+#' }
 generate_key_description <- function(annots) {
   if (!(all(c("key", "description") %in% colnames(annots)))) {
     stop("Annotations missing 'key' or 'description' columns.")
@@ -273,9 +278,10 @@ generate_key_description <- function(annots) {
 #' @param templates Named or unnamed list of template synIDs. Defaults to
 #' `config::get("templates")`.
 #' @return A vector of synIDs.
-#' @importFrom magrittr %>%
 #' @export
+#' @importFrom magrittr %>%
 #' @examples
+#' \dontrun{
 #' named_list <- dat1 <- list(
 #'   template1 = "syn111111",
 #'   template2 = "syn222222",
@@ -286,7 +292,6 @@ generate_key_description <- function(annots) {
 #' )
 #' get_template_synIDs(templates = named_list)
 #'
-#' \dontrun{
 #' # config.yml example
 #' # Write config file; this has fake synIDs and will not function
 #' config <- list(
