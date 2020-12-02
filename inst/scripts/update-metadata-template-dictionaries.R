@@ -6,6 +6,8 @@ if (!require("dccvalidator")) {
   remotes::install_github("Sage-Bionetworks/dccvalidator")
 }
 library("dccvalidator")
+# magrittr is dccvalidator dependency
+library("magrittr")
 
 option_list <- list(
   optparse::make_option(
@@ -64,12 +66,12 @@ if (!is.na(opt$password)) {
 }
 
 ## Get annotations
-# Get all annotations
+# Get all annotations and remove any duplicate rows
 annots <- purrr::map_dfr(
   config::get("annotations_table"),
   get_synapse_annotations,
   syn = syn
-)
+) %>% dplyr::distinct()
 ## Verify annotations are in correct format
 valid_results <- verify_dictionary_structure(annots)
 ## Check verification results
