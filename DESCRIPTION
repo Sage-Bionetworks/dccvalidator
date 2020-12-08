@@ -1,6 +1,6 @@
 Package: dccvalidator
 Title: Metadata Validation for Data Coordinating Centers
-Version: 0.3.0.9011
+Version: 0.3.0.9012
 Authors@R:
     c(person(given = "Kara",
              family = "Woo",
@@ -36,6 +36,7 @@ Imports:
     golem,
     htmltools,
     knitr,
+    magrittr,
     markdown,
     purrr,
     reactable,
@@ -54,17 +55,21 @@ Imports:
     visdat
 Suggests:
     covr,
+    dplyr,
     jsonlite,
     jsonvalidate,
+    mockery,
+    optparse,
     rmarkdown (>= 1.16.2),
     stringr,
     testthat,
-    withr
+    withr,
+    writexl
 VignetteBuilder:
     knitr
 ByteCompile: true
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 SystemRequirements: synapseclient (pypi.org/project/synapseclient)
