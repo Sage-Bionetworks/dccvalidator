@@ -40,10 +40,10 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
 
-      - name: Query dependencies
+      - name: Install pak and query dependencies
         run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), "depends.Rds", version = 2)
+          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
+          saveRDS(pak::pkg_deps_tree("local::.", dependencies = TRUE), ".github/r-depends.rds")
         shell: Rscript {0}
 
       - name: Cache R packages
@@ -54,13 +54,9 @@ jobs:
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{ hashFiles('depends.Rds') }}
           restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-
 
-      - name: Install system dependencies (Linux)
+      - name: Install linux system dependencies
         if: runner.os == 'Linux'
-        run: |
-          while read -r cmd
-          do
-            eval sudo $cmd
-          done < <(Rscript -e 'cat(remotes::system_requirements("ubuntu", "16.04"), sep = "\n")')
+        run: Rscript -e 'pak::local_system_requirements(execute = TRUE)'
 
       - name: Install system dependencies (macOS)
         if: runner.os == 'macOS' && matrix.config.r == 'devel'
@@ -102,7 +98,7 @@ jobs:
           apikey = "${{ secrets.SYNAPSE_API_KEY}}"
           EOM
           chmod +x "$OUTPUT_FILE"
-          
+
       - name: Setup Synapse config file for testing (Windows)
         if: runner.os == 'Windows'
         run: |
