@@ -22,7 +22,7 @@ app_server <- function(input, output, session) {
   session$sendCustomMessage(type = "readCookie", message = list())
 
   observeEvent(input$cookie, {
-
+    is_logged_in <- FALSE
     # If there's no session token, prompt user to log in
     if (input$cookie == "unauthorized") {
       waiter::waiter_update(
@@ -37,6 +37,7 @@ app_server <- function(input, output, session) {
       ### login and update session; otherwise, notify to login to Synapse first
       tryCatch({
         syn$login(sessionToken = input$cookie, rememberMe = FALSE)
+        is_logged_in <- TRUE
 
         ### update waiter loading screen once login successful
         waiter::waiter_update(
@@ -62,6 +63,7 @@ app_server <- function(input, output, session) {
         )
       })
     }
+    req(is_logged_in)
     ## Check if user is in AMP-AD Consortium team (needed in order to create
     ## folder at the next step), and if they are a certified user.
     user <- syn$getUserProfile()
