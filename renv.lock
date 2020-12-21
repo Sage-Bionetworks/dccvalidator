@@ -240,13 +240,6 @@
       "Repository": "CRAN",
       "Hash": "a63afe8eb92ab9510ef648f931e8219c"
     },
-    "downlit": {
-      "Package": "downlit",
-      "Version": "0.2.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "7020bf49ba1704ec3c1d1318e0a5ba01"
-    },
     "dplyr": {
       "Package": "dplyr",
       "Version": "1.0.2",
@@ -562,13 +555,6 @@
       "Repository": "CRAN",
       "Hash": "6eaefb4637ce9b5156dc4e3d1701432f"
     },
-    "pkgdown": {
-      "Package": "pkgdown",
-      "Version": "1.6.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "6afafdce7f29dde21c0a13619b980804"
-    },
     "pkgload": {
       "Package": "pkgload",
       "Version": "1.1.0",
@@ -624,13 +610,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "3bf617c0cf7cb69c5a5b2cc6bc3662a4"
-    },
-    "ragg": {
-      "Package": "ragg",
-      "Version": "0.4.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "39a1c3acb1982d94f10ce168b130f031"
     },
     "rappdirs": {
       "Package": "rappdirs",
@@ -842,26 +821,12 @@
       "Repository": "CRAN",
       "Hash": "bf7e9b78155f140f39725d23690fb78d"
     },
-    "systemfonts": {
-      "Package": "systemfonts",
-      "Version": "0.3.2",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "b2bfa6842e51cb3599cf2013f25d7594"
-    },
     "testthat": {
       "Package": "testthat",
       "Version": "3.0.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "e56365cb5248e77ca26882c51bd6b8b2"
-    },
-    "textshaping": {
-      "Package": "textshaping",
-      "Version": "0.1.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "db1d287fd86f3f69127215a95b9270ad"
     },
     "tibble": {
       "Package": "tibble",
