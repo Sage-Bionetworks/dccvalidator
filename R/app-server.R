@@ -27,7 +27,7 @@ app_server <- function(input, output, session) {
     if (input$cookie == "unauthorized") {
       waiter::waiter_update(
         html = tagList(
-          img(src = "synapse_logo.png", height = "120px"),
+          img(src = "www/synapse_logo.png", height = "120px"),
           h3("Looks like you're not logged in!"),
           span("Please ", a("login", href = "https://www.synapse.org/#!LoginPlace:0", target = "_blank"),
                " to Synapse, then refresh this page.")
@@ -42,7 +42,7 @@ app_server <- function(input, output, session) {
         ### update waiter loading screen once login successful
         waiter::waiter_update(
           html = tagList(
-            img(src = "synapse_logo.png", height = "120px"),
+            img(src = "www/synapse_logo.png", height = "120px"),
             h3(sprintf("Welcome, %s!", syn$getUserProfile()$userName))
           )
         )
@@ -52,7 +52,7 @@ app_server <- function(input, output, session) {
         Sys.sleep(2)
         waiter::waiter_update(
           html = tagList(
-            img(src = "synapse_logo.png", height = "120px"),
+            img(src = "www/synapse_logo.png", height = "120px"),
             h3("Login error"),
             span(
               "There was an error with the login process. Please refresh your Synapse session by logging out of and back in to",
