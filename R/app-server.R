@@ -22,40 +22,46 @@ app_server <- function(input, output, session) {
   session$sendCustomMessage(type = "readCookie", message = list())
 
   observeEvent(input$cookie, {
-    is_logged_in <- FALSE
-    tryCatch({
-      syn$login(sessionToken = input$cookie)
-      is_logged_in <- TRUE
 
-      ### update waiter loading screen once login successful
+    # If there's no session token, prompt user to log in
+    if (input$cookie == "unauthorized") {
       waiter::waiter_update(
         html = tagList(
-          img(src = "www/synapse_logo.png", height = "120px"),
-          h3(sprintf("Welcome, %s!", syn$getUserProfile()$userName))
+          img(src = "synapse_logo.png", height = "120px"),
+          h3("Looks like you're not logged in!"),
+          span("Please ", a("login", href = "https://www.synapse.org/#!LoginPlace:0", target = "_blank"),
+               " to Synapse, then refresh this page.")
         )
       )
-      Sys.sleep(2)
-      waiter::waiter_hide()
-    }, error = function(err) {
-      Sys.sleep(2)
-      waiter::waiter_update(
-        html = tagList(
-          img(src = "www/synapse_logo.png", height = "120px"),
-          h3("Looks like you're not logged in!"),
-          span(
-            "Please ",
-            a(
-              "log in",
-              href = "https://www.synapse.org/#!LoginPlace:0",
-              target = "_blank"
-            ),
-            " to Synapse, then refresh this page."
+    } else {
+      ### login and update session; otherwise, notify to login to Synapse first
+      tryCatch({
+        syn$login(sessionToken = input$cookie, rememberMe = FALSE)
+
+        ### update waiter loading screen once login successful
+        waiter::waiter_update(
+          html = tagList(
+            img(src = "synapse_logo.png", height = "120px"),
+            h3(sprintf("Welcome, %s!", syn$getUserProfile()$userName))
           )
         )
-      )
-    })
-    req(is_logged_in)
-
+        Sys.sleep(2)
+        waiter::waiter_hide()
+      }, error = function(err) {
+        Sys.sleep(2)
+        waiter::waiter_update(
+          html = tagList(
+            img(src = "synapse_logo.png", height = "120px"),
+            h3("Login error"),
+            span(
+              "There was an error with the login process. Please refresh your Synapse session by logging out of and back in to",
+              a("Synapse", href = "https://www.synapse.org/", target = "_blank"),
+              ", then refresh this page."
+            )
+          )
+        )
+      })
+    }
     ## Check if user is in AMP-AD Consortium team (needed in order to create
     ## folder at the next step), and if they are a certified user.
     user <- syn$getUserProfile()
