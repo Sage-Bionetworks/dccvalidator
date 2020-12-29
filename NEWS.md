@@ -13,6 +13,9 @@
 - Fix bug in behavior for `check_ages_over_90()` and `check_parent_syn()`
 - Remove progress bars for file input boxes
 - Add script and functions for updating metadata template dictionary sheets.
+- `check_annotation_keys()` and `check_annotation_values()` have renamed
+  arguments from `whitelist_keys`/`whitelist_values` to
+  `allowlist_keys`/`allowlist_values`
 
 # dccvalidator v0.3.0
 
