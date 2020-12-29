@@ -330,25 +330,29 @@ validator_server <- function(input, output, session, study_names, species_list,
     if (is.null(files$manifest)) {
       return(NULL)
     }
-    readr::read_tsv(files$manifest$datapath)
+    readr::read_tsv(files$manifest$datapath) %>%
+      remove_empty_rows()
   })
   indiv <- reactive({
     if (is.null(files$indiv)) {
       return(NULL)
     }
-    readr::read_csv(files$indiv$datapath)
+    readr::read_csv(files$indiv$datapath) %>%
+      remove_empty_rows()
   })
   biosp <- reactive({
     if (is.null(files$biosp)) {
       return(NULL)
     }
-    readr::read_csv(files$biosp$datapath)
+    readr::read_csv(files$biosp$datapath) %>%
+      remove_empty_rows()
   })
   assay <- reactive({
     if (is.null(files$assay)) {
       return(NULL)
     }
-    readr::read_csv(files$assay$datapath)
+    readr::read_csv(files$assay$datapath) %>%
+      remove_empty_rows()
   })
 
   species_name <- reactive({
