@@ -126,34 +126,34 @@ test_that("check_keys allows whitelisting keys", {
   resa <- check_keys(
     c("assay", "foo"),
     annotations = annots,
-    whitelist_keys = "foo"
+    allowlist_keys = "foo"
   )
   resb <- check_keys(
     c("assay", "foo", "bar"),
     annotations = annots,
-    whitelist_keys = "foo"
+    allowlist_keys = "foo"
   )
   resc <- check_keys(
     c("assay", "foo"),
     annotations = annots,
-    whitelist_keys = c("foo", "bar")
+    allowlist_keys = c("foo", "bar")
   )
   resd <- check_keys(
     c("assay", "foo"),
     annotations = annots,
-    whitelist_keys = "foo",
+    allowlist_keys = "foo",
     return_valid = TRUE
   )
   rese <- check_keys(
     c("assay", "foo", "bar"),
     annotations = annots,
-    whitelist_keys = "foo",
+    allowlist_keys = "foo",
     return_valid = TRUE
   )
   resf <- check_keys(
     c("assay", "foo"),
     annotations = annots,
-    whitelist_keys = c("foo", "bar"),
+    allowlist_keys = c("foo", "bar"),
     return_valid = TRUE
   )
   expect_true(inherits(resa, "check_pass"))

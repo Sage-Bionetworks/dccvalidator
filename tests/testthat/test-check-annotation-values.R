@@ -186,9 +186,9 @@ test_that("check_values can whitelist certain keys", {
     assay = "also wrong",
     organ = "wrong again"
   )
-  resa <- check_values(dat1, annots, whitelist_keys = "fileFormat")
-  resb <- check_values(dat1, annots, whitelist_keys = c("fileFormat", "assay"))
-  resc <- check_values(dat1, annots, whitelist_keys = c("fileFormat", "tissue"))
+  resa <- check_values(dat1, annots, allowlist_keys = "fileFormat")
+  resb <- check_values(dat1, annots, allowlist_keys = c("fileFormat", "assay"))
+  resc <- check_values(dat1, annots, allowlist_keys = c("fileFormat", "tissue"))
 
   dat2 <- tibble(
     fileFormat = "txt",
@@ -198,19 +198,19 @@ test_that("check_values can whitelist certain keys", {
   resd <- check_values(
     dat1,
     annots,
-    whitelist_keys = "fileFormat",
+    allowlist_keys = "fileFormat",
     return_valid = TRUE
   )
   rese <- check_values(
     dat1,
     annots,
-    whitelist_keys = c("fileFormat", "assay"),
+    allowlist_keys = c("fileFormat", "assay"),
     return_valid = TRUE
   )
   resf <- check_values(
     dat1,
     annots,
-    whitelist_keys = c("fileFormat", "tissue"),
+    allowlist_keys = c("fileFormat", "tissue"),
     return_valid = TRUE
   )
 
@@ -230,17 +230,17 @@ test_that("check_values can whitelist certain key/value combinations", {
   resa <- check_values(
     dat,
     annots,
-    whitelist_values = list(fileFormat = c("wrong", "wronger"))
+    allowlist_values = list(fileFormat = c("wrong", "wronger"))
   )
   resb <- check_values(
     dat,
     annots,
-    whitelist_values = list(assay = "also wrong")
+    allowlist_values = list(assay = "also wrong")
   )
   resc <- check_values(
     dat,
     annots,
-    whitelist_values = list(assay = "also wrong"),
+    allowlist_values = list(assay = "also wrong"),
     return_valid = TRUE
   )
   expect_equal(
@@ -265,8 +265,8 @@ test_that("check_values can whitelist keys and values simultaneously", {
   res <- check_values(
     dat,
     annots,
-    whitelist_keys = "assay",
-    whitelist_values = list(fileFormat = c("wrong", "wronger"))
+    allowlist_keys = "assay",
+    allowlist_values = list(fileFormat = c("wrong", "wronger"))
   )
   expect_equal(res$data, list(fileFormat = "wrongest"))
 })
@@ -395,13 +395,13 @@ test_that("check_type does not return duplicates", {
   )
 })
 
-test_that("whitelist_values works in check_type", {
+test_that("allowlist_values works in check_type", {
   expect_equal(
     check_type(
       c("a", "b"),
       "compoundDose",
       annots,
-      whitelist_values = list(compoundDose = "a")
+      allowlist_values = list(compoundDose = "a")
     ),
     "b"
   )
