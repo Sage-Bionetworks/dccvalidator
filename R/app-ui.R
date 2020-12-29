@@ -20,7 +20,7 @@ app_ui <- function(request) {
         if (!is.na(config::get("path_to_markdown"))) {
           menuItem("Using the App", tabName = "vignette")
         },
-        menuItem("Documentation", tabName = "documentation"),
+        menuItem("Upload Study Documentation", tabName = "documentation"),
         menuItem("Validator", tabName = "validator")
       ),
       create_footer(config::get("contact_email"))
