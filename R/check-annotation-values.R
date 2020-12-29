@@ -256,9 +256,13 @@ check_type <- function(values, key, annotations, whitelist_values = NULL,
   correct_class <- switch(
     coltype,
     "STRING" = "character",
+    "string" = "character",
     "BOOLEAN" = "logical",
+    "boolean" = "logical",
     "INTEGER" = "integer",
-    "DOUBLE" = "numeric"
+    "integer" = "integer",
+    "DOUBLE" = "numeric",
+    "number" = "numeric"
   )
   ## Convert factors to strings
   values <- if (is.factor(values)) as.character(values) else values
