@@ -23,7 +23,7 @@
 #'     )
 #'   )
 #'   # Show results in boxes
-#'   callModule(results_boxes_server, "Validation Results", res)
+#'   callModule(results_boxes_server, "validation_results", res)
 #' }
 #'
 #' ui <- function(request) {
@@ -34,7 +34,7 @@
 #'       includeCSS(
 #'         system.file("app/www/custom.css", package = "dccvalidator")
 #'       ),
-#'       results_boxes_ui("Validation Results")
+#'       results_boxes_ui("validation_results")
 #'     )
 #'   )
 #' }

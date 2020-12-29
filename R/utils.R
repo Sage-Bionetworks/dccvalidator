@@ -76,3 +76,12 @@ full_login_process <- function(...) {
   syn <- attempt_login(syn, ...)
   return(syn)
 }
+
+## Remove rows containing all NAs from a data frame
+remove_empty_rows <- function(d) {
+  dplyr::filter(
+    dplyr::rowwise(d),
+    !all(is.na(dplyr::c_across(dplyr::everything())))
+  ) %>%
+    dplyr::ungroup()
+}

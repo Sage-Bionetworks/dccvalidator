@@ -51,3 +51,13 @@ test_that("count_unique_values returns correct number", {
   expect_equal(count_unique_values("a", NA, NA), 1)
   expect_equal(count_unique_values(c(NA), c(1, 2), c("a", "b")), 4)
 })
+
+test_that("remove_empty_rows removes rows that are all NA", {
+  dat1 <- tibble::tibble(x = c(1, NA, NA), y = c(1, 2, NA))
+  dat2 <- tibble::tibble(x = c(NA, NA), y = c(NA), NA)
+  dat3 <- tibble::tibble(x = c("a", "b"), y = c("c", "d"))
+
+  expect_equal(remove_empty_rows(dat1), dat1[1:2, ])
+  expect_equal(nrow(remove_empty_rows(dat2)), 0)
+  expect_equal(remove_empty_rows(dat3), dat3)
+})
