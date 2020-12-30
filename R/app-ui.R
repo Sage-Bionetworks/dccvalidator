@@ -202,7 +202,7 @@ app_ui <- function(request) {
                     trigger = "hover"
                   )
                 ),
-                
+
                 # Add an indicator feature to validate button
                 with_busy_indicator_ui(
                   shinyjs::disabled(
