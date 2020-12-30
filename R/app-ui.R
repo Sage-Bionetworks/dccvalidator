@@ -220,7 +220,6 @@ app_ui <- function(request) {
                     "Reset"
                   )
                 )
-
               ),
 
               # Main panel
