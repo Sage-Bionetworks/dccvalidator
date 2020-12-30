@@ -33,8 +33,7 @@ app_server <- function(input, output, session) {
 
   observeEvent(input$cookie, {
     is_logged_in <- FALSE
-    tryCatch(
-      {
+    tryCatch({
         syn$login(sessionToken = input$cookie)
         is_logged_in <- TRUE
       },
