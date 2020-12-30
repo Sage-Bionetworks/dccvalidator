@@ -292,7 +292,7 @@ test_that("can customize link in check_values()", {
 ## check_type() ----------------------------------------------------------------
 
 test_that("check_type returns right value depending on class/`return_valid`", {
-  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
+  annotations <- tibble(key = "x", columnType = "string", value = NA)
   a <- c("a", "b")
   b <- c(1, 2)
   expect_equal(
@@ -314,7 +314,7 @@ test_that("check_type returns right value depending on class/`return_valid`", {
 })
 
 test_that("check_type checks different classes", {
-  annotations <- tibble(key = "x", columnType = "BOOLEAN", value = NA)
+  annotations <- tibble(key = "x", columnType = "boolean", value = NA)
   a <- c("a", "b")
   b <- c(1, 2)
   c <- c(TRUE, FALSE)
@@ -338,16 +338,16 @@ test_that("check_type checks different classes", {
 })
 
 test_that("check_type can handle annotations as data frames OR tibbles", {
-  a1 <- tibble(key = "x", columnType = "STRING", value = NA)
+  a1 <- tibble(key = "x", columnType = "string", value = NA)
   a2 <- data.frame(
     key = "x",
-    columnType = "STRING",
+    columnType = "string",
     value = NA,
     stringsAsFactors = FALSE
   )
   a3 <- data.frame(
     key = "x",
-    columnType = "STRING",
+    columnType = "string",
     value = NA,
     stringsAsFactors = TRUE
   )
@@ -363,7 +363,7 @@ test_that("check_type can handle annotations as data frames OR tibbles", {
 })
 
 test_that("check_type can handle factor annotation values as strings", {
-  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
+  annotations <- tibble(key = "x", columnType = "string", value = NA)
   a <- c("a", "b")
   b <- factor(c("a", "b"))
   expect_equal(
@@ -373,7 +373,7 @@ test_that("check_type can handle factor annotation values as strings", {
 })
 
 test_that("check_type omits NAs", {
-  annotations <- tibble(key = "x", columnType = "DOUBLE", value = NA)
+  annotations <- tibble(key = "x", columnType = "number", value = NA)
   a <- c("a", "b", NA)
   b <- c(1, NA, 2)
   expect_equal(
@@ -387,11 +387,21 @@ test_that("check_type omits NAs", {
 })
 
 test_that("check_type does not return duplicates", {
-  annotations <- tibble(key = "x", columnType = "STRING", value = NA)
+  annotations <- tibble(key = "x", columnType = "string", value = NA)
   a <- c("a", "b", NA, "b", "a")
   expect_equal(
     check_type(a, "x", annotations, return_valid = FALSE),
     character(0)
+  )
+})
+
+test_that("check_type handles old and new type formats", {
+  annots1 <- tibble(key = "x", columnType = "string", value = NA)
+  annots2 <- tibble(key = "x", columnType = "STRING", value = NA)
+  a <- c("a", "b")
+  expect_equal(
+    check_type(a, "x", annots1, return_valid = FALSE),
+    check_type(a, "x", annots2, return_valid = FALSE),
   )
 })
 
@@ -408,7 +418,7 @@ test_that("whitelist_values works in check_type", {
 })
 
 test_that("Multiple column types produces an error", {
-  annotations <- tibble(key = c("x", "x"), columnType = c("STRING", "DOUBLE"))
+  annotations <- tibble(key = c("x", "x"), columnType = c("string", "number"))
   a <- c("a")
   expect_error(check_type(a, "x", annotations, return_valid = FALSE))
 })
