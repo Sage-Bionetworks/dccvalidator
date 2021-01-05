@@ -31,6 +31,16 @@ app_ui <- function(request) {
       # Add resources in www
       golem_add_external_resources(),
 
+      # Show loading screen
+      waiter::use_waiter(),
+      waiter::waiter_show_on_load(
+        html = tagList(
+          img(src = "www/loading.gif"),
+          h4("Connecting to Synapse...")
+        ),
+        color = "#424874"
+      ),
+
       # Make a list of the tabItems; this is a workaround
       # for a problem with tabItems and shinyDashboard
       tags$div(

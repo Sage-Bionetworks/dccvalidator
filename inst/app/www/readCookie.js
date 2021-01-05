@@ -10,7 +10,7 @@ function readCookie() {
   xhr.onreadystatechange = function() {
     if (xhr.readyState == XMLHttpRequest.DONE) {
       if (xhr.status == 401) {
-        Shiny.onInputChange("authorized", false);
+        Shiny.onInputChange("cookie", "unauthorized");
       } else {
         Shiny.onInputChange("cookie",xhr.responseText);
       }

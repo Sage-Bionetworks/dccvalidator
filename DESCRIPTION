@@ -52,7 +52,8 @@ Imports:
     tibble,
     tools,
     utils,
-    visdat
+    visdat,
+    waiter
 Suggests:
     covr,
     dplyr,
