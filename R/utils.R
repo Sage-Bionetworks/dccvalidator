@@ -1,4 +1,4 @@
-## Check if we are running on travis
+## Check if we are running on CI
 on_ci <- function() {
   if (identical(Sys.getenv("CI"), "true")) {
     return(TRUE)
