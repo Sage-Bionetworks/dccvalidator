@@ -345,7 +345,7 @@ can_coerce <- function(values, class) {
     ## Integers are coercible to numeric
     return(TRUE)
   } else if (class == "integer" && inherits(values, "numeric") &&
-               isTRUE(all.equal(values, as.integer(values)))) {
+    isTRUE(all.equal(values, as.integer(values)))) {
     ## Whole numbers are coercible to integers
     return(TRUE)
   } else if (class == "logical") {

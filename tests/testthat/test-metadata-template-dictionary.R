@@ -71,7 +71,7 @@ test_that("verify_dictionary_structure throws error if not a data frame", {
   expect_error(verify_dictionary_structure(dat3))
 })
 
-test_that("verify_dictionary_structure error message is correct if missing columns", { # nolint 
+test_that("verify_dictionary_structure error message is correct if missing columns", { # nolint
   dat <- data.frame(
     key = c("foo", "bar"),
     description = c("foo", "bar"),
@@ -268,7 +268,7 @@ test_that("add_dictionary_sheets returns error if missing columns or annots", {
     annotations = dat[, c("key", "description", "source")]
   ))
   expect_error(add_dictionary_sheets(
-    annotations = data[,  c("value", "valueDescription")]
+    annotations = data[, c("value", "valueDescription")]
   ))
   # NULL/NA won't have a custom error message but should still be checked
   expect_error(add_dictionary_sheets(annotations = NA))
