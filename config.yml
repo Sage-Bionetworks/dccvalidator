@@ -79,6 +79,7 @@ amp-ad:
       methylationArray: "syn22036881"
       MRI: "syn22087332"
       PET: "syn22087299"
+      16SrRNAseq: "syn24184375"
   complete_columns:
     manifest:
       - "consortium"
