@@ -80,6 +80,7 @@ amp-ad:
       MRI: "syn22087332"
       PET: "syn22087299"
       16SrRNAseq: "syn24184375"
+      metabolomics: "syn24216748"
   complete_columns:
     manifest:
       - "consortium"
