@@ -81,6 +81,11 @@ amp-ad:
       PET: "syn22087299"
       16SrRNAseq: "syn24184375"
       metabolomics: "syn24216748"
+      abeta molecular data: "syn22035282"
+      blood chemistry: "syn21819968"
+      proinflammatory molecular data: "syn22035281"
+      immunofluorescence: "syn22035297"
+      
   complete_columns:
     manifest:
       - "consortium"
