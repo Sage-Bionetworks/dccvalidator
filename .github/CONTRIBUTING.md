@@ -13,13 +13,20 @@ the GitHub web interface, so long as the changes are made in the _source_ file.
 ### Prerequisites
 
 Before you make a substantial pull request, you should always file an issue and
-make sure someone from the team agrees that it’s a problem. If you’ve found a
+make sure someone from the team agrees that it’s a problem or desired feature. If you’ve found a
 bug, create an associated issue and illustrate the bug with a minimal 
 [reprex](https://www.tidyverse.org/help/#reprex).
 
+Once an issue exists, indicate that you plan on working on the update by commenting in the issue and, if able, assigning the issue to yourself.
+
+### Forked repos
+
+If you do not have write access to the repo, please create a fork in your own account. Note that a pull request from a forked branch will fail the GitHub Actions tests due to not having the required secrets. Since the maintainers will need to spend extra time vetting the update, pull requests from forked repositories will take longer to process.
+
 ### Pull request process
 
-*  We recommend that you create a Git branch for each pull request (PR).  
+*  We require that you create a Git branch for each pull request (PR).  
+
 *  Look at the R-CMD-Check build status before and after making changes. The `README`
 should contain badges for any continuous integration services used
 by the package.  
@@ -29,11 +36,13 @@ apply these styles, but please don't restyle code that has nothing to do with
 your PR.  
 *  We use [roxygen2](https://cran.r-project.org/package=roxygen2), with
 [Markdown syntax](https://cran.r-project.org/web/packages/roxygen2/vignettes/markdown.html), 
-for documentation.  
+for documentation. 
 *  We use [testthat](https://cran.r-project.org/package=testthat). Contributions
-with test cases included are easier to accept.  
+with test cases included are easier to accept. 
 
 ### Local development
+
+#### pre-commit hooks
 
 `dccvalidator` uses pre-commit hooks to check for common issues, such as code
 style (which should conform to [tidyverse style](https://style.tidyverse.org/)),
@@ -41,13 +50,13 @@ code parsability, and up-to-date .Rd documentation. To use, you will need to
 install [pre-commit](https://pre-commit.com/#intro). If on a Mac, I recommend
 using [homebrew](https://brew.sh/):
 
-```
+```R
 brew install pre-commit
 ```
 
 Then, within this git repo, run:
 
-```
+```R
 pre-commit install
 ```
 
@@ -57,6 +66,34 @@ issues with the checks and want to commit your work and worry about them later,
 you can run `git commit --no-verify` to skip all checks. Or, you can skip
 certain hooks by their ID (as shown in the file `.pre-commit-config.yaml`), e.g.
 `SKIP=roxygenize git commit -m "foo"`.
+
+#### Manual checks
+
+While pre-commit hooks are recommended, it's possible to verify that the update follows our standards.
+
+##### Package check
+
+Install the `devtools` package and run the `check()` function. All checks should pass, including tests.
+
+```R
+devtools::check()
+```
+
+##### Style
+
+As mentioned above, this package follows the [tidyverse style guide](http://style.tidyverse.org). Sticking to a single style helps with readability and allows for focusing on the code itself. Your code can be updated to the proper style by installing the `styler` package and running one of the styling functions on your code, such as `style_dir()`.
+
+```R
+styler::style_dir(file_type = "r")
+```
+
+Additionally, we also follow linting guidelines. While `styler` will enforce some of these guidelines, it is also useful to install `lintr` and run one of the linting functions, such as `lint_file()` or `lint_package()`. If there are linting errors, this will generate a list of problems to be fixed.
+
+```
+lintr::lint_package()
+```
+
+_Note: Only commit style and lint changes related to your own code. If there are style and lint changes unrelated to your code, these can be ignored._
 
 ### Code of Conduct
 
