@@ -16,7 +16,6 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-
 As the AMP-AD Knowledge Portal has grown to 50+ studies and over
 70,000 data files, we've realized a need to be more standardized in our
 approaches to data curation. Thus, we built an application that performs many of
