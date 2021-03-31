@@ -60,7 +60,7 @@ items not checked by the dccvalidator. Receive permissions to upload data to the
 staging folder.
 6. Use the validated manifest to upload the data with `syncToSynapse` (see
 [Synapse documentation](https://docs.synapse.org/articles/uploading_in_bulk.html) for uploading data in bulk).
-7. Contact the AMP-AD team. The team will do the final verifications before
+7. Contact the AD Data Liaison. The AD Curation team will do the final verifications before
 releasing the data.
 
 ## Documentation Upload
