@@ -50,10 +50,10 @@ requirements, validating and reviewing the metadata, and uploading the dataset.
 
 ## General Process Overview
 
-1. Contact the Data Liaison (juliane.schneider@sagebase.org) to discuss the study and the expected data. Receive
+1. Contact the Data Liaison (AMPAD_SageAdmin@synapse.org) to discuss the study and the expected data. Receive
 staging folder synIDs for each expected dataset.
 2. Using the templates located at the bottom of the [Onboarding page](https://www.synapse.org/#!Synapse:syn24986618), create a study description, methods description(s), and acknowledgement statement.
-3. Upload the study description, methods description and acknowledgement statement using the [Submission Form](https://www.synapse.org/#!Synapse:syn25051271)
+3. Upload the [study description](https://www.synapse.org/#!Synapse:syn25014531), [methods description](https://www.synapse.org/#!Synapse:syn25018065) and [acknowledgement statement](https://www.synapse.org/#!Synapse:syn25014532) using the [Submission Form](https://www.synapse.org/#!Synapse:syn25051271). Instructions on writing this documentation is located on our [Data Contributor Information](https://www.synapse.org/#!Synapse:syn24986618) page.
 4. Validate metadata + manifest files in [dccvalidator](https://shinypro.synapse.org/users/kwoo/dccvalidator-app/).
 5. Contact the AMP-AD team when all files pass validation. The team will verify
 items not checked by the dccvalidator. Receive permissions to upload data to the
