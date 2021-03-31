@@ -16,15 +16,19 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-We've built the dccvalidator tool to streamline the process of data validation
-and QA/QC. As the AMP-AD Knowledge Portal has grown to 50+ studies and over
+As the AMP-AD Knowledge Portal has grown to 50+ studies and over
 70,000 data files, we've realized a need to be more standardized in our
 approaches to data curation. Thus, we built an application that performs many of
 the routine data quality checks we previously conducted by hand, with the hopes
 that it will help you, the data contributor, get your data checked, validated,
 and shared more easily and quickly.
 
-The application can be found at https://shinypro.synapse.org/users/kwoo/dccvalidator-app/
+The [dccvalidator tool](https://shinypro.synapse.org/users/kwoo/dccvalidator-app/) checks your metadata for, among other things:
+* The correct structure (are all of the columns there?)
+* The values in the cells are correct if the column uses controlled values (for example, TRUE is used instead of Yes or Y)
+* If both individuals and biospecimen templates are used, each biospecimen is linked to an individual
+
+
 
 # Requirements
 
@@ -46,25 +50,26 @@ requirements, validating and reviewing the metadata, and uploading the dataset.
 
 ## General Process Overview
 
-1. Contact the AMP-AD team to discuss the study and the expected data. Receive
+1. Contact the [AD Data Liaison](mailto:AMPAD_SageAdmin@synapse.org) to discuss the study and the expected data. Receive
 staging folder synIDs for each expected dataset.
-2. Upload documentation and validate metadata + manifest files in [dccvalidator](https://shinypro.synapse.org/users/kwoo/dccvalidator-app/).
-3. Contact the AMP-AD team when all files pass validation. The team will verify
+2. Using the templates located at the bottom of the [Onboarding page](https://www.synapse.org/#!Synapse:syn24986618), create a study description, methods description(s), and acknowledgement statement.
+3. Upload the [study description](https://www.synapse.org/#!Synapse:syn25014531), [methods description](https://www.synapse.org/#!Synapse:syn25018065) and [acknowledgement statement](https://www.synapse.org/#!Synapse:syn25014532) using the [Submission Form](https://www.synapse.org/#!Synapse:syn25051271). Instructions on writing this documentation is located on our [Data Contributor Information](https://www.synapse.org/#!Synapse:syn24986618) page.
+4. Validate metadata + manifest files in [dccvalidator](https://shinypro.synapse.org/users/kwoo/dccvalidator-app/).
+5. Contact the [AD Data Liaison](mailto:AMPAD_SageAdmin@synapse.org) when all files pass validation. The team will verify
 items not checked by the dccvalidator. Receive permissions to upload data to the
 staging folder.
-4. Use the validated manifest to upload the data with `syncToSynapse` (see
-[Synapse documentation](https://docs.synapse.org/articles/uploading_in_bulk.html) for uploading data in bulk).
-5. Contact the AMP-AD team. The team will do the final verifications before
+6. Use the validated manifest to upload the data with `syncToSynapse` (see
+[Synapse documentation](https://docs.synapse.org/articles/uploading_in_bulk.html#validate-the-manifest-and-upload-files) for uploading data in bulk).
+7. Contact the [AD Data Liaison](mailto:AMPAD_SageAdmin@synapse.org). The AD Curation team will do the final verifications before
 releasing the data.
 
 ## Documentation Upload
 
-Each study in AMP-AD has accompanying [documentation in the portal](https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648).
-You can submit your documentation through the dccvalidator app on the
-Documentation page. There should be a study description for the whole study, and
-an assay description for each of the assays that was performed. These can be in
-a single file, or you can upload multiple files to the assay description
-section.
+Each study in AMP-AD has the accompanying [documentation in the portal](https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648):
+1. **Study Description:** use template located [here](https://www.synapse.org/#!Synapse:syn25014531) to write your study description
+2. **Methods Description(s):** use template located [here](https://www.synapse.org/#!Synapse:syn25018065) to write a methods description for **each** of your assay types
+3. **Acknowledgement statement:** use template located [here](https://www.synapse.org/#!Synapse:syn25014532) to write an acknowledgement statement for the use of those that cite your data
+You can submit your documentation through the [Submission Form](https://www.synapse.org/#!Synapse:syn25051271) located on our [Onboarding Documentation](https://www.synapse.org/#!Synapse:syn24986618)
 
 ## Data Validation
 
@@ -120,5 +125,6 @@ You can execute `syncToSynapse` in the
 [Python client](https://python-docs.synapse.org/build/html/synapseutils.html#synapseutils.sync.syncToSynapse)
 or 
 [R client](https://github.com/Sage-Bionetworks/synapserutils#upload-data-in-bulk).
+For uploads with more than 100 files or large file sizes, the Python client or command line client will upload substantially faster than the R client.
 For getting started with the Synapse programmatic clients, please visit our
 [Synapse docs](https://docs.synapse.org/articles/api_documentation.html).
