@@ -29,7 +29,6 @@ The [dccvalidator tool](https://shinypro.synapse.org/users/kwoo/dccvalidator-app
 * If both individuals and biospecimen templates are used, each biospecimen is linked to an individual
 
 
-The application can be found at https://shinypro.synapse.org/users/kwoo/dccvalidator-app/
 
 # Requirements
 
