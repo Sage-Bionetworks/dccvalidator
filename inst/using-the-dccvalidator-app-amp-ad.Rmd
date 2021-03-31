@@ -23,7 +23,7 @@ the routine data quality checks we previously conducted by hand, with the hopes
 that it will help you, the data contributor, get your data checked, validated,
 and shared more easily and quickly.
 
-The dccvalidator tool checks your metadata for, among other things:
+The [dccvalidator tool](https://shinypro.synapse.org/users/kwoo/dccvalidator-app/) checks your metadata for, among other things:
 * The correct structure (are all of the columns there?)
 * The values in the cells are correct if the column uses controlled values (TRUE is used instead of Yes or Y)
 * If both individuals and biospecimen templates are used, each biospecimen is linked to an individual
