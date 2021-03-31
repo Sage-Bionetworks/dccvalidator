@@ -55,7 +55,7 @@ staging folder synIDs for each expected dataset.
 2. Using the templates located at the bottom of the [Onboarding page](https://www.synapse.org/#!Synapse:syn24986618), create a study description, methods description(s), and acknowledgement statement.
 3. Upload the [study description](https://www.synapse.org/#!Synapse:syn25014531), [methods description](https://www.synapse.org/#!Synapse:syn25018065) and [acknowledgement statement](https://www.synapse.org/#!Synapse:syn25014532) using the [Submission Form](https://www.synapse.org/#!Synapse:syn25051271). Instructions on writing this documentation is located on our [Data Contributor Information](https://www.synapse.org/#!Synapse:syn24986618) page.
 4. Validate metadata + manifest files in [dccvalidator](https://shinypro.synapse.org/users/kwoo/dccvalidator-app/).
-5. Contact the AMP-AD team when all files pass validation. The team will verify
+5. Contact the AD Data Liaison when all files pass validation. The team will verify
 items not checked by the dccvalidator. Receive permissions to upload data to the
 staging folder.
 6. Use the validated manifest to upload the data with `syncToSynapse` (see
