@@ -19,97 +19,103 @@ upload_documents_ui <- function(id, study_link_human,
     tabName = id,
     # Use shinyjs
     shinyjs::useShinyjs(),
-    sidebarLayout(
-      sidebarPanel(
-        # UI for getting the study name
-        get_study_ui(ns("doc_study")),
+    if (config::get("docs_tab")$include_upload_widget) {
+      sidebarLayout(
+        sidebarPanel(
+          # UI for getting the study name
+          get_study_ui(ns("doc_study")),
 
-        # File import
-        div(
-          class = "result",
+          # File import
           div(
-            class = "wide",
-            shinyjs::disabled(
-              fileInput(
-                ns("study_doc"),
-                "Upload study description file (.txt, .docx, .md, .pdf, .tex)",
-                accept = c(
-                  "application/vnd.openxmlformats-officedocument.wordprocessingml.document", # nolint
-                  "application/msword",
-                  "application/pdf",
-                  "text/plain",
-                  "application/x-tex",
-                  "text/markdown"
+            class = "result",
+            div(
+              class = "wide",
+              shinyjs::disabled(
+                fileInput(
+                  ns("study_doc"),
+                  "Upload study description file (.txt, .docx, .md, .pdf, .tex)",
+                  accept = c(
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document", # nolint
+                    "application/msword",
+                    "application/pdf",
+                    "text/plain",
+                    "application/x-tex",
+                    "text/markdown"
+                  )
                 )
+              )
+            ),
+            popify(
+              tags$a(icon(name = "question-circle"), href = "#"),
+              "Information",
+              "Select the study description file. Please refer to the information on this page to learn what should be in the study description.", # nolint
+              placement = "left",
+              trigger = "hover"
+            )
+          ),
+          div(
+            class = "result",
+            div(
+              class = "wide",
+              shinyjs::disabled(
+                fileInput(
+                  ns("assay_doc"),
+                  "Upload assay description files (.txt, .docx, .md, .pdf, .tex)",
+                  multiple = TRUE,
+                  accept = c(
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document", # nolint
+                    "application/msword",
+                    "application/pdf",
+                    "text/plain",
+                    "application/x-tex",
+                    "text/markdown"
+                  )
+                )
+              )
+            ),
+            popify(
+              tags$a(icon(name = "question-circle"), href = "#"),
+              "Information",
+              "Select the assay description file(s). Please refer to the information on this page to learn what should be in the assay description.", # nolint
+              placement = "left",
+              trigger = "hover"
+            )
+          ),
+
+          # Add an indicator feature to submit button
+          with_busy_indicator_ui(
+            shinyjs::disabled(
+              actionButton(
+                ns("upload_docs"),
+                "Submit"
               )
             )
           ),
-          popify(
-            tags$a(icon(name = "question-circle"), href = "#"),
-            "Information",
-            "Select the study description file. Please refer to the information on this page to learn what should be in the study description.", # nolint
-            placement = "left",
-            trigger = "hover"
-          )
-        ),
-
-        div(
-          class = "result",
-          div(
-            class = "wide",
-            shinyjs::disabled(
-              fileInput(
-                ns("assay_doc"),
-                "Upload assay description files (.txt, .docx, .md, .pdf, .tex)",
-                multiple = TRUE,
-                accept = c(
-                  "application/vnd.openxmlformats-officedocument.wordprocessingml.document", # nolint
-                  "application/msword",
-                  "application/pdf",
-                  "text/plain",
-                  "application/x-tex",
-                  "text/markdown"
-                )
-              )
-            )
-          ),
-          popify(
-            tags$a(icon(name = "question-circle"), href = "#"),
-            "Information",
-            "Select the assay description file(s). Please refer to the information on this page to learn what should be in the assay description.", # nolint
-            placement = "left",
-            trigger = "hover"
-          )
-        ),
-
-        # Add an indicator feature to submit button
-        with_busy_indicator_ui(
+          hr(),
           shinyjs::disabled(
             actionButton(
-              ns("upload_docs"),
-              "Submit"
+              ns("reset_btn_doc"),
+              "Reset"
             )
           )
         ),
-
-        hr(),
-
-        shinyjs::disabled(
-          actionButton(
-            ns("reset_btn_doc"),
-            "Reset"
+        mainPanel(
+          upload_docs_instruct_text(
+            study_link_human,
+            study_link_animal,
+            study_link_ref
           )
         )
-      ),
-
-      mainPanel(
+      )
+    } else {
+      div(
         upload_docs_instruct_text(
           study_link_human,
           study_link_animal,
           study_link_ref
         )
       )
-    )
+    }
   )
 }
 
@@ -252,7 +258,6 @@ upload_docs_instruct_text <- function(study_link_human, study_link_animal,
     # nolint start
     overview_text,
     h4("Study Description"),
-
     p("Each study should be given both a descriptive and an abbreviated name. The abbreviation will be used to annotate all content associated with the study. For a study with a human cohort, the study description should include:"),
     tags$ul(
       tags$li(
@@ -268,7 +273,6 @@ upload_docs_instruct_text <- function(study_link_human, study_link_animal,
         "(for post mortem studies) the brain bank name(s) and links to website(s)"
       )
     ),
-
     p("For a study with an animal model cohort, the study description should include:"),
     tags$ul(
       tags$li(
@@ -281,7 +285,6 @@ upload_docs_instruct_text <- function(study_link_human, study_link_animal,
         "(if genetically modified) genotype and genetic background. Provide a link to the strain datasheet(s) if a commercial model, or a description of how it was created if not."
       )
     ),
-
     p("For studies using in-vitro cell culture, the study description should include:"),
     tags$ul(
       tags$li(
@@ -294,11 +297,8 @@ upload_docs_instruct_text <- function(study_link_human, study_link_animal,
         "cell culture information (such as primary or immortalized cell line, passage, treatments, differentiation). If a commercial cell line, provide a link."
       )
     ),
-
     p("Include citations for more study information if available."),
-
     h4("Assay Description"),
-
     p(
       "For each assay, provide a summary of ",
       tags$b("sample processing, data generation,"),

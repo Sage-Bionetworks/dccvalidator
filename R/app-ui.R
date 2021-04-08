@@ -255,13 +255,15 @@ app_ui <- function(request) {
               get_markdown()
             )
           },
-          # Documentation tab UI
-          upload_documents_ui(
-            id = "documentation",
-            study_link_human = config::get("study_link_human"),
-            study_link_animal = config::get("study_link_animal"),
-            study_link_ref = config::get("study_link_ref")
-          )
+          if (config::get("docs_tab")$include_tab) {
+            # Documentation tab UI
+            upload_documents_ui(
+              id = "documentation",
+              study_link_human = config::get("docs_tab")$study_link_human,
+              study_link_animal = config::get("docs_tab")$study_link_animal,
+              study_link_ref = config::get("docs_tab")$study_link_ref
+            )
+          }
         ),
         class = "tab-content"
       )
