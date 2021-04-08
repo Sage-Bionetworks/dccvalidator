@@ -158,6 +158,57 @@ test_that("check_value works with a tibble of multiple values", {
   expect_equal(res, character(0))
 })
 
+test_that("check_value checks comma separated or json stringlist enum values", {
+  ## Need to check all values in a comma separated or json stringlist set
+  ## against enumerated annotation values.
+  res1 <- check_value(
+    values = "rnaSeq, rnaSeq, rnaSeq",
+    key = "assay",
+    annotations = annots
+  )
+  res2 <- check_value(
+    values = "[\"rnaSeq\",\"rnaSeq\"]",
+    key = "assay",
+    annotations = annots
+  )
+  res3 <- check_value(
+    values = "foo, rnaSeq, bar, rnaSeq",
+    key = "assay",
+    annotations = annots
+  )
+  res4 <- check_value(
+    values = "[\"bar\",\"rnaSeq\"]",
+    key = "assay",
+    annotations = annots
+  )
+  expect_equal(res1, character(0))
+  expect_equal(res1, character(0))
+  expect_equal(res3, c("foo", "bar"))
+  expect_equal(res4, "bar")
+})
+
+test_that("check_value ignores commas if not enum annotation", {
+  ## Some values are free text and could have commas.
+  ## Check that free text values with commas are ignored if the annotation
+  ## is not enumerated.
+  annotations <- tribble(
+    ~key, ~value, ~columnType,
+    "notes", NA, "STRING"
+  )
+  res1 <- check_value(
+    values = "[\"this is\",\"a weirdly formmated comment\"]",
+    key = "notes",
+    annotations = annotations
+  )
+  res2 <- check_value(
+    values = "In my notes, I use commas",
+    key = "notes",
+    annotations = annotations
+  )
+  expect_equal(res1, character(0))
+  expect_equal(res2, character(0))
+})
+
 ## check_values() --------------------------------------------------------------
 
 test_that("check_values checks multiple values", {
