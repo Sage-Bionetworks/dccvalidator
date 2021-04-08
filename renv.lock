@@ -200,10 +200,15 @@
     },
     "dccvalidator": {
       "Package": "dccvalidator",
-      "Version": "0.3.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "a20a00c4c7750687de0607c56f4d855a"
+      "Version": "0.3.0.9015",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "dccvalidator",
+      "RemoteUsername": "Sage-Bionetworks",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "df58c79db1e02c2dd560516a185f23d43863618a",
+      "Hash": "1c504a6395b1d95e64900108d270a58f"
     },
     "desc": {
       "Package": "desc",
@@ -368,10 +373,10 @@
     },
     "htmltools": {
       "Package": "htmltools",
-      "Version": "0.5.0",
+      "Version": "0.5.1.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "abf3e9d8a07bf6c669f24df5a7a5658a"
+      "Hash": "daf11a0bf7d3ab70f0d6c6b571aa934d"
     },
     "htmlwidgets": {
       "Package": "htmlwidgets",
@@ -466,10 +471,10 @@
     },
     "magrittr": {
       "Package": "magrittr",
-      "Version": "1.5",
+      "Version": "2.0.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "c7f13848b0679292077bc7997d930862"
+      "Hash": "491fc94df48397a84854066ad08bcb78"
     },
     "markdown": {
       "Package": "markdown",
