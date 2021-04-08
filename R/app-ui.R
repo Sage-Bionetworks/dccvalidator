@@ -14,18 +14,18 @@
 app_ui <- function(request) {
   dashboardPage(
     dashboardHeader(title = "Metadata Validation"),
-
     dashboardSidebar(
       sidebarMenu(
         if (!is.na(config::get("path_to_markdown"))) {
           menuItem("Using the App", tabName = "vignette")
         },
-        menuItem("Upload Study Documentation", tabName = "documentation"),
+        if (config::get("docs_tab")$include_tab) {
+          menuItem("Upload Study Documentation", tabName = "documentation") 
+        },
         menuItem("Validator", tabName = "validator")
       ),
       create_footer(config::get("contact_email"))
     ),
-
     dashboardBody(
 
       # Add resources in www
