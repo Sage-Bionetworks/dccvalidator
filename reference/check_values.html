@@ -220,6 +220,15 @@ annotation keys and values.</p>
 <span class='op'>)</span>
 <span class='fu'>check_values</span><span class='op'>(</span><span class='va'>dat</span>, <span class='va'>annots</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>&lt;error/check_fail&gt;</span><span>
+#&gt; Some annotation values are invalid</div><div class='input'>
+<span class='co'>## Comma-separated and json-style strings for keys with enumerated values</span>
+<span class='co'>## are separated and checked individually</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+  fileFormat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"wrong, txt, csv"</span>, <span class='st'>"[\"wrong again\",\"csv\"]"</span><span class='op'>)</span>,
+  stringsAsFactors <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
+<span class='fu'>check_values</span><span class='op'>(</span><span class='va'>dat</span>, <span class='va'>annots</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>&lt;error/check_fail&gt;</span><span>
 #&gt; Some annotation values are invalid</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
