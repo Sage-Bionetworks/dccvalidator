@@ -6,20 +6,18 @@
 #'
 #' @noRd
 #' @param id the module id
-#' @param study_link_human html link to example of a study using human data
-#' @param study_link_animal html link to example of a study using animal models
-#' @param study_link_ref html link to example of study acknowledgment
-#'   preference
+#' @param markdown_path path to the markdown file to be displayed
+#' @param include_widget TRUE if the upload widget should be included,
+#'   else FALSE
 #' @return html ui for the module
-upload_documents_ui <- function(id, study_link_human,
-                                study_link_animal, study_link_ref) {
+upload_documents_ui <- function(id, markdown_path, include_widget) {
   ns <- NS(id)
 
   tabItem(
     tabName = id,
     # Use shinyjs
     shinyjs::useShinyjs(),
-    if (config::get("docs_tab")$include_upload_widget) {
+    if (include_widget) {
       sidebarLayout(
         sidebarPanel(
           # UI for getting the study name
@@ -100,20 +98,14 @@ upload_documents_ui <- function(id, study_link_human,
           )
         ),
         mainPanel(
-          upload_docs_instruct_text(
-            study_link_human,
-            study_link_animal,
-            study_link_ref
-          )
+          div(
+            get_markdown(markdown_path = markdown_path)
+          ) 
         )
       )
     } else {
       div(
-        upload_docs_instruct_text(
-          study_link_human,
-          study_link_animal,
-          study_link_ref
-        )
+        get_markdown(markdown_path = markdown_path)
       )
     }
   )

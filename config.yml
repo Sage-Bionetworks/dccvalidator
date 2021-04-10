@@ -7,11 +7,10 @@ default:
   annotations_link: "https://shinypro.synapse.org/users/nsanati/annotationUI/"
   templates_link: "https://www.synapse.org/#!Synapse:syn18512044"
   docs_tab:
-    include_tab: TRUE
-    include_upload_widget: TRUE
-    study_link_animal: "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648"
-    study_link_human: "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn3159438"
-    study_link_ref: ""
+    include_tab: FALSE
+    include_upload_widget: FALSE
+    tab_name: "Upload Study Documentation"
+    path_to_docs_markdown: "inst/study-documentation-amp-ad.Rmd"
   teams:
     - "273957"
   templates:
@@ -52,10 +51,9 @@ amp-ad:
     - "3405451"
   docs_tab:
     include_tab: TRUE
-    include_upload_widget: FALSE
-    study_link_animal: "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648"
-    study_link_human: "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn3159438"
-    study_link_ref: "https://adknowledgeportal.synapse.org/#/DataAccess/AcknowledgementStatements"
+    include_upload_widget: TRUE
+    tab_name: "Upload Study Documentation"
+    path_to_docs_markdown: "inst/study-documentation-amp-ad.Rmd"
   species_list:
     - "human"
     - "drosophila"
@@ -115,8 +113,8 @@ pec:
   docs_tab:
     include_tab: TRUE
     include_upload_widget: FALSE
-    study_link_animal: "https://www.synapse.org/#!Synapse:syn4566132"
-    study_link_human: "https://www.synapse.org/#!Synapse:syn4590909"
+    tab_name: "Study Documentation"
+    path_to_docs_markdown: "inst/study-documentation-pec.Rmd"
   teams:
     - "3323356"
   templates:

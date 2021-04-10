@@ -1,11 +1,11 @@
-get_markdown <- function() {
+get_markdown <- function(markdown_path) {
   HTML(markdown::markdownToHTML(
     knitr::knit(
       input = glue::glue(
-        tools::file_path_sans_ext(config::get("path_to_markdown")), ".Rmd"
+        tools::file_path_sans_ext(markdown_path), ".Rmd"
       ),
       output = glue::glue(
-        tools::file_path_sans_ext(config::get("path_to_markdown")), ".md"
+        tools::file_path_sans_ext(markdown_path), ".md"
       ),
       quiet = TRUE
     ),

@@ -20,7 +20,9 @@ app_ui <- function(request) {
           menuItem("Using the App", tabName = "vignette")
         },
         if (config::get("docs_tab")$include_tab) {
-          menuItem("Upload Study Documentation", tabName = "documentation") 
+          menuItem(
+            config::get("docs_tab")$tab_name,
+            tabName = "documentation") 
         },
         menuItem("Validator", tabName = "validator")
       ),
@@ -252,16 +254,15 @@ app_ui <- function(request) {
           if (!is.na(config::get("path_to_markdown"))) {
             tabItem(
               tabName = "vignette",
-              get_markdown()
+              get_markdown(config::get("path_to_markdown"))
             )
           },
           if (config::get("docs_tab")$include_tab) {
             # Documentation tab UI
             upload_documents_ui(
               id = "documentation",
-              study_link_human = config::get("docs_tab")$study_link_human,
-              study_link_animal = config::get("docs_tab")$study_link_animal,
-              study_link_ref = config::get("docs_tab")$study_link_ref
+              markdown_path = config::get("docs_tab")$path_to_docs_markdown,
+              include_widget = config::get("docs_tab")$include_upload_widget
             )
           }
         ),
