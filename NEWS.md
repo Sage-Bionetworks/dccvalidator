@@ -13,6 +13,7 @@
 - Fix bug in behavior for `check_ages_over_90()` and `check_parent_syn()`
 - Remove progress bars for file input boxes
 - Add script and functions for updating metadata template dictionary sheets.
+- Add customization options for app's study documentation tab, including necessary updates to config.yml.
 
 # dccvalidator v0.3.0
 
