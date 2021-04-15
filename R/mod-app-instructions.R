@@ -1,3 +1,9 @@
+#' @title Get markdown as HTML
+#'
+#' @description Knit a Rmarkdown file and return it as HTML.
+#'
+#' @noRd
+#' @param markdown_path Path to the markdown file
 get_markdown <- function(markdown_path) {
   HTML(markdown::markdownToHTML(
     knitr::knit(
@@ -9,6 +15,6 @@ get_markdown <- function(markdown_path) {
       ),
       quiet = TRUE
     ),
-    stylesheet = system.file("app/www/custom.css", package = "dccvalidator")
+    stylesheet = app_sys("www/custom.css")
   ))
 }
