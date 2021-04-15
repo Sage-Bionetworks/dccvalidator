@@ -7,8 +7,8 @@ default:
   annotations_link: "https://shinypro.synapse.org/users/nsanati/annotationUI/"
   templates_link: "https://www.synapse.org/#!Synapse:syn18512044"
   docs_tab:
-    include_tab: FALSE
-    include_upload_widget: FALSE
+    include_tab: TRUE
+    include_upload_widget: TRUE
     tab_name: "Upload Study Documentation"
     path_to_docs_markdown: "inst/study-documentation-amp-ad.Rmd"
   teams:
