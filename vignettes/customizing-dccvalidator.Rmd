@@ -101,9 +101,9 @@ To install the dccvalidator instead of forking the repository:
 * `templates_link`: URL to the location of metadata templates
 * `docs_tab`: These settings configure the documentation tab, including the
   option to not have a tab at all.
-  * `include_tab`: TRUE to include the documentation tab in the app; else FALSE.
-  * `include_upload_widget`: TRUE to include the widget that allows upload of
-    documentation; else FALSE. `include_tab` must be TRUE.
+  * `include_tab`: `TRUE` to include the documentation tab in the app, else `FALSE`.
+  * `include_upload_widget`: `TRUE` to include the widget that allows upload of
+    documentation, else `FALSE`. `include_tab` must be `TRUE` to have the widget.
   * `tab_name`: Desired name of the documentation tab.
   * `path_to_docs_markdown`: Location of an R Markdown document with
     documentation instructions.

@@ -10,8 +10,10 @@
 #' @noRd
 #' @param id the module id
 #' @param markdown_path path to the markdown file to be displayed
-#' @param include_widget TRUE if the upload widget should be included,
-#'   else FALSE
+#' @param include_widget `TRUE` if the upload widget should be included,
+#'   else `FALSE`. NOTE: if `TRUE`, then the server function
+#'   [`upload_documents_server()`] must be called for the widget to function
+#'   correctly. If `FALSE`, then the server function should not be called.
 #' @return html ui for the module
 upload_documents_ui <- function(id, markdown_path, include_widget) {
   ns <- NS(id)
