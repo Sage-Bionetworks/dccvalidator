@@ -40,7 +40,7 @@ default:
       - "specimenID"
     assay:
       - "specimenID"
-  contact_email: "karawoo@synapse.org"
+  contact_email: "nicole.kauer@synapse.org"
 
 amp-ad:
   parent: "syn21643404"
