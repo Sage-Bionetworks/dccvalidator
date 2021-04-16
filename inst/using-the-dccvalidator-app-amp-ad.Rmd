@@ -66,6 +66,7 @@ releasing the data.
 ## Documentation Upload
 
 Each study in AMP-AD has the accompanying [documentation in the portal](https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648):
+
 1. **Study Description:** use template located [here](https://www.synapse.org/#!Synapse:syn25014531) to write your study description
 2. **Methods Description(s):** use template located [here](https://www.synapse.org/#!Synapse:syn25018065) to write a methods description for **each** of your assay types
 3. **Acknowledgement statement:** use template located [here](https://www.synapse.org/#!Synapse:syn25014532) to write an acknowledgement statement for the use of those that cite your data
