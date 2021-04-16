@@ -51,8 +51,8 @@ amp-ad:
     - "3405451"
   docs_tab:
     include_tab: TRUE
-    include_upload_widget: TRUE
-    tab_name: "Upload Study Documentation"
+    include_upload_widget: FALSE
+    tab_name: "Study Documentation"
     path_to_docs_markdown: "inst/study-documentation-amp-ad.Rmd"
   species_list:
     - "human"
