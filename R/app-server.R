@@ -92,15 +92,18 @@ app_server <- function(input, output, session) {
       )
       purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
 
-      # Documentation server needs created_folder to run correctly
-      callModule(
-        upload_documents_server,
-        "documentation",
-        parent_folder = reactive(created_folder),
-        study_names = all_studies,
-        synapseclient = synapse,
-        syn = syn
-      )
+      if (config::get("docs_tab")$include_tab &
+        config::get("docs_tab")$include_upload_widget) {
+        # Documentation server needs created_folder to run correctly
+        callModule(
+          upload_documents_server,
+          "documentation",
+          parent_folder = reactive(created_folder),
+          study_names = all_studies,
+          synapseclient = synapse,
+          syn = syn
+        )
+      }
     }
 
     ## Reset fileInputs, study name, and other inputs
