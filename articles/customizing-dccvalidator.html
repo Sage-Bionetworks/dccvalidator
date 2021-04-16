@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dccvalidator</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9016</span>
       </span>
     </div>
 
@@ -58,6 +58,12 @@
     </li>
     <li>
       <a href="../articles/deploying-dccvalidator.html">Deploying dccvalidator</a>
+    </li>
+    <li>
+      <a href="../articles/study-documentation-amp-ad.html">AMP-AD Study Documentation</a>
+    </li>
+    <li>
+      <a href="../articles/study-documentation-pec.html">PEC Study Documentation</a>
     </li>
     <li>
       <a href="../articles/using-the-dccvalidator-app-amp-ad.html">Using the dccvalidator app in AMP-AD</a>
@@ -151,9 +157,18 @@ parent: "syn20400157"</code></pre>
 <li>
 <code>templates_link</code>: URL to the location of metadata templates</li>
 <li>
-<code>study_link_animal</code>: URL to an example study description for an animal model study</li>
+<code>docs_tab</code>: These settings configure the documentation tab, including the option to not have a tab at all.
+<ul>
 <li>
-<code>study_link_human</code>: URL to an example study description for a human study</li>
+<code>include_tab</code>: <code>TRUE</code> to include the documentation tab in the app, else <code>FALSE</code>.</li>
+<li>
+<code>include_upload_widget</code>: <code>TRUE</code> to include the widget that allows upload of documentation, else <code>FALSE</code>. <code>include_tab</code> must be <code>TRUE</code> to have the widget.</li>
+<li>
+<code>tab_name</code>: Desired name of the documentation tab.</li>
+<li>
+<code>path_to_docs_markdown</code>: Location of an R Markdown document with documentation instructions.</li>
+</ul>
+</li>
 <li>
 <code>teams</code>: The team(s) a user must be a member of in order to use the app. If the user is not in any of the teams, they will see a message telling them they must be added to one of the teams.</li>
 <li>
