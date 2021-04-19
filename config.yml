@@ -196,7 +196,7 @@ veoibd:
   annotations_table: "syn25558026"
   annotations_link: "https://www.synapse.org/#!Synapse:syn20729790"
   templates_link: "https://www.synapse.org/#!Synapse:syn20729790"
-  study_link_animal:
+  study_link_animal: "https://www.synapse.org/#!Synapse:syn25541843"
   study_link_human: "https://www.synapse.org/#!Synapse:syn25541843"
   teams:
     - "3382930"
