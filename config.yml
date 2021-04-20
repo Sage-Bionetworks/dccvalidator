@@ -199,7 +199,7 @@ annotations-research:
 
 veoibd:
   parent: "syn25556537"
-  path_to_markdown: "inst/using-the-dccvalidator-pec.Rmd"
+  path_to_markdown: "inst/using-the-dccvalidator-veoibd.Rmd"
   study_table: "syn25557724"
   samples_table: "syn25557826"
   annotations_table: "syn25558026"
