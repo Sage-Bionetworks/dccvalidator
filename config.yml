@@ -86,6 +86,7 @@ amp-ad:
       16SrRNAseq: "syn24184375"
       metabolomics: "syn24216748"
       HI-C: "syn25671270"
+      ChIPSeq: "syn22907810"
   complete_columns:
     manifest:
       - "consortium"
