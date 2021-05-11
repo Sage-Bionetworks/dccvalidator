@@ -13,8 +13,9 @@
 - Fix bug in behavior for `check_ages_over_90()` and `check_parent_syn()`
 - Remove progress bars for file input boxes
 - Add script and functions for updating metadata template dictionary sheets.
-- Update to `check_value()`: For keys with enumerated values, parse comma-separated and json-style strings and check all values within against allowed values.
-- Add customization options for app's study documentation tab, including necessary updates to config.yml.
+- Update to `check_value()`: For keys with enumerated values, parse comma-separated and json-style strings and check all values within against allowed values
+- Add customization options for app's study documentation tab, including necessary updates to config.yml
+- Minor fixes to update-metadata-template-dictionaries.R script
 
 # dccvalidator v0.3.0
 
