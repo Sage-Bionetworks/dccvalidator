@@ -212,6 +212,7 @@ veoibd:
     path_to_docs_markdown: "inst/study-documentation-pec.Rmd"
   teams:
     - "3382930"
+    - "3425042"
   templates:
     manifest_template: "syn20782058"
     individual_templates:
