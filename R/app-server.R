@@ -15,6 +15,12 @@
 #' }
 app_server <- function(input, output, session) {
   syn <- synapse$Synapse()
+  syn$setEndpoints(
+    authEndpoint = synapse$client$STAGING_ENDPOINTS$authEndpoint,
+    repoEndpoint = synapse$client$STAGING_ENDPOINTS$repoEndpoint,
+    fileHandleEndpoint = synapse$client$STAGING_ENDPOINTS$fileHandleEndpoint,
+    portalEndpoint = synapse$client$STAGING_ENDPOINTS$portalEndpoint
+  )
 
   ## Initial titles for report boxes
   callModule(results_boxes_server, "Validation Results", results = NULL)
@@ -33,8 +39,17 @@ app_server <- function(input, output, session) {
 
   observeEvent(input$cookie, {
     is_logged_in <- FALSE
-    tryCatch({
-        syn$login(sessionToken = input$cookie)
+    ## Move log in via sessionToken to a simple try without error handling
+    # try({
+    #     syn$login(sessionToken = input$cookie)
+    #     is_logged_in <- TRUE
+    #   },
+    #   silent = TRUE
+    # )
+    ## Use authToken and handle error here if still not logged in
+    if (!is_logged_in) {
+      tryCatch({
+        syn$login(authToken = input$cookie)
         is_logged_in <- TRUE
       },
       error = function(err) {
@@ -46,7 +61,8 @@ app_server <- function(input, output, session) {
           )
         )
       }
-    )
+      ) 
+    }
     req(is_logged_in)
 
     ## Check if user is in AMP-AD Consortium team (needed in order to create
