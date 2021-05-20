@@ -84,6 +84,7 @@ To install the dccvalidator instead of forking the repository:
    
 ### Configuration options
 
+* `production`: `TRUE` to use production Synapse endpoints; `FALSE` to use staging endpoints. Used for testing new versions of the client before they are officially released. See [Synapse client documentation](https://python-docs.synapse.org/build/html/index.html?highlight=endpoints#synapseclient.Synapse.setEndpoints) for information on endpoints.
 * `parent`: The Synapse project or folder where files will be stored
 * `path_to_markdown`: Location of an R Markdown document with app instructions. If you wish to omit instructions, insert `!expr NA`.
 * `study_table`: Synapse ID of a table that lists all of the existing studies in
