@@ -15,12 +15,10 @@
 #' }
 app_server <- function(input, output, session) {
   syn <- synapse$Synapse()
-  syn$setEndpoints(
-    authEndpoint = synapse$client$STAGING_ENDPOINTS$authEndpoint,
-    repoEndpoint = synapse$client$STAGING_ENDPOINTS$repoEndpoint,
-    fileHandleEndpoint = synapse$client$STAGING_ENDPOINTS$fileHandleEndpoint,
-    portalEndpoint = synapse$client$STAGING_ENDPOINTS$portalEndpoint
-  )
+
+  if (!config::get("production")) {
+    set_staging_endpoints(syn)
+  }
 
   ## Initial titles for report boxes
   callModule(results_boxes_server, "Validation Results", results = NULL)

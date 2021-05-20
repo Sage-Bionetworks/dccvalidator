@@ -16,6 +16,8 @@
 - Update to `check_value()`: For keys with enumerated values, parse comma-separated and json-style strings and check all values within against allowed values
 - Add customization options for app's study documentation tab, including necessary updates to config.yml
 - Minor fixes to update-metadata-template-dictionaries.R script
+- Update to allow for logging in with authToken
+- Add ability to change to staging endpoints based on config.yml production setting
 
 # dccvalidator v0.3.0
 
