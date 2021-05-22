@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dccvalidator</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9017</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9018</span>
       </span>
     </div>
 
@@ -141,6 +141,8 @@ parent: "syn20400157"</code></pre>
 <h3 class="hasAnchor">
 <a href="#configuration-options" class="anchor"></a>Configuration options</h3>
 <ul>
+<li>
+<code>production</code>: <code>TRUE</code> to use production Synapse endpoints; <code>FALSE</code> to use staging endpoints. Used for testing new versions of the client before they are officially released. See <a href="https://python-docs.synapse.org/build/html/index.html?highlight=endpoints#synapseclient.Synapse.setEndpoints">Synapse client documentation</a> for information on endpoints.</li>
 <li>
 <code>parent</code>: The Synapse project or folder where files will be stored</li>
 <li>
