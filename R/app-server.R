@@ -16,6 +16,10 @@
 app_server <- function(input, output, session) {
   syn <- synapse$Synapse()
 
+  if (!config::get("production")) {
+    set_staging_endpoints(syn)
+  }
+
   ## Initial titles for report boxes
   callModule(results_boxes_server, "Validation Results", results = NULL)
 
@@ -33,20 +37,30 @@ app_server <- function(input, output, session) {
 
   observeEvent(input$cookie, {
     is_logged_in <- FALSE
-    tryCatch({
-        syn$login(sessionToken = input$cookie)
+    ## Move log in via sessionToken to a simple try without error handling
+    try({
+        syn$login(sessionToken = input$cookie, silent = TRUE)
         is_logged_in <- TRUE
       },
-      error = function(err) {
-        showModal(
-          modalDialog(
-            title = "Login error",
-            HTML("There was an error with the login process. Please refresh your Synapse session by logging out of and back in to <a target=\"_blank\" href=\"https://www.synapse.org/\">Synapse</a>. Then refresh this page to use the application."), # nolint
-            footer = NULL
-          )
-        )
-      }
+      silent = TRUE
     )
+    ## Use authToken and handle error here if still not logged in
+    if (!is_logged_in) {
+      tryCatch({
+          syn$login(authToken = input$cookie, silent = TRUE)
+          is_logged_in <- TRUE
+        },
+        error = function(err) {
+          showModal(
+            modalDialog(
+              title = "Login error",
+              HTML("There was an error with the login process. Please refresh your Synapse session by logging out of and back in to <a target=\"_blank\" href=\"https://www.synapse.org/\">Synapse</a>. Then refresh this page to use the application."), # nolint
+              footer = NULL
+            )
+          )
+        }
+      )
+    }
     req(is_logged_in)
 
     ## Check if user is in AMP-AD Consortium team (needed in order to create
