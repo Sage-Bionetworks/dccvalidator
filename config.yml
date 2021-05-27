@@ -140,6 +140,8 @@ pec:
       snpArray: "syn21680759"
       ChIPSeq: "syn21861858"
       bisulfiteSeq: "syn23017098"
+      methylationArray: "syn25805391"
+      immunoassay: "syn25805392"
   species_list:
     - "human"
     - "animal model"
