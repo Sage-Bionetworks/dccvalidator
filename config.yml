@@ -91,6 +91,7 @@ amp-ad:
       metabolomics: "syn24216748"
       HI-C: "syn25671270"
       ChIPSeq: "syn22907810"
+      bisulfiteSeq: "syn25830897"
   complete_columns:
     manifest:
       - "consortium"
