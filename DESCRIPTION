@@ -55,6 +55,7 @@ Imports:
     visdat
 Suggests:
     covr,
+    devtools,
     dplyr,
     jsonlite,
     jsonvalidate,
