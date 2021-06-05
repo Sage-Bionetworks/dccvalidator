@@ -1,5 +1,6 @@
 default:
   production: TRUE
+  app_url: "https://shinypro.synapse.org/users/nkauer/dccvalidator-test/"
   parent: "syn20400157"
   path_to_markdown: "inst/using-the-dccvalidator-app-amp-ad.Rmd"
   study_table: "syn11363298"

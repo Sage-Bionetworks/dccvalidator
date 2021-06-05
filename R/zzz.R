@@ -1,3 +1,4 @@
+## Global Synapse module
 synapse <- NULL
 
 .onLoad <- function(libname, pkgname) {

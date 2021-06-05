@@ -10,7 +10,7 @@
 #' \dontrun{
 #' shinyApp(ui = app_ui, server = app_server)
 #' }
-ui <- function(request) {
+app_ui <- function(request) {
   dashboardPage(
     dashboardHeader(title = "Metadata Validation"),
     dashboardSidebar(
@@ -288,10 +288,13 @@ golem_add_external_resources <- function() {
 #' OAuth
 oauth_ui <- function(request) {
   if (!has_auth_code(parseQueryString(request$QUERY_STRING))) {
-    authorization_url = httr::oauth2.0_authorize_url(api, app, scope = scope)
-    return(tags$script(HTML(sprintf("location.replace(\"%s\");",
-                                    authorization_url))))
+    authorization_url = httr::oauth2.0_authorize_url(api, app, scope = SCOPE)
+    return(
+      tags$script(
+        HTML(sprintf("location.replace(\"%s\");", authorization_url))
+      )
+    )
   } else {
-    ui(request)
+    app_ui(request)
   }
 }

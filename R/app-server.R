@@ -14,14 +14,18 @@
 #' shinyApp(ui = app_ui, server = app_server)
 #' }
 app_server <- function(input, output, session) {
-  syn <- synapse$Synapse()
 
+  ## Initial titles for report boxes; try to populate ASAP
+  callModule(results_boxes_server, "Validation Results", results = NULL)
+
+  ## Synapse client for a specific user
+  syn <- synapse$Synapse()
+  ## Set client endpoints to staging, if needed
   if (!config::get("production")) {
     set_staging_endpoints(syn)
   }
 
-  ## Initial titles for report boxes
-  callModule(results_boxes_server, "Validation Results", results = NULL)
+  ## Kick off the OAuth process and try to log in
   params <- parseQueryString(isolate(session$clientData$url_search))
   access_token <- oauth_process(params)
   tryCatch(
