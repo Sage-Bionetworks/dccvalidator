@@ -284,17 +284,3 @@ golem_add_external_resources <- function() {
     tags$script(src = "www/readCookie.js")
   )
 }
-
-#' OAuth
-oauth_ui <- function(request) {
-  if (!has_auth_code(parseQueryString(request$QUERY_STRING))) {
-    authorization_url = httr::oauth2.0_authorize_url(api, app, scope = SCOPE)
-    return(
-      tags$script(
-        HTML(sprintf("location.replace(\"%s\");", authorization_url))
-      )
-    )
-  } else {
-    app_ui(request)
-  }
-}

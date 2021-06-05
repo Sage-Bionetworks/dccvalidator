@@ -57,3 +57,22 @@ oauth_process <- function(params) {
   access_token <- token_response$access_token
   access_token
 }
+
+#' OAuth UI pops in before the main app_ui loads
+#' @param request Shiny request object
+oauth_ui <- function(request) {
+  ## If this is the first time signing in, will need to do OAuth process
+  ## which will redirect back here
+  ## At that point, the token should be available and the main app_ui should
+  ## be loaded
+  if (!has_auth_code(parseQueryString(request$QUERY_STRING))) {
+    authorization_url = httr::oauth2.0_authorize_url(api, app, scope = SCOPE)
+    return(
+      tags$script(
+        HTML(sprintf("location.replace(\"%s\");", authorization_url))
+      )
+    )
+  } else {
+    app_ui(request)
+  }
+}
