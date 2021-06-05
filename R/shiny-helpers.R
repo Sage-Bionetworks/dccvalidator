@@ -12,3 +12,18 @@ reset_inputs <- function(...) {
     shinyjs::reset(x)
   })
 }
+
+#' @title Wrapper for modals
+#'
+#' @description This wraps the functions for showing a modal with a message.
+#'
+#' @param title Title text for modal
+#' @param message The message to show in the modal
+show_modal <- function(title, message) {
+  showModal(
+    modalDialog(
+      title = title,
+      HTML(message)
+    )
+  )
+}

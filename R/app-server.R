@@ -25,22 +25,36 @@ app_server <- function(input, output, session) {
     set_staging_endpoints(syn)
   }
 
-  ## Kick off the OAuth process and try to log in
-  params <- parseQueryString(isolate(session$clientData$url_search))
-  access_token <- oauth_process(params)
-  tryCatch(
-    {
-      syn$login(authToken = access_token)
-    },
-    error = function(e) {
-      showModal(
-        modalDialog(
+  ## Log into Synapse
+  ## Assume local .synapseConfig if running locally with run_app()
+  if(interactive()) {
+    tryCatch(
+      {
+        syn$login()
+      },
+      error = function(e) {
+        show_modal(
           title = "Not logged in",
-          HTML("You are not logged in.") # nolint
+          message = "You are not logged in. If you are running locally, check that you have a .synapseConfig with your credentials.") # nolint
         )
-      )
-    }
-  )
+      }
+    )
+  } else {
+    ## If not locally running, kick off the OAuth process and try to log in
+    params <- parseQueryString(isolate(session$clientData$url_search))
+    access_token <- oauth_process(params)
+    tryCatch(
+      {
+        syn$login(authToken = access_token)
+      },
+      error = function(e) {
+        show_modal(
+          title = "Not logged in",
+          message = "Something went wrong with the log in process."
+        )
+      }
+    )
+  }
 
   observe({
 
