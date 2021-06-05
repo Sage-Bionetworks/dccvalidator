@@ -266,15 +266,15 @@ app_ui <- function(request) {
           }
         ),
         class = "tab-content"
-      )
-    ),
-    waiter::use_waiter(),
-    waiter::waiter_show_on_load(
-      html = tagList(
-        img(src = "loading.gif"),
-        h4("Retrieving Synapse information...")
       ),
-      color = "#424874"
+      waiter::use_waiter(),
+      waiter::waiter_show_on_load(
+        html = tagList(
+          img(src = "www/loading.gif"),
+          h4("Retrieving Synapse information...")
+        ),
+        color = "#424874"
+      )
     )
   )
 }
@@ -288,8 +288,7 @@ golem_add_external_resources <- function() {
   tags$head(
     golem::activate_js(),
     golem::favicon(),
-    tags$link(rel = "stylesheet", type = "text/css", href = "www/custom.css"),
-    tags$script(src = "www/readCookie.js")
+    tags$link(rel = "stylesheet", type = "text/css", href = "www/custom.css")
   )
 }
 

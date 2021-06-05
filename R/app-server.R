@@ -69,7 +69,7 @@ app_server <- function(input, output, session) {
       )
       waiter::waiter_update(
         html = tagList(
-          img(src = "synapse_logo.png", height = "120px"),
+          img(src = "www/synapse_logo.png", height = "120px"),
           h3(sprintf("Welcome, %s!", syn$getUserProfile()$userName))
         )
       )
