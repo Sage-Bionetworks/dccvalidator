@@ -22,48 +22,23 @@ app_server <- function(input, output, session) {
 
   ## Initial titles for report boxes
   callModule(results_boxes_server, "Validation Results", results = NULL)
-
-  session$sendCustomMessage(type = "readCookie", message = list())
-
-  ## Show message if user is not logged in to synapse
-  unauthorized <- observeEvent(input$authorized, {
-    showModal(
-      modalDialog(
-        title = "Not logged in",
-        HTML("You must log in to <a target=\"_blank\" href=\"https://www.synapse.org/\">Synapse</a> to use this application. Please log in, and then refresh this page.") # nolint
-      )
-    )
-  })
-
-  observeEvent(input$cookie, {
-    is_logged_in <- FALSE
-    ## Use authToken and handle error here if still not logged in
-    tryCatch({
-      syn$login(authToken = input$cookie, silent = TRUE)
-      is_logged_in <- TRUE
+  params <- parseQueryString(isolate(session$clientData$url_search))
+  access_token <- oauth_process(params)
+  tryCatch(
+    {
+      syn$login(authToken = access_token)
     },
-    error = function(err) {
+    error = function(e) {
       showModal(
         modalDialog(
-          title = "Login error",
-          HTML("There was an error with the login process. Please refresh your Synapse session by logging out of and back in to <a target=\"_blank\" href=\"https://www.synapse.org/\">Synapse</a>. Then refresh this page to use the application."), # nolint
-          footer = NULL
+          title = "Not logged in",
+          HTML("You are not logged in.") # nolint
         )
       )
     }
-    )
-    ## Check that user did not log in as anonymous
-    if (syn$username == "anonymous") {
-      showModal(
-        modalDialog(
-          title = "Login error",
-          HTML("There was an error with the login process. You have been logged in as anonymous."), # nolint
-          footer = NULL
-        )
-      )
-      is_logged_in <- FALSE
-    }
-    req(is_logged_in)
+  )
+
+  observe({
 
     ## Check if user is in AMP-AD Consortium team (needed in order to create
     ## folder at the next step), and if they are a certified user.
