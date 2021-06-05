@@ -12,7 +12,7 @@
 #' }
 run_app <- function(...) {
   with_golem_options(
-    app = shinyApp(ui = oath_ui, server = app_server),
+    app = shinyApp(ui = oauth_ui, server = app_server),
     golem_opts = list(...)
   )
 }
