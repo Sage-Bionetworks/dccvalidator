@@ -29,20 +29,8 @@ app <- httr::oauth_app("dccvalidator",
 claims <- list(
   family_name=NULL, 
   given_name=NULL,
-  email=NULL,
-  email_verified=NULL,
   userid=NULL,
-  orcid=NULL,
-  is_certified=NULL,
-  is_validated=NULL,
-  validated_given_name=NULL,
-  validated_family_name=NULL,
-  validated_location=NULL,
-  validated_email=NULL,
-  validated_company=NULL,
-  validated_at=NULL,
-  validated_orcid=NULL,
-  company=NULL
+  is_certified=NULL
 )
 
 claimsParam <- jsonlite::toJSON(list(id_token = claims, userinfo = claims))
@@ -55,13 +43,14 @@ api <- httr::oauth_endpoint(
 scope <- "openid view download modify"
 
 oauth_process <- function(params) {
-  # if (!has_auth_code(params)) {
-  #   return()
-  # }
+  if (!has_auth_code(params)) {
+    return()
+  }
   redirect_url <- paste0(api$access, '?', 'redirect_uri=',
                          APP_URL, '&grant_type=',
                          'authorization_code' ,'&code=', params$code)
   # get the access_token and userinfo token
+
   req <- httr::POST(redirect_url,
               encode = "form",
               body = '',

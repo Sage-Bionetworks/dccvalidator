@@ -4,12 +4,13 @@
 #'
 #' @import shiny
 #' @import shinydashboard
+#' @param request Shiny request object
 #' @return A shinydashboard page
 #' @examples
 #' \dontrun{
 #' shinyApp(ui = app_ui, server = app_server)
 #' }
-ui <- function() {
+ui <- function(request) {
   dashboardPage(
     dashboardHeader(title = "Metadata Validation"),
     dashboardSidebar(
@@ -291,6 +292,6 @@ oauth_ui <- function(request) {
     return(tags$script(HTML(sprintf("location.replace(\"%s\");",
                                     authorization_url))))
   } else {
-    ui
+    ui(request)
   }
 }
