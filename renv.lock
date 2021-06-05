@@ -884,6 +884,13 @@
       "Repository": "CRAN",
       "Hash": "f62b960320b18fdffb2f0f76bb65dbaf"
     },
+    "waiter": {
+      "Package": "waiter",
+      "Version": "0.2.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "a8742a4d14e77d6464614b47a1e9921e"
+    },
     "waldo": {
       "Package": "waldo",
       "Version": "0.2.2",

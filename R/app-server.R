@@ -67,6 +67,14 @@ app_server <- function(input, output, session) {
           syn = syn
         )
       )
+      waiter::waiter_update(
+        html = tagList(
+          img(src = "synapse_logo.png", height = "120px"),
+          h3(sprintf("Welcome, %s!", syn$getUserProfile()$userName))
+        )
+      )
+      Sys.sleep(2)
+      waiter::waiter_hide()
 
       all_studies <- get_study_names(reactive(config::get("study_table")), syn)
       study_name <- callModule(

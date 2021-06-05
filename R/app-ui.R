@@ -267,6 +267,14 @@ app_ui <- function(request) {
         ),
         class = "tab-content"
       )
+    ),
+    waiter::use_waiter(),
+    waiter::waiter_show_on_load(
+      html = tagList(
+        img(src = "loading.gif"),
+        h4("Retrieving Synapse information...")
+      ),
+      color = "#424874"
     )
   )
 }
