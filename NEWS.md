@@ -18,6 +18,7 @@
 - Minor fixes to update-metadata-template-dictionaries.R script
 - Update to allow for logging in with authToken
 - Add ability to change to staging endpoints based on config.yml production setting
+- Add ability to log in with Synapse OAuth client
 
 # dccvalidator v0.3.0
 
