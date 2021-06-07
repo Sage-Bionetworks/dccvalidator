@@ -17,23 +17,49 @@ attempt_instantiate <- function() {
   }
 }
 
-## Attempt to log in using encrypted variables written to .synapseConfig file
-## within Sage org, or with regular synLogin() if not on CI. If on CI but not
-## within Sage, do nothing.
+#' @title Attempt to log into Synapse
+#'
+#' @description Attempt to log into Synapse. Will first try using authentication
+#' credentials written to a .synapseConfig file. If that fails, will try using
+#' any credentials passed to the function. Will return `NULL` if not all
+#' attempts failed.
+#'
+#' @export
+#' @param syn Synapse client object
+#' @param ... Synapse credentials, such as `authToken` or `email` with a
+#' `password` or `apiKey`.
+#' @return TRUE if logged in, else `NULL`
 attempt_login <- function(syn, ...) {
-  if (on_ci() & !is.null(syn)) {
-    try(syn$login(), silent = TRUE)
-  } else if (reticulate::py_module_available("synapseclient") & !is.null(syn)) {
-    syn$login(...)
-    return(syn)
-  } else {
-    return(NULL)
+  is_logged_in <- FALSE
+  ## Try logging in with .synapseConfig
+  try(
+    {
+      syn$login()
+      is_logged_in <- TRUE
+    },
+    silent = TRUE
+  )
+  ## If failed to login, try using credentials provided
+  if(!is_logged_in) {
+    try(
+      {
+        syn$login(...)
+        is_logged_in <- TRUE
+      }
+    )
   }
+  ## Return TRUE if logged in, else NULL
+  ifelse(is_logged_in, is_logged_in, NULL)
 }
 
-## Check if we're logged in
+#' @title Check if logged in as user
+#'
+#' @description Check if logged into Synapse as a non-anonymous user.
+#'
+#' @param syn Synapse client object.
+#' @return FALSE if not logged in at all or if logged in anonymously, else TRUE.
 logged_in <- function(syn) {
-  if (is.null(syn) || is.null(syn$username)) {
+  if (is.null(syn) || is.null(syn$username) || (syn$username == "anonymous")) {
     return(FALSE)
   } else {
     return(TRUE)
