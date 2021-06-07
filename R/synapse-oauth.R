@@ -3,14 +3,14 @@ synapse <- NULL
 ## Global OAuth client
 app <- NULL
 
-## Global app variables for OAuth
-if (interactive()) {
-  # testing url
-  options(shiny.port = 8100)
-  APP_URL <- "http://127.0.0.1:8100"
-} else {
-  APP_URL <- config::get("app_url")
-}
+# ## Global app variables for OAuth
+# if (interactive()) {
+#   # testing url
+#   options(shiny.port = 8100)
+#   APP_URL <- "http://127.0.0.1:8100"
+# } else {
+#   APP_URL <- config::get("app_url")
+# }
 ## These are the user info details ('claims') requested from Synapse
 CLAIMS <- list(
   family_name=NULL, 
@@ -107,7 +107,7 @@ oauth_process <- function(params) {
 #' @export
 #' @param request Shiny request object
 oauth_ui <- function(request) {
-  prep_for_oauth(request$url_pathname)
+  prep_for_oauth(config::get("app_url"))
   if (!has_auth_code(parseQueryString(request$QUERY_STRING))) {
     authorization_url = httr::oauth2.0_authorize_url(api, app, scope = SCOPE)
     return(
