@@ -1,7 +1,8 @@
 ## Global Synapse module
 synapse <- NULL
-## Global OAuth client
+## Global OAuth client and url
 app <- NULL
+APP_URL <- NULL
 
 # ## Global app variables for OAuth
 # if (interactive()) {
@@ -46,10 +47,11 @@ api <- httr::oauth_endpoint(
 
 ## Prep OAuth client
 prep_for_oauth <- function(app_url) {
+  APP_URL <<- app_url
   app <<- httr::oauth_app("dccvalidator",
                          key = CLIENT_ID,
                          secret = CLIENT_SECRET, 
-                         redirect_uri = app_url)
+                         redirect_uri = APP_URL)
 }
 
 #' @title Has authorization code
