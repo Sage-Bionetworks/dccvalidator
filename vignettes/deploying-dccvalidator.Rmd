@@ -37,7 +37,7 @@ stand up a new version that is customized for a different community):
 1. If needed, make any changes to the application's behavior by editing the
    files, or check out a branch that contains your changes
 1. Create a .Renviron file with the [verified OAuth](https://help.synapse.org/docs/Using-Synapse-as-an-OAuth-Server.2048327904.html#UsingSynapseasanOAuthServer-RegisteringandLinkinganOAuth2.0Client) `client_id` and `client_secret`
-and restrict permissions (`chmod 600 .Renviron`)
+and restrict permissions (`chmod 600 .Renviron` or `chmod 400 .Renviron`)
 1. To ensure packages are up-to-date, open an R session and run `renv::restore()`
 1. To ensure each connection has its own R process, the Sage Shiny Server administrator must configure the utilization scheduler. This is not necessary for the app to function, but might improve performance.
 ```
