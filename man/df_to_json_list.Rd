@@ -19,10 +19,10 @@ in a list, to make it easier to iteratively validate data with
 }
 \examples{
 if (requireNamespace("jsonlite", quietly = TRUE)) {
-dat <- data.frame(
-  x = c(NA, 1L)
-)
-df_to_json_list(dat)
+  dat <- data.frame(
+    x = c(NA, 1L)
+  )
+  df_to_json_list(dat)
 }
 }
 \seealso{

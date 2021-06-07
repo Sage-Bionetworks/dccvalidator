@@ -52,6 +52,7 @@ reference:
   contents:
     - app_server
     - app_ui
+    - oauth_ui
     - run_app
     - with_busy_indicator_ui
     - with_busy_indicator_server
@@ -68,6 +69,11 @@ reference:
   contents:
     - check_certified_user
     - check_team_membership
+    - oauth_process
+    - has_auth_code
+    - attempt_login
+    - logged_in
+    - show_modal
 
 - title: Constructors for validation results
   desc: >
@@ -88,3 +94,10 @@ reference:
     - get_template_synIDs
     - update_template_dictionaries
     - verify_dictionary_structure
+
+- title: Internal development
+  desc: >
+    These functions help with development needs, such as changing which Synapse
+    endpoints to use.
+  contents:
+    - set_staging_endpoints

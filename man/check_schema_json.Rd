@@ -31,7 +31,7 @@ Check a JSON blob against a JSON Schema.
 }
 \examples{
 if (requireNamespace("jsonvalidate", quietly = TRUE)) {
-schema <- '{
+  schema <- '{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "properties": {
     "x": {
@@ -41,13 +41,13 @@ schema <- '{
   "required": ["x"]
 }
 '
-json_valid <- '{
+  json_valid <- '{
   "x": 3
 }'
-json_invalid <- '{
+  json_invalid <- '{
   "x": 1.5
 }'
-check_schema_json(json_valid, schema)
-check_schema_json(json_invalid, schema)
+  check_schema_json(json_valid, schema)
+  check_schema_json(json_invalid, schema)
 }
 }
