@@ -49,7 +49,7 @@ To create a custom version of the app, you'll need to follow these steps:
 1. Fork the [dccvalidator](https://github.com/Sage-Bionetworks/dccvalidator/blob/master/config.yml)
    GitHub repository.
 1. (For a production version): register a Synapse OAuth client (see [Synapse Docs](https://help.synapse.org/docs/Using-Synapse-as-an-OAuth-Server.2048327904.html#UsingSynapseasanOAuthServer-RegisteringandLinkinganOAuth2.0Client)) and store the `client_id` and `client_secret` in a .Renviron file within the repository. Ensure you are the only person who has access to this file (e.g. `chmod 600 .Renviron` or `chmod 400 .Renviron`).
-1. (For running locally only): create a .synapseConfig file in your home directory that has your Synapse authentication credentials (see the [synapser docs for an example](https://r-docs.synapse.org/articles/manageSynapseCredentials.html#use-synapseconfig)).
+1. (For running locally only): create a .synapseConfig file in your home directory with your Synapse authentication credentials (see the [synapser docs for an example](https://r-docs.synapse.org/articles/manageSynapseCredentials.html#use-synapseconfig)).
 1. Create a new configuration in the `config.yml` file. Note that any values you
    do not customize will be inherited from the default configuration. The configuration file must have a `default` configuration.
 1. (Optional): create a pull request with your configuration back to the
@@ -83,13 +83,23 @@ To install the dccvalidator instead of forking the repository:
    team has the ability to download files (in order to assist with debugging).
    See this
    [example of how to create a project with appropriate permissions](https://github.com/Sage-Bionetworks/dccvalidator/blob/master/inst/app/create_project.R).
+
+1. Create a .synapseConfig file in your home directory with your Synapse
+    authentication credentials (see the 
+    [synapser docs for an example](https://r-docs.synapse.org/articles/manageSynapseCredentials.html#use-synapseconfig)).
    
 ### Configuration options
 
-* `production`: `TRUE` to use production Synapse endpoints; `FALSE` to use staging endpoints. Used for testing new versions of the client before they are officially released. See [Synapse client documentation](https://python-docs.synapse.org/build/html/index.html?highlight=endpoints#synapseclient.Synapse.setEndpoints) for information on endpoints.
-* `app_url`: The URL for the app when in production. This is required for using the Synapse OAuth 2.0 client for logging into the application. See [Deploying dccvalidator](https://sage-bionetworks.github.io/dccvalidator/articles/deploying-dccvalidator.html) for more information.
+* `production`: `TRUE` to use production Synapse endpoints; `FALSE` to use
+  staging endpoints. Used for testing new versions of the client before they are 
+  officially released. For information on endpoints, see [Synapse client documentation](https://python-docs.synapse.org/build/html/index.html?highlight=endpoints#synapseclient.Synapse.setEndpoints).
+* `app_url`: The URL for the app when in production. This is required for using
+  the Synapse OAuth 2.0 client for logging into the application. See
+  [Deploying dccvalidator](https://sage-bionetworks.github.io/dccvalidator/articles/deploying-dccvalidator.html)
+  for more information.
 * `parent`: The Synapse project or folder where files will be stored
-* `path_to_markdown`: Location of an R Markdown document with app instructions. If you wish to omit instructions, insert `!expr NA`.
+* `path_to_markdown`: Location of an R Markdown document with app instructions.
+  If you wish to omit instructions, insert `!expr NA`.
 * `study_table`: Synapse ID of a table that lists all of the existing studies in
   the consortium. It should have a column called `StudyName`
 * `samples_table`: Synapse ID of a table that lists the key-value pairs of `study`, `individualID`,
