@@ -35,7 +35,7 @@ app_server <- function(input, output, session) {
     is_logged_in <- FALSE
     ## Use authToken and handle error here if still not logged in
     tryCatch({
-      syn$login()
+      syn$login(authToken = input$cookie, silent = TRUE)
       is_logged_in <- TRUE
     },
     error = function(err) {
