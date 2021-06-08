@@ -1,0 +1,11 @@
+---
+title: "AMP-AD Study Documentation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{amp-ad-study-documentation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r direct-to-child, child = system.file("study-documentation-amp-ad.Rmd", package = "dccvalidator")}
+```

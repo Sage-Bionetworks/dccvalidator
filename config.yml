@@ -1,4 +1,5 @@
 default:
+  production: TRUE
   parent: "syn20400157"
   path_to_markdown: "inst/using-the-dccvalidator-app-amp-ad.Rmd"
   study_table: "syn11363298"
@@ -6,9 +7,11 @@ default:
   annotations_table: "syn10242922"
   annotations_link: "https://shinypro.synapse.org/users/nsanati/annotationUI/"
   templates_link: "https://www.synapse.org/#!Synapse:syn18512044"
-  study_link_animal: "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648"
-  study_link_human: "https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn3159438"
-  study_link_ref: ""
+  docs_tab:
+    include_tab: TRUE
+    include_upload_widget: TRUE
+    tab_name: "Upload Study Documentation"
+    path_to_docs_markdown: "inst/study-documentation-amp-ad.Rmd"
   teams:
     - "273957"
   templates:
@@ -38,18 +41,23 @@ default:
       - "specimenID"
     assay:
       - "specimenID"
-  contact_email: "karawoo@synapse.org"
+  contact_email: "nicole.kauer@synapse.org"
+
+dev:
+  production: FALSE
 
 amp-ad:
   parent: "syn21643404"
-  annotations_table:
-    - "syn10242922"
-    - "syn21459391"
+  annotations_table: "syn10242922"
   annotations_link: "https://shinypro.synapse.org/users/kwoo/amp-ad-metadata-dictionary/"
   teams:
     - "3320424"
     - "3405451"
-  study_link_ref: "https://adknowledgeportal.synapse.org/#/DataAccess/AcknowledgementStatements"
+  docs_tab:
+    include_tab: TRUE
+    include_upload_widget: FALSE
+    tab_name: "Study Documentation"
+    path_to_docs_markdown: "inst/study-documentation-amp-ad.Rmd"
   species_list:
     - "human"
     - "drosophila"
@@ -79,6 +87,11 @@ amp-ad:
       methylationArray: "syn22036881"
       MRI: "syn22087332"
       PET: "syn22087299"
+      16SrRNAseq: "syn24184375"
+      metabolomics: "syn24216748"
+      HI-C: "syn25671270"
+      ChIPSeq: "syn22907810"
+      bisulfiteSeq: "syn25830897"
   complete_columns:
     manifest:
       - "consortium"
@@ -104,8 +117,11 @@ pec:
   annotations_table: "syn20981788"
   annotations_link: "https://www.synapse.org/#!Synapse:syn20729790"
   templates_link: "https://www.synapse.org/#!Synapse:syn20729790"
-  study_link_animal: "https://www.synapse.org/#!Synapse:syn4566132"
-  study_link_human: "https://www.synapse.org/#!Synapse:syn4590909"
+  docs_tab:
+    include_tab: TRUE
+    include_upload_widget: FALSE
+    tab_name: "Study Documentation"
+    path_to_docs_markdown: "inst/study-documentation-pec.Rmd"
   teams:
     - "3323356"
   templates:
@@ -125,6 +141,8 @@ pec:
       snpArray: "syn21680759"
       ChIPSeq: "syn21861858"
       bisulfiteSeq: "syn23017098"
+      methylationArray: "syn25805391"
+      immunoassay: "syn25805392"
   species_list:
     - "human"
     - "animal model"
@@ -187,3 +205,64 @@ annotations-research:
       - "specimenID"
     assay:
       - "specimenID"
+
+veoibd:
+  parent: "syn25556537"
+  path_to_markdown: "inst/using-the-dccvalidator-veoibd.Rmd"
+  study_table: "syn25557724"
+  samples_table: "syn25557826"
+  annotations_table: "syn25558026"
+  annotations_link: "https://www.synapse.org/#!Synapse:syn20729790"
+  templates_link: "https://www.synapse.org/#!Synapse:syn20729790"
+  docs_tab:
+    include_tab: TRUE
+    include_upload_widget: FALSE
+    tab_name: "Study Documentation"
+    path_to_docs_markdown: "inst/study-documentation-pec.Rmd"
+  teams:
+    - "3382930"
+    - "3425042"
+  templates:
+    manifest_template: "syn20782058"
+    individual_templates:
+      human: "syn20781820"
+      animal: "syn21053116"
+    biospecimen_templates:
+      animal model: "syn20768131"
+      human: "syn20768131"
+    assay_templates:
+      wholeGenomeSeq: "syn20980993"
+      rnaSeq: "syn20768650"
+      ATACSeq: "syn20768526"
+      TMT quantitation: "syn21680761"
+      HI-C: "syn21680758"
+      snpArray: "syn21680759"
+      ChIPSeq: "syn21861858"
+      bisulfiteSeq: "syn23017098"
+  species_list:
+    - "human"
+    - "animal model"
+  complete_columns:
+    manifest:
+      - "consortium"
+      - "study"
+      - "grant"
+      - "fileFormat"
+      - "parent"
+      - "path"
+    individual:
+      - "individualID"
+      - "individualIdSource"
+      - "species"
+      - "reportedGender"
+      - "postmortem"
+      - "primaryDiagnosis"
+    biospecimen:
+      - "individualID"
+      - "specimenID"
+      - "organ"
+      - "tissue"
+      - "nucleicAcidSource"
+    assay:
+      - "specimenID"
+  contact_email: "cmolitor@synapse.org"

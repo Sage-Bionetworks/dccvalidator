@@ -14,18 +14,20 @@
 app_ui <- function(request) {
   dashboardPage(
     dashboardHeader(title = "Metadata Validation"),
-
     dashboardSidebar(
       sidebarMenu(
         if (!is.na(config::get("path_to_markdown"))) {
           menuItem("Using the App", tabName = "vignette")
         },
-        menuItem("Documentation", tabName = "documentation"),
+        if (config::get("docs_tab")$include_tab) {
+          menuItem(
+            config::get("docs_tab")$tab_name,
+            tabName = "documentation") 
+        },
         menuItem("Validator", tabName = "validator")
       ),
       create_footer(config::get("contact_email"))
     ),
-
     dashboardBody(
 
       # Add resources in www
@@ -42,22 +44,24 @@ app_ui <- function(request) {
           if (!is.na(config::get("path_to_markdown"))) {
             tabItem(
               tabName = "vignette",
-              get_markdown()
+              get_markdown(config::get("path_to_markdown"))
             )
           },
-          # Documentation tab UI
-          upload_documents_ui(
-            id = "documentation",
-            study_link_human = config::get("study_link_human"),
-            study_link_animal = config::get("study_link_animal"),
-            study_link_ref = config::get("study_link_ref")
-          ),
           # Validator UI
           validator_ui(
             id = "validator",
             species_list = config::get("species_list"),
             assay_templates = config::get("templates")$assay_templates
-          )
+          ),
+          # Documentation tab UI
+          if (config::get("docs_tab")$include_tab) {
+            # Documentation tab UI
+            upload_documents_ui(
+              id = "documentation",
+              markdown_path = config::get("docs_tab")$path_to_docs_markdown,
+              include_widget = config::get("docs_tab")$include_upload_widget
+            )
+          }
         ),
         class = "tab-content"
       )

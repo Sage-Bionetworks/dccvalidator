@@ -27,7 +27,12 @@ test_that("get_template fails when not logged in to Synapse", {
   skip_if(is.null(syn))
 
   syn$logout()
-  expect_error(get_template("syn12973252", syn))
+  reticulate::py_capture_output(
+    expect_error(
+      get_template("syn12973252", syn)
+    ),
+    type = "stderr"
+  )
 })
 
 attempt_login(syn)
@@ -248,7 +253,12 @@ test_that("check_cols_manifest works for manifest columns", {
 test_that("get_template errors for files that are not xlsx or csv", {
   skip_if_not(logged_in(syn = syn))
 
-  expect_error(get_template("syn17039045", syn = syn))
+  reticulate::py_capture_output(
+    expect_error(
+      get_template("syn17039045", syn = syn)
+    ),
+    type = "stderr"
+  )
 })
 
 test_that("get_template can read in excel and csv templates", {

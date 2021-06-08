@@ -44,6 +44,16 @@ option_list <- list(
 opt_parser <- optparse::OptionParser(option_list = option_list);
 opt <- optparse::parse_args(opt_parser);
 
+## If running within R (not from command line), use opt list below with your
+## needed parameters
+# opt <- list(
+#   config = "amp-ad",
+#   directory = "templates",
+#   username = NA,
+#   password = NA,
+#   apikey = NA
+# )
+
 ## Set the configuration to use
 ## Change "default" to the appropriate configuration
 Sys.setenv(R_CONFIG_ACTIVE = opt$config)
@@ -83,7 +93,7 @@ if (inherits(valid_results, "check_fail")) {
 } # else assume valid structure
 
 ## Get all templates as vector of synIDs
-temps <- get_template_synIDs()
+temps <- unique(get_template_synIDs())
 
 ## Download and update template files with new dictionary sheets
 updated_excel_files <- update_template_dictionaries(
@@ -103,4 +113,10 @@ purrr::walk(
 
 ## Clean up local files
 ## Should be same directory for update_template_dictionaries (default = ".")
-file.remove(list.files(opt$directory, pattern = "^template(.+)\\.xlsx"))
+file.remove(
+  list.files(
+    opt$directory,
+    pattern = "^template(.+)\\.xlsx",
+    full.names = TRUE
+  )
+)
