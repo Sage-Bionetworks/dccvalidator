@@ -1,14 +1,18 @@
 ## Global Synapse module
 synapse <- NULL
+## Global OAuth client and url
+app <- NULL
+APP_URL <- NULL
 
 ## Global app variables for OAuth
-if (interactive()) {
-  # testing url
-  options(shiny.port = 8100)
-  APP_URL <- "http://127.0.0.1:8100"
-} else {
-  APP_URL <- config::get("app_url")
-}
+# if (interactive()) {
+#   # testing url; will only work if OAuth client includes this URL in list of
+#   # redirect_uris
+#   options(shiny.port = 8100)
+#   APP_URL <- "http://127.0.0.1:8100"
+# } else {
+#   APP_URL <- get_golem_config("app_url")
+# }
 ## These are the user info details ('claims') requested from Synapse
 CLAIMS <- list(
   family_name=NULL, 
@@ -28,10 +32,10 @@ if (is.null(CLIENT_ID)) stop(".Renviron is missing client_id")
 if (is.null(CLIENT_SECRET)) stop(".Renviron is missing client_secret")
 
 ## Prep the OAuth app and api endpoint
-app <- httr::oauth_app("dccvalidator",
-                       key = CLIENT_ID,
-                       secret = CLIENT_SECRET, 
-                       redirect_uri = APP_URL)
+# app <- httr::oauth_app("dccvalidator",
+#                        key = CLIENT_ID,
+#                        secret = CLIENT_SECRET, 
+#                        redirect_uri = APP_URL)
 api <- httr::oauth_endpoint(
   authorize=paste0("https://signin.synapse.org?claims=", CLAIMS_PARAM),
   access="https://repo-prod.prod.sagebase.org/auth/v1/oauth2/token"
@@ -40,6 +44,15 @@ api <- httr::oauth_endpoint(
 ## Bring in the Synapse Python Client
 .onLoad <- function(libname, pkgname) {
   synapse <<- reticulate::import("synapseclient", delay_load = TRUE)
+}
+
+## Prep OAuth client
+prep_for_oauth <- function(app_url) {
+  APP_URL <<- app_url
+  app <<- httr::oauth_app("dccvalidator",
+                         key = CLIENT_ID,
+                         secret = CLIENT_SECRET, 
+                         redirect_uri = APP_URL)
 }
 
 #' @title Has authorization code
@@ -97,6 +110,7 @@ oauth_process <- function(params) {
 #' @export
 #' @param request Shiny request object
 oauth_ui <- function(request) {
+  prep_for_oauth(config::get("app_url"))
   if (!has_auth_code(parseQueryString(request$QUERY_STRING))) {
     authorization_url = httr::oauth2.0_authorize_url(api, app, scope = SCOPE)
     return(

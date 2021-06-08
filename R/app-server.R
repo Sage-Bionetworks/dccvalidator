@@ -21,7 +21,7 @@ app_server <- function(input, output, session) {
   ## Synapse client for a specific user
   syn <- synapse$Synapse()
   ## Set client endpoints to staging, if needed
-  if (!config::get("production")) {
+  if (!get_golem_config("production")) {
     set_staging_endpoints(syn)
   }
 
@@ -54,7 +54,7 @@ app_server <- function(input, output, session) {
     ## folder at the next step), and if they are a certified user.
     user <- syn$getUserProfile()
     membership <- check_team_membership(
-      teams = config::get("teams"),
+      teams = get_golem_config("teams"),
       user = user,
       syn = syn
     )
@@ -67,14 +67,14 @@ app_server <- function(input, output, session) {
       inherits(certified, "check_pass")) {
       created_folder <- try(
         create_folder(
-          parent = config::get("parent"),
+          parent = get_golem_config("parent"),
           name = user$userName,
           synapseclient = synapse,
           syn = syn
         )
       )
 
-      all_studies <- get_study_names(reactive(config::get("study_table")), syn)
+      all_studies <- get_study_names(reactive(get_golem_config("study_table")), syn)
       study_name <- callModule(
         get_study_server,
         "study",
@@ -93,8 +93,8 @@ app_server <- function(input, output, session) {
       )
       purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
 
-      if (config::get("docs_tab")$include_tab &
-        config::get("docs_tab")$include_upload_widget) {
+      if (get_golem_config("docs_tab")$include_tab &
+        get_golem_config("docs_tab")$include_upload_widget) {
         # Documentation server needs created_folder to run correctly
         callModule(
           upload_documents_server,
@@ -125,13 +125,13 @@ app_server <- function(input, output, session) {
         session,
         "species",
         "Species",
-        config::get("species_list")
+        get_golem_config("species_list")
       )
       updateSelectInput(
         session,
         "assay_name",
         "Assay type",
-        names(config::get("templates")$assay_templates)
+        names(get_golem_config("templates")$assay_templates)
       )
     })
 
@@ -145,7 +145,7 @@ app_server <- function(input, output, session) {
 
     ## Download annotation definitions
     annots <- purrr::map_dfr(
-      config::get("annotations_table"),
+      get_golem_config("annotations_table"),
       get_synapse_annotations,
       syn = syn
     )
@@ -209,8 +209,8 @@ app_server <- function(input, output, session) {
           title = "Instructions",
           # nolint start
           instructions(
-            annots_link = config::get("annotations_link"),
-            templates_link = config::get("templates_link")
+            annots_link = get_golem_config("annotations_link"),
+            templates_link = get_golem_config("templates_link")
           ),
           # nolint end
           easyClose = TRUE
@@ -337,7 +337,7 @@ app_server <- function(input, output, session) {
         callModule(results_boxes_server, "Validation Results", res)
 
         # Give next step if no failures
-        next_step_modal(res, config::get("contact_email"))
+        next_step_modal(res, get_golem_config("contact_email"))
       })
     })
 
