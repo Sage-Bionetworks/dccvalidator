@@ -4,13 +4,14 @@ synapse <- NULL
 app <- NULL
 APP_URL <- NULL
 
-# ## Global app variables for OAuth
+## Global app variables for OAuth
 # if (interactive()) {
-#   # testing url
+#   # testing url; will only work if OAuth client includes this URL in list of
+#   # redirect_uris
 #   options(shiny.port = 8100)
 #   APP_URL <- "http://127.0.0.1:8100"
 # } else {
-#   APP_URL <- config::get("app_url")
+#   APP_URL <- get_golem_config("app_url")
 # }
 ## These are the user info details ('claims') requested from Synapse
 CLAIMS <- list(
