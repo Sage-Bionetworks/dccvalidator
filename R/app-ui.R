@@ -15,17 +15,17 @@ app_ui <- function(request) {
     dashboardHeader(title = "Metadata Validation"),
     dashboardSidebar(
       sidebarMenu(
-        if (!is.na(config::get("path_to_markdown"))) {
+        if (!is.na(get_golem_config("path_to_markdown"))) {
           menuItem("Using the App", tabName = "vignette")
         },
-        if (config::get("docs_tab")$include_tab) {
+        if (get_golem_config("docs_tab")$include_tab) {
           menuItem(
-            config::get("docs_tab")$tab_name,
+            get_golem_config("docs_tab")$tab_name,
             tabName = "documentation") 
         },
         menuItem("Validator", tabName = "validator")
       ),
-      create_footer(config::get("contact_email"))
+      create_footer(get_golem_config("contact_email"))
     ),
     dashboardBody(
 
@@ -61,7 +61,7 @@ app_ui <- function(request) {
                       radioButtons(
                         "species",
                         "Species",
-                        config::get("species_list")
+                        get_golem_config("species_list")
                       )
                     )
                   ),
@@ -82,7 +82,7 @@ app_ui <- function(request) {
                       selectInput(
                         "assay_name",
                         "Assay type",
-                        names(config::get("templates")$assay_templates)
+                        names(get_golem_config("templates")$assay_templates)
                       )
                     )
                   ),
@@ -250,18 +250,18 @@ app_ui <- function(request) {
             )
           ),
           # Embedd How To Use App vignette
-          if (!is.na(config::get("path_to_markdown"))) {
+          if (!is.na(get_golem_config("path_to_markdown"))) {
             tabItem(
               tabName = "vignette",
-              get_markdown(config::get("path_to_markdown"))
+              get_markdown(get_golem_config("path_to_markdown"))
             )
           },
-          if (config::get("docs_tab")$include_tab) {
+          if (get_golem_config("docs_tab")$include_tab) {
             # Documentation tab UI
             upload_documents_ui(
               id = "documentation",
-              markdown_path = config::get("docs_tab")$path_to_docs_markdown,
-              include_widget = config::get("docs_tab")$include_upload_widget
+              markdown_path = get_golem_config("docs_tab")$path_to_docs_markdown,
+              include_widget = get_golem_config("docs_tab")$include_upload_widget
             )
           }
         ),
