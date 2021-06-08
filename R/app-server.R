@@ -16,6 +16,9 @@
 app_server <- function(input, output, session) {
   syn <- synapse$Synapse()
 
+  if (!config::get("production")) {
+    set_staging_endpoints(syn)
+  }
   session$sendCustomMessage(type = "readCookie", message = list())
 
   ## Show message if user is not logged in to synapse
@@ -30,10 +33,12 @@ app_server <- function(input, output, session) {
 
   observeEvent(input$cookie, {
     is_logged_in <- FALSE
+    ## Use authToken and handle error here if still not logged in
     tryCatch({
-      syn$login(sessionToken = input$cookie)
+      syn$login()
       is_logged_in <- TRUE
-    }, error = function(err) {
+    },
+    error = function(err) {
       showModal(
         modalDialog(
           title = "Login error",
@@ -41,7 +46,19 @@ app_server <- function(input, output, session) {
           footer = NULL
         )
       )
-    })
+    }
+    )
+    ## Check that user did not log in as anonymous
+    if (syn$username == "anonymous") {
+      showModal(
+        modalDialog(
+          title = "Login error",
+          HTML("There was an error with the login process. You have been logged in as anonymous."), # nolint
+          footer = NULL
+        )
+      )
+      is_logged_in <- FALSE
+    }
     req(is_logged_in)
 
     ## Check if user is in AMP-AD Consortium team (needed in order to create
@@ -70,15 +87,19 @@ app_server <- function(input, output, session) {
 
       all_studies <- get_study_names(reactive(config::get("study_table")), syn)
 
-      # Documentation server needs created_folder to run correctly
-      callModule(
-        upload_documents_server,
-        "documentation",
-        parent_folder = reactive(created_folder),
-        study_names = all_studies,
-        synapseclient = synapse,
-        syn = syn
-      )
+      if (config::get("docs_tab")$include_tab &
+        config::get("docs_tab")$include_upload_widget) {
+        # Documentation server needs created_folder to run correctly
+        callModule(
+          upload_documents_server,
+          "documentation",
+          parent_folder = reactive(created_folder),
+          study_names = all_studies,
+          synapseclient = synapse,
+          syn = syn
+        )
+      }
+    }
 
       # Validation module
       callModule(
@@ -95,7 +116,6 @@ app_server <- function(input, output, session) {
         synapseclient = synapse,
         syn = syn
       )
-    }
   })
 }
 

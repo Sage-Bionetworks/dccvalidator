@@ -31,7 +31,7 @@ membership <- check_team_membership(
   teams = "3396691",
   user = user,
   syn = syn
- )
+)
 certified <- check_certified_user(user$ownerId, syn = syn)
 report_unsatisfied_requirements(membership, certified, syn = syn)
 }

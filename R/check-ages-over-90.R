@@ -51,7 +51,6 @@ check_ages_over_90 <- function(data, col = "ageDeath", strict = FALSE,
       type = ifelse(strict, "check_fail", "check_warn")
     )
   }
-
 }
 
 # Does the column (after removing non-numeric characters) contain any values

@@ -84,6 +84,7 @@ To install the dccvalidator instead of forking the repository:
    
 ### Configuration options
 
+* `production`: `TRUE` to use production Synapse endpoints; `FALSE` to use staging endpoints. Used for testing new versions of the client before they are officially released. See [Synapse client documentation](https://python-docs.synapse.org/build/html/index.html?highlight=endpoints#synapseclient.Synapse.setEndpoints) for information on endpoints.
 * `parent`: The Synapse project or folder where files will be stored
 * `path_to_markdown`: Location of an R Markdown document with app instructions. If you wish to omit instructions, insert `!expr NA`.
 * `study_table`: Synapse ID of a table that lists all of the existing studies in
@@ -99,9 +100,14 @@ To install the dccvalidator instead of forking the repository:
 * `annotations_link`: URL to a list or description of allowable annotation
   values (so users can read more)
 * `templates_link`: URL to the location of metadata templates
-* `study_link_animal`: URL to an example study description for an animal model
-  study
-* `study_link_human`: URL to an example study description for a human study
+* `docs_tab`: These settings configure the documentation tab, including the
+  option to not have a tab at all.
+  * `include_tab`: `TRUE` to include the documentation tab in the app, else `FALSE`.
+  * `include_upload_widget`: `TRUE` to include the widget that allows upload of
+    documentation, else `FALSE`. `include_tab` must be `TRUE` to have the widget.
+  * `tab_name`: Desired name of the documentation tab.
+  * `path_to_docs_markdown`: Location of an R Markdown document with
+    documentation instructions.
 * `teams`: The team(s) a user must be a member of in order to use the app. If
   the user is not in any of the teams, they will see a message telling them they
   must be added to one of the teams.
