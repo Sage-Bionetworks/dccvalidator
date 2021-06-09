@@ -28,7 +28,6 @@
 #' dat2 <- data.frame(assay = "rnaSeq")
 #' check_annotation_values(dat1, annots)
 #' check_annotation_values(dat2, annots)
-#'
 #' \dontrun{
 #' syn <- synapse$Synapse()
 #' syn$login()
@@ -253,12 +252,15 @@ check_type <- function(values, key, annotations, allowlist_values = NULL,
     )
   }
 
-  correct_class <- switch(
-    coltype,
+  correct_class <- switch(coltype,
     "STRING" = "character",
+    "string" = "character",
     "BOOLEAN" = "logical",
+    "boolean" = "logical",
     "INTEGER" = "integer",
-    "DOUBLE" = "numeric"
+    "integer" = "integer",
+    "DOUBLE" = "numeric",
+    "number" = "numeric"
   )
   ## Convert factors to strings
   values <- if (is.factor(values)) as.character(values) else values
@@ -341,7 +343,7 @@ can_coerce <- function(values, class) {
     ## Integers are coercible to numeric
     return(TRUE)
   } else if (class == "integer" && inherits(values, "numeric") &&
-               isTRUE(all.equal(values, as.integer(values)))) {
+    isTRUE(all.equal(values, as.integer(values)))) {
     ## Whole numbers are coercible to integers
     return(TRUE)
   } else if (class == "logical") {
@@ -392,6 +394,13 @@ check_value <- function(values, key, annotations, allowlist_keys = NULL,
   if (all(is.na(annot_values))) {
     return(check_type(values, key, annotations, allowlist_values, return_valid))
   }
+  ## Multiple annotations come through as either comma separated list or
+  ## json-style strings (e.g. "[\"foo\",\"bar\"]"). Separate out the values.
+  if (any(grepl(",", values))) {
+    values <- gsub("\\[|\\]|\"", "", values)
+    values <- unlist(strsplit(values, split = ","))
+    values <- stringr::str_trim(values, side = "both")
+  }
   ## Check values against enumerated values in annotation definitions.
   if (isTRUE(return_valid)) {
     unique(values[values %in% c(annot_values, whitelist) & !is.na(values)])
@@ -431,6 +440,14 @@ check_value <- function(values, key, annotations, allowlist_keys = NULL,
 #' )
 #' dat <- data.frame(
 #'   fileFormat = c("wrong", "txt", "csv", "wrong again"),
+#'   stringsAsFactors = FALSE
+#' )
+#' check_values(dat, annots)
+#'
+#' ## Comma-separated and json-style strings for keys with enumerated values
+#' ## are separated and checked individually
+#' dat <- data.frame(
+#'   fileFormat = c("wrong, txt, csv", "[\"wrong again\",\"csv\"]"),
 #'   stringsAsFactors = FALSE
 #' )
 #' check_values(dat, annots)

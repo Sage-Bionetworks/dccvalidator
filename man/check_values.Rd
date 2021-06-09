@@ -62,4 +62,12 @@ dat <- data.frame(
   stringsAsFactors = FALSE
 )
 check_values(dat, annots)
+
+## Comma-separated and json-style strings for keys with enumerated values
+## are separated and checked individually
+dat <- data.frame(
+  fileFormat = c("wrong, txt, csv", "[\"wrong again\",\"csv\"]"),
+  stringsAsFactors = FALSE
+)
+check_values(dat, annots)
 }
