@@ -7,7 +7,7 @@
 check_keys(
   x,
   annotations,
-  whitelist_keys = NULL,
+  allowlist_keys = NULL,
   success_msg = "All annotation keys are valid",
   fail_msg = "Some annotation keys are invalid",
   annots_link = "https://shinypro.synapse.org/users/nsanati/annotationUI/",
@@ -20,7 +20,7 @@ check_keys(
 
 \item{annotations}{A data frame of annotations to check against}
 
-\item{whitelist_keys}{A character vector of annotation keys to whitelist. If
+\item{allowlist_keys}{A character vector of annotation keys to allowlist. If
 provided, all values for the given keys will be treated as valid.}
 
 \item{success_msg}{Message indicating the check succeeded.}

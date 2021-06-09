@@ -7,8 +7,8 @@
 check_values(
   x,
   annotations,
-  whitelist_keys = NULL,
-  whitelist_values = NULL,
+  allowlist_keys = NULL,
+  allowlist_values = NULL,
   success_msg = "All annotation values are valid",
   fail_msg = "Some annotation values are invalid",
   return_valid = FALSE,
@@ -21,11 +21,11 @@ check_values(
 
 \item{annotations}{A data frame of annotations to check against}
 
-\item{whitelist_keys}{A character vector of annotation keys to whitelist. If
+\item{allowlist_keys}{A character vector of annotation keys to allowlist. If
 provided, all values for the given keys will be treated as valid.}
 
-\item{whitelist_values}{A named list of keys (as the names) and values (as
-vectors) to whitelist}
+\item{allowlist_values}{A named list of keys (as the names) and values (as
+vectors) to allowlist}
 
 \item{success_msg}{Message indicating the check succeeded.}
 

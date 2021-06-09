@@ -89,13 +89,13 @@ check_annotation_values(fv, annots)
 my_file <- syn$get("syn11931757", downloadFile = FALSE)
 check_annotation_values(my_file, syn = syn)
 
-# It is possible to whitelist certain certain values, or all values for
+# It is possible to allowlist certain certain values, or all values for
 # certain keys:
-check_annotation_values(dat, whitelist_keys = "assay", syn = syn)
+check_annotation_values(dat, allowlist_keys = "assay", syn = syn)
 
 check_annotation_values(
   dat,
-  whitelist_values = list(assay = c("foo")),
+  allowlist_values = list(assay = c("foo")),
   syn = syn
 )
 }
