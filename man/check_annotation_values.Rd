@@ -65,7 +65,6 @@ dat1 <- data.frame(assay = "not a valid assay")
 dat2 <- data.frame(assay = "rnaSeq")
 check_annotation_values(dat1, annots)
 check_annotation_values(dat2, annots)
-
 \dontrun{
 syn <- synapse$Synapse()
 syn$login()

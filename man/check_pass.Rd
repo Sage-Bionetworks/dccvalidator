@@ -27,7 +27,7 @@ An S3 object of class "check_pass", "check_warn", or "check_fail"
 These functions create custom condition objects with subclasses "check_pass",
 "check_warn", and "check_fail" (inheriting from "message", "warning", or
 "error", respectively). Validation functions such as
-\code{\link[dccvalidator:check_col_names]{dccvalidator::check_col_names()}} use these to report results and provide
+\code{\link[=check_col_names]{check_col_names()}} use these to report results and provide
 additional data on the source of errors or invalid data if needed.
 }
 \examples{

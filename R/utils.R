@@ -1,4 +1,4 @@
-## Check if we are running on travis
+## Check if we are running on CI
 on_ci <- function() {
   if (identical(Sys.getenv("CI"), "true")) {
     return(TRUE)
@@ -25,6 +25,7 @@ attempt_login <- function(syn, ...) {
     try(syn$login(), silent = TRUE)
   } else if (reticulate::py_module_available("synapseclient") & !is.null(syn)) {
     syn$login(...)
+    return(syn)
   } else {
     return(NULL)
   }
@@ -64,4 +65,14 @@ save_to_synapse <- function(input_file,
 ## Count unique values
 count_unique_values <- function(...) {
   sum(!is.na(unique(c(...))))
+}
+
+## Do whole login process
+## Making a whole function so it can be more easily mocked for other functions
+full_login_process <- function(...) {
+  # Import synapseclient and login
+  synapse <<- reticulate::import("synapseclient")
+  syn <- attempt_instantiate()
+  syn <- attempt_login(syn, ...)
+  return(syn)
 }

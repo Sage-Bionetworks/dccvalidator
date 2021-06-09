@@ -11,6 +11,7 @@ default:
       drosophila: "syn20673251"
     assay_templates:
       rnaSeq: "syn12973256"
+      proteomics: "syn12973255"
   complete_columns:
     manifest:
       - "parent"

@@ -10,12 +10,12 @@
 #' @export
 #' @examples
 #' if (requireNamespace("jsonvalidate", quietly = TRUE) &
-#'       requireNamespace("jsonlite", quietly = TRUE)) {
-#' dat <- data.frame(
-#'   x = c(NA, 1, NA),
-#'   y = c(NA, NA, "foo")
-#' )
-#' schema <- '{
+#'   requireNamespace("jsonlite", quietly = TRUE)) {
+#'   dat <- data.frame(
+#'     x = c(NA, 1, NA),
+#'     y = c(NA, NA, "foo")
+#'   )
+#'   schema <- '{
 #'   "$schema": "http://json-schema.org/draft-04/schema#",
 #'   "properties": {
 #'     "x": {

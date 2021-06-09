@@ -88,5 +88,5 @@ check_cols_manifest(b, syn)
 }
 }
 \seealso{
-\code{\link[dccvalidator:get_template]{dccvalidator::get_template()}}
+\code{\link[=get_template]{get_template()}}
 }
