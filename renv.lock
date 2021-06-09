@@ -233,6 +233,13 @@
       "Repository": "CRAN",
       "Hash": "95d780d9cf3384d97579fc324a8d4c31"
     },
+    "downlit": {
+      "Package": "downlit",
+      "Version": "0.2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7020bf49ba1704ec3c1d1318e0a5ba01"
+    },
     "dplyr": {
       "Package": "dplyr",
       "Version": "1.0.2",
@@ -814,12 +821,26 @@
       "Repository": "CRAN",
       "Hash": "b227d13e29222b4574486cfcbde077fa"
     },
+    "systemfonts": {
+      "Package": "systemfonts",
+      "Version": "0.3.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "b2bfa6842e51cb3599cf2013f25d7594"
+    },
     "testthat": {
       "Package": "testthat",
       "Version": "3.0.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "13298cedd051cb7b8a8972d380b559a6"
+    },
+    "textshaping": {
+      "Package": "textshaping",
+      "Version": "0.1.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "db1d287fd86f3f69127215a95b9270ad"
     },
     "tibble": {
       "Package": "tibble",

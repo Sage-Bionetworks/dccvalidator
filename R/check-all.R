@@ -119,7 +119,7 @@ check_all <- function(data, annotations, study, syn) {
   annotation_keys_manifest <- check_annotation_keys(
     data$file_data[manifest_index][[1]],
     annotations,
-    whitelist_keys = c("path", "parent", "name", "used", "executed"),
+    allowlist_keys = c("path", "parent", "name", "used", "executed"),
     success_msg = "All keys (column names) in the manifest are valid",
     fail_msg = "Some keys (column names) in the manifest are invalid",
     annots_link = config::get("annotations_link")
@@ -136,7 +136,7 @@ check_all <- function(data, annotations, study, syn) {
   annotation_values_indiv <- check_annotation_values(
     data$file_data[indiv_index][[1]],
     annotations,
-    whitelist_keys = c("individualID"),
+    allowlist_keys = c("individualID"),
     success_msg = "All values in the individual metadata are valid",
     fail_msg = "Some values in the individual metadata are invalid",
     annots_link = config::get("annotations_link")
@@ -144,7 +144,7 @@ check_all <- function(data, annotations, study, syn) {
   annotation_values_biosp <- check_annotation_values(
     data$file_data[biosp_index][[1]],
     annotations,
-    whitelist_keys = c("specimenID", "individualID"),
+    allowlist_keys = c("specimenID", "individualID"),
     success_msg = "All values in the biospecimen metadata are valid",
     fail_msg = "Some values in the biospecimen metadata are invalid",
     annots_link = config::get("annotations_link")
@@ -152,7 +152,7 @@ check_all <- function(data, annotations, study, syn) {
   annotation_values_assay <- check_annotation_values(
     data$file_data[assay_index][[1]],
     annotations,
-    whitelist_keys = c("specimenID"),
+    allowlist_keys = c("specimenID"),
     success_msg = "All values in the assay metadata are valid",
     fail_msg = "Some values in the assay metadata are invalid",
     annots_link = config::get("annotations_link")
