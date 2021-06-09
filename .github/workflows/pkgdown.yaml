@@ -31,6 +31,10 @@ jobs:
           key: macOS-r-3.6-${{ hashFiles('depends.Rds') }}
           restore-keys: macOS-r-3.6-
 
+      - name: Install system dependencies
+        run: |
+          brew install harfbuzz fribidi
+
       - name: Install dependencies
         run: |
           install.packages("remotes")
