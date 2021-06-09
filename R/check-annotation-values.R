@@ -28,7 +28,6 @@
 #' dat2 <- data.frame(assay = "rnaSeq")
 #' check_annotation_values(dat1, annots)
 #' check_annotation_values(dat2, annots)
-#'
 #' \dontrun{
 #' syn <- synapse$Synapse()
 #' syn$login()
@@ -53,7 +52,7 @@
 #' my_file <- syn$get("syn11931757", downloadFile = FALSE)
 #' check_annotation_values(my_file, syn = syn)
 #'
-#' # It is possible to whitelist certain certain values, or all values for
+#' # It is possible to allowlist certain certain values, or all values for
 #' # certain keys:
 #' check_annotation_values(dat, allowlist_keys = "assay", syn = syn)
 #'
@@ -253,18 +252,21 @@ check_type <- function(values, key, annotations, allowlist_values = NULL,
     )
   }
 
-  correct_class <- switch(
-    coltype,
+  correct_class <- switch(coltype,
     "STRING" = "character",
+    "string" = "character",
     "BOOLEAN" = "logical",
+    "boolean" = "logical",
     "INTEGER" = "integer",
-    "DOUBLE" = "numeric"
+    "integer" = "integer",
+    "DOUBLE" = "numeric",
+    "number" = "numeric"
   )
   ## Convert factors to strings
   values <- if (is.factor(values)) as.character(values) else values
 
-  ## Get whitelisted values for key, if any
-  whitelist <- unique(allowlist_values[[key]])
+  ## Get allowlisted values for key, if any
+  allowlist <- unique(allowlist_values[[key]])
 
   ## Check if all values are coercible to the correct type. If so, then we can
   ## treat it as valid. One example use case is the readLength annotation, which
@@ -274,8 +276,8 @@ check_type <- function(values, key, annotations, allowlist_values = NULL,
   ## Check if class matches
   matches <- (class(values) == correct_class) | coercible
   if (return_valid & matches | !return_valid & !matches) {
-    ## Return valid or invalid values, minus whitelisted values
-    return(setdiff(unique(stats::na.omit(values)), whitelist))
+    ## Return valid or invalid values, minus allowlisted values
+    return(setdiff(unique(stats::na.omit(values)), allowlist))
   } else {
     return(character(0))
   }
@@ -341,7 +343,7 @@ can_coerce <- function(values, class) {
     ## Integers are coercible to numeric
     return(TRUE)
   } else if (class == "integer" && inherits(values, "numeric") &&
-               isTRUE(all.equal(values, as.integer(values)))) {
+    isTRUE(all.equal(values, as.integer(values)))) {
     ## Whole numbers are coercible to integers
     return(TRUE)
   } else if (class == "logical") {
@@ -369,8 +371,8 @@ check_value <- function(values, key, annotations, allowlist_keys = NULL,
                         syn) {
   values <- unlist(values)
 
-  ## Get whitelisted values for key, if any
-  whitelist <- unique(allowlist_values[[key]])
+  ## Get allowlisted values for key, if any
+  allowlist <- unique(allowlist_values[[key]])
 
   if (missing(annotations)) {
     annotations <- get_synapse_annotations(syn = syn)
@@ -379,7 +381,7 @@ check_value <- function(values, key, annotations, allowlist_keys = NULL,
     return(NULL)
   }
   annot_values <- annotations[annotations$key == key, ]$value
-  ## If key is being whitelisted, treat all values as valid
+  ## If key is being allowlisted, treat all values as valid
   if (key %in% allowlist_keys) {
     if (isTRUE(return_valid)) {
       return(unique(values))
@@ -392,11 +394,18 @@ check_value <- function(values, key, annotations, allowlist_keys = NULL,
   if (all(is.na(annot_values))) {
     return(check_type(values, key, annotations, allowlist_values, return_valid))
   }
+  ## Multiple annotations come through as either comma separated list or
+  ## json-style strings (e.g. "[\"foo\",\"bar\"]"). Separate out the values.
+  if (any(grepl(",", values))) {
+    values <- gsub("\\[|\\]|\"", "", values)
+    values <- unlist(strsplit(values, split = ","))
+    values <- stringr::str_trim(values, side = "both")
+  }
   ## Check values against enumerated values in annotation definitions.
   if (isTRUE(return_valid)) {
-    unique(values[values %in% c(annot_values, whitelist) & !is.na(values)])
+    unique(values[values %in% c(annot_values, allowlist) & !is.na(values)])
   } else {
-    unique(values[!values %in% c(annot_values, whitelist) & !is.na(values)])
+    unique(values[!values %in% c(annot_values, allowlist) & !is.na(values)])
   }
 }
 
@@ -405,10 +414,10 @@ check_value <- function(values, key, annotations, allowlist_keys = NULL,
 #' @inheritParams get_synapse_annotations
 #' @param x A data frame of annotation data
 #' @param annotations A data frame of annotations to check against
-#' @param allowlist_keys A character vector of annotation keys to whitelist. If
+#' @param allowlist_keys A character vector of annotation keys to allowlist. If
 #'   provided, all values for the given keys will be treated as valid.
 #' @param allowlist_values A named list of keys (as the names) and values (as
-#'   vectors) to whitelist
+#'   vectors) to allowlist
 #' @param success_msg Message indicating the check succeeded.
 #' @param fail_msg Message indicating the check failed.
 #' @param return_valid Should the function return valid values? Defaults to
@@ -431,6 +440,14 @@ check_value <- function(values, key, annotations, allowlist_keys = NULL,
 #' )
 #' dat <- data.frame(
 #'   fileFormat = c("wrong", "txt", "csv", "wrong again"),
+#'   stringsAsFactors = FALSE
+#' )
+#' check_values(dat, annots)
+#'
+#' ## Comma-separated and json-style strings for keys with enumerated values
+#' ## are separated and checked individually
+#' dat <- data.frame(
+#'   fileFormat = c("wrong, txt, csv", "[\"wrong again\",\"csv\"]"),
 #'   stringsAsFactors = FALSE
 #' )
 #' check_values(dat, annots)
