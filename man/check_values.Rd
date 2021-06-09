@@ -21,11 +21,11 @@ check_values(
 
 \item{annotations}{A data frame of annotations to check against}
 
-\item{allowlist_keys}{A character vector of annotation keys to whitelist. If
+\item{allowlist_keys}{A character vector of annotation keys to allowlist. If
 provided, all values for the given keys will be treated as valid.}
 
 \item{allowlist_values}{A named list of keys (as the names) and values (as
-vectors) to whitelist}
+vectors) to allowlist}
 
 \item{success_msg}{Message indicating the check succeeded.}
 

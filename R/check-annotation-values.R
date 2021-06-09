@@ -52,7 +52,7 @@
 #' my_file <- syn$get("syn11931757", downloadFile = FALSE)
 #' check_annotation_values(my_file, syn = syn)
 #'
-#' # It is possible to whitelist certain certain values, or all values for
+#' # It is possible to allowlist certain certain values, or all values for
 #' # certain keys:
 #' check_annotation_values(dat, allowlist_keys = "assay", syn = syn)
 #'
@@ -265,8 +265,8 @@ check_type <- function(values, key, annotations, allowlist_values = NULL,
   ## Convert factors to strings
   values <- if (is.factor(values)) as.character(values) else values
 
-  ## Get whitelisted values for key, if any
-  whitelist <- unique(allowlist_values[[key]])
+  ## Get allowlisted values for key, if any
+  allowlist <- unique(allowlist_values[[key]])
 
   ## Check if all values are coercible to the correct type. If so, then we can
   ## treat it as valid. One example use case is the readLength annotation, which
@@ -276,8 +276,8 @@ check_type <- function(values, key, annotations, allowlist_values = NULL,
   ## Check if class matches
   matches <- (class(values) == correct_class) | coercible
   if (return_valid & matches | !return_valid & !matches) {
-    ## Return valid or invalid values, minus whitelisted values
-    return(setdiff(unique(stats::na.omit(values)), whitelist))
+    ## Return valid or invalid values, minus allowlisted values
+    return(setdiff(unique(stats::na.omit(values)), allowlist))
   } else {
     return(character(0))
   }
@@ -371,8 +371,8 @@ check_value <- function(values, key, annotations, allowlist_keys = NULL,
                         syn) {
   values <- unlist(values)
 
-  ## Get whitelisted values for key, if any
-  whitelist <- unique(allowlist_values[[key]])
+  ## Get allowlisted values for key, if any
+  allowlist <- unique(allowlist_values[[key]])
 
   if (missing(annotations)) {
     annotations <- get_synapse_annotations(syn = syn)
@@ -381,7 +381,7 @@ check_value <- function(values, key, annotations, allowlist_keys = NULL,
     return(NULL)
   }
   annot_values <- annotations[annotations$key == key, ]$value
-  ## If key is being whitelisted, treat all values as valid
+  ## If key is being allowlisted, treat all values as valid
   if (key %in% allowlist_keys) {
     if (isTRUE(return_valid)) {
       return(unique(values))
@@ -403,9 +403,9 @@ check_value <- function(values, key, annotations, allowlist_keys = NULL,
   }
   ## Check values against enumerated values in annotation definitions.
   if (isTRUE(return_valid)) {
-    unique(values[values %in% c(annot_values, whitelist) & !is.na(values)])
+    unique(values[values %in% c(annot_values, allowlist) & !is.na(values)])
   } else {
-    unique(values[!values %in% c(annot_values, whitelist) & !is.na(values)])
+    unique(values[!values %in% c(annot_values, allowlist) & !is.na(values)])
   }
 }
 
@@ -414,10 +414,10 @@ check_value <- function(values, key, annotations, allowlist_keys = NULL,
 #' @inheritParams get_synapse_annotations
 #' @param x A data frame of annotation data
 #' @param annotations A data frame of annotations to check against
-#' @param allowlist_keys A character vector of annotation keys to whitelist. If
+#' @param allowlist_keys A character vector of annotation keys to allowlist. If
 #'   provided, all values for the given keys will be treated as valid.
 #' @param allowlist_values A named list of keys (as the names) and values (as
-#'   vectors) to whitelist
+#'   vectors) to allowlist
 #' @param success_msg Message indicating the check succeeded.
 #' @param fail_msg Message indicating the check failed.
 #' @param return_valid Should the function return valid values? Defaults to
