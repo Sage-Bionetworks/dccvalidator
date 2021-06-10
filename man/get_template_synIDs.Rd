@@ -4,11 +4,11 @@
 \alias{get_template_synIDs}
 \title{Get Template synIDs}
 \usage{
-get_template_synIDs(templates = config::get("templates"))
+get_template_synIDs(templates = get_golem_config("templates"))
 }
 \arguments{
 \item{templates}{Named or unnamed list of template synIDs. Defaults to
-\code{config::get("templates")}.}
+\code{get_golem_config("templates")}.}
 }
 \value{
 A vector of synIDs.

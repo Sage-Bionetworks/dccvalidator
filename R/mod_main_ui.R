@@ -102,7 +102,7 @@ mod_main_server <- function(id, syn) {
           )
         )
 
-        all_studies <- get_study_names(config::get("study_table"), syn)
+        all_studies <- get_study_names(get_golem_config("study_table"), syn)
 
         if (get_golem_config("docs_tab")$include_tab &
           get_golem_config("docs_tab")$include_upload_widget) {
@@ -121,12 +121,12 @@ mod_main_server <- function(id, syn) {
           validator_server,
           "validator",
           study_names = all_studies,
-          species_list = config::get("species_list"),
-          assay_templates = config::get("templates")$assay_templates,
-          annotations_table = config::get("annotations_table"),
-          annots_link = config::get("annotations_link"),
-          templates_link = config::get("templates_link"),
-          contact_email = config::get("contact_email"),
+          species_list = get_golem_config("species_list"),
+          assay_templates = get_golem_config("templates")$assay_templates,
+          annotations_table = get_golem_config("annotations_table"),
+          annots_link = get_golem_config("annotations_link"),
+          templates_link = get_golem_config("templates_link"),
+          contact_email = get_golem_config("contact_email"),
           parent = created_folder,
           synapseclient = synapse,
           syn = syn
