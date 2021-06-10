@@ -90,8 +90,7 @@ jobs:
         run: |
           Rscript -e "reticulate::conda_create('r-reticulate', packages = c('python==3.7.0'))"
           Rscript -e "remotes::install_local()"
-          Rscript -e "reticulate::py_install('pandas', pip = TRUE)"
-          Rscript -e "reticulate::py_install('synapseclient', pip = TRUE)"
+          Rscript -e "reticulate::py_install(c('pandas', 'numpy','boto3', 'synapseclient'), pip = TRUE)
 
       - name: Setup Synapse config file for testing
         if: runner.os != 'Windows'
