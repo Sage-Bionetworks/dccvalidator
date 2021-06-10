@@ -79,6 +79,7 @@ ui <- fluidPage(
 \dontrun{
 shinyApp(ui, server)
 }
+# nolint end
 }
 \author{
 Dean Attali \href{mailto:dean@attalitech.com}{dean@attalitech.com}

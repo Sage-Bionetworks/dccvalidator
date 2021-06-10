@@ -49,6 +49,6 @@ if (requireNamespace("jsonvalidate", quietly = TRUE) &
   "required": ["x", "y"]
 }
 '
-check_schema_df(dat, schema)
+  check_schema_df(dat, schema)
 }
 }

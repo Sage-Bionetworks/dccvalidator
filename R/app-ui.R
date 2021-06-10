@@ -5,6 +5,7 @@
 #' login. Otherwise, launches the \code{\link{mod_main_ui}} to start
 #' dccvalidator using login credentials stored in a .synapseConfig.
 #'
+#' @export
 #' @import shiny
 #' @import shinydashboard
 #' @param request Shiny request object
