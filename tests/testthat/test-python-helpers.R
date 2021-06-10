@@ -2,6 +2,7 @@ context("test-python-helpers.R")
 
 syn <- attempt_instantiate()
 attempt_login(syn)
+Sys.setenv(R_CONFIG_ACTIVE = "testing")
 
 test_that("dict_to_list converts annotations", {
   skip_if_not(logged_in(syn = syn))

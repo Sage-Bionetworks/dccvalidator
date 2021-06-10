@@ -3,6 +3,7 @@ context("test-check-annotation-values.R")
 library("tibble")
 syn <- attempt_instantiate()
 attempt_login(syn)
+Sys.setenv(R_CONFIG_ACTIVE = "testing")
 annots <- tribble(
   ~key, ~value, ~columnType,
   "assay", "rnaSeq", "STRING",

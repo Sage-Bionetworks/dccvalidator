@@ -2,6 +2,7 @@ context("test-get-synapse-annotations.R")
 
 syn <- attempt_instantiate()
 attempt_login(syn = syn)
+Sys.setenv(R_CONFIG_ACTIVE = "testing")
 
 test_that("get_synapse_table returns a data frame", {
   skip_if_not(logged_in(syn = syn))

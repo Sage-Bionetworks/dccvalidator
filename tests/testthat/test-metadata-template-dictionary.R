@@ -3,6 +3,7 @@ context("metadata-template-dictionary.R")
 # update_template_dictionaries ------------------------------------------------
 syn <- attempt_instantiate()
 attempt_login(syn)
+Sys.setenv(R_CONFIG_ACTIVE = "testing")
 
 test_that("update_template_dictionaries returns updated Synapse file list", {
   skip_if_not(logged_in(syn = syn))

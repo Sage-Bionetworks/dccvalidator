@@ -2,6 +2,7 @@ context("test-create-folder.R")
 
 syn <- attempt_instantiate()
 attempt_login(syn)
+Sys.setenv(R_CONFIG_ACTIVE = "testing")
 
 test_that("create_folder() creates a folder", {
   skip_if_not(logged_in(syn = syn))
