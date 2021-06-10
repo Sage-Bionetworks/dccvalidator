@@ -1,122 +1,134 @@
-#' @title App OAuth startup switcheroo
-#'
-#' @description Handles logic of launching the main [app_ui()] or the
-#' [mod_oauth_ui()] based on whether the app is running locally (main UI) or not
-#' (OAuth UI). If using OAuth, this function assumes a config file, with OAuth
-#' options `claims`, `scope`, and `app_url`, accessible with
-#' [`get_golem_config("oauth")`] and a .Renviron stored locally to the app with
-#' `Client_Name`, `Client_ID`, and `Client_Secret`.
-#'
-#' @param request Shiny request object
-app_ui_startup_switch <- function(request) {
-  # if(interactive()) {
-  #   ## Running locally; skip OAuth
-  #   app_ui(request)
-  # } else {
-    mod_synapse_oauth_ui(id = "oauth")
-  # }
+## Global Synapse module
+synapse <- NULL
+app <- NULL
+api <- NULL
+scope <- NULL
+app_url <- NULL
+claims_param <- NULL
+authorization_url <- NULL
+
+## Bring in the Synapse Python Client and set up global variables for OAuth
+.onLoad <- function(libname, pkgname) {
+  synapse <<- reticulate::import("synapseclient", delay_load = TRUE)
+  if (!interactive()) {
+    setup_global_oauth_vars(
+      app_url = get_golem_config("app_url"),
+      client_name = Sys.getenv("client_name"),
+      client_id = Sys.getenv("client_id"),
+      client_secret = Sys.getenv("client_secret")
+    )
+  }
 }
 
 #' @title Synapse Oauth Module
 #'
-#' @description Create the Synapse OAuth component of a Shiny app. Launches the
-#' OAuth UI. If this is the first time signing in, will need to do OAuth the
-#' process. The OAuth process will redirect back here and an authorization code
+#' @description Create the UI Synapse OAuth component of a Shiny app. If this is
+#' the first time signing in, will need to do OAuth the process. The OAuth
+#' process will redirect back here and an authorization code
 #' should be in the URL parameters. If this code is available, lauch the main
-#' app_ui. Note that the UI function does not accept an `id`, but rather a
-#' the Shiny `request` object. This function should be called from startup or
-#' called from the main UI, which receives the `request` and can pass it along.
+#' app_ui. This function should be called from startup
+#' called from the UI function specified when creating the application object
+#' (i.e. the function specified in the `ui` parameter here
+#' `shinyApp(ui = app_ui, server = app_server)`), which receives the `request`
+#' object and can pass it along. IMPORTANT: this module assumes the following
+#' global variables are available and valid: app, api, authorization_url,
+#' app_url, claims_params, scope. See \code{\link{setup_global_oauth_vars}}.
 #'
+#' @export
 #' @import shiny
+#' @param id The module id.
 #' @param request Shiny request object.
-#' @param client_name Synapse OAuth client name.
-#' @param client_id Synapse OAuth client ID.
-#' @param client_secret Synapse OAuth client secret.
-#' @param app_url Application URL to redirect back to after OAuth process.
-#' @param claims List of items to request access to. Defaults to `family_name`,
-#' `given_name`, `userid`, and `is_certified`. See ##TODO
-#' @param scope Space-seperated access scope. Defaults to
-#' `openid view download modify`. See ##TODO
+#' @param main_ui UI function to redirect to when OAuth is done. Defaults to
+#' \code{\link{mod_main_ui}}.
+#' @param main_ui_id The module id to use when launching `main_ui`. Defaults
+#' to "main".
 #' @examples
 #' \dontrun{
 #' ## TODO
 #' }
 mod_synapse_oauth_ui <- function(id, request,
-                                 client_name, client_id, client_secret, app_url,
-                                 claims = list(
-                                   family_name=NULL, 
-                                   given_name=NULL,
-                                   userid=NULL,
-                                   is_certified=NULL
-                                 ),
-                                 scope = "openid view download modify",
-                                 app_ui = app_ui(request)) {
+                                 main_ui = mod_main_ui, main_ui_id = "main") {
   ns <- NS(id)
-  # ## Set up client app
-  # app <- httr::oauth_app(
-  #   client_name,
-  #   key = client_id,
-  #   secret = client_secret, 
-  #   redirect_uri = app_url
-  # )
-  # ## Set up client api
-  # claims_param <- jsonlite::toJSON(list(id_token = claims, userinfo = claims))
-  # api <- httr::oauth_endpoint(
-  #   authorize=paste0("https://signin.synapse.org?claims=", claims_param),
-  #   access="https://repo-prod.prod.sagebase.org/auth/v1/oauth2/token"
-  # )
-  # 
-  # ## If access token not available, launch OAuth, else launch main app UI
-  # if (!has_auth_code(parseQueryString(request$QUERY_STRING))) {
-  #   authorization_url = httr::oauth2.0_authorize_url(api, app, scope = scope)
-  #   return(
-  #     tags$script(
-  #       HTML(sprintf("location.replace(\"%s\");", authorization_url))
-  #     )
-  #   )
-  # } else {
-  #   app_ui
-  # }
-  uiOutput(ns("ui"))
+
+  # If access token not available, launch OAuth, else launch main app UI
+  if (!has_auth_code(parseQueryString(request$QUERY_STRING))) {
+    # authorization_url = httr::oauth2.0_authorize_url(api, app, scope = scope)
+    return(
+      tags$script(
+        HTML(sprintf("location.replace(\"%s\");", authorization_url))
+      )
+    )
+  } else {
+    main_ui(main_ui_id)
+  }
 }
 
-#' @title 
-#' 
-mod_synapse_oauth_server <- function(id) {
+#' @title Synapse OAuth server
+#'
+#' @description Provides functionality for the Synapse OAuth module. IMPORTANT:
+#' this module assumes the following
+#' global variables are available and valid: app, api, authorization_url,
+#' app_url, claims_params, scope. See \code{\link{setup_global_oauth_vars}}.
+#
+#' @export
+#' @import shiny
+#' @param id The module id.
+#' @param syn Synapse client object
+mod_synapse_oauth_server <- function(id, syn) {
   moduleServer(
     id,
     function(input, output, session) {
-      ## Set up client app
-      app <- httr::oauth_app(
-        client_name,
-        key = client_id,
-        secret = client_secret, 
-        redirect_uri = app_url
-      )
-      ## Set up client api
-      claims_param <- jsonlite::toJSON(
-        list(id_token = claims, userinfo = claims)
-      )
-      api <- httr::oauth_endpoint(
-        authorize=paste0("https://signin.synapse.org?claims=", claims_param),
-        access="https://repo-prod.prod.sagebase.org/auth/v1/oauth2/token"
-      )
-      ## Set up client authorization url
-      authorization_url = httr::oauth2.0_authorize_url(api, app, scope)
-  
       url_params <- parseQueryString(isolate(session$clientData$url_search))
-      ## If access token not available, launch OAuth, else launch main app UI
-      if (!has_auth_code(url_params)) {
-        output$ui <- renderUI(
-          tags$script(
-            HTML(sprintf("location.replace(\"%s\");", authorization_url))
-          )
-        )
-      } else {
-        output$ui <- renderUI(app_ui)
-      }  
+      if (has_auth_code(url_params)) {
+        accessToken <- oauth_process(params = url_params)
+        if (inherits(accessToken, "character")) {
+          attempt_login(syn, authToken = accessToken)
+        }
+      }
+      return(syn)
     }
   )
+}
+
+#' @title Sets up global OAuth variables
+#'
+#' @description Sets up the global OAuth variables needed for all users. These
+#' must be initiated in the global environment for this to function correctly.
+#'
+#' @export
+#' @param app_url Application URL to redirect back to after OAuth process.
+#' @param client_name Synapse OAuth client name.
+#' @param client_id Synapse OAuth client ID.
+#' @param client_secret Synapse OAuth client secret.
+#' @param claims List of items to request access to. Defaults to `family_name`,
+#' `given_name`, `userid`, and `is_certified`. See ##TODO
+#' @param scope Space-seperated access scope. Defaults to
+#' `openid view download modify`. See ##TODO
+setup_global_oauth_vars <- function(app_url,
+                                    client_name, client_id, client_secret,
+                                    claims = list(
+                                      family_name = NULL,
+                                      given_name = NULL,
+                                      userid = NULL,
+                                      is_certified = NULL
+                                    ),
+                                    scope = "openid view download modify") {
+  scope <<- scope
+  app_url <<- app_url
+  claims_param <<- jsonlite::toJSON(
+    list(id_token = claims, userinfo = claims)
+  )
+  app <<- httr::oauth_app(
+    client_name,
+    key = client_id,
+    secret = client_secret,
+    redirect_uri = app_url
+  )
+  api <<- httr::oauth_endpoint(
+    authorize = paste0("https://signin.synapse.org?claims=", claims_param),
+    access = "https://repo-prod.prod.sagebase.org/auth/v1/oauth2/token"
+  )
+  authorization_url <<- httr::oauth2.0_authorize_url(api, app, scope)
 }
 
 #' @title Has authorization code
@@ -140,26 +152,27 @@ has_auth_code <- function(params) {
 #' @inheritParams has_auth_code
 #' @return Nothing if the params have an authorization code already present.
 #' Otherwise, kicks off the OAuth process and returns an access token for
-#' log in. 
+#' log in.
 oauth_process <- function(params) {
+  # params <- parseQueryString(isolate(session$clientData$url_search))
   if (!has_auth_code(params)) {
     return()
   }
   redirect_url <- glue::glue(
-    "{api$access}?redirect_uri={APP_URL}&grant_type=authorization_code",
+    "{api$access}?redirect_uri={app_url}&grant_type=authorization_code",
     "&code={params$code}"
   )
   # get the access_token and userinfo token
-  req <- httr::POST(
+  token_request <- httr::POST(
     redirect_url,
     encode = "form",
-    body = '',
+    body = "",
     httr::authenticate(app$key, app$secret, type = "basic"),
     config = list()
   )
   # Stop the code if anything other than 2XX status code is returned
-  httr::stop_for_status(req, task = "get an access token")
-  token_response <- httr::content(req, type = NULL)
+  httr::stop_for_status(token_request, task = "get an access token")
+  token_response <- httr::content(token_request, type = NULL)
   access_token <- token_response$access_token
   access_token
 }

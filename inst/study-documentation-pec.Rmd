@@ -16,6 +16,6 @@ knitr::opts_chunk$set(
 
 # Submit your Study and Assay Documentation to Synapse
 
-This information should be similar to a materials and methods section in a paper. The description of the study should include the main aims and the study type (e.g.randomized controlled study, prospective observational study, case-control study, or postmortem study). An example of what a study should include can be found [here](https://psychencode.synapse.org/Explore/Studies/DetailsPage?study=syn4566132) for an animal model study and [here](https://psychencode.synapse.org/Explore/Studies/DetailsPage?study=syn4590909) for a human study.
+This information should be similar to a materials and methods section in a paper. The description of the study should include the main aims and the study type (e.g.randomized controlled study, prospective observational study, case-control study, or postmortem study). An example of what a study should include can be found [here](https://psychencode.synapse.org/Explore/Studies/DetailsPage?study=syn4566132){target="_blank"} for an animal model study and [here](https://psychencode.synapse.org/Explore/Studies/DetailsPage?study=syn4590909){target="_blank"} for a human study.
 
-[Follow this link](https://www.synapse.org/#!Synapse:syn25150011) to submit your documentation.
+[Follow this link](https://www.synapse.org/#!Synapse:syn25150011){target="_blank"} to submit your documentation.

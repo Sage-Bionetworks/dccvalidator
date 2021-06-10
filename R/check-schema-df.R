@@ -28,7 +28,7 @@
 #'   "required": ["x", "y"]
 #' }
 #' '
-#' check_schema_df(dat, schema)
+#'   check_schema_df(dat, schema)
 #' }
 check_schema_df <- function(df, schema,
                             success_msg = "Data is valid against the schema",

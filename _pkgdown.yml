@@ -50,10 +50,13 @@ reference:
     Functions to generate and run the dccvalidator Shiny application. Also
     includes modules that make up the app.
   contents:
+    - run_app
     - app_server
     - app_ui
-    - oauth_ui
-    - run_app
+    - mod_main_ui
+    - mod_main_server
+    - mod_synapse_oauth_ui
+    - mod_synapse_oauth_server
     - with_busy_indicator_ui
     - with_busy_indicator_server
     - results_boxes_ui
@@ -69,6 +72,7 @@ reference:
   contents:
     - check_certified_user
     - check_team_membership
+    - setup_global_oauth_vars
     - oauth_process
     - has_auth_code
     - attempt_login

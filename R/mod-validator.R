@@ -12,7 +12,7 @@ validator_ui <- function(id, species_list, assay_templates) {
   ns <- NS(id)
   # Validator tab UI
   tabItem(
-    tabName = "validator",
+    tabName = id,
 
     # Sidebar
     sidebarLayout(
@@ -23,7 +23,6 @@ validator_ui <- function(id, species_list, assay_templates) {
 
         # UI for getting the study name
         get_study_ui(ns("study")),
-
         div(
           class = "result",
           div(
@@ -44,7 +43,6 @@ validator_ui <- function(id, species_list, assay_templates) {
             trigger = "hover"
           )
         ),
-
         div(
           class = "result",
           div(
@@ -69,7 +67,6 @@ validator_ui <- function(id, species_list, assay_templates) {
         # Files to be validated
         conditionalPanel(
           condition = "input.species != 'drosophila'",
-
           div(
             class = "result",
             div(
@@ -96,7 +93,6 @@ validator_ui <- function(id, species_list, assay_templates) {
             )
           )
         ),
-
         div(
           class = "result",
           div(
@@ -122,7 +118,6 @@ validator_ui <- function(id, species_list, assay_templates) {
             trigger = "hover"
           )
         ),
-
         div(
           class = "result",
           div(
@@ -148,7 +143,6 @@ validator_ui <- function(id, species_list, assay_templates) {
             trigger = "hover"
           )
         ),
-
         div(
           class = "result",
           div(
@@ -192,7 +186,6 @@ validator_ui <- function(id, species_list, assay_templates) {
             "Reset"
           )
         )
-
       ),
 
       # Main panel
@@ -232,7 +225,8 @@ validator_ui <- function(id, species_list, assay_templates) {
 #' @param input the input from [shiny::callModule()]
 #' @param output the output from [shiny::callModule()]
 #' @param session the session from [shiny::callModule()]
-#' @param annotations_table Synapse ID of table containing annotation definitions
+#' @param annotations_table Synapse ID of table containing annotation
+#' definitions
 #' @param annots_link Link to learn more about annotations
 #' @param templates_link Link to location of metadata templates
 #' @param contact_email Email address to contact with questions

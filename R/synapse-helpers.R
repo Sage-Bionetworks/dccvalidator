@@ -1,11 +1,4 @@
-## Global Synapse module
-synapse <- NULL
-
-## Bring in the Synapse Python Client
-.onLoad <- function(libname, pkgname) {
-  synapse <<- reticulate::import("synapseclient", delay_load = TRUE)
-}
-
+## Try to get Synapse client object
 attempt_instantiate <- function() {
   if (reticulate::py_module_available("synapseclient")) {
     return(synapse$Synapse())
@@ -37,13 +30,11 @@ attempt_login <- function(syn, ...) {
     silent = TRUE
   )
   ## If failed to login, try using credentials provided
-  if(!is_logged_in) {
-    try(
-      {
-        syn$login(...)
-        is_logged_in <- TRUE
-      }
-    )
+  if (!is_logged_in) {
+    try({
+      syn$login(...)
+      is_logged_in <- TRUE
+    })
   }
   ## Return TRUE if logged in, else NULL
   ifelse(is_logged_in, is_logged_in, NULL)
@@ -56,6 +47,7 @@ attempt_login <- function(syn, ...) {
 #' @param syn Synapse client object.
 #' @return FALSE if not logged in at all or if logged in anonymously, else TRUE.
 logged_in <- function(syn) {
+  stopifnot(inherits(syn, "synapseclient.client.Synapse"))
   if (is.null(syn) || is.null(syn$username) || (syn$username == "anonymous")) {
     return(FALSE)
   } else {
@@ -80,61 +72,6 @@ save_to_synapse <- function(input_file,
   )
   syn$store(file_to_upload)
 }
-
-#' #' @title Do the OAuth process
-#' #'
-#' #' @description Go through the OAuth process to get an access token for log in.
-#' #'
-#' #' @export
-#' #' @inheritParams has_auth_code
-#' #' @return Nothing if the params have an authorization code already present.
-#' #' Otherwise, kicks off the OAuth process and returns an access token for
-#' #' log in. 
-#' oauth_process <- function(params) {
-#'   if (!has_auth_code(params)) {
-#'     return()
-#'   }
-#'   redirect_url <- glue::glue(
-#'     "{api$access}?redirect_uri={APP_URL}&grant_type=authorization_code",
-#'     "&code={params$code}"
-#'   )
-#'   # get the access_token and userinfo token
-#'   req <- httr::POST(
-#'     redirect_url,
-#'     encode = "form",
-#'     body = '',
-#'     httr::authenticate(app$key, app$secret, type = "basic"),
-#'     config = list()
-#'   )
-#'   # Stop the code if anything other than 2XX status code is returned
-#'   httr::stop_for_status(req, task = "get an access token")
-#'   token_response <- httr::content(req, type = NULL)
-#'   access_token <- token_response$access_token
-#'   access_token
-#' }
-
-#' #' @title OAuth UI
-#' #'
-#' #' @description Launches the OAuth UI. If this is the first time signing in,
-#' #' will need to do OAuth the process. The OAuth process will redirect back here
-#' #' and an authorization code should be in the URL parameters. If this code is
-#' #' available, lauch the main app_ui.
-#' #'
-#' #' @export
-#' #' @param request Shiny request object
-#' oauth_ui <- function(request) {
-#'   prep_for_oauth(config::get("app_url"))
-#'   if (!has_auth_code(parseQueryString(request$QUERY_STRING))) {
-#'     authorization_url = httr::oauth2.0_authorize_url(api, app, scope = SCOPE)
-#'     return(
-#'       tags$script(
-#'         HTML(sprintf("location.replace(\"%s\");", authorization_url))
-#'       )
-#'     )
-#'   } else {
-#'     app_ui(request)
-#'   }
-#' }
 
 #' @title Set Synapse Staging Endpoints
 #'
