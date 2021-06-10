@@ -167,8 +167,7 @@ oauth_process <- function(params) {
     redirect_url,
     encode = "form",
     body = "",
-    httr::authenticate(app$key, app$secret, type = "basic"),
-    config = list()
+    httr::authenticate(app$key, app$secret, type = "basic")
   )
   # Stop the code if anything other than 2XX status code is returned
   httr::stop_for_status(token_request, task = "get an access token")
