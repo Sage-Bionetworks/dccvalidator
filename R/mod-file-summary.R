@@ -156,8 +156,8 @@ visualize_data_types <- function(data) {
 #' @param data Dataframe or tibble with file data.
 #' @return Tibble with summary information.
 data_summary <- function(data) {
-  if (!inherits(data, "tbl_df") && !inherits(data, "data.frame")
-  || nrow(data) == 0) {
+  if (!inherits(data, "tbl_df") && !inherits(data, "data.frame") ||
+    nrow(data) == 0) {
     return(NULL)
   }
   data_sum <- tibble::as_tibble(skimr::skim(data))

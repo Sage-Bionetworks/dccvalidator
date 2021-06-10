@@ -13,7 +13,10 @@ app_ui(request)
 A shinydashboard page
 }
 \description{
-Create the UI component of the dccvalidator Shiny app.
+If not running interactively (i.e. locally), launches the
+\code{\link{mod_synapse_oauth_ui}} to start dccvalidator using OAuth for
+login. Otherwise, launches the \code{\link{mod_main_ui}} to start
+dccvalidator using login credentials stored in a .synapseConfig.
 }
 \examples{
 \dontrun{

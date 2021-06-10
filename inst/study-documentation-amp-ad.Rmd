@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 # Study Documentation
 
-This information should be similar to a materials and methods section in a paper. An example of what a study should include can be found [here](https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648) for an animal model study and [here](https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn3159438) for a human study. If you wish, also provide an acknowledgement statment and/or reference that should be included in publications resulting from secondary data use; examples can be found [here](https://adknowledgeportal.synapse.org/#/DataAccess/AcknowledgementStatements). This can be provided as part of the study documentation text.
+This information should be similar to a materials and methods section in a paper. An example of what a study should include can be found [here](https://adknowledgeportal.synapse.org/Explore/Studies/DetailsPage?Study=syn8391648){target="_blank"} for an animal model study and [here](https://adknowledgeportal.synapse.org/Explore/Studies/DetailsPage?Study=syn3159438){target="_blank"} for a human study. If you wish, also provide an acknowledgement statment and/or reference that should be included in publications resulting from secondary data use; examples can be found in the Acknowledgement sections of the studies linked above. This can be provided as part of the study documentation text.
 
 ## Study Description
 
@@ -44,4 +44,4 @@ Include citations for more study information if available.
 
 For each assay, provide a summary of **sample processing**, **data generation**, and **data processing**, including which organs and tissues the samples came from. For other tests (such as cognitive assessments or imaging), include a description of how the test was done. Include links for any commercial equipment or tools, code repositories, and citations for more information, if available.
 
-Detailed protocols are highly recommended. These can be uploaded as pdf together with the data-files, or as links to protocol repositories such as [protocols.io](https://www.protocols.io/) or [Open Lab Book](https://theolb.readthedocs.io/en/latest/index.html#).
+Detailed protocols are highly recommended. These can be uploaded as pdf together with the data-files, or as links to protocol repositories such as [protocols.io](https://www.protocols.io/){target="_blank"} or [Open Lab Book](https://theolb.readthedocs.io/en/latest/index.html#){target="_blank"}.

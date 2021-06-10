@@ -21,21 +21,21 @@
 #' @export
 #' @examples
 #' samples_table <- tibble::tribble(
-#'   ~individualID, ~specimenID,   ~study,   ~assay,
-#'              "A",        "a1", "study1", "rnaSeq",
-#'              "A",        "a2", "study1", "rnaSeq",
-#'              "B",        "b1", "study1", "rnaSeq",
-#'              "B",        "b2", "study1", "rnaSeq",
-#'              "B",        "b1", "study1", "rnaSeq",
-#'              "B",        "b1", "study1", "rnaSeq",
-#'              "C",        "c1", "study1",  "LC-MS",
-#'              "D",        "d1", "study2", "rnaSeq",
-#'              "D",        "d2", "study2", "rnaSeq"
+#'   ~individualID, ~specimenID, ~study, ~assay,
+#'   "A", "a1", "study1", "rnaSeq",
+#'   "A", "a2", "study1", "rnaSeq",
+#'   "B", "b1", "study1", "rnaSeq",
+#'   "B", "b2", "study1", "rnaSeq",
+#'   "B", "b1", "study1", "rnaSeq",
+#'   "B", "b1", "study1", "rnaSeq",
+#'   "C", "c1", "study1", "LC-MS",
+#'   "D", "d1", "study2", "rnaSeq",
+#'   "D", "d2", "study2", "rnaSeq"
 #' )
 #' dat <- tibble::tribble(
 #'   ~individualID, ~specimenID,
-#'              "A",        "a1",
-#'              "A",        "a2"
+#'   "A", "a1",
+#'   "A", "a2"
 #' )
 #' check_complete_ids(
 #'   data = dat,

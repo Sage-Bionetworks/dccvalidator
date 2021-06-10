@@ -11,13 +11,8 @@
 #' run_app()
 #' }
 run_app <- function(...) {
-  if(interactive()) {
-    app <- shinyApp(ui = app_ui, server = app_server)
-  } else {
-    app <- shinyApp(ui = oauth_ui, server = app_server)
-  }
   with_golem_options(
-    app = app,
+    app = shinyApp(ui = app_ui, server = app_server),
     golem_opts = list(...)
   )
 }

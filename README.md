@@ -35,7 +35,7 @@ Whichever Python installation you choose should have synapseclient
 installed.
 
 Because dccvalidator uses reticulate, it is not compatible with the
-[synapser](https://r-docs.synapse.org/) package..
+[synapser](https://r-docs.synapse.org/) package.
 
 ## Check data
 
@@ -50,7 +50,7 @@ quality issues:
     in one file are also present in another)
   - Check that identifiers are unique within a file
 
-# Data submission validation
+## Data submission validation
 
 This package contains a Shiny app to validate manifests and metadata for
 AMP-AD studies. It uses the dccvalidator package to check for common
@@ -66,3 +66,24 @@ See the [customizing
 dccvalidator](https://sage-bionetworks.github.io/dccvalidator/articles/customizing-dccvalidator.html)
 vignette for information on how to spin up a customized version of the
 application
+
+## Requesting New Features or Bug Fixes
+
+For new feature requests or bug fixes, please create an issue to let the
+maintainers know. If you’ve found a bug, create an associated issue and
+illustrate the bug with a minimal
+[reprex](https://www.tidyverse.org/help/#reprex). If there is agreement
+that the problem exists or that a new feature is desired, then the issue
+will be triaged for future development based on priority.
+
+Please note that the dccvalidator project is released with a
+[Contributor Code of
+Conduct](https://sage-bionetworks.github.io/dccvalidator/CODE_OF_CONDUCT).
+By contributing to this project via issue creation, comment, or pull
+request, you agree to abide by its terms.
+
+## Contributing
+
+See the [Contributing
+Guide](https://github.com/Sage-Bionetworks/dccvalidator/blob/master/.github/CONTRIBUTING.md)
+to see how you can get involved in the development of this application.

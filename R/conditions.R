@@ -70,8 +70,7 @@ check_fail <- function(msg, behavior, data = NULL) {
 #'   type = ifelse(strict, "check_fail", "check_warn")
 #' )
 check_condition <- function(msg, behavior, data, type) {
-  switch(
-    type,
+  switch(type,
     check_pass = check_pass(msg, behavior, data),
     check_warn = check_warn(msg, behavior, data),
     check_fail = check_fail(msg, behavior, data)

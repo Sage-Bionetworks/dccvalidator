@@ -5,7 +5,7 @@
 #' @param study_table_id synapse Id for the consortium study table
 #' @return list of studies
 get_study_names <- function(study_table_id, syn) {
-  study_table <- get_synapse_table(study_table_id(), syn)
+  study_table <- get_synapse_table(study_table_id, syn)
   return(c("", sort(study_table$StudyName)))
 }
 
@@ -42,7 +42,6 @@ get_study_ui <- function(id) {
         trigger = "hover"
       )
     ),
-
     conditionalPanel(
       condition = "input.study_exists == 'Yes'",
       ns = ns,
