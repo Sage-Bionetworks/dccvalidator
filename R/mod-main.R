@@ -1,7 +1,9 @@
 #' @title Main dccvalidator UI
 #'
-#' @description Create the main UI component of the dccvalidator Shiny app.
+#' @description Create the main UI and server components of the dccvalidator
+#' Shiny app.
 #'
+#' @export
 #' @import shiny
 #' @import shinydashboard
 #' @param id The module id.
@@ -67,8 +69,8 @@ mod_main_ui <- function(id) {
 
 #' @title Main dccvalidator server
 #'
-#' @description Create the server-side component of the dccvalidator Shiny app.
-#'
+#' @rdname mod_main_ui
+#' @export
 #' @import shiny
 #' @import shinydashboard
 #' @param id The module ID.
