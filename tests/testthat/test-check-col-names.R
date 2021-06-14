@@ -1,6 +1,8 @@
 context("test-check-col-names.R")
 
 syn <- attempt_instantiate()
+attempt_login(syn)
+Sys.setenv(R_CONFIG_ACTIVE = "testing")
 
 test_that("check_col_names returns condition object when check passes", {
   template <- data.frame(x = 1, y = 1)

@@ -1,9 +1,5 @@
 context("utils.R")
 
-test_that("on_ci() returns TRUE on CI", {
-  expect_equal(on_ci(), isTRUE(as.logical(Sys.getenv("CI"))))
-})
-
 test_that("login works on CI in main repo", {
   ## Lots of other things will fail too if it doesn't, but doesn't hurt to have
   ## a dedicated test

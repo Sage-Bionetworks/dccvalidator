@@ -36,7 +36,7 @@ upload_documents_ui <- function(id, markdown_path, include_widget) {
               shinyjs::disabled(
                 fileInput(
                   ns("study_doc"),
-                  "Upload study description file (.txt, .docx, .md, .pdf, .tex)",
+                  "Upload study description file (.txt, .docx, .md, .pdf, .tex)", # nolint
                   accept = c(
                     "application/vnd.openxmlformats-officedocument.wordprocessingml.document", # nolint
                     "application/msword",
@@ -63,7 +63,7 @@ upload_documents_ui <- function(id, markdown_path, include_widget) {
               shinyjs::disabled(
                 fileInput(
                   ns("assay_doc"),
-                  "Upload assay description files (.txt, .docx, .md, .pdf, .tex)",
+                  "Upload assay description files (.txt, .docx, .md, .pdf, .tex)", # nolint
                   multiple = TRUE,
                   accept = c(
                     "application/vnd.openxmlformats-officedocument.wordprocessingml.document", # nolint
@@ -105,7 +105,7 @@ upload_documents_ui <- function(id, markdown_path, include_widget) {
         mainPanel(
           div(
             get_markdown(markdown_path = markdown_path)
-          ) 
+          )
         )
       )
     } else {
@@ -142,7 +142,7 @@ upload_documents_server <- function(input, output, session,
   # Create folder for upload
   docs_folder <- synapseclient$Folder(
     name = "Documentation",
-    parent = parent_folder()
+    parent = parent_folder
   )
   created_docs_folder <- syn$store(docs_folder)
 

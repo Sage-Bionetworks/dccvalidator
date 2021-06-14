@@ -276,7 +276,7 @@ generate_key_description <- function(annots) {
 #' config.yml file.
 #'
 #' @param templates Named or unnamed list of template synIDs. Defaults to
-#' `config::get("templates")`.
+#' `get_golem_config("templates")`.
 #' @return A vector of synIDs.
 #' @export
 #' @importFrom magrittr %>%
@@ -305,7 +305,7 @@ generate_key_description <- function(annots) {
 #' yaml::write_yaml(config, "./config.yml")
 #' get_template_synIDs()
 #' }
-get_template_synIDs <- function(templates = config::get("templates")) {
+get_template_synIDs <- function(templates = get_golem_config("templates")) {
   # Get all template synIDs as vector
   templates %>%
     purrr::flatten() %>%

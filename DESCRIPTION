@@ -1,6 +1,6 @@
 Package: dccvalidator
 Title: Metadata Validation for Data Coordinating Centers
-Version: 0.3.0.9019
+Version: 0.3.0.9020
 Authors@R:
     c(person(given = "Kara",
              family = "Woo",
@@ -57,6 +57,7 @@ Suggests:
     covr,
     devtools,
     dplyr,
+    httr,
     jsonlite,
     jsonvalidate,
     mockery,

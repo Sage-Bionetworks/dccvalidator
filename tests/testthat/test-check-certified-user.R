@@ -2,6 +2,7 @@ context("test-chec-certified-user.R")
 
 syn <- attempt_instantiate()
 attempt_login(syn)
+Sys.setenv(R_CONFIG_ACTIVE = "testing")
 
 test_that("check_certified_user returns check_pass if certified", {
   skip_if_not(logged_in(syn = syn))

@@ -71,15 +71,15 @@ server <- function(input, output) {
 
 ui <- fluidPage(
   includeCSS(
-   system.file("app/www/custom.css", package = "dccvalidator")
+    system.file("app/www/custom.css", package = "dccvalidator")
   ),
   with_busy_indicator_ui(actionButton("action", label = "Action")),
   fluidRow(column(2, textOutput("value")))
 )
-
 \dontrun{
 shinyApp(ui, server)
 }
+# nolint end
 }
 \author{
 Dean Attali \href{mailto:dean@attalitech.com}{dean@attalitech.com}

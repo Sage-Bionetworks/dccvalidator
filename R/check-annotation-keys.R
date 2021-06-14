@@ -24,7 +24,6 @@
 #' dat2 <- data.frame(assay = "rnaSeq")
 #' check_annotation_keys(dat1, annots)
 #' check_annotation_keys(dat2, annots)
-#'
 #' \dontrun{
 #' syn <- synapse$Synapse()
 #' syn$login()

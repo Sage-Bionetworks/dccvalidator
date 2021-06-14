@@ -66,22 +66,22 @@ check_all <- function(data, annotations, study, syn) {
   # Missing columns ----------------------------------------------------------
   missing_cols_indiv <- check_cols_individual(
     data$file_data[indiv_index][[1]],
-    config::get("templates")$individual_templates[[data$species[indiv_index]]],
+    get_golem_config("templates")$individual_templates[[data$species[indiv_index]]],
     syn = syn
   )
   missing_cols_biosp <- check_cols_biospecimen(
     data$file_data[biosp_index][[1]],
-    config::get("templates")$biospecimen_templates[[data$species[biosp_index]]],
+    get_golem_config("templates")$biospecimen_templates[[data$species[biosp_index]]],
     syn = syn
   )
   missing_cols_assay <- check_cols_assay(
     data$file_data[assay_index][[1]],
-    config::get("templates")$assay_templates[[data$assay[assay_index]]],
+    get_golem_config("templates")$assay_templates[[data$assay[assay_index]]],
     syn = syn
   )
   missing_cols_manifest <- check_cols_manifest(
     data$file_data[manifest_index][[1]],
-    config::get("templates")$manifest_template,
+    get_golem_config("templates")$manifest_template,
     syn = syn
   )
 
@@ -122,7 +122,7 @@ check_all <- function(data, annotations, study, syn) {
     allowlist_keys = c("path", "parent", "name", "used", "executed"),
     success_msg = "All keys (column names) in the manifest are valid",
     fail_msg = "Some keys (column names) in the manifest are invalid",
-    annots_link = config::get("annotations_link")
+    annots_link = get_golem_config("annotations_link")
   )
 
   # Annotation values in manifest and metadata are valid ---------------------
@@ -131,7 +131,7 @@ check_all <- function(data, annotations, study, syn) {
     annotations,
     success_msg = "All values in the manifest are valid",
     fail_msg = "Some values in the manifest are invalid",
-    annots_link = config::get("annotations_link")
+    annots_link = get_golem_config("annotations_link")
   )
   annotation_values_indiv <- check_annotation_values(
     data$file_data[indiv_index][[1]],
@@ -139,7 +139,7 @@ check_all <- function(data, annotations, study, syn) {
     allowlist_keys = c("individualID"),
     success_msg = "All values in the individual metadata are valid",
     fail_msg = "Some values in the individual metadata are invalid",
-    annots_link = config::get("annotations_link")
+    annots_link = get_golem_config("annotations_link")
   )
   annotation_values_biosp <- check_annotation_values(
     data$file_data[biosp_index][[1]],
@@ -147,7 +147,7 @@ check_all <- function(data, annotations, study, syn) {
     allowlist_keys = c("specimenID", "individualID"),
     success_msg = "All values in the biospecimen metadata are valid",
     fail_msg = "Some values in the biospecimen metadata are invalid",
-    annots_link = config::get("annotations_link")
+    annots_link = get_golem_config("annotations_link")
   )
   annotation_values_assay <- check_annotation_values(
     data$file_data[assay_index][[1]],
@@ -155,7 +155,7 @@ check_all <- function(data, annotations, study, syn) {
     allowlist_keys = c("specimenID"),
     success_msg = "All values in the assay metadata are valid",
     fail_msg = "Some values in the assay metadata are invalid",
-    annots_link = config::get("annotations_link")
+    annots_link = get_golem_config("annotations_link")
   )
 
   # Individual and specimen IDs are not duplicated ---------------------------
@@ -177,25 +177,25 @@ check_all <- function(data, annotations, study, syn) {
   # Empty columns produce warnings -------------------------------------------
   empty_cols_manifest <- check_cols_empty(
     data$file_data[manifest_index][[1]],
-    required_cols = config::get("complete_columns")$manifest,
+    required_cols = get_golem_config("complete_columns")$manifest,
     success_msg = "No columns are empty in the manifest",
     fail_msg = "Some columns are completely empty in the manifest"
   )
   empty_cols_indiv <- check_cols_empty(
     data$file_data[indiv_index][[1]],
-    required_cols = config::get("complete_columns")$individual,
+    required_cols = get_golem_config("complete_columns")$individual,
     success_msg = "No columns are empty in the individual metadata",
     fail_msg = "Some columns are completely empty in the individual metadata"
   )
   empty_cols_biosp <- check_cols_empty(
     data$file_data[biosp_index][[1]],
-    required_cols = config::get("complete_columns")$biospecimen,
+    required_cols = get_golem_config("complete_columns")$biospecimen,
     success_msg = "No columns are empty in the biospecimen metadata",
     fail_msg = "Some columns are completely empty in the biospecimen metadata"
   )
   empty_cols_assay <- check_cols_empty(
     data$file_data[assay_index][[1]],
-    required_cols = config::get("complete_columns")$assay,
+    required_cols = get_golem_config("complete_columns")$assay,
     success_msg = "No columns are empty in the assay metadata",
     fail_msg = "Some columns are completely empty in the assay metadata"
   )
@@ -203,25 +203,25 @@ check_all <- function(data, annotations, study, syn) {
   # Incomplete required columns produce failures -----------------------------
   complete_cols_manifest <- check_cols_complete(
     data$file_data[manifest_index][[1]],
-    required_cols = config::get("complete_columns")$manifest,
+    required_cols = get_golem_config("complete_columns")$manifest,
     success_msg = "There is no missing data in columns that are required to be complete in the manifest", # nolint
     fail_msg = "There is missing data in some columns that are required to be complete in the manifest" # nolint
   )
   complete_cols_indiv <- check_cols_complete(
     data$file_data[indiv_index][[1]],
-    required_cols = config::get("complete_columns")$individual,
+    required_cols = get_golem_config("complete_columns")$individual,
     success_msg = "There is no missing data in columns that are required to be complete in the individual metadata", # nolint
     fail_msg = "There is missing data in some columns that are required to be complete in the individual metadata" # nolint
   )
   complete_cols_biosp <- check_cols_complete(
     data$file_data[biosp_index][[1]],
-    required_cols = config::get("complete_columns")$biospecimen,
+    required_cols = get_golem_config("complete_columns")$biospecimen,
     success_msg = "There is no missing data in columns that are required to be complete in the biospecimen metadata", # nolint
     fail_msg = "There is missing data in some columns that are required to be complete in the biospecimen metadata" # nolint
   )
   complete_cols_assay <- check_cols_complete(
     data$file_data[assay_index][[1]],
-    required_cols = config::get("complete_columns")$assay,
+    required_cols = get_golem_config("complete_columns")$assay,
     success_msg = "There is no missing data in columns that are required to be complete in the assay metadata", # nolint
     fail_msg = "There is missing data in some columns that are required to be complete in the assay metadata" # nolint
   )
@@ -265,7 +265,7 @@ check_all <- function(data, annotations, study, syn) {
 
   # Additions to existing studies have complete IDs ----------------------------
   samples_table <- syn$tableQuery(
-    glue::glue("SELECT * FROM {config::get('samples_table')} WHERE study = '{study}'"), # nolint
+    glue::glue("SELECT * FROM {get_golem_config('samples_table')} WHERE study = '{study}'"), # nolint
     includeRowIdAndRowVersion = FALSE
   )
   samples_table <- readr::read_csv(samples_table$filepath)

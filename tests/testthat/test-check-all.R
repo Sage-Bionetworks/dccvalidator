@@ -11,6 +11,7 @@ annots <- tribble(
   "fileFormat", "csv", "STRING",
   "species", "Human", "STRING"
 )
+Sys.setenv(R_CONFIG_ACTIVE = "testing")
 
 test_that("check_all() returns a list of check conditions or NULLs", {
   skip_if_not(logged_in(syn = syn))
@@ -407,4 +408,8 @@ test_that("check_all() doesn't run check_complete_ids if study isn't in table", 
   expect_null(res$complete_ids_indiv)
   expect_null(res$complete_ids_biosp)
   expect_null(res$complete_ids_assay)
+})
+
+test_that("config works", {
+  expect_equal(get_golem_config("samples_table"), "syn22089767")
 })

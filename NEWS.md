@@ -21,6 +21,7 @@
 - `check_annotation_keys()` and `check_annotation_values()` have renamed
   arguments from `whitelist_keys`/`whitelist_values` to
   `allowlist_keys`/`allowlist_values`
+- Add ability to log in with Synapse OAuth client
 
 # dccvalidator v0.3.0
 

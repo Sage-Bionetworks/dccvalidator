@@ -2,6 +2,7 @@ context("test-get-user-teams.R")
 
 syn <- attempt_instantiate()
 attempt_login(syn)
+Sys.setenv(R_CONFIG_ACTIVE = "testing")
 
 test_that("get_user_teams gets team memberships", {
   skip_if_not(logged_in(syn = syn))

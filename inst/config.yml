@@ -1,5 +1,6 @@
 default:
   production: TRUE
+  app_url: "https://shinypro.synapse.org/users/nkauer/dccvalidator-test/"
   parent: "syn20400157"
   path_to_markdown: "inst/using-the-dccvalidator-app-amp-ad.Rmd"
   study_table: "syn11363298"
@@ -46,7 +47,35 @@ default:
 dev:
   production: FALSE
 
+testing:
+  default:
+  samples_table: "syn22089767"
+  templates:
+    manifest_template: "syn20820080"
+    individual_templates:
+      human: "syn12973254"
+      mouse or other animal model: "syn12973253"
+    biospecimen_templates:
+      mouse or other animal model: "syn12973252"
+      human: "syn12973252"
+      drosophila: "syn20673251"
+    assay_templates:
+      rnaSeq: "syn12973256"
+      proteomics: "syn12973255"
+  complete_columns:
+    manifest:
+      - "parent"
+    individual:
+      - "individualID"
+    biospecimen:
+      - "individualID"
+      - "specimenID"
+    assay:
+      - "specimenID"
+
+
 amp-ad:
+  app_url: "https://shinypro.synapse.org/users/kwoo/dccvalidator-app/"
   parent: "syn21643404"
   annotations_table: "syn10242922"
   annotations_link: "https://shinypro.synapse.org/users/kwoo/amp-ad-metadata-dictionary/"
@@ -110,6 +139,7 @@ amp-ad:
   contact_email: "AMPAD_SageAdmin@synapse.org"
 
 pec:
+  app_url: "https://shinypro.synapse.org/users/kmontgomery/dccvalidator/"
   parent: "syn21763123"
   path_to_markdown: "inst/using-the-dccvalidator-pec.Rmd"
   study_table: "syn20968992"
@@ -171,42 +201,8 @@ pec:
       - "specimenID"
   contact_email: "kelsey@synapse.org"
 
-annotations-research:
-  parent: "syn21782020"
-  annotations_table:
-    - "syn10242922"
-    - "syn21459391"
-  annotations_link: "https://shinypro.synapse.org/users/kwoo/amp-ad-metadata-dictionary/"
-  teams:
-    - "3407020"
-    - "273957"
-  study_link_ref: "https://adknowledgeportal.synapse.org/#/DataAccess/AcknowledgementStatements"
-  templates:
-    assay_templates:
-      proteomics: "syn12973255"
-      single cell RNAseq: "syn21018360"
-      wholeGenomeSeq: "syn21018358"
-      wholeExomeSeq: "syn21078272"
-      NanoString: "syn21082744"
-      snpArray: "syn21372586"
-      TMT quantitation: "syn21433357"
-  complete_columns:
-    manifest:
-      - "consortium"
-      - "study"
-      - "grant"
-      - "fileFormat"
-      - "parent"
-      - "path"
-    individual:
-      - "individualID"
-    biospecimen:
-      - "individualID"
-      - "specimenID"
-    assay:
-      - "specimenID"
-
 veoibd:
+  app_url: "https://shinypro.synapse.org/users/nkauer/dccvalidator-veoibd/"
   parent: "syn25556537"
   path_to_markdown: "inst/using-the-dccvalidator-veoibd.Rmd"
   study_table: "syn25557724"
