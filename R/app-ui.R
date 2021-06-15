@@ -15,12 +15,13 @@
 #' shinyApp(ui = app_ui, server = app_server)
 #' }
 app_ui <- function(request) {
-  if (interactive()) {
-    ## Running locally; skip OAuth
-    mod_main_ui("main")
-  } else {
-    mod_synapse_oauth_ui(id = "oauth", request = request)
-  }
+  div(
+    h2("dccvalidator has moved to Synapse"),
+    p(
+      "You can find the application here: ",
+      a("dccvalidator", href = "https://www.synapse.org/#!Wiki:syn25878247/ENTITY")
+    )
+  )
 }
 
 #' @import shiny
