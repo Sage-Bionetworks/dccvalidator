@@ -146,7 +146,7 @@ verify_dictionary_structure <- function(dictionary) {
 
   return(check_pass(
     msg = "All keys had a single description and columnType",
-    behavior = "All keys should have a single descrioption and columnType"
+    behavior = "All keys should have a single description and columnType"
   ))
 }
 
@@ -255,8 +255,8 @@ add_dictionary_sheets <- function(template_xlsx_path, annotations) {
 #'     "A person's family name",
 #'     "A person's family name"
 #'   )
-#' generate_key_description(annots)
 #' )
+#' generate_key_description(annots)
 #' }
 generate_key_description <- function(annots) {
   if (!(all(c("key", "description") %in% colnames(annots)))) {
