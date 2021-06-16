@@ -7,7 +7,7 @@ app_url <- NULL
 claims_param <- NULL
 authorization_url <- NULL
 
-#' @title
+#' @title Set up Synapse and OAuth variables
 #'
 #' @description Bring in the Synapse Python Client and set up global variables
 #' for OAuth at startup. Requires global variables initialized to NULL: synapse,
@@ -31,7 +31,7 @@ authorization_url <- NULL
 #' @title Synapse Oauth Module
 #'
 #' @description Create the Synapse OAuth component of a Shiny app.
-#' 
+#'
 #' If this is
 #' the first time signing in, will need to do OAuth the process. The OAuth
 #' process will redirect back here and an authorization code
@@ -41,7 +41,7 @@ authorization_url <- NULL
 #' (i.e. the function specified in the `ui` parameter here
 #' `shinyApp(ui = app_ui, server = app_server)`), which receives the `request`
 #' object and can pass it along.
-#' 
+#'
 #' IMPORTANT: this module assumes the following
 #' global variables are available and valid: app, api, authorization_url,
 #' app_url, claims_params, scope. See \code{\link{setup_global_oauth_vars}}.
@@ -58,16 +58,16 @@ authorization_url <- NULL
 #' \dontrun{
 #' library("dccvalidator")
 #' app_ui <- function(request) {
-#' mod_synapse_oauth_ui(id = "oauth", request = request)
+#'   mod_synapse_oauth_ui(id = "oauth", request = request)
 #' }
 #' app_server <- function(input, output, session) {
-#' synapse <- reticulate::import("synapseclient")
-#' syn <- synapse$Synapse()
-#' syn <- mod_synapse_oauth_server(
-#' id = "oauth",
-#' syn = syn
-#' )
-#' shiny::req(inherits(syn, "synapseclient.client.Synapse"), logged_in(syn))
+#'   synapse <- reticulate::import("synapseclient")
+#'   syn <- synapse$Synapse()
+#'   syn <- mod_synapse_oauth_server(
+#'     id = "oauth",
+#'     syn = syn
+#'   )
+#'   shiny::req(inherits(syn, "synapseclient.client.Synapse"), logged_in(syn))
 #' }
 #' run_app()
 #' }

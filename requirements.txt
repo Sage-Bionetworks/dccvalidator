@@ -1,4 +1,5 @@
 backports.csv==1.0.7
+boto3==1.17.95
 certifi==2019.9.11
 chardet==3.0.4
 Deprecated==1.2.4
@@ -6,6 +7,7 @@ entrypoints==0.3
 future==0.18.2
 idna==2.8
 keyring==12.0.2
+pandas==1.2.4
 requests==2.22.0
 six==1.13.0
 synapseclient==1.9.4

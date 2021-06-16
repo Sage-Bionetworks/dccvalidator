@@ -43,16 +43,16 @@ app_url, claims_params, scope. See \code{\link{setup_global_oauth_vars}}.
 \dontrun{
 library("dccvalidator")
 app_ui <- function(request) {
-mod_synapse_oauth_ui(id = "oauth", request = request)
+  mod_synapse_oauth_ui(id = "oauth", request = request)
 }
 app_server <- function(input, output, session) {
-synapse <- reticulate::import("synapseclient")
-syn <- synapse$Synapse()
-syn <- mod_synapse_oauth_server(
-id = "oauth",
-syn = syn
-)
-shiny::req(inherits(syn, "synapseclient.client.Synapse"), logged_in(syn))
+  synapse <- reticulate::import("synapseclient")
+  syn <- synapse$Synapse()
+  syn <- mod_synapse_oauth_server(
+    id = "oauth",
+    syn = syn
+  )
+  shiny::req(inherits(syn, "synapseclient.client.Synapse"), logged_in(syn))
 }
 run_app()
 }

@@ -71,10 +71,10 @@ jobs:
       - name: Install dependencies
         run: |
           library(remotes)
-          deps <- readRDS("depends.Rds")
-          deps[["installed"]] <- vapply(deps[["package"]], remotes:::local_sha, character(1))
+          deps <- readRDS('depends.Rds')
+          deps[['installed']] <- vapply(deps[['package']], remotes:::local_sha, character(1))
           update(deps)
-          remotes::install_cran("rcmdcheck")
+          remotes::install_cran('rcmdcheck')
         shell: Rscript {0}
 
       - name: Install Miniconda
@@ -88,9 +88,8 @@ jobs:
 
       - name: Install Python deps
         run: |
-          Rscript -e "reticulate::conda_create('r-reticulate', packages = c('python==3.7.0'))"
-          Rscript -e "remotes::install_local()"
-          Rscript -e "reticulate::py_install(c('pandas', 'numpy','boto3', 'synapseclient'), pip = TRUE)
+          Rscript -e "reticulate::py_discover_config()"
+          Rscript -e "reticulate::py_install(c('pandas', 'numpy', 'boto3', 'synapseclient'), pip = TRUE)"
 
       - name: Setup Synapse config file for testing
         if: runner.os != 'Windows'

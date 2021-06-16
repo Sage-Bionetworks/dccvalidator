@@ -2,7 +2,12 @@ context("test-check-all.R")
 
 library("tibble")
 syn <- attempt_instantiate()
-attempt_login(syn)
+tryCatch(
+  attempt_login(syn),
+  error = function(e) {
+    print(glue::glue("Did not log into Synapse: {e$message}"))
+  }
+)
 annots <- tribble(
   ~key, ~value, ~columnType,
   "assay", "rnaSeq", "STRING",
