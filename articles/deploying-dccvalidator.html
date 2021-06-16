@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dccvalidator</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9018</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9020</span>
       </span>
     </div>
 
@@ -126,6 +126,7 @@
 <li>
 <code>git clone</code> the repository into the folder you’ve created</li>
 <li>If needed, make any changes to the application’s behavior by editing the files, or check out a branch that contains your changes</li>
+<li>Create a .Renviron file with the <a href="https://help.synapse.org/docs/Using-Synapse-as-an-OAuth-Server.2048327904.html#UsingSynapseasanOAuthServer-RegisteringandLinkinganOAuth2.0Client">verified OAuth</a> <code>client_id</code> and <code>client_secret</code> and restrict permissions (<code>chmod 600 .Renviron</code> or <code>chmod 400 .Renviron</code>)</li>
 <li>To ensure packages are up-to-date, open an R session and run <code>renv::restore()</code>
 </li>
 <li>To ensure each connection has its own R process, the Sage Shiny Server administrator must configure the utilization scheduler. This is not necessary for the app to function, but might improve performance.</li>

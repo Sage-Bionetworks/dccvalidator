@@ -35,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">dccvalidator</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9018</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9020</span>
       </span>
     </div>
 
@@ -100,7 +100,6 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-
 <div id="dccvalidator" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#dccvalidator" class="anchor"></a>dccvalidator</h1></div>
@@ -114,9 +113,9 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"dccvalidator"</span><span class="op">)</span></code></pre></div>
 <p>To install the development version from GitHub, run:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Sage-Bionetworks/dccvalidator"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"Sage-Bionetworks/dccvalidator"</span><span class="op">)</span></code></pre></div>
 <p>Many functions in dccvalidator use reticulate and the <a href="https://pypi.org/project/synapseclient/">Synapse Python client</a>. See the <a href="https://rstudio.github.io/reticulate/#python-version">reticulate documentation</a> for information on how to set R to use a specific version of Python if you don’t want to use the default Python installation on your machine. Whichever Python installation you choose should have synapseclient installed.</p>
-<p>Because dccvalidator uses reticulate, it is not compatible with the <a href="https://r-docs.synapse.org/">synapser</a> package..</p>
+<p>Because dccvalidator uses reticulate, it is not compatible with the <a href="https://r-docs.synapse.org/">synapser</a> package.</p>
 </div>
 <div id="check-data" class="section level2">
 <h2 class="hasAnchor">
@@ -131,15 +130,25 @@
 <li>Check that identifiers are unique within a file</li>
 </ul>
 </div>
-</div>
-<div id="data-submission-validation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#data-submission-validation" class="anchor"></a>Data submission validation</h1>
+<div id="data-submission-validation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#data-submission-validation" class="anchor"></a>Data submission validation</h2>
 <p>This package contains a Shiny app to validate manifests and metadata for AMP-AD studies. It uses the dccvalidator package to check for common data quality issues and gives realtime feedback to the data contributor on errors that need to be fixed. The reporting UI is heavily inspired by the <a href="https://knb.ecoinformatics.org/quality/s=knb.suite.1/doi%3A10.5063%2FF12V2D1V">MetaDIG project’s metadata quality reports</a>.</p>
 <p>The application also allows users to submit documentation of their study, a description of the methods used, etc.</p>
 <p>See the <a href="https://sage-bionetworks.github.io/dccvalidator/articles/customizing-dccvalidator.html">customizing dccvalidator</a> vignette for information on how to spin up a customized version of the application</p>
 </div>
-
+<div id="requesting-new-features-or-bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#requesting-new-features-or-bug-fixes" class="anchor"></a>Requesting New Features or Bug Fixes</h2>
+<p>For new feature requests or bug fixes, please create an issue to let the maintainers know. If you’ve found a bug, create an associated issue and illustrate the bug with a minimal <a href="https://www.tidyverse.org/help/#reprex">reprex</a>. If there is agreement that the problem exists or that a new feature is desired, then the issue will be triaged for future development based on priority.</p>
+<p>Please note that the dccvalidator project is released with a <a href="https://sage-bionetworks.github.io/dccvalidator/CODE_OF_CONDUCT">Contributor Code of Conduct</a>. By contributing to this project via issue creation, comment, or pull request, you agree to abide by its terms.</p>
+</div>
+<div id="contributing" class="section level2">
+<h2 class="hasAnchor">
+<a href="#contributing" class="anchor"></a>Contributing</h2>
+<p>See the <a href="https://github.com/Sage-Bionetworks/dccvalidator/blob/master/.github/CONTRIBUTING.md">Contributing Guide</a> to see how you can get involved in the development of this application.</p>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

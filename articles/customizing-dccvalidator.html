@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dccvalidator</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9018</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9020</span>
       </span>
     </div>
 
@@ -118,6 +118,8 @@
 <ol style="list-style-type: decimal">
 <li>Create a Synapse project or folder with the appropriate permissions to store uploaded files. In AMP-AD, we created a folder to which consortium members have permissions to read and write, but <em>not</em> download. Only the curation team has the ability to download files (in order to assist with debugging). See this <a href="https://github.com/Sage-Bionetworks/dccvalidator/blob/master/inst/app/create_project.R">example of how to create a project with appropriate permissions</a>.</li>
 <li>Fork the <a href="https://github.com/Sage-Bionetworks/dccvalidator/blob/master/config.yml">dccvalidator</a> GitHub repository.</li>
+<li>(For a production version): register a Synapse OAuth client (see <a href="https://help.synapse.org/docs/Using-Synapse-as-an-OAuth-Server.2048327904.html#UsingSynapseasanOAuthServer-RegisteringandLinkinganOAuth2.0Client">Synapse Docs</a>) and store the <code>client_id</code> and <code>client_secret</code> in a .Renviron file within the repository. Ensure you are the only person who has access to this file (e.g. <code>chmod 600 .Renviron</code> or <code>chmod 400 .Renviron</code>).</li>
+<li>(For running locally only): create a .synapseConfig file in your home directory with your Synapse authentication credentials (see the <a href="https://r-docs.synapse.org/articles/manageSynapseCredentials.html#use-synapseconfig">synapser docs for an example</a>).</li>
 <li>Create a new configuration in the <code>config.yml</code> file. Note that any values you do not customize will be inherited from the default configuration. The configuration file must have a <code>default</code> configuration.</li>
 <li>(Optional): create a pull request with your configuration back to the upstream dccvalidator repository.</li>
 <li>Within the file <a href="https://github.com/Sage-Bionetworks/dccvalidator/blob/master/app.R"><code>app.R</code></a>, replace the <code>"default"</code> configuration with the name of your new configuration.</li>
@@ -136,13 +138,16 @@ run_app()</a></code></pre>
 parent: "syn20400157"</code></pre>
 </li>
 <li><p>Create a Synapse project or folder with the appropriate permissions to store uploaded files. In AMP-AD, we created a folder to which consortium members have permissions to read and write, but <em>not</em> download. Only the curation team has the ability to download files (in order to assist with debugging). See this <a href="https://github.com/Sage-Bionetworks/dccvalidator/blob/master/inst/app/create_project.R">example of how to create a project with appropriate permissions</a>.</p></li>
+<li><p>Create a .synapseConfig file in your home directory with your Synapse authentication credentials (see the <a href="https://r-docs.synapse.org/articles/manageSynapseCredentials.html#use-synapseconfig">synapser docs for an example</a>).</p></li>
 </ol>
 <div id="configuration-options" class="section level3">
 <h3 class="hasAnchor">
 <a href="#configuration-options" class="anchor"></a>Configuration options</h3>
 <ul>
 <li>
-<code>production</code>: <code>TRUE</code> to use production Synapse endpoints; <code>FALSE</code> to use staging endpoints. Used for testing new versions of the client before they are officially released. See <a href="https://python-docs.synapse.org/build/html/index.html?highlight=endpoints#synapseclient.Synapse.setEndpoints">Synapse client documentation</a> for information on endpoints.</li>
+<code>production</code>: <code>TRUE</code> to use production Synapse endpoints; <code>FALSE</code> to use staging endpoints. Used for testing new versions of the client before they are officially released. For information on endpoints, see <a href="https://python-docs.synapse.org/build/html/index.html?highlight=endpoints#synapseclient.Synapse.setEndpoints">Synapse client documentation</a>.</li>
+<li>
+<code>app_url</code>: The URL for the app when in production. This is required for using the Synapse OAuth 2.0 client for logging into the application. See <a href="https://sage-bionetworks.github.io/dccvalidator/articles/deploying-dccvalidator.html">Deploying dccvalidator</a> for more information.</li>
 <li>
 <code>parent</code>: The Synapse project or folder where files will be stored</li>
 <li>
@@ -316,7 +321,7 @@ parent: "syn20400157"</code></pre>
   <span class="op">)</span>
   
   <span class="co"># Show results in boxes</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/callModule.html">callModule</a></span><span class="op">(</span><span class="va">results_boxes_server</span>, <span class="st">"Validation Results"</span>, <span class="va">res</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/callModule.html">callModule</a></span><span class="op">(</span><span class="va">results_boxes_server</span>, <span class="st">"validation_results"</span>, <span class="va">res</span><span class="op">)</span>
 <span class="op">}</span>
 
 <span class="va">ui</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">request</span><span class="op">)</span> <span class="op">{</span>
@@ -327,7 +332,7 @@ parent: "syn20400157"</code></pre>
       <span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/include.html">includeCSS</a></span><span class="op">(</span>
         <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"app/www/custom.css"</span>, package <span class="op">=</span> <span class="st">"dccvalidator"</span><span class="op">)</span>
       <span class="op">)</span>,
-      <span class="fu"><a href="../reference/results_boxes_ui.html">results_boxes_ui</a></span><span class="op">(</span><span class="st">"Validation Results"</span><span class="op">)</span>
+      <span class="fu"><a href="../reference/results_boxes_ui.html">results_boxes_ui</a></span><span class="op">(</span><span class="st">"validation_results"</span><span class="op">)</span>
     <span class="op">)</span>
   <span class="op">)</span>
 <span class="op">}</span>

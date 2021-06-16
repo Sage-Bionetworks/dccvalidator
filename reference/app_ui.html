@@ -40,7 +40,10 @@
 
 
 <meta property="og:title" content="App UI — app_ui" />
-<meta property="og:description" content="Create the UI component of the dccvalidator Shiny app." />
+<meta property="og:description" content="If not running interactively (i.e. locally), launches the
+mod_synapse_oauth_ui to start dccvalidator using OAuth for
+login. Otherwise, launches the mod_main_ui to start
+dccvalidator using login credentials stored in a .synapseConfig." />
 
 
 
@@ -72,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dccvalidator</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9018</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9020</span>
       </span>
     </div>
 
@@ -144,7 +147,10 @@
     </div>
 
     <div class="ref-description">
-    <p>Create the UI component of the dccvalidator Shiny app.</p>
+    <p>If not running interactively (i.e. locally), launches the
+<code><a href='mod_synapse_oauth_ui.html'>mod_synapse_oauth_ui</a></code> to start dccvalidator using OAuth for
+login. Otherwise, launches the <code><a href='mod_main_ui.html'>mod_main_ui</a></code> to start
+dccvalidator using login credentials stored in a .synapseConfig.</p>
     </div>
 
     <pre class="usage"><span class='fu'>app_ui</span><span class='op'>(</span><span class='va'>request</span><span class='op'>)</span></pre>
@@ -154,7 +160,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>request</th>
-      <td><p>Shiny request</p></td>
+      <td><p>Shiny request object</p></td>
     </tr>
     </table>
 

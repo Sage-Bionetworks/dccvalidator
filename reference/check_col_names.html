@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dccvalidator</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9018</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9020</span>
       </span>
     </div>
 
@@ -234,7 +234,7 @@ present (<code>"check_pass"</code>) or absent (<code>"check_fail"</code>).</p>
     <pre class="examples"><div class='input'><span class='va'>template</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"individualID"</span>, <span class='st'>"specimenID"</span>, <span class='st'>"assay"</span><span class='op'>)</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>individualID <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span><span class='op'>)</span>, specimenID <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a1"</span>, <span class='st'>"b1"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>check_col_names</span><span class='op'>(</span><span class='va'>dat</span>, <span class='va'>template</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>&lt;error/check_fail&gt;</span><span></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>&lt;error/check_fail&gt;</span></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='va'>syn</span> <span class='op'>&lt;-</span> <span class='va'>synapse</span><span class='op'>$</span><span class='fu'>Synapse</span><span class='op'>(</span><span class='op'>)</span>
 <span class='va'>syn</span><span class='op'>$</span><span class='fu'>login</span><span class='op'>(</span><span class='op'>)</span>
 
@@ -244,7 +244,7 @@ present (<code>"check_pass"</code>) or absent (<code>"check_fail"</code>).</p>
 <span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>assay <span class='op'>=</span> <span class='st'>"rnaSeq"</span><span class='op'>)</span>
 <span class='fu'>check_cols_manifest</span><span class='op'>(</span><span class='va'>b</span>, <span class='va'>syn</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -73,7 +73,7 @@ config.yml file." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dccvalidator</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9018</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9020</span>
       </span>
     </div>
 
@@ -149,7 +149,7 @@ config.yml file." />
 config.yml file.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_template_synIDs</span><span class='op'>(</span>templates <span class='op'>=</span> <span class='fu'>config</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/config/man/get.html'>get</a></span><span class='op'>(</span><span class='st'>"templates"</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_template_synIDs</span><span class='op'>(</span>templates <span class='op'>=</span> <span class='fu'>get_golem_config</span><span class='op'>(</span><span class='st'>"templates"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,7 +157,7 @@ config.yml file.</p>
     <tr>
       <th>templates</th>
       <td><p>Named or unnamed list of template synIDs. Defaults to
-<code><a href='https://rdrr.io/pkg/config/man/get.html'>config::get("templates")</a></code>.</p></td>
+<code>get_golem_config("templates")</code>.</p></td>
     </tr>
     </table>
 

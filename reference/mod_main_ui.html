@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get Synapse table — get_synapse_table • dccvalidator</title>
+<title>Main dccvalidator UI — mod_main_ui • dccvalidator</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Get Synapse table — get_synapse_table" />
-<meta property="og:description" content="Get the contents of a Synapse table as a data frame" />
+<meta property="og:title" content="Main dccvalidator UI — mod_main_ui" />
+<meta property="og:description" content="Create the main UI and server components of the dccvalidator
+Shiny app." />
 
 
 
@@ -138,42 +139,34 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get Synapse table</h1>
-    <small class="dont-index">Source: <a href='https://github.com/Sage-Bionetworks/dccvalidator/blob/master/R/get-synapse-annotations.R'><code>R/get-synapse-annotations.R</code></a></small>
-    <div class="hidden name"><code>get_synapse_table.Rd</code></div>
+    <h1>Main dccvalidator UI</h1>
+    <small class="dont-index">Source: <a href='https://github.com/Sage-Bionetworks/dccvalidator/blob/master/R/mod-main.R'><code>R/mod-main.R</code></a></small>
+    <div class="hidden name"><code>mod_main_ui.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Get the contents of a Synapse table as a data frame</p>
+    <p>Create the main UI and server components of the dccvalidator
+Shiny app.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_synapse_table</span><span class='op'>(</span><span class='va'>synID</span>, <span class='va'>syn</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>mod_main_ui</span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span>
+
+<span class='fu'>mod_main_server</span><span class='op'>(</span><span class='va'>id</span>, <span class='va'>syn</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>synID</th>
-      <td><p>The Synapse ID of a table to query from. Defaults to
-"syn10242922"</p></td>
+      <th>id</th>
+      <td><p>The module ID.</p></td>
     </tr>
     <tr>
       <th>syn</th>
-      <td><p>Synapse client object</p></td>
+      <td><p>Synapse client object.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Data frame of table contents</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='va'>syn</span> <span class='op'>&lt;-</span> <span class='va'>synapse</span><span class='op'>$</span><span class='fu'>Synapse</span><span class='op'>(</span><span class='op'>)</span>
-<span class='va'>syn</span><span class='op'>$</span><span class='fu'>login</span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'>get_synapse_table</span><span class='op'>(</span>synID <span class='op'>=</span> <span class='st'>"syn10242922"</span>, syn <span class='op'>=</span> <span class='va'>syn</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

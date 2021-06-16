@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dccvalidator</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9018</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9020</span>
       </span>
     </div>
 
@@ -333,6 +333,12 @@
       <tr>
         
         <td>
+          <p><code><a href="run_app.html">run_app()</a></code> </p>
+        </td>
+        <td><p>Run the Shiny application</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="app_server.html">app_server()</a></code> </p>
         </td>
         <td><p>App server</p></td>
@@ -345,9 +351,15 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="run_app.html">run_app()</a></code> </p>
+          <p><code><a href="mod_main_ui.html">mod_main_ui()</a></code> <code><a href="mod_main_ui.html">mod_main_server()</a></code> </p>
         </td>
-        <td><p>Run the Shiny application</p></td>
+        <td><p>Main dccvalidator UI</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="mod_synapse_oauth_ui.html">mod_synapse_oauth_ui()</a></code> <code><a href="mod_synapse_oauth_ui.html">mod_synapse_oauth_server()</a></code> </p>
+        </td>
+        <td><p>Synapse Oauth Module</p></td>
       </tr><tr>
         
         <td>
@@ -397,6 +409,42 @@
           <p><code><a href="check_team_membership.html">check_team_membership()</a></code> </p>
         </td>
         <td><p>Check team membership</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setup_global_oauth_vars.html">setup_global_oauth_vars()</a></code> </p>
+        </td>
+        <td><p>Sets up global OAuth variables</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="oauth_process.html">oauth_process()</a></code> </p>
+        </td>
+        <td><p>Do the OAuth process</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="has_auth_code.html">has_auth_code()</a></code> </p>
+        </td>
+        <td><p>Has authorization code</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="attempt_login.html">attempt_login()</a></code> </p>
+        </td>
+        <td><p>Attempt to log into Synapse</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="logged_in.html">logged_in()</a></code> </p>
+        </td>
+        <td><p>Check if logged in as user</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="show_modal.html">show_modal()</a></code> </p>
+        </td>
+        <td><p>Wrapper for modals</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -459,6 +507,25 @@
           <p><code><a href="verify_dictionary_structure.html">verify_dictionary_structure()</a></code> </p>
         </td>
         <td><p>Verify Dictionary Structure</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-internal-development" class="hasAnchor"><a href="#section-internal-development" class="anchor"></a>Internal development</h2>
+          <p class="section-desc"><p>These functions help with development needs, such as changing which Synapse endpoints to use.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="set_staging_endpoints.html">set_staging_endpoints()</a></code> </p>
+        </td>
+        <td><p>Set Synapse Staging Endpoints</p></td>
       </tr>
     </tbody>
     </table>

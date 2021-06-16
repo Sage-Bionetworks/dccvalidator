@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dccvalidator</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9018</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9020</span>
       </span>
     </div>
 
@@ -111,7 +111,12 @@
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>As the AMP-AD Knowledge Portal has grown to 50+ studies and over 70,000 data files, we’ve realized a need to be more standardized in our approaches to data curation. Thus, we built an application that performs many of the routine data quality checks we previously conducted by hand, with the hopes that it will help you, the data contributor, get your data checked, validated, and shared more easily and quickly.</p>
-<p>The <a href="https://shinypro.synapse.org/users/kwoo/dccvalidator-app/">dccvalidator tool</a> checks your metadata for, among other things: * The correct structure (are all of the columns there?) * The values in the cells are correct if the column uses controlled values (for example, TRUE is used instead of Yes or Y) * If both individuals and biospecimen templates are used, each biospecimen is linked to an individual</p>
+<p>The dccvalidator tool checks your metadata for, among other things:</p>
+<ul>
+<li>The correct structure (are all of the columns there?)</li>
+<li>The values in the cells are correct if the column uses controlled values (for example, TRUE is used instead of Yes or Y)</li>
+<li>If both individuals and biospecimen templates are used, each biospecimen is linked to an individual</li>
+</ul>
 </div>
 <div id="requirements" class="section level1">
 <h1 class="hasAnchor">
@@ -119,7 +124,7 @@
 <p>To use this application you must:</p>
 <ol style="list-style-type: decimal">
 <li>Be logged in to Synapse in your browser</li>
-<li>Be a <a href="https://docs.synapse.org/articles/accounts_certified_users_and_profile_validation.html">Synapse certified user</a>
+<li>Be a <a href="https://docs.synapse.org/articles/accounts_certified_users_and_profile_validation.html" target="_blank">Synapse certified user</a>
 </li>
 <li>Be a member of the AMP-AD consortium team</li>
 </ol>
@@ -133,26 +138,26 @@
 <h2 class="hasAnchor">
 <a href="#general-process-overview" class="anchor"></a>General Process Overview</h2>
 <ol style="list-style-type: decimal">
-<li>Contact the <a href="mailto:AMPAD_SageAdmin@synapse.org">AD Data Liaison</a> to discuss the study and the expected data. Receive staging folder synIDs for each expected dataset.</li>
-<li>Using the templates located at the bottom of the <a href="https://www.synapse.org/#!Synapse:syn24986618">Onboarding page</a>, create a study description, methods description(s), and acknowledgement statement.</li>
-<li>Upload the <a href="https://www.synapse.org/#!Synapse:syn25014531">study description</a>, <a href="https://www.synapse.org/#!Synapse:syn25018065">methods description</a> and <a href="https://www.synapse.org/#!Synapse:syn25014532">acknowledgement statement</a> using the <a href="https://www.synapse.org/#!Synapse:syn25051271">Submission Form</a>. Instructions on writing this documentation is located on our <a href="https://www.synapse.org/#!Synapse:syn24986618">Data Contributor Information</a> page.</li>
-<li>Validate metadata + manifest files in <a href="https://shinypro.synapse.org/users/kwoo/dccvalidator-app/">dccvalidator</a>.</li>
-<li>Contact the <a href="mailto:AMPAD_SageAdmin@synapse.org">AD Data Liaison</a> when all files pass validation. The team will verify items not checked by the dccvalidator. Receive permissions to upload data to the staging folder.</li>
-<li>Use the validated manifest to upload the data with <code>syncToSynapse</code> (see <a href="https://docs.synapse.org/articles/uploading_in_bulk.html#validate-the-manifest-and-upload-files">Synapse documentation</a> for uploading data in bulk).</li>
-<li>Contact the <a href="mailto:AMPAD_SageAdmin@synapse.org">AD Data Liaison</a>. The AD Curation team will do the final verifications before releasing the data.</li>
+<li>Contact the <a href="mailto:AMPAD_SageAdmin@synapse.org" target="_blank">AD Data Liaison</a> to discuss the study and the expected data. Receive staging folder synIDs for each expected dataset.</li>
+<li>Using the templates located at the bottom of the <a href="https://www.synapse.org/#!Synapse:syn24986618" target="_blank">Onboarding page</a>, create a study description, methods description(s), and acknowledgement statement.</li>
+<li>Upload the <a href="https://www.synapse.org/#!Synapse:syn25014531" target="_blank">study description</a>, <a href="https://www.synapse.org/#!Synapse:syn25018065" target="_blank">methods description</a> and <a href="https://www.synapse.org/#!Synapse:syn25014532" target="_blank">acknowledgement statement</a> using the <a href="https://www.synapse.org/#!Synapse:syn25051271" target="_blank">Submission Form</a>. Instructions on writing this documentation is located on our <a href="https://www.synapse.org/#!Synapse:syn24986618" target="_blank">Data Contributor Information</a> page.</li>
+<li>Validate metadata + manifest files in <a href="https://shinypro.synapse.org/users/kwoo/dccvalidator-app/" target="_blank">dccvalidator</a>.</li>
+<li>Contact the <a href="mailto:AMPAD_SageAdmin@synapse.org" target="_blank">AD Data Liaison</a> when all files pass validation. The team will verify items not checked by the dccvalidator. Receive permissions to upload data to the staging folder.</li>
+<li>Use the validated manifest to upload the data with <code>syncToSynapse</code> (see <a href="https://docs.synapse.org/articles/uploading_in_bulk.html#validate-the-manifest-and-upload-files">Synapse documentation</a> for uploading data in bulk){target="_blank"}.</li>
+<li>Contact the <a href="mailto:AMPAD_SageAdmin@synapse.org" target="_blank">AD Data Liaison</a>. The AD Curation team will do the final verifications before releasing the data.</li>
 </ol>
 </div>
 <div id="documentation-upload" class="section level2">
 <h2 class="hasAnchor">
 <a href="#documentation-upload" class="anchor"></a>Documentation Upload</h2>
-<p>Each study in AMP-AD has the accompanying <a href="https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648">documentation in the portal</a>:</p>
+<p>Each study in AMP-AD has the accompanying <a href="https://adknowledgeportal.synapse.org/#/Explore/Studies?Study=syn8391648" target="_blank">documentation in the portal</a>:</p>
 <ol style="list-style-type: decimal">
 <li>
-<strong>Study Description:</strong> use template located <a href="https://www.synapse.org/#!Synapse:syn25014531">here</a> to write your study description</li>
+<strong>Study Description:</strong> use template located <a href="https://www.synapse.org/#!Synapse:syn25014531" target="_blank">here</a> to write your study description</li>
 <li>
-<strong>Methods Description(s):</strong> use template located <a href="https://www.synapse.org/#!Synapse:syn25018065">here</a> to write a methods description for <strong>each</strong> of your assay types</li>
+<strong>Methods Description(s):</strong> use template located <a href="https://www.synapse.org/#!Synapse:syn25018065" target="_blank">here</a> to write a methods description for <strong>each</strong> of your assay types</li>
 <li>
-<strong>Acknowledgement statement:</strong> use template located <a href="https://www.synapse.org/#!Synapse:syn25014532">here</a> to write an acknowledgement statement for the use of those that cite your data You can submit your documentation through the <a href="https://www.synapse.org/#!Synapse:syn25051271">Submission Form</a> located on our <a href="https://www.synapse.org/#!Synapse:syn24986618">Onboarding Documentation</a>
+<strong>Acknowledgement statement:</strong> use template located <a href="https://www.synapse.org/#!Synapse:syn25014532" target="_blank">here</a> to write an acknowledgement statement for the use of those that cite your data You can submit your documentation through the <a href="https://www.synapse.org/#!Synapse:syn25051271" target="_blank">Submission Form</a> located on our <a href="https://www.synapse.org/#!Synapse:syn24986618" target="_blank">Onboarding Documentation</a>
 </li>
 </ol>
 </div>
@@ -196,7 +201,7 @@
 <div id="uploading-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#uploading-data" class="anchor"></a>Uploading Data</h2>
-<p>Once data has passed validation, and the AMP-AD data curators permit edit permissions to the staging folder for your study, you will use your newly created manifest file to upload your data and metadata using <code>syncToSynapse</code>. You can execute <code>syncToSynapse</code> in the <a href="https://python-docs.synapse.org/build/html/synapseutils.html#synapseutils.sync.syncToSynapse">Python client</a> or <a href="https://github.com/Sage-Bionetworks/synapserutils#upload-data-in-bulk">R client</a>. For uploads with more than 100 files or large file sizes, the Python client or command line client will upload substantially faster than the R client. For getting started with the Synapse programmatic clients, please visit our <a href="https://docs.synapse.org/articles/api_documentation.html">Synapse docs</a>.</p>
+<p>Once data has passed validation, and the AMP-AD data curators permit edit permissions to the staging folder for your study, you will use your newly created manifest file to upload your data and metadata using <code>syncToSynapse</code>. You can execute <code>syncToSynapse</code> in the <a href="https://python-docs.synapse.org/build/html/synapseutils.html#synapseutils.sync.syncToSynapse" target="_blank">Python client</a> or <a href="https://github.com/Sage-Bionetworks/synapserutils#upload-data-in-bulk" target="_blank">R client</a>. For uploads with more than 100 files or large file sizes, the Python client or command line client will upload substantially faster than the R client. For getting started with the Synapse programmatic clients, please visit our <a href="https://docs.synapse.org/articles/api_documentation.html" target="_blank">Synapse docs</a>.</p>
 </div>
 </div>
   </div>

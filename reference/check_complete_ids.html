@@ -75,7 +75,7 @@ present in the uploaded data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dccvalidator</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9018</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9020</span>
       </span>
     </div>
 
@@ -208,21 +208,21 @@ present (<code>"check_pass"</code>) or absent (<code>"check_fail"</code>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>samples_table</span> <span class='op'>&lt;-</span> <span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span><span class='op'>(</span>
-  <span class='op'>~</span><span class='va'>individualID</span>, <span class='op'>~</span><span class='va'>specimenID</span>,   <span class='op'>~</span><span class='va'>study</span>,   <span class='op'>~</span><span class='va'>assay</span>,
-             <span class='st'>"A"</span>,        <span class='st'>"a1"</span>, <span class='st'>"study1"</span>, <span class='st'>"rnaSeq"</span>,
-             <span class='st'>"A"</span>,        <span class='st'>"a2"</span>, <span class='st'>"study1"</span>, <span class='st'>"rnaSeq"</span>,
-             <span class='st'>"B"</span>,        <span class='st'>"b1"</span>, <span class='st'>"study1"</span>, <span class='st'>"rnaSeq"</span>,
-             <span class='st'>"B"</span>,        <span class='st'>"b2"</span>, <span class='st'>"study1"</span>, <span class='st'>"rnaSeq"</span>,
-             <span class='st'>"B"</span>,        <span class='st'>"b1"</span>, <span class='st'>"study1"</span>, <span class='st'>"rnaSeq"</span>,
-             <span class='st'>"B"</span>,        <span class='st'>"b1"</span>, <span class='st'>"study1"</span>, <span class='st'>"rnaSeq"</span>,
-             <span class='st'>"C"</span>,        <span class='st'>"c1"</span>, <span class='st'>"study1"</span>,  <span class='st'>"LC-MS"</span>,
-             <span class='st'>"D"</span>,        <span class='st'>"d1"</span>, <span class='st'>"study2"</span>, <span class='st'>"rnaSeq"</span>,
-             <span class='st'>"D"</span>,        <span class='st'>"d2"</span>, <span class='st'>"study2"</span>, <span class='st'>"rnaSeq"</span>
+  <span class='op'>~</span><span class='va'>individualID</span>, <span class='op'>~</span><span class='va'>specimenID</span>, <span class='op'>~</span><span class='va'>study</span>, <span class='op'>~</span><span class='va'>assay</span>,
+  <span class='st'>"A"</span>, <span class='st'>"a1"</span>, <span class='st'>"study1"</span>, <span class='st'>"rnaSeq"</span>,
+  <span class='st'>"A"</span>, <span class='st'>"a2"</span>, <span class='st'>"study1"</span>, <span class='st'>"rnaSeq"</span>,
+  <span class='st'>"B"</span>, <span class='st'>"b1"</span>, <span class='st'>"study1"</span>, <span class='st'>"rnaSeq"</span>,
+  <span class='st'>"B"</span>, <span class='st'>"b2"</span>, <span class='st'>"study1"</span>, <span class='st'>"rnaSeq"</span>,
+  <span class='st'>"B"</span>, <span class='st'>"b1"</span>, <span class='st'>"study1"</span>, <span class='st'>"rnaSeq"</span>,
+  <span class='st'>"B"</span>, <span class='st'>"b1"</span>, <span class='st'>"study1"</span>, <span class='st'>"rnaSeq"</span>,
+  <span class='st'>"C"</span>, <span class='st'>"c1"</span>, <span class='st'>"study1"</span>, <span class='st'>"LC-MS"</span>,
+  <span class='st'>"D"</span>, <span class='st'>"d1"</span>, <span class='st'>"study2"</span>, <span class='st'>"rnaSeq"</span>,
+  <span class='st'>"D"</span>, <span class='st'>"d2"</span>, <span class='st'>"study2"</span>, <span class='st'>"rnaSeq"</span>
 <span class='op'>)</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span><span class='op'>(</span>
   <span class='op'>~</span><span class='va'>individualID</span>, <span class='op'>~</span><span class='va'>specimenID</span>,
-             <span class='st'>"A"</span>,        <span class='st'>"a1"</span>,
-             <span class='st'>"A"</span>,        <span class='st'>"a2"</span>
+  <span class='st'>"A"</span>, <span class='st'>"a1"</span>,
+  <span class='st'>"A"</span>, <span class='st'>"a2"</span>
 <span class='op'>)</span>
 <span class='fu'>check_complete_ids</span><span class='op'>(</span>
   data <span class='op'>=</span> <span class='va'>dat</span>,
@@ -230,8 +230,8 @@ present (<code>"check_pass"</code>) or absent (<code>"check_fail"</code>)</p>
   id_type <span class='op'>=</span> <span class='st'>"individualID"</span>,
   study <span class='op'>=</span> <span class='st'>"study1"</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>&lt;error/check_fail&gt;</span><span>
-#&gt; Some IDs are missing from the data</div></span></pre>
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>&lt;error/check_fail&gt;</span>
+#&gt; Some IDs are missing from the data</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

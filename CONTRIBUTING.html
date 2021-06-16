@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">dccvalidator</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9018</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9020</span>
       </span>
     </div>
 
@@ -145,7 +145,7 @@
 <p>This outlines how to propose a change to dccvalidator.</p>
 <div id="fixing-typos" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixing-typos" class="anchor"></a>Fixing typos</h3>
+<a href="#fixing-typos" class="anchor"></a>Fixing Typos</h3>
 <p>Small typos or grammatical errors in documentation may be edited directly using the GitHub web interface, so long as the changes are made in the <em>source</em> file.</p>
 <ul>
 <li>YES: you edit a roxygen comment in a <code>.R</code> file below <code>R/</code>.</li>
@@ -155,31 +155,73 @@
 <div id="prerequisites" class="section level3">
 <h3 class="hasAnchor">
 <a href="#prerequisites" class="anchor"></a>Prerequisites</h3>
-<p>Before you make a substantial pull request, you should always file an issue and make sure someone from the team agrees that it’s a problem. If you’ve found a bug, create an associated issue and illustrate the bug with a minimal <a href="https://www.tidyverse.org/help/#reprex">reprex</a>.</p>
+<p>Before you make a substantial pull request, you should always file an issue and make sure someone from the team agrees that it’s a problem or desired feature. If you’ve found a bug, create an associated issue and illustrate the bug with a minimal <a href="https://www.tidyverse.org/help/#reprex">reprex</a>.</p>
+<p>Once an issue exists, indicate that you plan on working on the update by commenting in the issue and, if able, assigning the issue to yourself.</p>
 </div>
-<div id="pull-request-process" class="section level3">
+<div id="contribution-process" class="section level3">
 <h3 class="hasAnchor">
-<a href="#pull-request-process" class="anchor"></a>Pull request process</h3>
+<a href="#contribution-process" class="anchor"></a>Contribution Process</h3>
+<p>All updates are done via pull request. We require that you create a Git branch for each pull request (PR). If you are unable to create a branch in the main repo, please see the section on forked repos below. There is a default template for all pull requests, subject to change.</p>
 <ul>
-<li>We recommend that you create a Git branch for each pull request (PR).<br>
-</li>
-<li>Look at the Travis build status before and after making changes. The <code>README</code> should contain badges for any continuous integration services used by the package.<br>
-</li>
+<li>
+<strong>Fixes #:</strong> Put the number of the issue (e.g. Fixes #123).</li>
+<li>
+<strong>Changes proposed</strong>: List the changes made.</li>
+<li>
+<strong>Confirmation checklist</strong>: This checklist is both a reminder and a verification that related items were done. If the item is relevant to the changes being made, then be sure to do the task associated. When the pull request includes the item, check the box by adding an ‘x’ (e.g. <code>- [x]</code>) if marking upon pull request creation or by clicking on the checkbox for existing pull requests. If the item is irrelevant to the changes being made, leave the checkbox unchecked. If the maintainers believe the item is relevant to the change, they will request an update to the pull request.</li>
+</ul>
+<div id="guidelines" class="section level4">
+<h4 class="hasAnchor">
+<a href="#guidelines" class="anchor"></a>Guidelines</h4>
+<p>There are a few guidelines to make note of. Please see the Local Development section for more information, as well.</p>
+<ul>
 <li>New code should follow the tidyverse <a href="http://style.tidyverse.org">style guide</a>. You can use the <a href="https://CRAN.R-project.org/package=styler">styler</a> package to apply these styles, but please don’t restyle code that has nothing to do with your PR.<br>
 </li>
-<li>We use <a href="https://cran.r-project.org/package=roxygen2">roxygen2</a>, with <a href="https://cran.r-project.org/web/packages/roxygen2/vignettes/markdown.html">Markdown syntax</a>, for documentation.<br>
-</li>
+<li>We use <a href="https://cran.r-project.org/package=roxygen2">roxygen2</a>, with <a href="https://cran.r-project.org/web/packages/roxygen2/vignettes/markdown.html">Markdown syntax</a>, for documentation.</li>
 <li>We use <a href="https://cran.r-project.org/package=testthat">testthat</a>. Contributions with test cases included are easier to accept.</li>
+<li>If adding or updating features, be aware that the maintainers may suggest breaking up a complicated function into two or more smaller, testable functions. This helps with testing, debugging, and reusability.</li>
 </ul>
+</div>
+<div id="forked-repos" class="section level4">
+<h4 class="hasAnchor">
+<a href="#forked-repos" class="anchor"></a>Forked Repos</h4>
+<p>If you do not have write access to the repo, please create a fork in your own account. Note that a pull request from a forked branch will fail the GitHub Actions tests due to not having the required secrets. Since the maintainers will need to spend extra time vetting the update, pull requests from forked repositories will take longer to process.</p>
+</div>
 </div>
 <div id="local-development" class="section level3">
 <h3 class="hasAnchor">
-<a href="#local-development" class="anchor"></a>Local development</h3>
+<a href="#local-development" class="anchor"></a>Local Development</h3>
+<div id="pre-commit-hooks" class="section level4">
+<h4 class="hasAnchor">
+<a href="#pre-commit-hooks" class="anchor"></a>pre-commit hooks</h4>
 <p><code>dccvalidator</code> uses pre-commit hooks to check for common issues, such as code style (which should conform to <a href="https://style.tidyverse.org/">tidyverse style</a>), code parsability, and up-to-date .Rd documentation. To use, you will need to install <a href="https://pre-commit.com/#intro">pre-commit</a>. If on a Mac, I recommend using <a href="https://brew.sh/">homebrew</a>:</p>
-<pre><code>brew install pre-commit</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>brew install pre<span class="op">-</span>commit</span></code></pre></div>
 <p>Then, within this git repo, run:</p>
-<pre><code>pre-commit install</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>pre<span class="op">-</span>commit install</span></code></pre></div>
 <p>When you commit your changes, pre-commit will run the checks described above, and the commit will fail if the checks do not pass. If you are experiencing issues with the checks and want to commit your work and worry about them later, you can run <code>git commit --no-verify</code> to skip all checks. Or, you can skip certain hooks by their ID (as shown in the file <code>.pre-commit-config.yaml</code>), e.g. <code>SKIP=roxygenize git commit -m "foo"</code>.</p>
+</div>
+<div id="manual-checks" class="section level4">
+<h4 class="hasAnchor">
+<a href="#manual-checks" class="anchor"></a>Manual checks</h4>
+<p>While pre-commit hooks are recommended, it’s possible to verify that the update follows our standards.</p>
+<div id="package-check" class="section level5">
+<h5 class="hasAnchor">
+<a href="#package-check" class="anchor"></a>Package Check</h5>
+<p>Install the <code>devtools</code> package and run the <code><a href="https://rdrr.io/r/utils/PkgUtils.html">check()</a></code> function. All checks should pass, including tests.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/check.html">check</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="style" class="section level5">
+<h5 class="hasAnchor">
+<a href="#style" class="anchor"></a>Style</h5>
+<p>As mentioned above, this package follows the <a href="http://style.tidyverse.org">tidyverse style guide</a>. Sticking to a single style helps with readability and allows for focusing on the code itself. Your code can be updated to the proper style by installing the <code>styler</code> package and running one of the styling functions on your code, such as <code>style_dir()</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">styler</span><span class="fu">::</span><span class="fu">style_dir</span><span class="op">(</span>file_type <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span></code></pre></div>
+<p>Additionally, we also follow linting guidelines. While <code>styler</code> will enforce some of these guidelines, it is also useful to install <code>lintr</code> and run one of the linting functions, such as <code>lint_file()</code> or <code>lint_package()</code>. If there are linting errors, this will generate a list of problems to be fixed.</p>
+<pre><code>lintr::lint_package()</code></pre>
+<p><em>Note: Only commit style and lint changes related to your own code. If there are style and lint changes unrelated to your code, these can be ignored.</em></p>
+</div>
+</div>
 </div>
 <div id="code-of-conduct" class="section level3">
 <h3 class="hasAnchor">
