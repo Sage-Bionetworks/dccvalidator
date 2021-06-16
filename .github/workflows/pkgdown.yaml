@@ -24,22 +24,17 @@ jobs:
           saveRDS(remotes::dev_package_deps(dependencies = TRUE), "depends.Rds", version = 2)
         shell: Rscript {0}
 
-      - name: Cache R packages
-        uses: actions/cache@v1
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: macOS-r-3.6-${{ hashFiles('depends.Rds') }}
-          restore-keys: macOS-r-3.6-
-
       - name: Install system dependencies
         run: |
           brew install harfbuzz fribidi
 
       - name: Install dependencies
         run: |
-          install.packages("remotes")
-          remotes::install_deps(dependencies = TRUE)
-          install.packages("pkgdown", type = "binary")
+          library(remotes)
+          deps <- readRDS("depends.Rds")
+          deps[["installed"]] <- vapply(deps[["package"]], remotes:::local_sha, character(1))
+          update(deps)
+          install.packages(c("pkgdown", "shinyBS"), type = "binary")
         shell: Rscript {0}
 
       - name: Install package
