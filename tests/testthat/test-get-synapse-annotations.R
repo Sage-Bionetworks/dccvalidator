@@ -1,7 +1,12 @@
 context("test-get-synapse-annotations.R")
 
 syn <- attempt_instantiate()
-attempt_login(syn = syn)
+tryCatch(
+  attempt_login(syn),
+  error = function(e) {
+    print(glue::glue("Did not log into Synapse: {e$message}"))
+  }
+)
 Sys.setenv(R_CONFIG_ACTIVE = "testing")
 
 test_that("get_synapse_table returns a data frame", {
