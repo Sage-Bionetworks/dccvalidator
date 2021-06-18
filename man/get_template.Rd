@@ -4,16 +4,16 @@
 \alias{get_template}
 \title{Get metadata template keys}
 \usage{
-get_template(syn, synID = NA, id = NA, ...)
+get_template(id = NA, syn, synID = NA, ...)
 }
 \arguments{
+\item{id}{The id of JSON metadata schema registered in Synapse or Synapse ID
+of an excel or csv file containing a metadata template}
+
 \item{syn}{Synapse client object}
 
 \item{synID}{Synapse ID of an excel or csv file containing a metadata
 template}
-
-\item{id}{The id of JSON metadata schema registered in Synapse or Synapse ID
-of an excel or csv file containing a metadata template}
 
 \item{...}{Additional arguments passed to syn$get()}
 }
