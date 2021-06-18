@@ -71,8 +71,8 @@ test_that("get_synapse_schema returns error if schema not returned", {
   expect_error(get_synapse_schema(syn, "fake-template"))
 })
 
-test_that("get_template", {
+test_that("get_template returns error if schema not returned", {
   skip_if_not(logged_in(syn = syn))
 
-  get_template(syn = syn, id = "fake-template")
+  expect_error(get_template(syn = syn, id = "fake-template"))
 })
