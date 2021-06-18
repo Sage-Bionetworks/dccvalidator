@@ -60,17 +60,17 @@ get_template_keys_synID <- function(syn, synID, ...) {
       .call = FALSE
     )
   }
-  
+
   filepath <- template$path
   ext <- tools::file_ext(filepath)
-  
+
   if (!ext %in% c("xlsx", "csv")) {
     stop(
       "Error loading template: file format must be .csv or .xlsx",
       call. = FALSE
     )
   }
-  
+
   if (ext == "xlsx") {
     template <- readxl::read_excel(template$path, sheet = 1)
   } else if (ext == "csv") {
@@ -85,15 +85,15 @@ get_template_keys_synID <- function(syn, synID, ...) {
 #'
 #' @inheritParams get_template
 get_template_keys_schema <- function(syn, id) {
-  schema <- tryCatch(
+  tryCatch(
     {
-      get_synapse_schema(syn = syn, id = id)
+      schema <- get_synapse_schema(syn = syn, id = id)
+      return(names(schema$properties))
     },
     error = function(e) {
-      stop(glue::glue("Failed to get the validation schema for {id}. Error: {e$message}"))
+      stop(glue::glue("Failed to get the validation schema for {id}."))
     }
   )
-  return(names(schema$validationSchema$properties))
 }
 
 #' @title Get Synapse validation schema
@@ -104,14 +104,21 @@ get_template_keys_schema <- function(syn, id) {
 #' @inheritParams get_template
 get_synapse_schema <- function(syn, id) {
   ## Start the job to compile the validation schema
-  token <- rest_post(
-    syn = syn,
-    uri = "/schema/type/validation/async/start",
-    body = glue::glue("{{$id: \"{id}\"}}")
+  tryCatch(
+    {
+      token <- rest_post(
+        syn = syn,
+        uri = "/schema/type/validation/async/start",
+        body = glue::glue("{{$id: \"{id}\"}}")
+      )
+      ## Should wait until finished
+      schema <- get_synapse_schema_compiled(syn = syn, token = token)
+      return(schema$validationSchema)
+    },
+    error = function(e) {
+      stop("The JSON schema could not be returned.")
+    }
   )
-  ## Should wait until finished
-  schema <- get_synapse_schema_compiled(syn = syn, token = token)
-  schema
 }
 
 #' @title Get compiled validation schema

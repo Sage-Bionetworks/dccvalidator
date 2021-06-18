@@ -64,3 +64,15 @@ test_that("get_template can get keys from a (simple) registered schema", {
   expect_equal(res1, c("a", "b", "c"))
   expect_equal(res2, c("a", "b", "c", "d"))
 })
+
+test_that("get_synapse_schema returns error if schema not returned", {
+  skip_if_not(logged_in(syn = syn))
+
+  expect_error(get_synapse_schema(syn, "fake-template"))
+})
+
+test_that("get_template", {
+  skip_if_not(logged_in(syn = syn))
+
+  get_template(syn = syn, id = "fake-template")
+})

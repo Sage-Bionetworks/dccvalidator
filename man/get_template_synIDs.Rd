@@ -23,8 +23,8 @@ named_list <- dat1 <- list(
   template1 = "syn111111",
   template2 = "syn222222",
   template_set = list(
-   template3 = "syn333333",
-   template4 = "syn444444"
+    template3 = "syn333333",
+    template4 = "syn444444"
   )
 )
 get_template_synIDs(templates = named_list)

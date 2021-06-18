@@ -255,8 +255,8 @@ add_dictionary_sheets <- function(template_xlsx_path, annotations) {
 #'     "A person's family name",
 #'     "A person's family name"
 #'   )
-#' generate_key_description(annots)
 #' )
+#' generate_key_description(annots)
 #' }
 generate_key_description <- function(annots) {
   if (!(all(c("key", "description") %in% colnames(annots)))) {
@@ -286,8 +286,8 @@ generate_key_description <- function(annots) {
 #'   template1 = "syn111111",
 #'   template2 = "syn222222",
 #'   template_set = list(
-#'    template3 = "syn333333",
-#'    template4 = "syn444444"
+#'     template3 = "syn333333",
+#'     template4 = "syn444444"
 #'   )
 #' )
 #' get_template_synIDs(templates = named_list)
