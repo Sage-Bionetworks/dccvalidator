@@ -2,7 +2,12 @@ context("test-check-annotation-keys.R")
 
 library("tibble")
 syn <- attempt_instantiate()
-attempt_login(syn = syn)
+tryCatch(
+  attempt_login(syn),
+  error = function(e) {
+    print(glue::glue("Did not log into Synapse: {e$message}"))
+  }
+)
 Sys.setenv(R_CONFIG_ACTIVE = "testing")
 
 annots <- tribble(

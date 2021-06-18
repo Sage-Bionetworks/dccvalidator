@@ -7,7 +7,7 @@ app_url <- NULL
 claims_param <- NULL
 authorization_url <- NULL
 
-#' @title
+#' @title Set up Synapse and OAuth variables
 #'
 #' @description Bring in the Synapse Python Client and set up global variables
 #' for OAuth at startup. Requires global variables initialized to NULL: synapse,

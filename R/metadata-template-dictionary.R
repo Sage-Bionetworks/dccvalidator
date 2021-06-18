@@ -146,7 +146,7 @@ verify_dictionary_structure <- function(dictionary) {
 
   return(check_pass(
     msg = "All keys had a single description and columnType",
-    behavior = "All keys should have a single descrioption and columnType"
+    behavior = "All keys should have a single description and columnType"
   ))
 }
 

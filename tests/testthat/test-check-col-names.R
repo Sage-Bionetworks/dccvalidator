@@ -1,7 +1,12 @@
 context("test-check-col-names.R")
 
 syn <- attempt_instantiate()
-attempt_login(syn)
+tryCatch(
+  attempt_login(syn),
+  error = function(e) {
+    print(glue::glue("Did not log into Synapse: {e$message}"))
+  }
+)
 Sys.setenv(R_CONFIG_ACTIVE = "testing")
 
 test_that("check_col_names returns condition object when check passes", {

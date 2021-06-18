@@ -2,7 +2,7 @@
 % Please edit documentation in R/mod-synapse-oauth.R
 \name{.onLoad}
 \alias{.onLoad}
-\title{}
+\title{Set up Synapse and OAuth variables}
 \usage{
 .onLoad(libname, pkgname)
 }
