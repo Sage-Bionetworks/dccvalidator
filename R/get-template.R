@@ -18,7 +18,7 @@
 #' get_template(synID = "syn12973252", syn = syn)
 #' get_template(id = "syn12973252", syn = syn)
 #' }
-get_template <- function(syn, synID = NA, id = NA, ...) {
+get_template <- function(id = NA, syn, synID = NA, ...) {
   ## Use synID if given
   if (!is.na(synID)) {
     return(get_template_keys_synID(syn = syn, synID = synID, ...))
@@ -83,6 +83,7 @@ get_template_keys_synID <- function(syn, synID, ...) {
 #'
 #' @description Get JSON schema registered in Synapse.
 #'
+#' @export
 #' @inheritParams get_template
 get_template_keys_schema <- function(syn, id) {
   tryCatch(
