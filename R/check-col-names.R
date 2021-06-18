@@ -49,7 +49,7 @@ check_cols_manifest <- function(data, id,
   if (is.null(data)) {
     return(NULL)
   }
-  required <- get_template(id, ...)
+  required <- get_template(id = id, ...)
   behavior <- glue::glue(
     "Manifest should contain columns: {glue::glue_collapse(required, sep = ', ')}" # nolint
   )
@@ -75,7 +75,7 @@ check_cols_individual <- function(data, id,
   if (is.null(data)) {
     return(NULL)
   }
-  required <- get_template(id, ...)
+  required <- get_template(id = id, ...)
   behavior <- glue::glue(
     "Individual file should contain columns: {glue::glue_collapse(required, sep = ', ')}. If you do not have data related to a column, the column name should be present and the column should be empty." # nolint
   )
@@ -101,7 +101,7 @@ check_cols_assay <- function(data, id,
   if (is.null(data)) {
     return(NULL)
   }
-  required <- get_template(id, ...)
+  required <- get_template(id = id, ...)
   behavior <- glue::glue(
     "Assay file should contain columns: {glue::glue_collapse(required, sep = ', ')}. If you do not have data related to a column, the column name should be present and the column should be empty." # nolint
   )
@@ -127,7 +127,7 @@ check_cols_biospecimen <- function(data, id,
   if (is.null(data)) {
     return(NULL)
   }
-  required <- get_template(id, ...)
+  required <- get_template(id = id, ...)
   behavior <- glue::glue(
     "Biospecimen file should contain columns: {glue::glue_collapse(required, sep = ', ')}. If you do not have data related to a column, the column name should be present and the column should be empty." # nolint
   )
@@ -138,45 +138,4 @@ check_cols_biospecimen <- function(data, id,
     fail_msg = fail_msg,
     behavior = behavior
   )
-}
-
-#' Get a template
-#'
-#' @param synID Synapse ID of an excel or csv file containing a metadata
-#'   template
-#' @inheritParams get_synapse_annotations
-#' @param ... Additional arguments passed to syn$get()
-#' @return Character vector of template column names
-#' @export
-#' @examples
-#' \dontrun{
-#' syn <- synapse$Synapse()
-#' syn$login()
-#' get_template("syn12973252", syn = syn)
-#' }
-get_template <- function(synID, syn, ...) {
-  template <- try(syn$get(synID, ...), silent = TRUE)
-  if (inherits(template, "try-error")) {
-    stop(
-      "Couldn't download metadata template. Make sure you are logged in to Synapse and that `synID` is a valid synapse ID.", # nolint
-      .call = FALSE
-    )
-  }
-
-  filepath <- template$path
-  ext <- tools::file_ext(filepath)
-
-  if (!ext %in% c("xlsx", "csv")) {
-    stop(
-      "Error loading template: file format must be .csv or .xlsx",
-      call. = FALSE
-    )
-  }
-
-  if (ext == "xlsx") {
-    template <- readxl::read_excel(template$path, sheet = 1)
-  } else if (ext == "csv") {
-    template <- utils::read.csv(template$path, stringsAsFactors = FALSE)
-  }
-  return(names(template))
 }

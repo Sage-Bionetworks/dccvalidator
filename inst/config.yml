@@ -25,7 +25,7 @@ default:
       human: "syn12973252"
       drosophila: "syn20673251"
     assay_templates:
-      rnaSeq: "syn12973256"
+      rnaSeq: "sysbio.metadataTemplates-assay.rnaSeq"
       proteomics: "syn12973255"
   species_list:
     - "mouse or other animal model"

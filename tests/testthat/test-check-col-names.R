@@ -25,24 +25,10 @@ test_that("check_col_names returns missing columns in the data", {
   expect_equal(result$data, "z")
 })
 
-test_that("get_template fails when not logged in to Synapse", {
-  skip_if(is.null(syn))
-
-  syn$logout()
-  reticulate::py_capture_output(
-    expect_error(
-      get_template("syn12973252", syn)
-    ),
-    type = "stderr"
-  )
-})
-
-attempt_login(syn)
-
 test_that("check_cols_individual works for individual columns", {
   skip_if_not(logged_in(syn = syn))
 
-  cols <- get_template("syn12973254", syn, version = 1)
+  cols <- get_template(synID = "syn12973254", syn = syn, version = 1)
   full_col <- data.frame(matrix(ncol = length(cols)))
   colnames(full_col) <- cols
   incomplete_col <- full_col[, !names(full_col) %in% "yearsEducation"]
@@ -74,7 +60,7 @@ test_that("check_cols_individual works for individual columns", {
 test_that("check_cols_individual returns invalid columns in condition object", {
   skip_if_not(logged_in(syn = syn))
 
-  cols <- get_template("syn12973254", syn = syn, version = 1)
+  cols <- get_template(synID = "syn12973254", syn = syn, version = 1)
   full_col <- data.frame(matrix(ncol = length(cols)))
   colnames(full_col) <- cols
   incomplete_col <- full_col[, !names(full_col) %in% "yearsEducation"]
@@ -93,7 +79,7 @@ test_that("check_cols_individual returns invalid columns in condition object", {
 test_that("check_cols_biospecimen works for biospecimen columns", {
   skip_if_not(logged_in(syn = syn))
 
-  biosp_names <- get_template("syn12973252", syn = syn, version = 4)
+  biosp_names <- get_template(synID = "syn12973252", syn = syn, version = 4)
 
   full_col_biosp <- data.frame(matrix(ncol = length(biosp_names)))
   colnames(full_col_biosp) <- biosp_names
@@ -126,7 +112,7 @@ test_that("check_cols_biospecimen works for biospecimen columns", {
 test_that("check_cols_biospecimen returns invalid columns in condition obj.", {
   skip_if_not(logged_in(syn = syn))
 
-  biosp_names <- get_template("syn12973252", syn = syn, version = 4)
+  biosp_names <- get_template(synID = "syn12973252", syn = syn, version = 4)
 
   full_col_biosp <- data.frame(matrix(ncol = length(biosp_names)))
   colnames(full_col_biosp) <- biosp_names
@@ -146,7 +132,11 @@ test_that("check_cols_biospecimen returns invalid columns in condition obj.", {
 test_that("check_cols_biospecimen can get drosophila template", {
   skip_if_not(logged_in(syn = syn))
 
-  drosophila_names <- get_template("syn20673251", syn = syn, version = 1)
+  drosophila_names <- get_template(
+    synID = "syn20673251",
+    syn = syn,
+    version = 1
+  )
   drosophila_data <- data.frame(matrix(ncol = length(drosophila_names)))
   colnames(drosophila_data) <- drosophila_names
 
@@ -177,7 +167,7 @@ test_that("check_cols_biospecimen can get drosophila template", {
 test_that("check_cols_assay works for assay columns", {
   skip_if_not(logged_in(syn = syn))
 
-  rnaseq_names <- get_template("syn12973256", syn = syn, version = 2)
+  rnaseq_names <- get_template(synID = "syn12973256", syn = syn, version = 2)
 
   full_col_assay <- data.frame(matrix(ncol = length(rnaseq_names)))
   colnames(full_col_assay) <- rnaseq_names
@@ -210,7 +200,7 @@ test_that("check_cols_assay works for assay columns", {
 test_that("check_cols_assay returns invalid columns within condition object", {
   skip_if_not(logged_in(syn = syn))
 
-  rnaseq_names <- get_template("syn12973256", syn = syn, version = 2)
+  rnaseq_names <- get_template(synID = "syn12973256", syn = syn, version = 2)
 
   full_col_assay <- data.frame(matrix(ncol = length(rnaseq_names)))
   colnames(full_col_assay) <- rnaseq_names
@@ -230,7 +220,7 @@ test_that("check_cols_assay returns invalid columns within condition object", {
 test_that("check_cols_manifest works for manifest columns", {
   skip_if_not(logged_in(syn = syn))
 
-  cols <- get_template("syn20820080", syn = syn, version = 3)
+  cols <- get_template(synID = "syn20820080", syn = syn, version = 3)
   dat <- data.frame(matrix(ncol = length(cols)))
   names(dat) <- cols
   incomplete <- dat[, !names(dat) %in% "parent"]
@@ -250,35 +240,6 @@ test_that("check_cols_manifest works for manifest columns", {
     )$data,
     "parent"
   )
-})
-
-test_that("get_template errors for files that are not xlsx or csv", {
-  skip_if_not(logged_in(syn = syn))
-
-  reticulate::py_capture_output(
-    expect_error(
-      get_template("syn17039045", syn = syn)
-    ),
-    type = "stderr"
-  )
-})
-
-test_that("get_template can read in excel and csv templates", {
-  skip_if_not(logged_in(syn = syn))
-
-  csv <- get_template("syn18384877", syn = syn, version = 1)
-  xlsx <- get_template("syn18384878", syn = syn, version = 1)
-  expect_equal(csv, c("a", "b", "c"))
-  expect_equal(xlsx, c("a", "b", "c"))
-})
-
-test_that("get_template can get different version of a template", {
-  skip_if_not(logged_in(syn = syn))
-
-  xlsx1 <- get_template("syn18384878", syn = syn, version = 1)
-  xlsx2 <- get_template("syn18384878", syn = syn, version = 2)
-  expect_equal(xlsx1, c("a", "b", "c"))
-  expect_equal(xlsx2, c("a", "b", "c", "d"))
 })
 
 test_that("wrapper functions for specific template gets the correct version", {
