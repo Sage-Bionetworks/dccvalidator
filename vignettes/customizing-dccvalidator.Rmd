@@ -125,10 +125,10 @@ To install the dccvalidator instead of forking the repository:
   the user is not in any of the teams, they will see a message telling them they
   must be added to one of the teams.
 * `templates` (including `manifest_template`, `individual_templates`,
-  `biospecimen_templates`, and `assay_templates`): Synapse IDs of templates to
-  use for validation. These should be either .xlsx or .csv files, where the
+  `biospecimen_templates`, and `assay_templates`): Location of templates to
+  use for validation. These may be a Synapse synID or the id of a Synapse-registered JSON schema. For templates accessed via synID, these should be either .xlsx or .csv files, where the
   column names reflect the required columns in the template. If the template is
-  an excel file with multiple sheets, the first sheet will be used.
+  an excel file with multiple sheets, the first sheet will be used. For templates accessed via JSON schema id, these should have a `properties` object listing all column names (a.k.a. keys) that should be present in the metadata.
 * `species_list`: List of possible species in the consortium. These are shown as
   options in the validation UI and control which individual template and
   biospecimen template the app validates against.

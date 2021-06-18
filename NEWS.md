@@ -22,6 +22,7 @@
   arguments from `whitelist_keys`/`whitelist_values` to
   `allowlist_keys`/`allowlist_values`
 - Add ability to log in with Synapse OAuth client
+- Add ability for `check_col_names` (via `get_template`) to pull full set of metadata keys from a simple (i.e. has "properties") registered Synapse JSON schema.
 
 # dccvalidator v0.3.0
 
