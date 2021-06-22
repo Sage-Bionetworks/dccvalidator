@@ -21,14 +21,12 @@ attempt_instantiate <- function() {
 attempt_login <- function(syn, ...) {
   is_logged_in <- FALSE
   ## Try logging in with .synapseConfig
-  tryCatch(
+  try(
     {
       syn$login()
       is_logged_in <- TRUE
     },
-    error = function(e) {
-      stop("There was a problem logging in using stored credentials.")
-    }
+    silent = TRUE
   )
   ## If failed to login, try using credentials provided
   if (!is_logged_in) {
@@ -37,7 +35,7 @@ attempt_login <- function(syn, ...) {
         syn$login(...)
       },
       error = function(e) {
-        stop("There was a problem logging in using given credentials.")
+        stop("There was a problem logging in.")
       }
     )
   }
