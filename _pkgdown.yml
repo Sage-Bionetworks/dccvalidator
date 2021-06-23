@@ -43,6 +43,9 @@ reference:
     - get_synapse_annotations
     - get_synapse_table
     - get_template
+    - get_synapse_schema
+    - get_template_keys_synID
+    - get_template_keys_schema
     - df_to_json_list
 
 - title: Shiny app functions

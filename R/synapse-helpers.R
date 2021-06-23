@@ -18,7 +18,6 @@ attempt_instantiate <- function() {
 #' @param syn Synapse client object
 #' @param ... Synapse credentials, such as `authToken` or `email` with a
 #' `password` or `apiKey`.
-#' @return TRUE if logged in, else `NULL`
 attempt_login <- function(syn, ...) {
   is_logged_in <- FALSE
   ## Try logging in with .synapseConfig
@@ -31,13 +30,15 @@ attempt_login <- function(syn, ...) {
   )
   ## If failed to login, try using credentials provided
   if (!is_logged_in) {
-    try({
-      syn$login(...)
-      is_logged_in <- TRUE
-    })
+    tryCatch(
+      {
+        syn$login(...)
+      },
+      error = function(e) {
+        stop("There was a problem logging in.")
+      }
+    )
   }
-  ## Return TRUE if logged in, else NULL
-  ifelse(is_logged_in, is_logged_in, NULL)
 }
 
 #' @title Check if logged in as user

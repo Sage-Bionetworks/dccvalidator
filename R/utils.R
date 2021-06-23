@@ -24,6 +24,6 @@ full_login_process <- function(...) {
   # Import synapseclient and login
   synapse <<- reticulate::import("synapseclient")
   syn <- attempt_instantiate()
-  syn <- attempt_login(syn, ...)
+  attempt_login(syn, ...)
   return(syn)
 }

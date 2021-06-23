@@ -66,12 +66,12 @@ check_all <- function(data, annotations, study, syn) {
   # Missing columns ----------------------------------------------------------
   missing_cols_indiv <- check_cols_individual(
     data$file_data[indiv_index][[1]],
-    get_golem_config("templates")$individual_templates[[data$species[indiv_index]]],
+    get_golem_config("templates")$individual_templates[[data$species[indiv_index]]], # nolint
     syn = syn
   )
   missing_cols_biosp <- check_cols_biospecimen(
     data$file_data[biosp_index][[1]],
-    get_golem_config("templates")$biospecimen_templates[[data$species[biosp_index]]],
+    get_golem_config("templates")$biospecimen_templates[[data$species[biosp_index]]], # nolint
     syn = syn
   )
   missing_cols_assay <- check_cols_assay(
