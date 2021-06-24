@@ -139,7 +139,7 @@ amp-ad:
   contact_email: "AMPAD_SageAdmin@synapse.org"
 
 pec:
-  app_url: "https://shinypro.synapse.org/users/kmontgomery/dccvalidator/"
+  app_url: "https://shinypro.synapse.org/users/kmontgomery/apps_w_oauth/dccvalidator/"
   parent: "syn21763123"
   path_to_markdown: "inst/using-the-dccvalidator-pec.Rmd"
   study_table: "syn20968992"
