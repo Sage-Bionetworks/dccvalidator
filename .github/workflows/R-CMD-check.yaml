@@ -109,7 +109,7 @@ jobs:
           SYNAPSE_USER: ${{ secrets.SYNAPSE_USER }}
           SYNAPSE_APIKEY: ${{ secrets.SYNAPSE_APIKEY}}
         run: |
-          (echo [authentication] & echo username = %SYNAPSE_USER% & echo apikey = %SYNAPSE_APIKEY%) > %~HOME/.synapseConfig
+          (echo [authentication] & echo username = %SYNAPSE_USER% & echo apikey = %SYNAPSE_APIKEY%) > %HOME%\.synapseConfig
 
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
