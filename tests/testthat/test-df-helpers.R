@@ -1,5 +1,7 @@
 context("df-helpers.R")
 
+Sys.setenv(R_CONFIG_ACTIVE = "testing")
+
 dat1 <- tibble::tribble(
   ~metadataType,
   "manifest",
@@ -119,11 +121,11 @@ test_that("gather_template_ids gets the ids from the config", {
   expect_equal(res4, "syn12973254")
 })
 
-test_that("gather_template_ids throws error if missing species for bio/ind", {
-  expect_error(gather_template_ids(type = "biospecimen"))
-  expect_error(gather_template_ids(type = "individual"))
+test_that("gather_template_ids returns NA if missing species for bio/ind", {
+  expect_equal(gather_template_ids(type = "biospecimen"), NA)
+  expect_equal(gather_template_ids(type = "individual"), NA)
 })
 
-test_that("gather_template_ids throws error if missing assay for assay", {
-  expect_error(gather_template_ids(type = "assay"))
+test_that("gather_template_ids returns NA if missing assay for assay", {
+  expect_equal(gather_template_ids(type = "assay"), NA)
 })

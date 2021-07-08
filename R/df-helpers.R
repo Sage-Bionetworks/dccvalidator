@@ -38,7 +38,7 @@ get_metadataType_indices <- function(data, meta_types) {
 #' @param species The species needed to specify the correct biospecimen
 #' or individual templates (default `NA`).
 #' @param assay The assay needed to specify the correct assay template.
-#' @returns the template id from the config (default `NA`).
+#' @returns the template id from the config (`NA` if not found).
 gather_template_ids <- function(type, species = NA, assay = NA) {
   switch(type,
     manifest = get_golem_config("templates")$manifest_template,
@@ -50,27 +50,30 @@ gather_template_ids <- function(type, species = NA, assay = NA) {
 
 ## gather_template_ids helper
 gather_template_id_individual <- function(species) {
-  if (!is.na(species)) {
-    get_golem_config("templates")$individual_templates[[species]]
+  templates <- get_golem_config("templates")$individual_templates
+  if (species %in% names(templates)) {
+    return(templates[[species]])
   } else {
-    stop("Missing species.")
+    return(NA)
   }
 }
 
 ## gather_template_ids helper
 gather_template_id_biospecimen <- function(species) {
-  if (!is.na(species)) {
-    get_golem_config("templates")$biospecimen_templates[[species]]
+  templates <- get_golem_config("templates")$biospecimen_templates
+  if (species %in% names(templates)) {
+    return(templates[[species]])
   } else {
-    stop("Missing species.")
+    return(NA)
   }
 }
 
 ## gather_template_ids helper
 gather_template_id_assay <- function(assay) {
-  if (!is.na(assay)) {
-    get_golem_config("templates")$assay_templates[[assay]]
+  templates <- get_golem_config("templates")$assay_templates
+  if (assay %in% names(templates)) {
+    return(templates[[assay]])
   } else {
-    stop("Missing assay.")
+    return(NA)
   }
 }
