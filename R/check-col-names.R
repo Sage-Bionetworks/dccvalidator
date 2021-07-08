@@ -46,7 +46,7 @@ check_cols_manifest <- function(data, id,
                                 success_msg = "All manifest columns present",
                                 fail_msg = "Missing columns in the manifest",
                                 ...) {
-  if (is.null(data)) {
+  if (is.null(data) | is.na(id)) {
     return(NULL)
   }
   required <- get_template(id = id, ...)
@@ -72,7 +72,7 @@ check_cols_individual <- function(data, id,
                                   fail_msg = "Missing columns in the individual metadata file",
                                   # nolint end
                                   ...) {
-  if (is.null(data)) {
+  if (is.null(data) | is.na(id)) {
     return(NULL)
   }
   required <- get_template(id = id, ...)
@@ -98,7 +98,7 @@ check_cols_assay <- function(data, id,
                              fail_msg = "Missing columns in the assay metadata file",
                              # nolint end
                              ...) {
-  if (is.null(data)) {
+  if (is.null(data) | is.na(id)) {
     return(NULL)
   }
   required <- get_template(id = id, ...)
@@ -124,7 +124,7 @@ check_cols_biospecimen <- function(data, id,
                                    fail_msg = "Missing columns in the biospecimen metadata file",
                                    # nolint end
                                    ...) {
-  if (is.null(data)) {
+  if (is.null(data) | is.na(id)) {
     return(NULL)
   }
   required <- get_template(id = id, ...)
