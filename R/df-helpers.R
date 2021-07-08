@@ -40,8 +40,7 @@ get_metadataType_indices <- function(data, meta_types) {
 #' @param assay The assay needed to specify the correct assay template.
 #' @returns the template id from the config (default `NA`).
 gather_template_ids <- function(type, species = NA, assay = NA) {
-  switch(
-    type,
+  switch(type,
     manifest = get_golem_config("templates")$manifest_template,
     individual = gather_template_id_individual(species = species),
     biospecimen = gather_template_id_biospecimen(species = species),

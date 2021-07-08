@@ -70,8 +70,7 @@ check_all <- function(data, annotations, syn, study = NA, samples_table = NA) {
 
   # Missing columns ------------------------------------------------------------
   # Only run if the template column exists
-  missing_cols_indiv <- missing_cols_biosp <-
-    missing_cols_assay <- missing_cols_manifest <- NULL
+  missing_cols_indiv <- missing_cols_biosp <- missing_cols_assay <- missing_cols_manifest <- NULL # nolint
   if ("template" %in% colnames(data)) {
     missing_cols_indiv <- check_cols_individual(
       data$file_data[indices$individual][[1]],
