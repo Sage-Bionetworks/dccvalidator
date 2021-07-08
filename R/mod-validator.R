@@ -4,12 +4,18 @@
 #' manifest, and see a report of validation results.
 #'
 #' @noRd
+#' @import shiny
 #' @param id the module id
 #' @param species_list Vector of species user can choose from for their study
 #' @param assay_templates Vector of assay template names
+#' @param include_biospecimen_type TRUE to include radiobutton options for
+#' specimen type of "in vitro" or "other (in vivo, postmortem)"; else FALSE
+#' (default) to leave out of application.
 #' @return html ui for the module
-validator_ui <- function(id, species_list, assay_templates) {
+validator_ui <- function(id, species_list, assay_templates,
+                         include_biospecimen_type = FALSE) {
   ns <- NS(id)
+
   # Validator tab UI
   tabItem(
     tabName = id,
@@ -23,6 +29,8 @@ validator_ui <- function(id, species_list, assay_templates) {
 
         # UI for getting the study name
         get_study_ui(ns("study")),
+
+        # Species
         div(
           class = "result",
           div(
@@ -43,6 +51,38 @@ validator_ui <- function(id, species_list, assay_templates) {
             trigger = "hover"
           )
         ),
+
+        # Biospecimen type
+        if (include_biospecimen_type) {
+            conditionalPanel(
+              condition = "input.species != 'drosophila'",
+              div(
+                class = "result",
+                div(
+                  class = "wide",
+                  shinyjs::hidden(
+                    shinyjs::disabled(
+                      radioButtons(
+                        ns("biospecimen_type"),
+                        "Specimen Type",
+                        choices = NA
+                      )
+                    )
+                  )
+                ),
+                popify(
+                  tags$a(icon(name = "question-circle"), href = "#"),
+                  "Information",
+                  "Select the specimen type: in vitro, in vivo or postmortem.",
+                  placement = "left",
+                  trigger = "hover"
+                )
+              ),
+              ns = ns
+          )
+        },
+
+        # Assay name
         div(
           class = "result",
           div(
@@ -91,7 +131,8 @@ validator_ui <- function(id, species_list, assay_templates) {
               placement = "left",
               trigger = "hover"
             )
-          )
+          ),
+          ns = ns
         ),
         div(
           class = "result",
@@ -233,7 +274,8 @@ validator_ui <- function(id, species_list, assay_templates) {
 validator_server <- function(input, output, session, study_names, species_list,
                              assay_templates, annotations_table, annots_link,
                              templates_link, contact_email, parent,
-                             synapseclient, syn) {
+                             synapseclient, syn,
+                             include_biospecimen_type = FALSE) {
 
   ## Initial titles for report boxes
   callModule(results_boxes_server, "validation_results", results = NULL)
@@ -254,6 +296,9 @@ validator_server <- function(input, output, session, study_names, species_list,
     "validate_btn",
     "reset_btn_validate"
   )
+  if (include_biospecimen_type) {
+    inputs_to_enable <- c(inputs_to_enable, "biospecimen_type")
+  }
   purrr::walk(inputs_to_enable, function(x) shinyjs::enable(x))
 
   ## Reset fileInputs, study name, and other inputs
@@ -276,6 +321,14 @@ validator_server <- function(input, output, session, study_names, species_list,
       "Species",
       species_list
     )
+    updateRadioButtons(
+      session,
+      "biospecimen_type",
+      "Specimen Type",
+      choiceNames = c("In vitro", "Other (in vivo, postmortem)"),
+      choiceValues = c("in_vitro", "other"),
+      selected = "other"
+    )
     updateSelectInput(
       session,
       "assay_name",
@@ -285,10 +338,45 @@ validator_server <- function(input, output, session, study_names, species_list,
   })
 
   ## If drosophila species checked, reset fileInput
+  ## Change Specimen Type radioButtons depending on species
   observeEvent(input$species, {
     if (input$species == "drosophila") {
       reset_inputs("indiv_meta")
       files$indiv <- NULL
+      # biospecimen type will hide automatically, but need to update the values
+      updateRadioButtons(
+        session,
+        "biospecimen_type",
+        "Specimen Type",
+        choices = "",
+        selected = ""
+      )
+    } else {
+      specimen_types <- unique(
+        names(
+          get_golem_config("templates")$biospecimen[[input$species]]
+        )
+      )
+      if (!is.null(specimen_types)) {
+        # Grab specimen types from config and default choose first in list
+        updateRadioButtons(
+          session,
+          "biospecimen_type",
+          "Specimen Type",
+          choices = specimen_types,
+          selected = specimen_types[1]
+        )
+        shinyjs::show("biospecimen_type")
+      } else {
+        shinyjs::hide("biospecimen_type")
+        updateRadioButtons(
+          session,
+          "biospecimen_type",
+          "Specimen Type",
+          choices = "",
+          selected = ""
+        )
+      }
     }
   })
 
@@ -348,6 +436,12 @@ validator_server <- function(input, output, session, study_names, species_list,
   species_name <- reactive({
     input$species
   })
+  biospecimen_type <- NA
+  if (get_golem_config("include_biospecimen_type")) {
+    biospecimen_type <- reactive({
+      input$biospecimen_type
+    })
+  }
   assay_name <- reactive({
     input$assay_name
   })

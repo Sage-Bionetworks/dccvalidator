@@ -15,14 +15,19 @@ default:
     path_to_docs_markdown: "inst/study-documentation-amp-ad.Rmd"
   teams:
     - "273957"
+  include_biospecimen_type: TRUE
   templates:
     manifest_template: "syn20820080"
     individual_templates:
       human: "syn12973254"
       mouse or other animal model: "syn12973253"
     biospecimen_templates:
-      mouse or other animal model: "syn12973252"
-      human: "syn12973252"
+      mouse or other animal model:
+        in vitro: "syn25955510"
+        other (in vivo, postmortem): "syn12973252"
+      human:
+        in vitro: "syn25955510"
+        other (in vivo, postmortem): "syn12973252"
       drosophila: "syn20673251"
     assay_templates:
       rnaSeq: "sysbio.metadataTemplates-assay.rnaSeq"
@@ -48,8 +53,9 @@ dev:
   production: FALSE
 
 testing:
-  default:
   samples_table: "syn22089767"
+  biospecimen_templates:
+    include_type: false
   templates:
     manifest_template: "syn20820080"
     individual_templates:
