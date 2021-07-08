@@ -451,7 +451,6 @@ validator_server <- function(input, output, session, study_names, species_list,
         )
       }
 
-      browser()
       ## Load in data to table for validation checks
       ## If file name is NULL, pass in NA.
       all_data <- tibble::tibble(
