@@ -7,15 +7,24 @@
 #' complete_columns for each metadataType.
 #'
 #' @param data A tibble or dataframe with the columns:
-#'   name, metadataType, species, assay, file_data.
+#'   name, metadataType, species, assay, file_data, template (optional).
 #'   The file_data column should be a list column containing
 #'   a dataframe with the file data or `NULL` if the data
 #'   does not exist. `data` is expected to have four rows,
 #'   one for each metadataType: individual, biospecimen,
 #'   assay, manifest. If file_data is `NULL` for a given
 #'   metadataType, the metadataType should still be
-#'   present.
-#' @param study A string containing the name of the study.
+#'   present. The template column should have the synID or Synapse JSON schema
+#'   id for the metadata temaplate. If this is `NULL` or the column is missing,
+#'   then the check will not verify that all expected columns are present in
+#'   the metadata (i.e. `check_cols` is skipped).
+#' @param study A string containing the name of the study (default `NA`). If not
+#' given, will not check the metadata for individuals and specimens currently
+#' in the `samples_table`.
+#' @param samples_table Synapse synID for a table containing the columns:
+#' specimenID, individualID, assay, study (default `NA`). If `samples_table` or
+#' `study` not provided, will not check the metadata for individuals and
+#' specimens currently in this table.
 #' @inheritParams check_annotation_keys
 #' @return List of conditions
 #' @export
@@ -45,71 +54,72 @@
 #' )
 #' res <- check_all(data, annots, syn)
 #' }
-check_all <- function(data, annotations, study, syn) {
+check_all <- function(data, annotations, syn, study = NA, samples_table = NA) {
 
   # Get indices by type
-  indiv_index <- which(data$metadataType == "individual")
-  biosp_index <- which(data$metadataType == "biospecimen")
-  assay_index <- which(data$metadataType == "assay")
-  manifest_index <- which(data$metadataType == "manifest")
+  indices <- get_metadataType_indices(
+    data,
+    c("individual", "biospecimen", "assay", "manifest")
+  )
 
   # Must have 1 and only 1 index per metadata type
-  purrr::walk(
-    list(indiv_index, biosp_index, assay_index, manifest_index),
-    function(x) {
-      if (length(x) != 1) {
-        stop("There must be exactly row 1 of each metadata type to check: biospecimen, individual, assay, manifest") # nolint
-      }
-    }
-  )
+  num_indices <- purrr::map_lgl(indices, ~ length(.) != 1)
+  if (length(indices) < 4 | any(num_indices)) {
+    stop("There must be exactly row 1 of each metadata type to check: biospecimen, individual, assay, manifest") # nolint
+  }
 
-  # Missing columns ----------------------------------------------------------
-  missing_cols_indiv <- check_cols_individual(
-    data$file_data[indiv_index][[1]],
-    get_golem_config("templates")$individual_templates[[data$species[indiv_index]]], # nolint
-    syn = syn
-  )
-  missing_cols_biosp <- check_cols_biospecimen(
-    data$file_data[biosp_index][[1]],
-    get_golem_config("templates")$biospecimen_templates[[data$species[biosp_index]]], # nolint
-    syn = syn
-  )
-  missing_cols_assay <- check_cols_assay(
-    data$file_data[assay_index][[1]],
-    get_golem_config("templates")$assay_templates[[data$assay[assay_index]]],
-    syn = syn
-  )
-  missing_cols_manifest <- check_cols_manifest(
-    data$file_data[manifest_index][[1]],
-    get_golem_config("templates")$manifest_template,
-    syn = syn
-  )
+  # Missing columns ------------------------------------------------------------
+  # Only run if the template column exists
+  missing_cols_indiv <- missing_cols_biosp <-
+    missing_cols_assay <- missing_cols_manifest <- NULL
+  if ("template" %in% colnames(data)) {
+    missing_cols_indiv <- check_cols_individual(
+      data$file_data[indices$individual][[1]],
+      data$template[indices$individual][[1]],
+      syn = syn
+    )
+    missing_cols_biosp <- check_cols_biospecimen(
+      data$file_data[indices$biospecimen][[1]],
+      data$template[indices$biospecimen][[1]],
+      syn = syn
+    )
+    missing_cols_assay <- check_cols_assay(
+      data$file_data[indices$assay][[1]],
+      data$template[indices$assay][[1]],
+      syn = syn
+    )
+    missing_cols_manifest <- check_cols_manifest(
+      data$file_data[indices$manifest][[1]],
+      data$template[indices$assay][[1]],
+      syn = syn
+    )
+  }
 
   # Individual and specimen IDs match ----------------------------------------
   individual_ids_indiv_biosp <- check_indiv_ids_match(
-    data$file_data[indiv_index][[1]],
-    data$file_data[biosp_index][[1]],
+    data$file_data[indices$individual][[1]],
+    data$file_data[indices$biospecimen][[1]],
     "individual",
     "biospecimen",
     bidirectional = FALSE
   )
   individual_ids_indiv_manifest <- check_indiv_ids_match(
-    data$file_data[indiv_index][[1]],
-    data$file_data[manifest_index][[1]],
+    data$file_data[indices$individual][[1]],
+    data$file_data[indices$manifest][[1]],
     "individual",
     "manifest",
     bidirectional = FALSE
   )
   specimen_ids_biosp_assay <- check_specimen_ids_match(
-    data$file_data[biosp_index][[1]],
-    data$file_data[assay_index][[1]],
+    data$file_data[indices$biospecimen][[1]],
+    data$file_data[indices$assay][[1]],
     "biospecimen",
     "assay",
     bidirectional = FALSE
   )
   specimen_ids_biosp_manifest <- check_specimen_ids_match(
-    data$file_data[biosp_index][[1]],
-    data$file_data[manifest_index][[1]],
+    data$file_data[indices$biospecimen][[1]],
+    data$file_data[indices$manifest][[1]],
     "biospecimen",
     "manifest",
     bidirectional = FALSE
@@ -117,7 +127,7 @@ check_all <- function(data, annotations, study, syn) {
 
   # Annotation keys in manifest are valid ------------------------------------
   annotation_keys_manifest <- check_annotation_keys(
-    data$file_data[manifest_index][[1]],
+    data$file_data[indices$manifest][[1]],
     annotations,
     allowlist_keys = c("path", "parent", "name", "used", "executed"),
     success_msg = "All keys (column names) in the manifest are valid",
@@ -127,14 +137,14 @@ check_all <- function(data, annotations, study, syn) {
 
   # Annotation values in manifest and metadata are valid ---------------------
   annotation_values_manifest <- check_annotation_values(
-    data$file_data[manifest_index][[1]],
+    data$file_data[indices$manifest][[1]],
     annotations,
     success_msg = "All values in the manifest are valid",
     fail_msg = "Some values in the manifest are invalid",
     annots_link = get_golem_config("annotations_link")
   )
   annotation_values_indiv <- check_annotation_values(
-    data$file_data[indiv_index][[1]],
+    data$file_data[indices$individual][[1]],
     annotations,
     allowlist_keys = c("individualID"),
     success_msg = "All values in the individual metadata are valid",
@@ -142,7 +152,7 @@ check_all <- function(data, annotations, study, syn) {
     annots_link = get_golem_config("annotations_link")
   )
   annotation_values_biosp <- check_annotation_values(
-    data$file_data[biosp_index][[1]],
+    data$file_data[indices$biospecimen][[1]],
     annotations,
     allowlist_keys = c("specimenID", "individualID"),
     success_msg = "All values in the biospecimen metadata are valid",
@@ -150,7 +160,7 @@ check_all <- function(data, annotations, study, syn) {
     annots_link = get_golem_config("annotations_link")
   )
   annotation_values_assay <- check_annotation_values(
-    data$file_data[assay_index][[1]],
+    data$file_data[indices$assay][[1]],
     annotations,
     allowlist_keys = c("specimenID"),
     success_msg = "All values in the assay metadata are valid",
@@ -160,41 +170,37 @@ check_all <- function(data, annotations, study, syn) {
 
   # Individual and specimen IDs are not duplicated ---------------------------
   duplicate_indiv_ids <- check_indiv_ids_dup(
-    data$file_data[indiv_index][[1]],
-    # nolint start
+    data$file_data[indices$individual][[1]],
     success_msg = "Individual IDs in the individual metadata file are unique",
     fail_msg = "Duplicate individual IDs found in the individual metadata file"
-    # nolint end
   )
   duplicate_specimen_ids <- check_specimen_ids_dup(
-    data$file_data[biosp_index][[1]],
-    # nolint start
+    data$file_data[indices$biospecimen][[1]],
     success_msg = "Specimen IDs in the biospecimen metadata file are unique",
     fail_msg = "Duplicate specimen IDs found in the biospecimen metadata file"
-    # nolint end
   )
 
   # Empty columns produce warnings -------------------------------------------
   empty_cols_manifest <- check_cols_empty(
-    data$file_data[manifest_index][[1]],
+    data$file_data[indices$manifest][[1]],
     required_cols = get_golem_config("complete_columns")$manifest,
     success_msg = "No columns are empty in the manifest",
     fail_msg = "Some columns are completely empty in the manifest"
   )
   empty_cols_indiv <- check_cols_empty(
-    data$file_data[indiv_index][[1]],
+    data$file_data[indices$individual][[1]],
     required_cols = get_golem_config("complete_columns")$individual,
     success_msg = "No columns are empty in the individual metadata",
     fail_msg = "Some columns are completely empty in the individual metadata"
   )
   empty_cols_biosp <- check_cols_empty(
-    data$file_data[biosp_index][[1]],
+    data$file_data[indices$biospecimen][[1]],
     required_cols = get_golem_config("complete_columns")$biospecimen,
     success_msg = "No columns are empty in the biospecimen metadata",
     fail_msg = "Some columns are completely empty in the biospecimen metadata"
   )
   empty_cols_assay <- check_cols_empty(
-    data$file_data[assay_index][[1]],
+    data$file_data[indices$assay][[1]],
     required_cols = get_golem_config("complete_columns")$assay,
     success_msg = "No columns are empty in the assay metadata",
     fail_msg = "Some columns are completely empty in the assay metadata"
@@ -202,25 +208,25 @@ check_all <- function(data, annotations, study, syn) {
 
   # Incomplete required columns produce failures -----------------------------
   complete_cols_manifest <- check_cols_complete(
-    data$file_data[manifest_index][[1]],
+    data$file_data[indices$manifest][[1]],
     required_cols = get_golem_config("complete_columns")$manifest,
     success_msg = "There is no missing data in columns that are required to be complete in the manifest", # nolint
     fail_msg = "There is missing data in some columns that are required to be complete in the manifest" # nolint
   )
   complete_cols_indiv <- check_cols_complete(
-    data$file_data[indiv_index][[1]],
+    data$file_data[indices$individual][[1]],
     required_cols = get_golem_config("complete_columns")$individual,
     success_msg = "There is no missing data in columns that are required to be complete in the individual metadata", # nolint
     fail_msg = "There is missing data in some columns that are required to be complete in the individual metadata" # nolint
   )
   complete_cols_biosp <- check_cols_complete(
-    data$file_data[biosp_index][[1]],
+    data$file_data[indices$biospecimen][[1]],
     required_cols = get_golem_config("complete_columns")$biospecimen,
     success_msg = "There is no missing data in columns that are required to be complete in the biospecimen metadata", # nolint
     fail_msg = "There is missing data in some columns that are required to be complete in the biospecimen metadata" # nolint
   )
   complete_cols_assay <- check_cols_complete(
-    data$file_data[assay_index][[1]],
+    data$file_data[indices$assay][[1]],
     required_cols = get_golem_config("complete_columns")$assay,
     success_msg = "There is no missing data in columns that are required to be complete in the assay metadata", # nolint
     fail_msg = "There is missing data in some columns that are required to be complete in the assay metadata" # nolint
@@ -228,28 +234,28 @@ check_all <- function(data, annotations, study, syn) {
 
   # Metadata files appear in manifest ----------------------------------------
   meta_files_in_manifest <- check_files_manifest(
-    data$file_data[manifest_index][[1]],
+    data$file_data[indices$manifest][[1]],
     c(
-      data$name[indiv_index],
-      data$name[biosp_index],
-      data$name[assay_index]
+      data$name[indices$individual],
+      data$name[indices$biospecimen],
+      data$name[indices$assay]
     ),
     success_msg = "Manifest file contains all metadata files",
     fail_msg = "Manifest file does not contain all metadata files"
   )
 
   # Parent column in manifest is valid synID -----------------------------------
-  valid_parent_syn <- check_parent_syn(data$file_data[manifest_index][[1]])
+  valid_parent_syn <- check_parent_syn(data$file_data[indices$manifest][[1]])
 
   # Ages over 90 are censored in human individual metadata ---------------------
   if (any(data$species == "human", na.rm = TRUE)) {
     ages_over_90_indiv <- check_ages_over_90(
-      data$file_data[indiv_index][[1]],
+      data$file_data[indices$individual][[1]],
       success_msg = "No ages over 90 detected in the individual metadata",
       fail_msg = "Ages over 90 detected in the individual metadata"
     )
     ages_over_90_biosp <- check_ages_over_90(
-      data$file_data[biosp_index][[1]],
+      data$file_data[indices$biospecimen][[1]],
       col = "samplingAge",
       success_msg = "No ages over 90 detected in the biospecimen metadata",
       fail_msg = "Ages over 90 detected in the biospecimen metadata"
@@ -260,44 +266,47 @@ check_all <- function(data, annotations, study, syn) {
 
   # No file paths are duplicated in the manifest -------------------------------
   duplicate_file_paths <- check_duplicate_paths(
-    data$file_data[manifest_index][[1]]
+    data$file_data[indices$manifest][[1]]
   )
 
   # Additions to existing studies have complete IDs ----------------------------
-  samples_table <- syn$tableQuery(
-    glue::glue("SELECT * FROM {get_golem_config('samples_table')} WHERE study = '{study}'"), # nolint
-    includeRowIdAndRowVersion = FALSE
-  )
-  samples_table <- readr::read_csv(samples_table$filepath)
-  if (study %in% samples_table$study) {
-    assay <- data[assay_index, "assay", drop = TRUE]
-    complete_ids_indiv <- check_complete_ids(
-      data$file_data[indiv_index][[1]],
-      samples_table = samples_table,
-      study = study,
-      id_type = "individualID",
-      success_msg = "All pre-existing individual IDs are present in the individual file", # nolint
-      fail_msg = "Some individual IDs that were previously part of this study are missing from the individual file" # nolint
+  ## Only do if samples_table and study provided
+  complete_ids_indiv <- complete_ids_biosp <- complete_ids_assay <- NULL
+  if (!is.na(samples_table) & !is.na(study)) {
+    samples <- syn$tableQuery(
+      glue::glue("SELECT * FROM {samples_table} WHERE study = '{study}'"),
+      includeRowIdAndRowVersion = FALSE
     )
-    complete_ids_biosp <- check_complete_ids(
-      data$file_data[biosp_index][[1]],
-      samples_table = samples_table,
-      study = study,
-      id_type = "specimenID",
-      success_msg = "All pre-existing specimen IDs are present in the biospecimen file", # nolint
-      fail_msg = "Some specimen IDs that were previously part of this study are missing from the biospecimen file" # nolint
-    )
-    complete_ids_assay <- check_complete_ids(
-      data$file_data[assay_index][[1]],
-      samples_table = samples_table,
-      study = study,
-      id_type = "specimenID",
-      assay = assay,
-      success_msg = "All pre-existing specimen IDs for this assay are present in the assay file", # nolint
-      fail_msg = "Some specimen IDs that were previously part of this study and assay are missing from the assay file" # nolint
-    )
-  } else {
-    complete_ids_indiv <- complete_ids_biosp <- complete_ids_assay <- NULL
+    samples <- readr::read_csv(samples$filepath)
+    ## Check if the study is in the table before continuing
+    if (study %in% samples$study) {
+      assay <- data[indices$assay, "assay", drop = TRUE]
+      complete_ids_indiv <- check_complete_ids(
+        data$file_data[indices$individual][[1]],
+        samples_table = samples,
+        study = study,
+        id_type = "individualID",
+        success_msg = "All pre-existing individual IDs are present in the individual file", # nolint
+        fail_msg = "Some individual IDs that were previously part of this study are missing from the individual file" # nolint
+      )
+      complete_ids_biosp <- check_complete_ids(
+        data$file_data[indices$biospecimen][[1]],
+        samples_table = samples,
+        study = study,
+        id_type = "specimenID",
+        success_msg = "All pre-existing specimen IDs are present in the biospecimen file", # nolint
+        fail_msg = "Some specimen IDs that were previously part of this study are missing from the biospecimen file" # nolint
+      )
+      complete_ids_assay <- check_complete_ids(
+        data$file_data[indices$assay][[1]],
+        samples_table = samples,
+        study = study,
+        id_type = "specimenID",
+        assay = assay,
+        success_msg = "All pre-existing specimen IDs for this assay are present in the assay file", # nolint
+        fail_msg = "Some specimen IDs that were previously part of this study and assay are missing from the assay file" # nolint
+      )
+    }
   }
 
   ## List results

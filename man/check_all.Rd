@@ -4,25 +4,35 @@
 \alias{check_all}
 \title{Run all validation checks}
 \usage{
-check_all(data, annotations, study, syn)
+check_all(data, annotations, syn, study = NA, samples_table = NA)
 }
 \arguments{
 \item{data}{A tibble or dataframe with the columns:
-name, metadataType, species, assay, file_data.
+name, metadataType, species, assay, file_data, template (optional).
 The file_data column should be a list column containing
 a dataframe with the file data or \code{NULL} if the data
 does not exist. \code{data} is expected to have four rows,
 one for each metadataType: individual, biospecimen,
 assay, manifest. If file_data is \code{NULL} for a given
 metadataType, the metadataType should still be
-present.}
+present. The template column should have the synID or Synapse JSON schema
+id for the metadata temaplate. If this is \code{NULL} or the column is missing,
+then the check will not verify that all expected columns are present in
+the metadata (i.e. \code{check_cols} is skipped).}
 
 \item{annotations}{A data frame of annotation definitions. Must contain at
 least three columns: \code{key}, \code{value}, and \code{columnType}.}
 
-\item{study}{A string containing the name of the study.}
-
 \item{syn}{Synapse client object}
+
+\item{study}{A string containing the name of the study (default \code{NA}). If not
+given, will not check the metadata for individuals and specimens currently
+in the \code{samples_table}.}
+
+\item{samples_table}{Synapse synID for a table containing the columns:
+specimenID, individualID, assay, study (default \code{NA}). If \code{samples_table} or
+\code{study} not provided, will not check the metadata for individuals and
+specimens currently in this table.}
 }
 \value{
 List of conditions
