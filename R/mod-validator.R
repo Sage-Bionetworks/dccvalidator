@@ -54,31 +54,31 @@ validator_ui <- function(id, species_list, assay_templates,
 
         # Biospecimen type
         if (include_biospecimen_type) {
-            conditionalPanel(
-              condition = "input.species != 'drosophila'",
+          conditionalPanel(
+            condition = "input.species != 'drosophila'",
+            div(
+              class = "result",
               div(
-                class = "result",
-                div(
-                  class = "wide",
-                  shinyjs::hidden(
-                    shinyjs::disabled(
-                      radioButtons(
-                        ns("biospecimen_type"),
-                        "Specimen Type",
-                        choices = NA
-                      )
+                class = "wide",
+                shinyjs::hidden(
+                  shinyjs::disabled(
+                    radioButtons(
+                      ns("biospecimen_type"),
+                      "Specimen Type",
+                      choices = NA
                     )
                   )
-                ),
-                popify(
-                  tags$a(icon(name = "question-circle"), href = "#"),
-                  "Information",
-                  "Select the specimen type: in vitro, in vivo or postmortem.",
-                  placement = "left",
-                  trigger = "hover"
                 )
               ),
-              ns = ns
+              popify(
+                tags$a(icon(name = "question-circle"), href = "#"),
+                "Information",
+                "Select the specimen type: in vitro, in vivo or postmortem.",
+                placement = "left",
+                trigger = "hover"
+              )
+            ),
+            ns = ns
           )
         },
 
@@ -571,7 +571,11 @@ validator_server <- function(input, output, session, study_names, species_list,
         "template" = c(
           gather_template_ids(type = "manifest"),
           gather_template_ids(type = "individual", species = species_name()),
-          gather_template_ids(type = "biospecimen", species = species_name()),
+          gather_template_ids(
+            type = "biospecimen",
+            species = species_name(),
+            biospecimen_type = biospecimen_type()
+          ),
           gather_template_ids(type = "assay", assay = assay_name())
         )
       )

@@ -307,8 +307,16 @@ generate_key_description <- function(annots) {
 #' }
 get_template_synIDs <- function(templates = get_golem_config("templates")) {
   # Get all template synIDs as vector
+  temps <- templates %>%
+    get_template_synIDs_nested() %>%
+    unname() %>%
+    unlist()
+  temps[grepl("^syn", temps)]
+}
+
+## get_template_synIDs helper
+get_template_synIDs_nested <- function(templates) {
   templates %>%
-    purrr::flatten() %>%
     unname() %>%
     unlist()
 }

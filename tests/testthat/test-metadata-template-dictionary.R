@@ -365,10 +365,11 @@ test_that("get_template_synIDs returns vector of synIDs from config", {
   expected <- c(
     "syn12973254",
     "syn12973253",
+    "syn25955510",
     "syn12973252",
+    "syn25955510",
     "syn12973252",
     "syn20673251",
-    "syn12973256",
     "syn12973255",
     "syn20820080"
   )

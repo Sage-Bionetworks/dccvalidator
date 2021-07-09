@@ -124,11 +124,26 @@ To install the dccvalidator instead of forking the repository:
 * `teams`: The team(s) a user must be a member of in order to use the app. If
   the user is not in any of the teams, they will see a message telling them they
   must be added to one of the teams.
+* `include_biospecimen_type`: `TRUE` to include specific biospecimen types
+  within each species, else `FALSE`. This will dictate whether the Specimen Type
+  panel appears in the validator tab.
 * `templates` (including `manifest_template`, `individual_templates`,
   `biospecimen_templates`, and `assay_templates`): Location of templates to
-  use for validation. These may be a Synapse synID or the id of a Synapse-registered JSON schema. For templates accessed via synID, these should be either .xlsx or .csv files, where the
-  column names reflect the required columns in the template. If the template is
-  an excel file with multiple sheets, the first sheet will be used. For templates accessed via JSON schema id, these should have a `properties` object listing all column names (a.k.a. keys) that should be present in the metadata.
+  use for validation. These may be a Synapse synID or the id of a
+  Synapse-registered JSON schema. For templates accessed via synID, these should
+  be either .xlsx or .csv files, where the column names reflect the required
+  columns in the template. If the template is an excel file with multiple
+  sheets, the first sheet will be used. For templates accessed via JSON schema
+  id, these should have a `properties` object listing all column names (a.k.a.
+  keys) that should be present in the metadata. The `manifest_template` should
+  have only one template. `individual_templates` and `biospecimen_templates`
+  should be broken up by species (the species must be included in the
+  `species_list`). Additionally, the `biospecimen_templates` may also be divided
+  by specimen type (e.g. in vitro, postmortmem, other). Note that this requires
+  `include_biospecimen_type` to be `TRUE`). The types specified in the config
+  will be reflected in the application UI. The `assay_templates` should be
+  broken up by `assay` (the list of assay templates available will be reflected
+  in the application UI).
 * `species_list`: List of possible species in the consortium. These are shown as
   options in the validation UI and control which individual template and
   biospecimen template the app validates against.

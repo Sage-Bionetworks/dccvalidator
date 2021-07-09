@@ -38,12 +38,18 @@ get_metadataType_indices <- function(data, meta_types) {
 #' @param species The species needed to specify the correct biospecimen
 #' or individual templates (default `NA`).
 #' @param assay The assay needed to specify the correct assay template.
+#' @param biospecimen_type The type of biospecimen template needed
+#' (default `NA`).
 #' @returns the template id from the config (`NA` if not found).
-gather_template_ids <- function(type, species = NA, assay = NA) {
+gather_template_ids <- function(type, species = NA, assay = NA,
+                                biospecimen_type = NA) {
   switch(type,
     manifest = get_golem_config("templates")$manifest_template,
     individual = gather_template_id_individual(species = species),
-    biospecimen = gather_template_id_biospecimen(species = species),
+    biospecimen = gather_template_id_biospecimen(
+      species = species,
+      biospecimen_type = biospecimen_type
+    ),
     assay = gather_template_id_assay(assay = assay)
   )
 }
@@ -59,10 +65,16 @@ gather_template_id_individual <- function(species) {
 }
 
 ## gather_template_ids helper
-gather_template_id_biospecimen <- function(species) {
+gather_template_id_biospecimen <- function(species, biospecimen_type) {
   templates <- get_golem_config("templates")$biospecimen_templates
   if (species %in% names(templates)) {
-    return(templates[[species]])
+    if (is.na(biospecimen_type) | biospecimen_type %in% "") {
+      # Grab based on species
+      return(templates[[species]])
+    } else {
+      # Grab based on both species and type
+      return(templates[[species]][[biospecimen_type]])
+    }
   } else {
     return(NA)
   }
