@@ -23,8 +23,8 @@ default:
       mouse or other animal model: "syn12973253"
     biospecimen_templates:
       mouse or other animal model:
+        in vivo, postmortem, other: "syn12973252"
         in vitro: "syn25955510"
-        other (in vivo, postmortem): "syn12973252"
       human:
         in vitro: "syn25955510"
         other (in vivo, postmortem): "syn12973252"
