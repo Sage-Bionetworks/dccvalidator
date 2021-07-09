@@ -277,10 +277,10 @@ test_that("wrapper functions for specific template gets the correct version", {
   )
 })
 
-test_that("check_cols functions handle NULL input", {
-  expect_null(check_col_names(NULL))
-  expect_null(check_cols_manifest(NULL))
-  expect_null(check_cols_individual(NULL))
-  expect_null(check_cols_biospecimen(NULL))
-  expect_null(check_cols_assay(NULL))
+test_that("check_cols functions handle NULL/NA input", {
+  expect_null(check_col_names(NULL, NA))
+  expect_null(check_cols_manifest(NULL, NA))
+  expect_null(check_cols_individual(NULL, NA))
+  expect_null(check_cols_biospecimen(NULL, NA))
+  expect_null(check_cols_assay(NULL, NA))
 })
