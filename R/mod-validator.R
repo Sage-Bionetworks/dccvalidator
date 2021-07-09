@@ -362,7 +362,7 @@ validator_server <- function(input, output, session, study_names, species_list,
         updateRadioButtons(
           session,
           "biospecimen_type",
-          "Specimen Type",
+          "Biospecimen Type",
           choices = specimen_types,
           selected = specimen_types[1]
         )
