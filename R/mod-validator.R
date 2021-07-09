@@ -64,7 +64,7 @@ validator_ui <- function(id, species_list, assay_templates,
                   shinyjs::disabled(
                     radioButtons(
                       ns("biospecimen_type"),
-                      "Specimen Type",
+                      "Biospecimen Type",
                       choices = NA
                     )
                   )
