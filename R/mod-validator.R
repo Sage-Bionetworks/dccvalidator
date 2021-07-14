@@ -436,7 +436,7 @@ validator_server <- function(input, output, session, study_names, species_list,
   species_name <- reactive({
     input$species
   })
-  biospecimen_type <- NA
+  biospecimen_type <- reactive({NA})
   if (get_golem_config("include_biospecimen_type")) {
     biospecimen_type <- reactive({
       input$biospecimen_type
@@ -509,6 +509,7 @@ validator_server <- function(input, output, session, study_names, species_list,
             study = study_name(),
             metadataType = "biospecimen",
             species = species_name(),
+            biospecimenType = biospecimen_type(),
             isDocumentation = FALSE
           ),
           synapseclient = synapse,
