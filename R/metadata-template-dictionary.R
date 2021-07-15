@@ -310,8 +310,9 @@ get_template_synIDs <- function(templates = get_golem_config("templates")) {
   temps <- templates %>%
     get_template_synIDs_nested() %>%
     unname() %>%
-    unlist()
-  temps[grepl("^syn", temps)]
+    unlist() %>%
+    unique()
+  temps[grepl("^syn[[:digit:]]", temps)]
 }
 
 ## get_template_synIDs helper

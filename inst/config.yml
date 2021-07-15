@@ -68,7 +68,7 @@ testing:
       drosophila: "syn20673251"
     assay_templates:
       rnaSeq: "syn12973256"
-      proteomics: "syn12973255"
+      proteomics: "sysbio.metadataTemplates-assay.proteomics"
   complete_columns:
     manifest:
       - "parent"
