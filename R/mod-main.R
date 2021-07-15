@@ -49,7 +49,10 @@ mod_main_ui <- function(id) {
           validator_ui(
             id = ns("validator"),
             species_list = get_golem_config("species_list"),
-            assay_templates = get_golem_config("templates")$assay_templates
+            assay_templates = get_golem_config("templates")$assay_templates,
+            include_biospecimen_type = get_golem_config(
+              "include_biospecimen_type"
+            )
           ),
           # Documentation tab UI
           if (get_golem_config("docs_tab")$include_tab) {
@@ -129,6 +132,9 @@ mod_main_server <- function(id, syn) {
           annots_link = get_golem_config("annotations_link"),
           templates_link = get_golem_config("templates_link"),
           contact_email = get_golem_config("contact_email"),
+          include_biospecimen_type = get_golem_config(
+            "include_biospecimen_type"
+          ),
           parent = created_folder,
           synapseclient = synapse,
           syn = syn

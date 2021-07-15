@@ -4,7 +4,7 @@
 \alias{gather_template_ids}
 \title{Gather all template ids}
 \usage{
-gather_template_ids(type, species = NA, assay = NA)
+gather_template_ids(type, species = NA, assay = NA, biospecimen_type = NA)
 }
 \arguments{
 \item{type}{The type of metadata template to get: manifest, individual,
@@ -14,9 +14,12 @@ biospecimen, or assay.}
 or individual templates (default \code{NA}).}
 
 \item{assay}{The assay needed to specify the correct assay template.}
+
+\item{biospecimen_type}{The type of biospecimen template needed
+(default \code{NA}).}
 }
 \value{
-the template id from the config (default \code{NA}).
+the template id from the config (\code{NA} if not found).
 }
 \description{
 Gather all template ids from config and add as a new column.

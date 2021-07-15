@@ -25,6 +25,7 @@
 - Add ability for `check_col_names()` (via `get_template()`) to pull full set of metadata keys from a simple (i.e. has "properties") registered Synapse JSON schema; includes update to `get_template()` parameters, allowing for backwards compatibility with `synID` and additional functionality with `id`.
 - `check_all()` now expects the template ids to be included in `data`; if not included, will skip the check for missing column names
 - Added `get_metadataType_indices()` and `gather_template_ids()`
+- Add ability to specify biospecimen templates based on type
 
 # dccvalidator v0.3.0
 

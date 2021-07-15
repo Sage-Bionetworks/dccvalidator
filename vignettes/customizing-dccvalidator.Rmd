@@ -124,11 +124,39 @@ To install the dccvalidator instead of forking the repository:
 * `teams`: The team(s) a user must be a member of in order to use the app. If
   the user is not in any of the teams, they will see a message telling them they
   must be added to one of the teams.
+* `include_biospecimen_type`: `TRUE` to include specific biospecimen types
+  within each species, else `FALSE`. This will dictate whether the Specimen Type
+  panel appears in the validator tab.
 * `templates` (including `manifest_template`, `individual_templates`,
   `biospecimen_templates`, and `assay_templates`): Location of templates to
-  use for validation. These may be a Synapse synID or the id of a Synapse-registered JSON schema. For templates accessed via synID, these should be either .xlsx or .csv files, where the
-  column names reflect the required columns in the template. If the template is
-  an excel file with multiple sheets, the first sheet will be used. For templates accessed via JSON schema id, these should have a `properties` object listing all column names (a.k.a. keys) that should be present in the metadata.
+  use for validation. These may be a Synapse synID or the id of a
+  Synapse-registered JSON schema. See the 
+  [config file here](https://github.com/Sage-Bionetworks/dccvalidator/blob/master/inst/config.yml)
+  for an example and see below for more detailed information on `templates`.
+    * Template reference types:
+      * synID: Templates accessed via synID should be either .xlsx or .csv
+        files, where the column names reflect the needed columns in the
+        template. If the template is an excel file with multiple sheets, the
+        first sheet will be used.
+      * JSON schema id: Templates accessed via JSON schema id should be
+        registered in Synapse. The schema should have a `properties` object
+        listing all column names (a.k.a. keys) that should be present in the
+        metadata. The `manifest_template` should have only one template. 
+  * Template types:
+    * `individual_templates`: Individual templates should be based on species.
+      Note that the species must also be included in `species_list`.
+    * `biospecimen_templates`: Biospecimen templates have two options. The first
+      option is for the biospecimen templates to be based on species only and
+      `include_biospecimen_type` is set to `FALSE`. Note that the species must
+      also be included in `species_list`. The second option is for the
+      biospecimen templates to be be based on both a species and a biospecimen
+      type (e.g. in vitro, in vivo) and `include_biospecimen_type` is set to
+      `TRUE`. If the biospecimen templates have specific biospecimen types,
+      these will be reflected in the validation section for the users to select
+      the correct type.
+    * `assay_templates`: Assay templates should be based on assay type. The list
+      assays will be reflected in the validation section for users to select
+      the correct type.
 * `species_list`: List of possible species in the consortium. These are shown as
   options in the validation UI and control which individual template and
   biospecimen template the app validates against.

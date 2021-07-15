@@ -115,10 +115,22 @@ test_that("gather_template_ids gets the ids from the config", {
   res2 <- gather_template_ids(type = "biospecimen", species = "human")
   res3 <- gather_template_ids(type = "assay", assay = "rnaSeq")
   res4 <- gather_template_ids(type = "individual", species = "human")
+  res5 <- gather_template_ids(
+    type = "biospecimen",
+    species = "human",
+    biospecimen_type = NA
+  )
+  res6 <- gather_template_ids(
+    type = "biospecimen",
+    species = "human",
+    biospecimen_type = ""
+  )
   expect_equal(res1, "syn20820080")
   expect_equal(res2, "syn12973252")
   expect_equal(res3, "syn12973256")
   expect_equal(res4, "syn12973254")
+  expect_equal(res5, "syn12973252")
+  expect_equal(res6, "syn12973252")
 })
 
 test_that("gather_template_ids returns NA if missing species for bio/ind", {
@@ -128,4 +140,20 @@ test_that("gather_template_ids returns NA if missing species for bio/ind", {
 
 test_that("gather_template_ids returns NA if missing assay for assay", {
   expect_equal(gather_template_ids(type = "assay"), NA)
+})
+
+test_that("gather_template_ids gets correct biospecimen type", {
+  res1 <- gather_template_ids(
+    type = "biospecimen",
+    species = "mouse or other animal model",
+    biospecimen_type = "in vitro"
+  )
+  res2 <- gather_template_ids(
+    type = "biospecimen",
+    species = "mouse or other animal model",
+    biospecimen_type = "other"
+  )
+
+  expect_equal(res1, "syn25955510")
+  expect_equal(res2, "syn12973252")
 })

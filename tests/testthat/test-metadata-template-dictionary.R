@@ -360,17 +360,28 @@ test_that("get_template_synIDs returns vector of synIDs from list", {
   expect_equal(res3, "syn111111")
 })
 
-test_that("get_template_synIDs returns vector of synIDs from config", {
-  # config.yml at top level of /tests
+test_that("get_template_synIDs only returns unique synIDs from config", {
   expected <- c(
     "syn12973254",
     "syn12973253",
     "syn12973252",
-    "syn12973252",
+    "syn25955510",
     "syn20673251",
     "syn12973256",
-    "syn12973255",
     "syn20820080"
   )
   expect_equal(get_template_synIDs(), expected)
+})
+
+test_that("get_template_synIDs does not return JSON schema ids", {
+  dat <- list(
+    template1 = "syn111111",
+    template2 = "synapse.fake-schema",
+    template_set = list(
+      template3 = "json.schema-fake.template",
+      template4 = "syn222222"
+    )
+  )
+  expected <- c("syn111111", "syn222222")
+  expect_equal(get_template_synIDs(dat), expected)
 })

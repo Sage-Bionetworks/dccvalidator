@@ -38,41 +38,91 @@ get_metadataType_indices <- function(data, meta_types) {
 #' @param species The species needed to specify the correct biospecimen
 #' or individual templates (default `NA`).
 #' @param assay The assay needed to specify the correct assay template.
+#' @param biospecimen_type The type of biospecimen template needed
+#' (default `NA`).
 #' @returns the template id from the config (`NA` if not found).
-gather_template_ids <- function(type, species = NA, assay = NA) {
+gather_template_ids <- function(type, species = NA, assay = NA,
+                                biospecimen_type = NA) {
+  templates <- get_golem_config("templates")
   switch(type,
-    manifest = get_golem_config("templates")$manifest_template,
-    individual = gather_template_id_individual(species = species),
-    biospecimen = gather_template_id_biospecimen(species = species),
-    assay = gather_template_id_assay(assay = assay)
+    manifest = templates[["manifest_template"]],
+    individual = gather_template_id_individual(
+      templates = templates,
+      species = species
+    ),
+    biospecimen = gather_template_id_biospecimen(
+      templates = templates,
+      species = species,
+      biospecimen_type = biospecimen_type
+    ),
+    assay = gather_template_id_assay(
+      templates = templates,
+      assay = assay
+    )
   )
 }
 
-## gather_template_ids helper
-gather_template_id_individual <- function(species) {
-  templates <- get_golem_config("templates")$individual_templates
-  if (species %in% names(templates)) {
-    return(templates[[species]])
+#' @title Grab specific biospecimen template ID
+#'
+#' @description Helper for [gather_template_ids]. Grabs the ID for a specific
+#' biospecimen template based on the species and, if relevant, the biospecimen
+#' type.
+#'
+#' @noRd
+#' @param templates Named list of templates, `biospecimen_templates`,
+#' `individual_templates`, `assay_templates`.
+#' @inheritParams gather_template_ids
+#' @return Biospecimen template ID from `templates` that matches the `species`
+#' and `biospecimen_type`, if relevant, or `NA` if the biospecimen templates
+#' had no match to the species and type.
+gather_template_id_biospecimen <- function(templates, species,
+                                           biospecimen_type) {
+  if (species %in% names(templates[["biospecimen_templates"]])) {
+    if (is.na(biospecimen_type) | biospecimen_type %in% "") {
+      # Grab based on species
+      return(templates[["biospecimen_templates"]][[species]])
+    } else {
+      # Grab based on both species and type
+      return(
+        templates[["biospecimen_templates"]][[species]][[biospecimen_type]]
+      )
+    }
   } else {
     return(NA)
   }
 }
 
-## gather_template_ids helper
-gather_template_id_biospecimen <- function(species) {
-  templates <- get_golem_config("templates")$biospecimen_templates
-  if (species %in% names(templates)) {
-    return(templates[[species]])
+#' @title Grab specific individual template ID
+#'
+#' @description Helper for [gather_template_ids]. Grabs the ID for a specific
+#' individual based on the species.
+#'
+#' @noRd
+#' @inheritParams gather_template_id_biospecimen
+#' @inheritParams gather_template_ids
+#' @return Individual template ID from `templates` that matches the `species`,
+#' or `NA` if there was no assay type that matched.
+gather_template_id_individual <- function(templates, species) {
+  if (species %in% names(templates[["individual_templates"]])) {
+    return(templates[["individual_templates"]][[species]])
   } else {
     return(NA)
   }
 }
 
-## gather_template_ids helper
-gather_template_id_assay <- function(assay) {
-  templates <- get_golem_config("templates")$assay_templates
-  if (assay %in% names(templates)) {
-    return(templates[[assay]])
+#' @title Grab specific assay template ID
+#'
+#' @description Helper for [gather_template_ids]. Grabs the ID for a specific
+#' assay template based on the assay type.
+#'
+#' @noRd
+#' @inheritParams gather_template_id_biospecimen
+#' @inheritParams gather_template_ids
+#' @return Assay template ID from template that matches the `assay`, or `NA`
+#' if there was no assay type that matched.
+gather_template_id_assay <- function(templates, assay) {
+  if (assay %in% names(templates[["assay_templates"]])) {
+    return(templates[["assay_templates"]][[assay]])
   } else {
     return(NA)
   }
