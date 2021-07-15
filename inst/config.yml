@@ -107,14 +107,14 @@ amp-ad:
       MODEL-AD mouse model: "syn21084071"
     biospecimen_templates:
       human:
+        in vivo, postmortem, other: "syn12973252"
         in vitro: "syn25955510"
-        other (in vivo, postmortem): "syn12973252"
       other mouse or animal model:
+        in vivo, postmortem, other: "syn12973252"
         in vitro: "syn25955510"
-        other (in vivo, postmortem): "syn12973252"
       MODEL-AD mouse model:
+        in vivo, postmortem, other: "syn12973252"
         in vitro: "syn25955510"
-        other (in vivo, postmortem): "syn12973252"
       drosophila: "syn20673251"
     assay_templates:
       ATACseq: "syn22024364"
