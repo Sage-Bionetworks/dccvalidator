@@ -76,7 +76,7 @@ complete_columns for each metadataType." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dccvalidator</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9021</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9022</span>
       </span>
     </div>
 
@@ -155,7 +155,7 @@ assay depends on the assay type. Additionally, there should be
 complete_columns for each metadataType.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>check_all</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>annotations</span>, <span class='va'>study</span>, <span class='va'>syn</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>check_all</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>annotations</span>, <span class='va'>syn</span>, study <span class='op'>=</span> <span class='cn'>NA</span>, samples_table <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -163,14 +163,17 @@ complete_columns for each metadataType.</p>
     <tr>
       <th>data</th>
       <td><p>A tibble or dataframe with the columns:
-name, metadataType, species, assay, file_data.
+name, metadataType, species, assay, file_data, template (optional).
 The file_data column should be a list column containing
 a dataframe with the file data or <code>NULL</code> if the data
 does not exist. <code>data</code> is expected to have four rows,
 one for each metadataType: individual, biospecimen,
 assay, manifest. If file_data is <code>NULL</code> for a given
 metadataType, the metadataType should still be
-present.</p></td>
+present. The template column should have the synID or Synapse JSON schema
+id for the metadata temaplate. If this is <code>NULL</code> or the column is missing,
+then the check will not verify that all expected columns are present in
+the metadata (i.e. <code>check_cols</code> is skipped).</p></td>
     </tr>
     <tr>
       <th>annotations</th>
@@ -178,12 +181,21 @@ present.</p></td>
 least three columns: <code>key</code>, <code>value</code>, and <code>columnType</code>.</p></td>
     </tr>
     <tr>
-      <th>study</th>
-      <td><p>A string containing the name of the study.</p></td>
-    </tr>
-    <tr>
       <th>syn</th>
       <td><p>Synapse client object</p></td>
+    </tr>
+    <tr>
+      <th>study</th>
+      <td><p>A string containing the name of the study (default <code>NA</code>). If not
+given, will not check the metadata for individuals and specimens currently
+in the <code>samples_table</code>.</p></td>
+    </tr>
+    <tr>
+      <th>samples_table</th>
+      <td><p>Synapse synID for a table containing the columns:
+specimenID, individualID, assay, study (default <code>NA</code>). If <code>samples_table</code> or
+<code>study</code> not provided, will not check the metadata for individuals and
+specimens currently in this table.</p></td>
     </tr>
     </table>
 

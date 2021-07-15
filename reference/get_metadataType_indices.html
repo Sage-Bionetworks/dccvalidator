@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get Template synIDs — get_template_synIDs • dccvalidator</title>
+<title>Get metadataType indices — get_metadataType_indices • dccvalidator</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Get Template synIDs — get_template_synIDs" />
-<meta property="og:description" content="Get a vector of template synIDs from either a list or from the
-config.yml file." />
+<meta property="og:title" content="Get metadataType indices — get_metadataType_indices" />
+<meta property="og:description" content="Get the metadataType indices for data." />
 
 
 
@@ -139,58 +138,46 @@ config.yml file." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get Template synIDs</h1>
-    <small class="dont-index">Source: <a href='https://github.com/Sage-Bionetworks/dccvalidator/blob/master/R/metadata-template-dictionary.R'><code>R/metadata-template-dictionary.R</code></a></small>
-    <div class="hidden name"><code>get_template_synIDs.Rd</code></div>
+    <h1>Get metadataType indices</h1>
+    <small class="dont-index">Source: <a href='https://github.com/Sage-Bionetworks/dccvalidator/blob/master/R/df-helpers.R'><code>R/df-helpers.R</code></a></small>
+    <div class="hidden name"><code>get_metadataType_indices.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Get a vector of template synIDs from either a list or from the
-config.yml file.</p>
+    <p>Get the metadataType indices for <code>data</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_template_synIDs</span><span class='op'>(</span>templates <span class='op'>=</span> <span class='fu'>get_golem_config</span><span class='op'>(</span><span class='st'>"templates"</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_metadataType_indices</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>meta_types</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>templates</th>
-      <td><p>Named or unnamed list of template synIDs. Defaults to
-<code>get_golem_config("templates")</code>.</p></td>
+      <th>data</th>
+      <td><p>A tibble or dataframe with the columns:
+name, metadataType, species, assay, file_data, template (optional).
+The file_data column should be a list column containing
+a dataframe with the file data or <code>NULL</code> if the data
+does not exist. <code>data</code> is expected to have four rows,
+one for each metadataType: individual, biospecimen,
+assay, manifest. If file_data is <code>NULL</code> for a given
+metadataType, the metadataType should still be
+present. The template column should have the synID or Synapse JSON schema
+id for the metadata temaplate. If this is <code>NULL</code> or the column is missing,
+then the check will not verify that all expected columns are present in
+the metadata (i.e. <code>check_cols</code> is skipped).</p></td>
+    </tr>
+    <tr>
+      <th>meta_types</th>
+      <td><p>List of metadataTypes to find.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A vector of synIDs.</p>
+    <p>List of indices for <code>data</code> where the metadataType exists;
+<code>NULL</code> if none exist.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='va'>named_list</span> <span class='op'>&lt;-</span> <span class='va'>dat1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-  template1 <span class='op'>=</span> <span class='st'>"syn111111"</span>,
-  template2 <span class='op'>=</span> <span class='st'>"syn222222"</span>,
-  template_set <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    template3 <span class='op'>=</span> <span class='st'>"syn333333"</span>,
-    template4 <span class='op'>=</span> <span class='st'>"syn444444"</span>
-  <span class='op'>)</span>
-<span class='op'>)</span>
-<span class='fu'>get_template_synIDs</span><span class='op'>(</span>templates <span class='op'>=</span> <span class='va'>named_list</span><span class='op'>)</span>
-
-<span class='co'># config.yml example</span>
-<span class='co'># Write config file; this has fake synIDs and will not function</span>
-<span class='va'>config</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-  default <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    templates <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      template1 <span class='op'>=</span> <span class='st'>"syn222222"</span>,
-      template2 <span class='op'>=</span> <span class='st'>"syn3333333"</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span>
-<span class='op'>)</span>
-<span class='fu'>yaml</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/yaml/man/write_yaml.html'>write_yaml</a></span><span class='op'>(</span><span class='va'>config</span>, <span class='st'>"./config.yml"</span><span class='op'>)</span>
-<span class='fu'>get_template_synIDs</span><span class='op'>(</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
