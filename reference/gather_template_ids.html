@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dccvalidator</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9022</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9023</span>
       </span>
     </div>
 
@@ -147,7 +147,7 @@
     <p>Gather all template ids from config and add as a new column.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>gather_template_ids</span><span class='op'>(</span><span class='va'>type</span>, species <span class='op'>=</span> <span class='cn'>NA</span>, assay <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>gather_template_ids</span><span class='op'>(</span><span class='va'>type</span>, species <span class='op'>=</span> <span class='cn'>NA</span>, assay <span class='op'>=</span> <span class='cn'>NA</span>, biospecimen_type <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,11 +166,16 @@ or individual templates (default <code>NA</code>).</p></td>
       <th>assay</th>
       <td><p>The assay needed to specify the correct assay template.</p></td>
     </tr>
+    <tr>
+      <th>biospecimen_type</th>
+      <td><p>The type of biospecimen template needed
+(default <code>NA</code>).</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>the template id from the config (default <code>NA</code>).</p>
+    <p>the template id from the config (<code>NA</code> if not found).</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
