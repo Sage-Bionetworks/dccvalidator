@@ -360,7 +360,7 @@ test_that("get_template_synIDs returns vector of synIDs from list", {
   expect_equal(res3, "syn111111")
 })
 
-test_that("get_template_synIDs returns unique vector of synIDs only from config", {
+test_that("get_template_synIDs only returns unique synIDs from config", {
   expected <- c(
     "syn12973254",
     "syn12973253",
