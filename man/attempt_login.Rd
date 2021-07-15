@@ -12,9 +12,6 @@ attempt_login(syn, ...)
 \item{...}{Synapse credentials, such as \code{authToken} or \code{email} with a
 \code{password} or \code{apiKey}.}
 }
-\value{
-TRUE if logged in, else \code{NULL}
-}
 \description{
 Attempt to log into Synapse. Will first try using authentication
 credentials written to a .synapseConfig file. If that fails, will try using

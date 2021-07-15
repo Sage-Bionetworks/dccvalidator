@@ -47,6 +47,7 @@ reference:
     - get_template_keys_synID
     - get_template_keys_schema
     - df_to_json_list
+    - get_metadataType_indices
 
 - title: Shiny app functions
   desc: >
@@ -67,6 +68,7 @@ reference:
     - file_summary_ui
     - file_summary_server
     - report_unsatisfied_requirements
+    - gather_template_ids
 
 - title: App-supporting functions
   desc: >

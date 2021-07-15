@@ -4,7 +4,7 @@ syn <- attempt_instantiate()
 
 test_that("get_template fails when not logged in to Synapse", {
   skip_if(is.null(syn))
-  
+
   syn$logout()
   reticulate::py_capture_output(
     expect_error(
@@ -19,7 +19,7 @@ attempt_login(syn)
 
 test_that("get_template errors for files from synID that are not xlsx or csv", {
   skip_if_not(logged_in(syn = syn))
-  
+
   reticulate::py_capture_output(
     expect_error(
       get_template("syn17039045", syn = syn)
@@ -30,7 +30,7 @@ test_that("get_template errors for files from synID that are not xlsx or csv", {
 
 test_that("get_template can read in excel and csv templates", {
   skip_if_not(logged_in(syn = syn))
-  
+
   csv <- get_template(synID = "syn18384877", syn = syn, version = 1)
   xlsx <- get_template(synID = "syn18384878", syn = syn, version = 1)
   expect_equal(csv, c("a", "b", "c"))
@@ -39,7 +39,7 @@ test_that("get_template can read in excel and csv templates", {
 
 test_that("get_template can get different version of a template", {
   skip_if_not(logged_in(syn = syn))
-  
+
   xlsx1 <- get_template(synID = "syn18384878", syn = syn, version = 1)
   xlsx2 <- get_template(synID = "syn18384878", syn = syn, version = 2)
   expect_equal(xlsx1, c("a", "b", "c"))
@@ -48,7 +48,7 @@ test_that("get_template can get different version of a template", {
 
 test_that("get_template accepts synID with id param", {
   skip_if_not(logged_in(syn = syn))
-  
+
   xlsx1 <- get_template(id = "syn18384878", syn = syn, version = 1)
   xlsx2 <- get_template(id = "syn18384878", syn = syn, version = 2)
   expect_equal(xlsx1, c("a", "b", "c"))

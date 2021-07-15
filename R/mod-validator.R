@@ -473,6 +473,12 @@ validator_server <- function(input, output, session, study_names, species_list,
           list(indiv()),
           list(biosp()),
           list(assay())
+        ),
+        "template" = c(
+          gather_template_ids(type = "manifest"),
+          gather_template_ids(type = "individual", species = species_name()),
+          gather_template_ids(type = "biospecimen", species = species_name()),
+          gather_template_ids(type = "assay", assay = assay_name())
         )
       )
 
@@ -480,7 +486,8 @@ validator_server <- function(input, output, session, study_names, species_list,
         data = all_data,
         annotations = annots,
         study = study_name(),
-        syn
+        syn = syn,
+        samples_table = get_golem_config("samples_table")
       )
 
       callModule(results_boxes_server, "validation_results", res)

@@ -347,7 +347,8 @@ test_that("check_all catches duplicate file paths in manifest", {
     data = data,
     annotations = annots,
     study = "foo",
-    syn = syn
+    syn = syn,
+    samples_table = get_golem_config("samples_table")
   )
   expect_true(inherits(res1$duplicate_file_paths, "check_fail"))
 })
@@ -375,7 +376,8 @@ test_that("check_all() catches missing IDs from existing studies", {
     data = data,
     annotations = annots,
     study = "study1",
-    syn = syn
+    syn = syn,
+    samples_table = get_golem_config("samples_table")
   )
   expect_true(inherits(res$complete_ids_indiv, "check_fail"))
   expect_equal(res$complete_ids_indiv$data, "A")
@@ -408,11 +410,115 @@ test_that("check_all() doesn't run check_complete_ids if study isn't in table", 
     data = data,
     annotations = annots,
     study = "not a study in this table",
-    syn = syn
+    syn = syn,
+    samples_table = get_golem_config("samples_table")
   )
   expect_null(res$complete_ids_indiv)
   expect_null(res$complete_ids_biosp)
   expect_null(res$complete_ids_assay)
+})
+
+test_that("check_all() doesn't run check_complete_ids if study or table not provided", { # nolint
+  skip_if_not(logged_in(syn = syn))
+  data <- tibble::tibble(
+    metadataType = c(
+      "manifest",
+      "individual",
+      "biospecimen",
+      "assay"
+    ),
+    name = c("file1", "file2", "file3", "file4"),
+    species = "human",
+    assay = "rnaSeq",
+    file_data = c(
+      list(data.frame(path = c("/file.txt", "/file.txt"))),
+      list(data.frame(individualID = "B")),
+      list(data.frame(individualID = "B", specimenID = "b1")),
+      list(data.frame(specimenID = "b1"))
+    )
+  )
+  res1 <- check_all(
+    data = data,
+    annotations = annots,
+    syn = syn
+  )
+  res2 <- check_all(
+    data = data,
+    annotations = annots,
+    syn = syn,
+    study = "foo"
+  )
+  res3 <- check_all(
+    data = data,
+    annotations = annots,
+    syn = syn,
+    samples_table = "foo"
+  )
+  expect_null(res1$complete_ids_indiv)
+  expect_null(res1$complete_ids_biosp)
+  expect_null(res1$complete_ids_assay)
+  expect_null(res2$complete_ids_indiv)
+  expect_null(res2$complete_ids_biosp)
+  expect_null(res2$complete_ids_assay)
+  expect_null(res3$complete_ids_indiv)
+  expect_null(res3$complete_ids_biosp)
+  expect_null(res3$complete_ids_assay)
+})
+
+test_that("check_all doesn't run check_cols if missing template col", {
+  data <- tibble::tibble(
+    metadataType = c(
+      "manifest",
+      "individual",
+      "biospecimen",
+      "assay"
+    ),
+    name = c("file1", "file2", "file3", "file4"),
+    species = "human",
+    assay = "rnaSeq",
+    file_data = c(
+      list(data.frame(path = c("/file.txt", "/file.txt"))),
+      list(data.frame(individualID = "B")),
+      list(data.frame(individualID = "B", specimenID = "b1")),
+      list(data.frame(specimenID = "b1"))
+    )
+  )
+  res <- check_all(data = data, annotations = annots, syn = syn)
+  expect_null(res$missing_cols_indiv)
+  expect_null(res$missing_cols_biosp)
+  expect_null(res$missing_cols_assay)
+  expect_null(res$missing_cols_manifest)
+})
+
+test_that("check_all runs check_cols if not missing template col", {
+  data <- tibble::tibble(
+    metadataType = c(
+      "manifest",
+      "individual",
+      "biospecimen",
+      "assay"
+    ),
+    name = c("file1", "file2", "file3", "file4"),
+    species = "human",
+    assay = "rnaSeq",
+    file_data = c(
+      list(data.frame(path = c("/file.txt", "/file.txt"))),
+      list(data.frame(individualID = "B")),
+      list(data.frame(individualID = "B", specimenID = "b1")),
+      list(data.frame(specimenID = "b1"))
+    ),
+    template = c(
+      "syn20820080",
+      "syn12973254",
+      "syn12973252",
+      "syn12973256"
+    )
+  )
+  res <- check_all(data = data, annotations = annots, syn = syn)
+  expect_true(!is.null(res$missing_cols_indiv))
+  expect_true(!is.null(res$missing_cols_biosp))
+  expect_true(!is.null(res$missing_cols_assay))
+  expect_true(!is.null(res$missing_cols_manifest))
 })
 
 test_that("config works", {
