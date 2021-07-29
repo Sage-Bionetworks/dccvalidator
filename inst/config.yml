@@ -79,7 +79,7 @@ testing:
 amp-ad:
   app_url: "https://shinypro.synapse.org/users/nkauer/dccvalidator-ad/"
   parent: "syn21643404"
-  annotations_table: "syn10242922"
+  annotations_table: "syn21459391"
   annotations_link: "https://shinypro.synapse.org/users/kwoo/amp-ad-metadata-dictionary/"
   teams:
     - "3320424"
