@@ -364,8 +364,8 @@ test_that("get_template_synIDs only returns unique synIDs from config", {
   expected <- c(
     "syn12973254",
     "syn12973253",
-    "syn12973252",
     "syn25955510",
+    "syn12973252",
     "syn20673251",
     "syn12973256",
     "syn20820080"
@@ -385,3 +385,4 @@ test_that("get_template_synIDs does not return JSON schema ids", {
   expected <- c("syn111111", "syn222222")
   expect_equal(get_template_synIDs(dat), expected)
 })
+
