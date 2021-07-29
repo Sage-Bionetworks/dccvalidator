@@ -27,7 +27,6 @@ default:
       drosophila: "syn20673251"
     assay_templates:
       rnaSeq: "sysbio.metadataTemplates-assay.rnaSeq"
-      proteomics: "syn12973255"
   species_list:
     - "mouse or other animal model"
     - "human"
@@ -164,6 +163,7 @@ pec:
     path_to_docs_markdown: "inst/study-documentation-pec.Rmd"
   teams:
     - "3323356"
+  include_biospecimen_type: TRUE
   templates:
     manifest_template: "syn20782058"
     individual_templates:
