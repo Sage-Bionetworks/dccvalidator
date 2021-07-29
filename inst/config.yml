@@ -170,19 +170,24 @@ pec:
       human: "syn20781820"
       animal: "syn21053116"
     biospecimen_templates:
-      animal model: "syn20768131"
-      human: "syn20768131"
+      human:
+        in vivo, postmortem, other: "syn20768131"
+        in vitro: "syn26011297"
+      other mouse or animal model:
+        in vivo, postmortem, other: "syn20768131"
+        in vitro: "syn26011297"
     assay_templates:
-      wholeGenomeSeq: "syn20980993"
-      rnaSeq: "syn20768650"
       ATACSeq: "syn20768526"
-      TMT quantitation: "syn21680761"
-      HI-C: "syn21680758"
-      snpArray: "syn21680759"
-      ChIPSeq: "syn21861858"
       bisulfiteSeq: "syn23017098"
-      methylationArray: "syn25805391"
+      ChIPSeq: "syn21861858"
+      HI-C: "syn21680758"
       immunoassay: "syn25805392"
+      methylationArray: "syn25805391"
+      rnaSeq: "syn20768650"
+      snpArray: "syn21680759"
+      STARRSeq: "syn26011215"
+      TMT quantitation: "syn21680761"
+      wholeGenomeSeq: "syn20980993"
   species_list:
     - "human"
     - "animal model"
