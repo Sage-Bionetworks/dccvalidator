@@ -26,6 +26,7 @@
 - `check_all()` now expects the template ids to be included in `data`; if not included, will skip the check for missing column names
 - Added `get_metadataType_indices()` and `gather_template_ids()`
 - Add ability to specify biospecimen templates based on type
+- Fixed logic for resetting biospecimen type UI
 
 # dccvalidator v0.3.0
 

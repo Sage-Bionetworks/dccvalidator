@@ -321,20 +321,37 @@ validator_server <- function(input, output, session, study_names, species_list,
       "Species",
       species_list
     )
-    updateRadioButtons(
-      session,
-      "biospecimen_type",
-      "Specimen Type",
-      choiceNames = c("In vitro", "Other (in vivo, postmortem)"),
-      choiceValues = c("in_vitro", "other"),
-      selected = "other"
-    )
     updateSelectInput(
       session,
       "assay_name",
       "Assay type",
       names(assay_templates)
     )
+    specimen_types <- unique(
+      names(
+        get_golem_config("templates")$biospecimen[[input$species]]
+      )
+    )
+    if (!is.null(specimen_types)) {
+      # Grab specimen types from config and default choose first in list
+      updateRadioButtons(
+        session,
+        "biospecimen_type",
+        "Biospecimen Type",
+        choices = specimen_types,
+        selected = specimen_types[1]
+      )
+      shinyjs::show("biospecimen_type")
+    } else {
+      shinyjs::hide("biospecimen_type")
+      updateRadioButtons(
+        session,
+        "biospecimen_type",
+        "Specimen Type",
+        choices = "",
+        selected = ""
+      )
+    }
   })
 
   ## If drosophila species checked, reset fileInput
