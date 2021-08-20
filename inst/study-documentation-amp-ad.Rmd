@@ -18,6 +18,8 @@ knitr::opts_chunk$set(
 
 This information should be similar to a materials and methods section in a paper. An example of what a study should include can be found [here](https://adknowledgeportal.synapse.org/Explore/Studies/DetailsPage?Study=syn8391648){target="_blank"} for an animal model study and [here](https://adknowledgeportal.synapse.org/Explore/Studies/DetailsPage?Study=syn3159438){target="_blank"} for a human study. If you wish, also provide an acknowledgement statment and/or reference that should be included in publications resulting from secondary data use; examples can be found in the Acknowledgement sections of the studies linked above. This can be provided as part of the study documentation text.
 
+Documentation should be submitted [here](https://www.synapse.org/#!Synapse:syn25051271) before beginning metadata validation. 
+
 ## Study Description
 
 Each study should be given both a descriptive and an abbreviated name. The abbreviation will be used to annotate all content associated with the study. For a study with a human cohort, the study description should include:
