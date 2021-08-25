@@ -89,7 +89,7 @@ check_all <- function(data, annotations, syn, study = NA, samples_table = NA) {
     )
     missing_cols_manifest <- check_cols_manifest(
       data$file_data[indices$manifest][[1]],
-      data$template[indices$assay][[1]],
+      data$template[indices$manifest][[1]],
       syn = syn
     )
   }
