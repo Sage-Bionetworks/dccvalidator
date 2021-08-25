@@ -77,6 +77,9 @@ gather_template_ids <- function(type, species = NA, assay = NA,
 #' had no match to the species and type.
 gather_template_id_biospecimen <- function(templates, species,
                                            biospecimen_type) {
+  if (length(species) < 1 | is.na(species)) {
+    return(NA)
+  }
   if (species %in% names(templates[["biospecimen_templates"]])) {
     if (is.na(biospecimen_type) | biospecimen_type %in% "") {
       # Grab based on species
@@ -103,6 +106,9 @@ gather_template_id_biospecimen <- function(templates, species,
 #' @return Individual template ID from `templates` that matches the `species`,
 #' or `NA` if there was no assay type that matched.
 gather_template_id_individual <- function(templates, species) {
+  if (length(species) < 1 | is.na(species)) {
+    return(NA)
+  }
   if (species %in% names(templates[["individual_templates"]])) {
     return(templates[["individual_templates"]][[species]])
   } else {
@@ -121,6 +127,9 @@ gather_template_id_individual <- function(templates, species) {
 #' @return Assay template ID from template that matches the `assay`, or `NA`
 #' if there was no assay type that matched.
 gather_template_id_assay <- function(templates, assay) {
+  if (length(assay) < 1 | is.na(assay)) {
+    return(NA)
+  }
   if (assay %in% names(templates[["assay_templates"]])) {
     return(templates[["assay_templates"]][[assay]])
   } else {
