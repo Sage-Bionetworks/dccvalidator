@@ -1,6 +1,6 @@
 Package: dccvalidator
 Title: Metadata Validation for Data Coordinating Centers
-Version: 0.3.0.9024
+Version: 0.3.0.9025
 Authors@R:
     c(person(given = "Kara",
              family = "Woo",

@@ -27,6 +27,7 @@
 - Added `get_metadataType_indices()` and `gather_template_ids()`
 - Add ability to specify biospecimen templates based on type
 - Fixed logic for resetting biospecimen type UI
+- Fixed typo in `check_all()` that led to manifests being checked against assay templates
 
 # dccvalidator v0.3.0
 
