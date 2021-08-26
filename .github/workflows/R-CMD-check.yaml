@@ -31,6 +31,7 @@ jobs:
       RSPM: ${{ matrix.config.rspm }}
       RETICULATE_AUTOCONFIGURE: 'FALSE'
       CI: true
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - uses: actions/checkout@v2
