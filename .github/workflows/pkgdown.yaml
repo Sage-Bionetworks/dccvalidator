@@ -10,6 +10,7 @@ jobs:
 
     env:
       CI: true
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - uses: actions/checkout@v2

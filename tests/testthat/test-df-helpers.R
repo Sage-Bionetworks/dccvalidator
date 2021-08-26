@@ -157,3 +157,37 @@ test_that("gather_template_ids gets correct biospecimen type", {
   expect_equal(res1, "syn25955510")
   expect_equal(res2, "syn12973252")
 })
+
+test_that("gather_template_ids returns NA if missing information", {
+  expect_true(is.na(gather_template_ids(type = "assay")))
+  expect_true(is.na(gather_template_ids(type = "individual")))
+  expect_true(is.na(gather_template_ids(type = "biospecimen")))
+  expect_true(is.na(gather_template_ids(type = "assay", assay = logical(0))))
+  expect_true(
+    is.na(gather_template_ids(type = "individual", species = logical(0)))
+  )
+  expect_true(
+    is.na(gather_template_ids(type = "biospecimen", species = logical(0)))
+  )
+  expect_true(
+    is.na(gather_template_ids(
+      type = "biospecimen",
+      species = logical(0),
+      biospecimen_type = logical(0)
+    ))
+  )
+  expect_true(is.na(gather_template_ids(type = "assay", assay = NULL)))
+  expect_true(
+    is.na(gather_template_ids(type = "individual", species = NULL))
+  )
+  expect_true(
+    is.na(gather_template_ids(type = "biospecimen", species = NULL))
+  )
+  expect_true(
+    is.na(gather_template_ids(
+      type = "biospecimen",
+      species = logical(0),
+      biospecimen_type = NULL
+    ))
+  )
+})
