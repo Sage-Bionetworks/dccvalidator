@@ -48,7 +48,7 @@ To create a custom version of the app, you'll need to follow these steps:
    [example of how to create a project with appropriate permissions](https://github.com/Sage-Bionetworks/dccvalidator/blob/master/inst/app/create_project.R).
 1. Fork the [dccvalidator](https://github.com/Sage-Bionetworks/dccvalidator/blob/master/config.yml)
    GitHub repository.
-1. (For a production version): register a Synapse OAuth client (see [Synapse Docs](https://help.synapse.org/docs/Using-Synapse-as-an-OAuth-Server.2048327904.html#UsingSynapseasanOAuthServer-RegisteringandLinkinganOAuth2.0Client)) and store the `client_id` and `client_secret` in a .Renviron file within the repository. Ensure you are the only person who has access to this file (e.g. `chmod 600 .Renviron` or `chmod 400 .Renviron`).
+1. (For a production version): register a Synapse OAuth client (see [Synapse Docs](https://help.synapse.org/docs/Using-Synapse-as-an-OAuth-Server.2048327904.html#UsingSynapseasanOAuthServer-RegisteringandLinkinganOAuth2.0Client)) and store the `client_name`, `client_id` and `client_secret` in a .Renviron file within the repository. Ensure you are the only person who has access to this file (e.g. `chmod 600 .Renviron` or `chmod 400 .Renviron`).
 1. (For running locally only): create a .synapseConfig file in your home directory with your Synapse authentication credentials (see the [synapser docs for an example](https://r-docs.synapse.org/articles/manageSynapseCredentials.html#use-synapseconfig)).
 1. Create a new configuration in the `config.yml` file. Note that any values you
    do not customize will be inherited from the default configuration. The configuration file must have a `default` configuration.
