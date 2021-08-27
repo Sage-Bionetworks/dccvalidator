@@ -491,6 +491,7 @@ test_that("check_all doesn't run check_cols if missing template col", {
 })
 
 test_that("check_all runs check_cols if not missing template col", {
+  skip_if_not(logged_in(syn))
   data <- tibble::tibble(
     metadataType = c(
       "manifest",
