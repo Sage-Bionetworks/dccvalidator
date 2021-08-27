@@ -1,6 +1,12 @@
 context("test-get-template.R")
 
 syn <- attempt_instantiate()
+tryCatch(
+  attempt_login(syn),
+  error = function(e) {
+    print(glue::glue("Did not log into Synapse: {e$message}"))
+  }
+)
 
 test_that("get_template fails when not logged in to Synapse", {
   skip_if(is.null(syn))
@@ -14,8 +20,12 @@ test_that("get_template fails when not logged in to Synapse", {
   )
 })
 
-attempt_login(syn)
-
+tryCatch(
+  attempt_login(syn),
+  error = function(e) {
+    print(glue::glue("Did not log into Synapse: {e$message}"))
+  }
+)
 
 test_that("get_template errors for files from synID that are not xlsx or csv", {
   skip_if_not(logged_in(syn = syn))

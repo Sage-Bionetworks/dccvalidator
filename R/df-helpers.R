@@ -81,11 +81,11 @@ gather_template_id_biospecimen <- function(templates, species,
     return(NA)
   }
   if (species %in% names(templates[["biospecimen_templates"]])) {
-    if (any(
+    if (any(c(
       length(biospecimen_type) < 0,
       is.na(biospecimen_type),
-      biospecimen_type %in% ""
-    )) {
+      biospecimen_type %in% c("", "NaN")
+    ))) {
       # Grab based on species
       return(templates[["biospecimen_templates"]][[species]])
     } else {

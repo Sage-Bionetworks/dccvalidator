@@ -99,14 +99,14 @@ jobs:
           cat > "$OUTPUT_FILE" << EOM
           [authentication]
           username = "${{ secrets.SYNAPSE_USER }}"
-          apikey = "${{ secrets.SYNAPSE_APIKEY}}"
+          apikey = "${{ secrets.SYNAPSE_APIKEY }}"
           EOM
           chmod +x "$OUTPUT_FILE"
           
       - name: Setup Synapse config file for testing (Windows)
         if: runner.os == 'Windows'
         run: |
-          "[authentication]`nusername = ${{ secrets.SYNAPSE_USER }}`napikey = ${{ secrets.SYNAPSE_APIKEY}}" | Out-File -FilePath "$HOME\.synapseConfig"
+          "[authentication]`nusername = ${{ secrets.SYNAPSE_USER }}`napikey = ${{ secrets.SYNAPSE_APIKEY }}`n" | Out-File -FilePath "$HOME\.synapseConfig"
 
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
