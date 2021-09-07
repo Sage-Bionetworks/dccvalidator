@@ -35,6 +35,7 @@ reference:
     - check_ages_over_90
     - check_duplicate_paths
     - check_complete_ids
+    - check_invalid_characters
 
 - title: Validation helpers
   desc: >
