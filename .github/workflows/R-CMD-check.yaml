@@ -66,11 +66,11 @@ jobs:
       - name: Install system dependencies (macOS)
         if: runner.os == 'macOS' && matrix.config.r == 'devel'
         run: |
-          brew install V8
           brew install libgit2
 
       - name: Install dependencies
         run: |
+          Sys.setenv(DOWNLOAD_STATIC_LIBV8 = 1)
           library(remotes)
           deps <- readRDS('depends.Rds')
           deps[['installed']] <- vapply(deps[['package']], remotes:::local_sha, character(1))

@@ -28,6 +28,7 @@
 - Add ability to specify biospecimen templates based on type
 - Fixed logic for resetting biospecimen type UI
 - Fixed typo in `check_all()` that led to manifests being checked against assay templates
+- Add `check_invalid_characters()` and include in `validator_server()` to block upload and validation
 
 # dccvalidator v0.3.0
 

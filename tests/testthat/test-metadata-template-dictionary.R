@@ -385,4 +385,3 @@ test_that("get_template_synIDs does not return JSON schema ids", {
   expected <- c("syn111111", "syn222222")
   expect_equal(get_template_synIDs(dat), expected)
 })
-

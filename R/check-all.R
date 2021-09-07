@@ -344,3 +344,35 @@ check_all <- function(data, annotations, syn, study = NA, samples_table = NA) {
   )
   res
 }
+
+## Check all for invalid characters
+check_all_invalid_char <- function(manifest, indiv, biosp, assay) {
+
+  # Invalid characters ---------------------------------------------------------
+  invalid_characters_manifest <- check_invalid_characters(
+    manifest,
+    success_msg = "There are no invalid characters in the manifest",
+    fail_msg = "There are invalid characters in the manifest columns"
+  )
+  invalid_characters_individual <- check_invalid_characters(
+    indiv,
+    success_msg = "There are no invalid characters in the individual metadata",
+    fail_msg = "There are invalid characters in the individual metadata columns"
+  )
+  invalid_characters_biospecimen <- check_invalid_characters(
+    biosp,
+    success_msg = "There are no invalid characters in the biospecimen metadata",
+    fail_msg = "There are invalid characters in the biospecimen metadata columns" #nolint
+  )
+  invalid_characters_assay <- check_invalid_characters(
+    assay,
+    success_msg = "There are no invalid characters in the assay metadata",
+    fail_msg = "There are invalid characters in the assay metadata columns"
+  )
+  list(
+    invalid_characters_manifest = invalid_characters_manifest,
+    invalid_characters_individual = invalid_characters_individual,
+    invalid_characters_biospecimen = invalid_characters_biospecimen,
+    invalid_characters_assay = invalid_characters_assay
+  )
+}
