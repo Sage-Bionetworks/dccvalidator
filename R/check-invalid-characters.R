@@ -51,7 +51,7 @@ contains_invalid <- function(text) {
     if (is.na(value)) {
       return(FALSE)
     }
-    conv <- iconv(value, from = 'UTF-8', to = 'ASCII//TRANSLIT')
+    conv <- iconv(value, from = "UTF-8", to = "ASCII//TRANSLIT")
     ## Will recieve NA if there's an unacceptable character
     ## Check for other types of invalid patterns
     pattern <- "<0x|&[a-zA-Z0-9]+;|&#[0-9]+;"
@@ -72,5 +72,5 @@ summarize_invalid_char_check <- function(check_list) {
 
 summarize_check <- function(check_result) {
   details <- glue::glue_collapse(check_result$data, sep = ", ")
-  glue::glue("Only standard ascii characters are allowed in the files.\n{check_result$message}: {details}")
+  glue::glue("Only standard ascii characters are allowed in the files.\n{check_result$message}: {details}") #nolint
 }

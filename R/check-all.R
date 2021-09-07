@@ -347,7 +347,7 @@ check_all <- function(data, annotations, syn, study = NA, samples_table = NA) {
 
 ## Check all for invalid characters
 check_all_invalid_char <- function(manifest, indiv, biosp, assay) {
-  
+
   # Invalid characters ---------------------------------------------------------
   invalid_characters_manifest <- check_invalid_characters(
     manifest,
