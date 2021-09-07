@@ -32,6 +32,7 @@ jobs:
       RETICULATE_AUTOCONFIGURE: 'FALSE'
       CI: true
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      DOWNLOAD_STATIC_LIBV8: 1
 
     steps:
       - uses: actions/checkout@v2
