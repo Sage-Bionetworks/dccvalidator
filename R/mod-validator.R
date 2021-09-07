@@ -504,6 +504,23 @@ validator_server <- function(input, output, session, study_names, species_list,
           "Manifest file must be .tsv or .txt, not .csv"
         )
       )
+      ## Check for any invalid characters in files before continuing
+      invalid_checks <- check_all_invalid_char(
+        manifest = manifest(),
+        indiv = indiv(),
+        biosp = biosp(),
+        assay = assay()
+      )
+      has_invalid <- purrr::map_lgl(
+        invalid_checks,
+        ~ inherits(., "check_fail")
+      )
+      validate(
+        need(
+          !any(has_invalid),
+          message = summarize_all_failed_checks(invalid_checks)
+        )
+      )
 
       ## Upload only the files that have been given
       if (!is.null(indiv())) {
