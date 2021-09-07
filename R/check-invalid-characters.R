@@ -72,5 +72,5 @@ summarize_invalid_char_check <- function(check_list) {
 
 summarize_check <- function(check_result) {
   details <- glue::glue_collapse(check_result$data, sep = ", ")
-  glue::glue("{check_result$message}: {details}")
+  glue::glue("Only standard ascii characters are allowed in the files.\n{check_result$message}: {details}")
 }
