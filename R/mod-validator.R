@@ -518,7 +518,7 @@ validator_server <- function(input, output, session, study_names, species_list,
       validate(
         need(
           !any(has_invalid),
-          message = summarize_all_failed_checks(invalid_checks)
+          message = summarize_invalid_char_check(invalid_checks)
         )
       )
 

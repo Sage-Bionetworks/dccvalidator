@@ -61,3 +61,16 @@ contains_invalid <- function(text) {
     return(FALSE)
   }))
 }
+
+## Summarize all invalid character checks
+summarize_invalid_char_check <- function(check_list) {
+  ## Only checks that are check_fail
+  failed <- purrr::map_lgl(check_list, ~ inherits(., "check_fail"))
+  failed_text <- purrr::map_chr(check_list[failed], ~ summarize_check(.))
+  glue::glue_collapse(failed_text, sep = "\n")
+}
+
+summarize_check <- function(check_result) {
+  details <- glue::glue_collapse(check_result$data, sep = ", ")
+  glue::glue("{check_result$message} {details}")
+}
