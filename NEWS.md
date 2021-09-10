@@ -1,4 +1,4 @@
-# dccvalidator (development version)
+# dccvalidator v0.4.0
 
 - Add `check_complete_ids()` and `samples_table` configuration option
 - Fix bug in Data Summary information boxes to not count NA
