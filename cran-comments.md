@@ -12,3 +12,7 @@
 Added conditional requirement in json schema tests that will skip test if
 `jsonvalidate` is not available. This is to avoid the problem with Fedora-clang
 not having the V8 package.
+
+## Downstream dependencies
+
+There are currently no downstream dependencies for this package.
