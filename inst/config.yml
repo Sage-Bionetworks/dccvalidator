@@ -216,7 +216,7 @@ pec:
       - "nucleicAcidSource"
     assay:
       - "specimenID"
-  contact_email: "kelsey@synapse.org"
+  contact_email: "PEC_SageAdmin@synapse.org"
 
 veoibd:
   app_url: "https://shinypro.synapse.org/users/nkauer/dccvalidator-veoibd/"
