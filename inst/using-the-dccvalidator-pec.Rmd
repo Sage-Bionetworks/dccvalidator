@@ -76,6 +76,10 @@ With a new study, there may not yet be a **Staging folder** in the PEC Knowledge
 
 ## Data validation
 
+### Naming your files
+
+**All files must have unique names.** Upon upload, the existing directory hierarchy of your files gets collapsed. If files have the same name, they will get uploaded as a second version of the same file.
+
 ### Metadata requirements
 
 Each study should include metadata that would help a new researcher understand and reuse the data. In most cases, we will expect 4 files:
