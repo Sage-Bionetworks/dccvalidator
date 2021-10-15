@@ -75,6 +75,10 @@ You can submit your documentation through the [Submission Form](https://www.syna
 
 ## Data Validation
 
+### Naming your files
+
+**All files must have unique names.** Upon upload, the existing directory hierarchy of your files gets collapsed. If files have the same name, they will get uploaded as a second version of the same file.
+
 ### Metadata Requirements
 
 Each study should include metadata that would help a new researcher understand
