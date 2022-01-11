@@ -82,9 +82,7 @@ amp-ad:
   annotations_table: "syn21459391"
   annotations_link: "https://shinypro.synapse.org/users/kwoo/amp-ad-metadata-dictionary/"
   teams:
-    - "3320424"
     - "3405451"
-    - "3433437"
   docs_tab:
     include_tab: TRUE
     include_upload_widget: FALSE

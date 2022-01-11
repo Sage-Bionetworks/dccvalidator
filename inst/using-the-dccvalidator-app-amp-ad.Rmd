@@ -37,7 +37,7 @@ To use this application you must:
 
 1. Be logged in to Synapse in your browser
 2. Be a [Synapse certified user](https://docs.synapse.org/articles/accounts_certified_users_and_profile_validation.html){target="_blank"}
-3. Be a member of the AMP-AD consortium team
+3. Be a member of the AD_PortalContributor Synapse team
 
 Some portions of the app submit data to Synapse. This allows curators at Sage to
 troubleshoot issues if needed; no one outside the Sage curation team will be
