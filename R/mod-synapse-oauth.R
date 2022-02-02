@@ -21,7 +21,7 @@ authorization_url <- NULL
   #automatically check if the synapseclient version is larger than 2.3.1,
   #otherwise, print the error message in log file
   syn_version <- synapse["__version__"]
-  stopifnot(compareVersion(syn_version, "2.3.1") >= 0)
+  stopifnot(utils::compareVersion(syn_version, "2.3.1") >= 0)
   if (!interactive()) {
     setup_global_oauth_vars(
       app_url = get_golem_config("app_url"),
