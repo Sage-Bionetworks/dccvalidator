@@ -85,16 +85,33 @@ get_template_keys_synID <- function(syn, synID, ...) {
 #'
 #' @export
 #' @inheritParams get_template
-get_template_keys_schema <- function(syn, id) {
-  tryCatch(
-    {
-      schema <- get_synapse_schema(syn = syn, id = id)
-      return(names(schema$properties))
-    },
-    error = function(e) {
-      stop(glue::glue("Failed to get the validation schema for {id}."))
-    }
-  )
+#' @param id Registered synapse ID of schema.
+#' @param file Filepath to json schema.
+#' @param url URL to json schema.
+get_template_keys_schema <- function(syn, id = NA, file = NA, url = NA) {
+  
+  if (sum(!is.na(id), !is.na(file), !is.na(url)) != 1){
+    stop("Specify only one of id, file, or url")
+  }
+  
+  if (!is.na(id)){
+    tryCatch(
+      {
+        schema <- get_synapse_schema(syn = syn, id = id)
+      },
+      error = function(e) {
+        stop(glue::glue("Failed to get the validation schema for {id}."))
+      }
+    )
+  }
+  if (!is.na(file)) {
+    schema <- get_file_schema(file = file)
+  }
+  if (!is.na(url)) {
+    schema <- get_url_schema(url = url)
+  }
+  
+  return(names(schema$properties))
 }
 
 #' @title Get Synapse validation schema
@@ -176,4 +193,20 @@ rest_post <- function(syn, uri, body = NULL) {
   } else {
     syn$restPOST(uri = uri, body = body)
   }
+}
+
+#' @title Get JSON schema attributes from a file
+#' 
+#' @description Read a JSON schema from a file. Similar
+#' to [get_synapse_schema].
+#' 
+#' @import rjson
+#' @param file Filepath of json schema.
+get_file_schema <- function(file) {
+  
+  if (!file.exists(file)) stop(glue::glue("{file} does not exist."))
+  if (!tolower(tools::file_ext(file)) == "json") stop("File must be json.")
+  schema <- fromJSON(file = file)
+  return(schema)
+  
 }

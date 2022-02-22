@@ -65,14 +65,44 @@ test_that("get_template accepts synID with id param", {
   expect_equal(xlsx2, c("a", "b", "c", "d"))
 })
 
-test_that("get_template can get keys from a (simple) registered schema", {
-  skip_if_not(logged_in(syn = syn))
+# test_that("get_template can get keys from a (simple) registered schema", {
+#   skip_if_not(logged_in(syn = syn))
+# 
+#   ## Expect schema to have easily obtained distinct properties
+#   res1 <- get_template(id = "nkauer-dccvalidator.simpleTest-0.1.0", syn = syn)
+#   res2 <- get_template(id = "nkauer-dccvalidator.simpleTest-0.2.0", syn = syn)
+#   expect_equal(res1, c("a", "b", "c"))
+#   expect_equal(res2, c("a", "b", "c", "d"))
+# })
 
+test_that("get_template can get keys from a schema file", {
+  skip_if_not(logged_in(syn = syn))
+  
   ## Expect schema to have easily obtained distinct properties
-  res1 <- get_template(id = "nkauer-dccvalidator.simpleTest-0.1.0", syn = syn)
-  res2 <- get_template(id = "nkauer-dccvalidator.simpleTest-0.2.0", syn = syn)
-  expect_equal(res1, c("a", "b", "c"))
-  expect_equal(res2, c("a", "b", "c", "d"))
+  schema <- 
+    system.file("testdata",
+    "amp.ad.data.Assay16SrRNAseqMetadataTemplate.schema.json",
+    package="dccvalidator")
+  expect_equal(get_template_keys_schema(file=schema),
+    c("dnaExtractionMethod", "runType", "libraryPrep", "sequencingBatch",
+    "specimenID", "platform", "assay", "readLength", "dnaBatch", "Component", 
+    "assayTarget", "libraryBatch"))
+})
+
+test_that("get_template can get a schema file", {
+  skip_if_not(logged_in(syn = syn))
+  
+  schema <- 
+    system.file("testdata",
+                "amp.ad.data.Assay16SrRNAseqMetadataTemplate.schema.json",
+                package="dccvalidator")
+  
+  schema <- get_file_schema(file = schema)
+  expect_equal(names(schema$properties),
+    c("dnaExtractionMethod", "runType", "libraryPrep", "sequencingBatch",
+      "specimenID", "platform", "assay", "readLength", "dnaBatch", "Component", 
+      "assayTarget", "libraryBatch"))
+  
 })
 
 test_that("get_synapse_schema returns error if schema not returned", {
