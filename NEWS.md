@@ -29,6 +29,7 @@
 - Fixed logic for resetting biospecimen type UI
 - Fixed typo in `check_all()` that led to manifests being checked against assay templates
 - Add `check_invalid_characters()` and include in `validator_server()` to block upload and validation
+- Can now read schemas from files and URLs in addition to registered synapse schemas.
 
 # dccvalidator v0.3.0
 
