@@ -195,11 +195,10 @@ rest_post <- function(syn, uri, body = NULL) {
 #' @description Read a JSON schema from a file. Similar
 #' to [get_synapse_schema].
 #' 
-#' @import rjson
 #' @param file Filepath of json schema.
 get_file_schema <- function(file) {
   
-  schema <- fromJSON(file = file)
+  schema <- rjson::fromJSON(file = file)
   return(schema)
   
 }
