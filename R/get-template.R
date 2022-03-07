@@ -6,7 +6,8 @@
 #' @param synID Synapse ID of an excel or csv file containing a metadata
 #'   template
 #' @param id The id of JSON metadata schema registered in Synapse or Synapse ID
-#' of an excel or csv file containing a metadata template
+#' of an excel or csv file containing a metadata template. Or a filepath or URL
+#' to a json schema.
 #' @inheritParams get_synapse_annotations
 #' @param ... Additional arguments passed to syn$get()
 #' @return Character vector of template column names
@@ -27,6 +28,10 @@ get_template <- function(id = NA, syn, synID = NA, ...) {
     ## Check if id was used to give a synID
     if (grepl("^syn", id)) {
       return(get_template_keys_synID(syn = syn, synID = id, ...))
+    }
+    ## Check if a schema file or URL was passed
+    if (identical(tolower(tools::file_ext(id)), "json") | grepl("/", id)) {
+      return(get_template_keys_schema(syn = syn, file = id))
     }
     ## If not a synID, assume a schema id
     return(get_template_keys_schema(syn = syn, id = id))

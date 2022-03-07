@@ -8,7 +8,8 @@ get_template(id = NA, syn, synID = NA, ...)
 }
 \arguments{
 \item{id}{The id of JSON metadata schema registered in Synapse or Synapse ID
-of an excel or csv file containing a metadata template}
+of an excel or csv file containing a metadata template. Or a filepath or URL
+to a json schema.}
 
 \item{syn}{Synapse client object}
 

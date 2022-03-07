@@ -65,6 +65,18 @@ test_that("get_template accepts synID with id param", {
   expect_equal(xlsx2, c("a", "b", "c", "d"))
 })
 
+test_that("get_template can correctly handles URLs and filepaths", {
+  gt <- get_template(id = "https://raw.githubusercontent.com/afwillia/sysbioDCCjsonschemas/schematic_workflow/schematic_schemas/json/amp.ad.data.Assay16SrRNAseqMetadataTemplate.schema.json",
+               syn = syn)
+  gu <- get_file_schema(file="https://raw.githubusercontent.com/afwillia/sysbioDCCjsonschemas/schematic_workflow/schematic_schemas/json/amp.ad.data.Assay16SrRNAseqMetadataTemplate.schema.json")
+  expect_identical(gt, names(gu$properties))
+  
+  gt <- get_template(id = system.file("testdata",
+                      "amp.ad.data.Assay16SrRNAseqMetadataTemplate.schema.json",
+                      package="dccvalidator"))
+  expect_identical(gt, names(gu$properties))
+})
+
 # test_that("get_template can get keys from a (simple) registered schema", {
 #   skip_if_not(logged_in(syn = syn))
 # 
@@ -103,7 +115,7 @@ test_that("get_template can get a schema file", {
       "specimenID", "platform", "assay", "readLength", "dnaBatch", "Component", 
       "assayTarget", "libraryBatch"))
   
-  schema_url <- get_file_schema(file="https://raw.githubusercontent.com/afwillia/sysbioDCCjsonschemas/schematic_workflow/schema_metadata_templates/schematic_test/json/amp.ad.data.Assay16SrRNAseqMetadataTemplate.schema.json")
+  schema_url <- get_file_schema(file="https://raw.githubusercontent.com/afwillia/sysbioDCCjsonschemas/schematic_workflow/schematic_schemas/json/amp.ad.data.Assay16SrRNAseqMetadataTemplate.schema.json")
   expect_equal(names(schema_url$properties),
      c("dnaExtractionMethod", "runType", "libraryPrep", "sequencingBatch",
        "specimenID", "platform", "assay", "readLength", "dnaBatch", "Component", 

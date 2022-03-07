@@ -1,6 +1,6 @@
 default:
   production: TRUE
-  app_url: "https://shinypro.synapse.org/users/nkauer/dccvalidator-test/"
+  app_url: "https://shinypro.synapse.org/users/awilliams/dccvalidator/"
   parent: "syn20400157"
   path_to_markdown: "inst/using-the-dccvalidator-app-amp-ad.Rmd"
   study_table: "syn11363298"
@@ -19,14 +19,15 @@ default:
   templates:
     manifest_template: "syn20820080"
     individual_templates:
-      human: "syn12973254"
+      human: "awilliams.test-IndividualHumanMetadataTemplate"
       mouse or other animal model: "syn12973253"
     biospecimen_templates:
       mouse or other animal model: "syn12973252"
       human: "syn12973252"
       drosophila: "syn20673251"
     assay_templates:
-      rnaSeq: "sysbio.metadataTemplates-assay.rnaSeq"
+      rnaSeq: "awilliams.test-AssayRnaSeqMetadataTemplate"
+      16SrRNAseq: "awilliams.test-Assay16SrRNAseqMetadataTemplate"
   species_list:
     - "mouse or other animal model"
     - "human"
@@ -77,8 +78,9 @@ testing:
 
 
 amp-ad:
-  app_url: "https://shinypro.synapse.org/users/nkauer/dccvalidator-ad/"
+  app_url: "https://shinypro.synapse.org/users/awilliams/dccvalidator/"
   parent: "syn21643404"
+  samples_table: "syn21578908"
   annotations_table: "syn21459391"
   annotations_link: "https://shinypro.synapse.org/users/kwoo/amp-ad-metadata-dictionary/"
   teams:
@@ -116,6 +118,7 @@ amp-ad:
       ATACseq: "syn22024364"
       autorad: "syn22087295"
       immunoassay: "syn22117582"
+      rnaSeq: "sysbio.metadataTemplates-assay.rnaSeq"
       proteomics: "syn12973255"
       single cell RNAseq: "syn21018360"
       wholeGenomeSeq: "syn21018358"
@@ -150,7 +153,7 @@ amp-ad:
   contact_email: "AMPAD_SageAdmin@synapse.org"
 
 pec:
-  app_url: "https://shinypro.synapse.org/users/kmontgomery/apps_w_oauth/dccvalidator/"
+  app_url: "https://shinypro.synapse.org/users/awilliams/dccvalidator/"
   parent: "syn21763123"
   path_to_markdown: "inst/using-the-dccvalidator-pec.Rmd"
   study_table: "syn20968992"
@@ -219,7 +222,7 @@ pec:
   contact_email: "PEC_SageAdmin@synapse.org"
 
 veoibd:
-  app_url: "https://shinypro.synapse.org/users/nkauer/dccvalidator-veoibd/"
+  app_url: "https://shinypro.synapse.org/users/awilliams/dccvalidator/"
   parent: "syn25556537"
   path_to_markdown: "inst/using-the-dccvalidator-veoibd.Rmd"
   study_table: "syn25557724"
@@ -279,3 +282,72 @@ veoibd:
     assay:
       - "specimenID"
   contact_email: "cmolitor@synapse.org"
+  
+  amp-ad-test:
+    app_url: "https://shinypro.synapse.org/users/awilliams/dccmonitor"
+    annotations_link: "https://shinypro.synapse.org/users/kwoo/amp-ad-metadata-dictionary/"
+    consortium_fileview: "syn21448475"
+    samples_table: "syn21578908"
+    annotations_storage: "syn21698384"
+    annotations_table: "syn21459391"
+    annotation_keys:
+      - "age"
+      - "primaryDiagnosis"
+    teams:
+      - "3346847"
+    species_list:
+      - "human"
+      - "drosophila"
+      - "MODEL-AD mouse model"
+      - "other mouse or animal model"
+    templates:
+      individual_templates:
+        human: "https://raw.githubusercontent.com/afwillia/sysbioDCCjsonschemas/schematic_workflow/schematic_schemas/json/amp.ad.data.IndividualHumanMetadataTemplate.schema.json"
+        other mouse or animal model: "syn27000468"
+        MODEL-AD mouse model: "syn21084071"
+      biospecimen_templates:
+        human:
+          in vivo, postmortem, other: "awilliams.test-BiospecimenMetadataTemplate"
+          in vitro: "awilliams.test-BiospecimenInvitroMetadataTemplate"
+        other mouse or animal model:
+          in vivo, postmortem, other: "syn12973252"
+          in vitro: "syn25955510"
+        MODEL-AD mouse model:
+          in vivo, postmortem, other: "syn12973252"
+          in vitro: "syn25955510"
+        drosophila: "syn20673251"
+      assay_templates:
+        ATACseq: "awilliams.test-AssayATACSeqMetadataTemplate"
+        autorad: "syn22087295"
+        rnaSeq: "awilliams.test-AssayRnaSeqMetadataTemplate"
+        immunoassay: "syn22117582"
+        proteomics: "syn12973255"
+        single cell RNAseq: "awilliams.test-AssayScrnaSeqMetadataTemplate"
+        wholeGenomeSeq: "awilliams.test-AssayWholeGenomeSeqMetadataTemplate"
+        wholeExomeSeq: "awilliams.test-AssayWholeExomeSeqMetadataTemplate"
+        NanoString: "awilliams.test-AssayNanostringMetadataTemplate"
+        snpArray: "awilliams.test-AssaySnpArrayMetadataTemplate"
+        STARRSeq: "awilliams.test-AssaySTARRSeqMetadataTemplate"
+        TMT quantitation: "awilliams.test-AssayTMTquantitationMetadataTemplate"
+        methylationArray: "awilliams.test-AssayMethylationArrayMetadataTemplate"
+        MRI: "awilliams.test-AssayMRIMetadataTemplate"
+        PET: "awilliams.test-AssayPETMetadataTemplate"
+        16SrRNAseq: "awilliams.test-Assay16SrRNAseqMetadataTemplate"
+        metabolomics: "awilliams.test-AssayMetabolomicsMetadataTemplate"
+        HI-C: "syn27000426"
+        ChIPSeq: "awilliams.test-AssayChIPSeqMetadataTemplate"
+        bisulfiteSeq: "awilliams.test-AssayBisulfiteSeqMetadataTemplate"
+    complete_columns:
+      manifest:
+        - "consortium"
+        - "study"
+        - "grant"
+        - "fileFormat"
+        - "parent"
+      individual:
+        - "individualID"
+      biospecimen:
+        - "individualID"
+        - "specimenID"
+      assay:
+        - "specimenID"
