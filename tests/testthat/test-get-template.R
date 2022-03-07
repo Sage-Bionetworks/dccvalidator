@@ -103,7 +103,7 @@ test_that("get_template can get a schema file", {
       "specimenID", "platform", "assay", "readLength", "dnaBatch", "Component", 
       "assayTarget", "libraryBatch"))
   
-  schema_url <- get_file_schema(file="https://raw.githubusercontent.com/afwillia/sysbioDCCjsonschemas/schematic_workflow/schema_metadata_templates/schematic_test/amp.ad.data.Assay16SrRNAseqMetadataTemplate.schema.json")
+  schema_url <- get_file_schema(file="https://raw.githubusercontent.com/afwillia/sysbioDCCjsonschemas/schematic_workflow/schema_metadata_templates/schematic_test/json/amp.ad.data.Assay16SrRNAseqMetadataTemplate.schema.json")
   expect_equal(names(schema_url$properties),
      c("dnaExtractionMethod", "runType", "libraryPrep", "sequencingBatch",
        "specimenID", "platform", "assay", "readLength", "dnaBatch", "Component", 
