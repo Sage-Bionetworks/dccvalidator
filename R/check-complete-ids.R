@@ -65,7 +65,8 @@ check_complete_ids <- function(data, samples_table, study,
   }
   samples_table <- samples_table[samples_table$study == study, ]
   if (!is.null(assay)) {
-    samples_table <- samples_table[samples_table$assay == assay, ]
+    #browser()
+    samples_table <- samples_table[grepl(assay, samples_table$assay), ]
   }
   missing <- setdiff(
     samples_table[, id_type, drop = TRUE],
