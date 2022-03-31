@@ -59,7 +59,6 @@ Suggests:
     devtools,
     dplyr,
     httr,
-    jsonlite,
     jsonvalidate,
     mockery,
     optparse,
