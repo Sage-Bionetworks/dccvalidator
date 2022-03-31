@@ -102,6 +102,7 @@ reference:
   contents:
     - add_dictionary_sheets
     - get_template_synIDs
+    - get_file_schema
     - update_template_dictionaries
     - verify_dictionary_structure
 
