@@ -4,13 +4,14 @@
 \alias{get_template_keys_schema}
 \title{Get JSON schema template}
 \usage{
-get_template_keys_schema(syn, id)
+get_template_keys_schema(syn, id = NA, file = NA)
 }
 \arguments{
 \item{syn}{Synapse client object}
 
-\item{id}{The id of JSON metadata schema registered in Synapse or Synapse ID
-of an excel or csv file containing a metadata template}
+\item{id}{Registered synapse ID of schema.}
+
+\item{file}{Filepath or URL to json schema.}
 }
 \description{
 Get JSON schema registered in Synapse.

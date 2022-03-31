@@ -35,6 +35,7 @@ Imports:
     glue,
     golem,
     htmltools,
+    jsonlite,
     knitr,
     magrittr,
     markdown,
@@ -58,7 +59,6 @@ Suggests:
     devtools,
     dplyr,
     httr,
-    jsonlite,
     jsonvalidate,
     mockery,
     optparse,
@@ -73,5 +73,5 @@ ByteCompile: true
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 SystemRequirements: synapseclient (>= 2.3.1) (pypi.org/project/synapseclient)

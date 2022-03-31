@@ -6,7 +6,8 @@
 #' @param synID Synapse ID of an excel or csv file containing a metadata
 #'   template
 #' @param id The id of JSON metadata schema registered in Synapse or Synapse ID
-#' of an excel or csv file containing a metadata template
+#' of an excel or csv file containing a metadata template. Or a filepath or URL
+#' to a json schema.
 #' @inheritParams get_synapse_annotations
 #' @param ... Additional arguments passed to syn$get()
 #' @return Character vector of template column names
@@ -27,6 +28,10 @@ get_template <- function(id = NA, syn, synID = NA, ...) {
     ## Check if id was used to give a synID
     if (grepl("^syn", id)) {
       return(get_template_keys_synID(syn = syn, synID = id, ...))
+    }
+    ## Check if a schema file or URL was passed
+    if (identical(tolower(tools::file_ext(id)), "json") | grepl("/", id)) {
+      return(get_template_keys_schema(syn = syn, file = id))
     }
     ## If not a synID, assume a schema id
     return(get_template_keys_schema(syn = syn, id = id))
@@ -85,16 +90,28 @@ get_template_keys_synID <- function(syn, synID, ...) {
 #'
 #' @export
 #' @inheritParams get_template
-get_template_keys_schema <- function(syn, id) {
-  tryCatch(
-    {
-      schema <- get_synapse_schema(syn = syn, id = id)
-      return(names(schema$properties))
-    },
-    error = function(e) {
-      stop(glue::glue("Failed to get the validation schema for {id}."))
-    }
-  )
+#' @param id Registered synapse ID of schema.
+#' @param file Filepath or URL to json schema.
+get_template_keys_schema <- function(syn, id = NA, file = NA) {
+  
+  if (sum(!is.na(id), !is.na(file)) != 1){
+    stop("Specify only one of id, file")
+  }
+  
+  if (!is.na(id)){
+    tryCatch(
+      {
+        schema <- get_synapse_schema(syn = syn, id = id)
+      },
+      error = function(e) {
+        stop(glue::glue("Failed to get the validation schema for {id}."))
+      }
+    )
+  }
+  if (!is.na(file)) {
+    schema <- get_file_schema(file = file)
+  }
+  return(names(schema$properties))
 }
 
 #' @title Get Synapse validation schema
@@ -176,4 +193,17 @@ rest_post <- function(syn, uri, body = NULL) {
   } else {
     syn$restPOST(uri = uri, body = body)
   }
+}
+
+#' @title Get JSON schema attributes from a file
+#' 
+#' @description Read a JSON schema from a file. Similar
+#' to [get_synapse_schema].
+#' 
+#' @param file Filepath of json schema.
+get_file_schema <- function(file) {
+  
+  schema <- jsonlite::fromJSON(txt = file)
+  return(schema)
+  
 }
