@@ -66,9 +66,9 @@ test_that("get_template accepts synID with id param", {
 })
 
 test_that("get_template can correctly handles URLs and filepaths", {
-  gt <- get_template(id = "https://raw.githubusercontent.com/afwillia/sysbioDCCjsonschemas/schematic_workflow/schematic_schemas/json/amp.ad.data.Assay16SrRNAseqMetadataTemplate.schema.json",
+  gt <- get_template(id = "https://raw.githubusercontent.com/afwillia/sysbioDCCjsonschemas/schematic_workflow/schematic_schemas/json/amp.ad.data.Assay16SrRNAseqMetadataTemplate.schema.json", #nolint
                syn = syn)
-  gu <- get_file_schema(file="https://raw.githubusercontent.com/afwillia/sysbioDCCjsonschemas/schematic_workflow/schematic_schemas/json/amp.ad.data.Assay16SrRNAseqMetadataTemplate.schema.json")
+  gu <- get_file_schema(file="https://raw.githubusercontent.com/afwillia/sysbioDCCjsonschemas/schematic_workflow/schematic_schemas/json/amp.ad.data.Assay16SrRNAseqMetadataTemplate.schema.json") #nolint
   expect_identical(gt, names(gu$properties))
   
   gt <- get_template(id = system.file("testdata",
