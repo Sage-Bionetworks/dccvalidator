@@ -203,7 +203,7 @@ rest_post <- function(syn, uri, body = NULL) {
 #' @param file Filepath of json schema.
 get_file_schema <- function(file) {
   
-  schema <- rjson::fromJSON(file = file)
+  schema <- jsonlite::fromJSON(file = file)
   return(schema)
   
 }

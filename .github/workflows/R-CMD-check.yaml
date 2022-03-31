@@ -62,7 +62,7 @@ jobs:
         run: |
           export DEBIAN_FRONTEND=noninteractive
           sudo apt-get -y update
-          sudo apt-get install -y make python-minimal pandoc pandoc-citeproc git-core libv8-dev libxml2-dev libcurl4-openssl-dev libssl-dev libssh2-1-dev zlib1g-dev libgit2-dev r-api-3.4 r-base-core 3.4.4-1ubuntu1 r-cran-rjson
+          sudo apt-get install -y make python-minimal pandoc pandoc-citeproc git-core libv8-dev libxml2-dev libcurl4-openssl-dev libssl-dev libssh2-1-dev zlib1g-dev libgit2-dev
 
       - name: Install system dependencies (macOS)
         if: runner.os == 'macOS' && matrix.config.r == 'devel'
