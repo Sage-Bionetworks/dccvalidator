@@ -1,0 +1,21 @@
+---
+title: "1kD Study Documentation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{pec-study-documentation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Submit your Study and Assay Documentation to Synapse
+
+This information should be similar to a materials and methods section in a paper. 
+
+[Follow this link](https://www.synapse.org/#!Synapse:syn25150011){target="_blank"} to submit your documentation.
