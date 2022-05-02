@@ -114,7 +114,7 @@ validator_ui <- function(id, species_list, assay_templates,
               shinyjs::disabled(
                 fileInput(
                   ns("indiv_meta"),
-                  "Individual metadata file (.csv)",
+                  "1kD_standardized_demographic_data file (.csv)",
                   width = NULL,
                   accept = c(
                     "text/csv",
