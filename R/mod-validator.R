@@ -83,26 +83,26 @@ validator_ui <- function(id, species_list, assay_templates,
         },
 
         # Assay name
-        div(
-          class = "result",
-          div(
-            class = "wide",
-            shinyjs::disabled(
-              selectInput(
-                ns("assay_name"),
-                "Assay type",
-                names(assay_templates)
-              )
-            )
-          ),
-          popify(
-            tags$a(icon(name = "question-circle"), href = "#"),
-            "Information",
-            "Select the type of assay that matches your assay metadata.", # nolint
-            placement = "left",
-            trigger = "hover"
-          )
-        ),
+        #div(
+         # class = "result",
+         # div(
+          #  class = "wide",
+          #  shinyjs::disabled(
+           #   selectInput(
+           #     ns("assay_name"),
+           #     "Assay type",
+           #     names(assay_templates)
+          #    )
+          #  )
+         # ),
+         # popify(
+         #   tags$a(icon(name = "question-circle"), href = "#"),
+         #   "Information",
+        #    "Select the type of assay that matches your assay metadata.", # nolint
+         #   placement = "left",
+        #    trigger = "hover"
+        #  )
+       # ),
 
         # Files to be validated
         conditionalPanel(
