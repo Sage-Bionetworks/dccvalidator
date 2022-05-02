@@ -288,7 +288,7 @@ veoibd:
   annotations_link: "https://www.synapse.org/#!Synapse:syn27817580"
   templates_link: "https://www.synapse.org/#!Synapse:syn27817580"
   docs_tab:
-    include_tab: TRUE
+    include_tab: FALSE
     include_upload_widget: FALSE
     tab_name: "Study Documentation"
     path_to_docs_markdown: "inst/study-documentation-1kD.Rmd"
@@ -304,18 +304,15 @@ veoibd:
     - "3436716"
     - "3436713"
     - "3436714"
-  include_biospecimen_type: TRUE
+  include_biospecimen_type: FALSE
   templates:
     manifest_template: "syn27832372"
     individual_templates:
       human: "syn29358381"
-      animal: "syn27831906"
     biospecimen_templates:
       human: "syn29358373"
-    assay_templates:
   species_list:
     - "human"
-    - "animal model"
   complete_columns:
     manifest:
       - "path"
@@ -346,6 +343,4 @@ veoibd:
       - "specimenType"
       - "samplingAge"
       - "samplingAgeUnits"
-    assay:
-      - "specimenID"
   contact_email: "1kD_SageAdmin@synapse.org"
