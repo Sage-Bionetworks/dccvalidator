@@ -127,7 +127,7 @@ validator_ui <- function(id, species_list, assay_templates,
             popify(
               tags$a(icon(name = "question-circle"), href = "#"),
               "Information",
-              "Select the individual metadata file. This file should have one row per individual, with data about each individual in the experiment. If adding a new dataset to an existing dataset, please include all previous individuals.", # nolint
+              "Select the 1kD_standardized_demographic_data file. This file should have one row per individual, with data about each individual in the experiment. If adding a new dataset to an existing dataset, please include all previous individuals.", # nolint
               placement = "left",
               trigger = "hover"
             )
