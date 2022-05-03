@@ -29,14 +29,6 @@ To use this application you must:
 
 Some portions of the app submit data to Synapse. This allows curators at Sage to troubleshoot issues if needed. No one outside the [1kD admins](https://www.synapse.org/#!Team:3433360) will be able to download the data.
 
-## Data Sharing Agreement 
-
-In order to contribute data to the 1kD Synapse project, you are required to sign the 1kD Data Sharing Agreement.
-
-- If you discover you have released sensitive information in error, please follow the [process in Synapse to flag](https://docs.synapse.org/articles/contribute_and_access_controlled_use_data.html#flagging-inappropriate-data-use){target="_blank"} affected data. 
-
-- We are also interested in rapidly identifiying data that does not conform to our quality control standards. If you discover data is contaminated or sample identity is questionable due to a concordance analysis, for example, please reach out to the curation team - [1kD_SageAdmin@synapse.org](mailto:1kD_SageAdmin@synapse.org){target="_blank"}.
-
 ## Terminology
 
 #### What is a biospecimen? 
@@ -46,12 +38,6 @@ A biospecimen is a sample of material such as tissue, cells, DNA, RNA or protein
 #### What is a manifest? How is a manifest different than a metadata file? 
 
 A manifest is .tsv or .txt file with data files to be uploaded to Synapse as entries in each row. Details of a manifest are described in the [Uploading and Downloading Data in Bulk](https://docs.synapse.org/articles/uploading_in_bulk.html){target="_blank"} Synapse User Guide. While a metadata file will be stored on Synapse as a flat file, and select variables added as file annotations, all variables in a manifest file will live as annotations respective to the file in that row. To successfully upload a file, you must specify the local `path` to the file and the Synapse ID of the folder in the `parent` column.
-
-## Study and assay documentation upload 
-
-Each study should have accompanying documentation in the 1kD Synapse project. 
-                                                                                                                                                                                                        
-You can submit your documentation through the dccvalidator app on the Documentation page. There should be a study description for the whole study, and an assay description for each of the assays that was performed. These can be in a single file, or you can upload multiple files to the assay description section.
 
 ## Data validation
 
@@ -71,11 +57,11 @@ If you don't see a template for the assay(s) in your study, please send a reques
 The data validation portion of the app allows you to upload metadata files (as .csv) and the manifest (as .tsv or .txt) and view the results of a series of automated checks.
 
 Examples of the types of checks we perform are:
-- A metadata template is used
-- All required columns from the templates are present
-- Individuals and specimens have unique identifiers, and the identifiers match across different metadata files
-- Metadata terms conform to a controlled vocabulary, where applicable
-- Duplicates file path in the manifest
+1. A metadata template is used
+2.All required columns from the templates are present
+3. Individuals and specimens have unique identifiers, and the identifiers match across different metadata files
+4. Metadata terms conform to a controlled vocabulary, where applicable
+5. Duplicates file path in the manifest
 
 ### Viewing data summary
 
