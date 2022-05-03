@@ -57,6 +57,7 @@ If you don't see a template for the assay(s) in your study, please send a reques
 The data validation portion of the app allows you to upload metadata files (as .csv) and the manifest (as .tsv or .txt) and view the results of a series of automated checks.
 
 Examples of the types of checks we perform are:
+
 * All required columns from the templates are present
 * Individuals and specimens have unique identifiers
 * Metadata terms conform to a controlled vocabulary if the column uses controlled values (for example, TRUE is used instead of Yes or Y)
