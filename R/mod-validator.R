@@ -31,26 +31,26 @@ validator_ui <- function(id, species_list, assay_templates,
         get_study_ui(ns("study")),
 
         # Species
-        div(
-          class = "result",
-          div(
-            class = "wide",
-            shinyjs::disabled(
-              radioButtons(
-                ns("species"),
-                "Species",
-                species_list
-              )
-            )
-          ),
-          popify(
-            tags$a(icon(name = "question-circle"), href = "#"),
-            "Information",
-            "Select the species used in the study.",
-            placement = "left",
-            trigger = "hover"
-          )
-        ),
+        #div(
+          #class = "result",
+          #div(
+          # class = "wide",
+           # shinyjs::disabled(
+           #   radioButtons(
+            #    ns("species"),
+            #    "Species",
+            #    species_list
+            #  )
+          #  )
+         # ),
+         # popify(
+         #   tags$a(icon(name = "question-circle"), href = "#"),
+         #   "Information",
+         #   "Select the species used in the study.",
+         #   placement = "left",
+          #  trigger = "hover"
+         # )
+       # ),
 
         # Biospecimen type
         if (include_biospecimen_type) {
