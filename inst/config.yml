@@ -311,8 +311,6 @@ veoibd:
       human: "syn29358381"
     biospecimen_templates:
       human: "syn29358373"
-  species_list:
-    - "human"
   complete_columns:
     manifest:
       - "path"
