@@ -57,11 +57,10 @@ If you don't see a template for the assay(s) in your study, please send a reques
 The data validation portion of the app allows you to upload metadata files (as .csv) and the manifest (as .tsv or .txt) and view the results of a series of automated checks.
 
 Examples of the types of checks we perform are:
-1. A metadata template is used
-2.All required columns from the templates are present
-3. Individuals and specimens have unique identifiers, and the identifiers match across different metadata files
-4. Metadata terms conform to a controlled vocabulary, where applicable
-5. Duplicates file path in the manifest
+* All required columns from the templates are present
+* Individuals and specimens have unique identifiers
+* Metadata terms conform to a controlled vocabulary if the column uses controlled values (for example, TRUE is used instead of Yes or Y)
+* If both 1kD_standardized_demographic_data and biospecimen templates are used, each biospecimen is linked to an individual
 
 ### Viewing data summary
 
