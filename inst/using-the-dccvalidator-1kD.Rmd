@@ -45,8 +45,8 @@ A manifest is .tsv or .txt file with data files to be uploaded to Synapse as ent
 
 Each study should include metadata that would help a new researcher understand and reuse the data. 
   
-1. A **[1kD_minimum_ChildParent_metadata](https://www.synapse.org/#!Synapse:syn29358381)** describing each child/parent/other caregiver in the study. Each row corresponds to a unique individual
-2. A **[AssayManifest](https://www.synapse.org/#!Synapse:syn27832372)** listing each file and its assay specific information that will be uploaded. Remember to include your metadata files in the manifest.
+1. A **[1kD_minimum_ChildParent_metadata](https://www.synapse.org/#!Synapse:syn29358381)** describing each child/parent/other caregiver in the study. Each row corresponds to a unique individual.
+2. A **[UploadManifest](https://www.synapse.org/#!Synapse:syn27832372)** listing each file and its assay specific information that will be uploaded. Remember to include your metadata files in the manifest.
 3. A **[Biospecimen metadata](https://www.synapse.org/#!Synapse:syn29358373)** describing the specimens that were collected. **Only applicable to metabolomics and metagenomics data.** 
 
 Metadata file templates are [available in the 1kD Synapse project](https://www.synapse.org/#!Synapse:syn27817580){target="_blank"}. 
