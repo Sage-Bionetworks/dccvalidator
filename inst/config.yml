@@ -6,7 +6,7 @@ default:
   study_table: "syn11363298"
   samples_table: "syn21578908"
   annotations_table: "syn10242922"
-  annotations_link: "https://shinypro.synapse.org/users/nsanati/annotationUI/"
+  annotations_link: "https://shinypro.synapse.org/users/nkauer/amp-ad-metadata-dictionary/"
   templates_link: "https://www.synapse.org/#!Synapse:syn18512044"
   docs_tab:
     include_tab: TRUE
@@ -43,7 +43,7 @@ default:
       - "specimenID"
     assay:
       - "specimenID"
-  contact_email: "nicole.kauer@synapse.org"
+  contact_email: "AMPAD_SageAdmin@synapse.org"
 
 dev:
   production: FALSE
@@ -82,7 +82,7 @@ amp-ad:
   parent: "syn21643404"
   samples_table: "syn21578908"
   annotations_table: "syn21459391"
-  annotations_link: "https://shinypro.synapse.org/users/kwoo/amp-ad-metadata-dictionary/"
+  annotations_link: "https://shinypro.synapse.org/users/nkauer/amp-ad-metadata-dictionary/"
   teams:
     - "3405451"
   docs_tab:
