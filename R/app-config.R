@@ -22,7 +22,7 @@ get_golem_config <- function(value,
                                "GOLEM_CONFIG_ACTIVE",
                                Sys.getenv(
                                  "R_CONFIG_ACTIVE",
-                                 "default"
+                                 "amp-ad"
                                )
                              ),
                              file = Sys.getenv("R_CONFIG_FILE", app_sys("config.yml")),
