@@ -1,0 +1,12 @@
+pandoc: 2.7.3
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  customizing-dccvalidator: customizing-dccvalidator.html
+  deploying-dccvalidator: deploying-dccvalidator.html
+  study-documentation-amp-ad: study-documentation-amp-ad.html
+  study-documentation-pec: study-documentation-pec.html
+  using-the-dccvalidator-app-amp-ad: using-the-dccvalidator-app-amp-ad.html
+  using-the-dccvalidator-pec: using-the-dccvalidator-pec.html
+last_built: 2021-09-07T16:18Z
+
