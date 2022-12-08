@@ -1,6 +1,6 @@
 backports.csv==1.0.7
 boto3==1.17.95
-certifi==2019.9.11
+certifi==2022.12.7
 chardet==3.0.4
 Deprecated==1.2.4
 entrypoints==0.3
