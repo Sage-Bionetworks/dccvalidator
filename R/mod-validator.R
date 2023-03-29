@@ -31,26 +31,26 @@ validator_ui <- function(id, species_list, assay_templates,
         get_study_ui(ns("study")),
 
         # Species
-        div(
-          class = "result",
-          div(
-            class = "wide",
-            shinyjs::disabled(
-              radioButtons(
-                ns("species"),
-                "Species",
-                species_list
-              )
-            )
-          ),
-          popify(
-            tags$a(icon(name = "question-circle"), href = "#"),
-            "Information",
-            "Select the species used in the study.",
-            placement = "left",
-            trigger = "hover"
-          )
-        ),
+        #div(
+          #class = "result",
+          #div(
+          # class = "wide",
+           # shinyjs::disabled(
+           #   radioButtons(
+            #    ns("species"),
+            #    "Species",
+            #    species_list
+            #  )
+          #  )
+         # ),
+         # popify(
+         #   tags$a(icon(name = "question-circle"), href = "#"),
+         #   "Information",
+         #   "Select the species used in the study.",
+         #   placement = "left",
+          #  trigger = "hover"
+         # )
+       # ),
 
         # Biospecimen type
         if (include_biospecimen_type) {
@@ -83,26 +83,26 @@ validator_ui <- function(id, species_list, assay_templates,
         },
 
         # Assay name
-        div(
-          class = "result",
-          div(
-            class = "wide",
-            shinyjs::disabled(
-              selectInput(
-                ns("assay_name"),
-                "Assay type",
-                names(assay_templates)
-              )
-            )
-          ),
-          popify(
-            tags$a(icon(name = "question-circle"), href = "#"),
-            "Information",
-            "Select the type of assay that matches your assay metadata.", # nolint
-            placement = "left",
-            trigger = "hover"
-          )
-        ),
+        #div(
+         # class = "result",
+         # div(
+          #  class = "wide",
+          #  shinyjs::disabled(
+           #   selectInput(
+           #     ns("assay_name"),
+           #     "Assay type",
+           #     names(assay_templates)
+          #    )
+          #  )
+         # ),
+         # popify(
+         #   tags$a(icon(name = "question-circle"), href = "#"),
+         #   "Information",
+        #    "Select the type of assay that matches your assay metadata.", # nolint
+         #   placement = "left",
+        #    trigger = "hover"
+        #  )
+       # ),
 
         # Files to be validated
         conditionalPanel(
@@ -114,7 +114,7 @@ validator_ui <- function(id, species_list, assay_templates,
               shinyjs::disabled(
                 fileInput(
                   ns("indiv_meta"),
-                  "Individual metadata file (.csv)",
+                  "1kD_standardized_demographic_data file (.csv)",
                   width = NULL,
                   accept = c(
                     "text/csv",
@@ -127,7 +127,7 @@ validator_ui <- function(id, species_list, assay_templates,
             popify(
               tags$a(icon(name = "question-circle"), href = "#"),
               "Information",
-              "Select the individual metadata file. This file should have one row per individual, with data about each individual in the experiment. If adding a new dataset to an existing dataset, please include all previous individuals.", # nolint
+              "Select the 1kD_standardized_demographic_data file. This file should have one row per individual, with data about each individual in the experiment. If adding a new dataset to an existing dataset, please include all previous individuals.", # nolint
               placement = "left",
               trigger = "hover"
             )
@@ -159,31 +159,31 @@ validator_ui <- function(id, species_list, assay_templates,
             trigger = "hover"
           )
         ),
-        div(
-          class = "result",
-          div(
-            class = "wide",
-            shinyjs::disabled(
-              fileInput(
-                ns("assay_meta"),
-                "Assay metadata file (.csv)",
-                width = NULL,
-                accept = c(
-                  "text/csv",
-                  "text/comma-separated-values,text/plain",
-                  ".csv"
-                )
-              )
-            )
-          ),
-          popify(
-            tags$a(icon(name = "question-circle"), href = "#"),
-            "Information",
-            "Select the assay metadata file. Depending on the assay, this file should have one row per specimen or one row per individual (indicated in the template), with data about the assay performed on each specimen or individual in the experiment. If adding a new dataset to an existing dataset, please include all previous assay specimens or individuals. Please be sure to choose the correct assay type from the drop-down above, as well.", # nolint
-            placement = "left",
-            trigger = "hover"
-          )
-        ),
+       # div(
+         # class = "result",
+         # div(
+         #   class = "wide",
+         #   shinyjs::disabled(
+         #     fileInput(
+          #      ns("assay_meta"),
+          #      "Assay metadata file (.csv)",
+          #      width = NULL,
+           #     accept = c(
+           #       "text/csv",
+           #       "text/comma-separated-values,text/plain",
+           #       ".csv"
+           #     )
+           #   )
+           # )
+          #),
+        #  popify(
+         #   tags$a(icon(name = "question-circle"), href = "#"),
+         #   "Information",
+          #  "Select the assay metadata file. Depending on the assay, this file should have one row per specimen or one row per individual (indicated in the template), with data about the assay performed on each specimen or individual in the experiment. If adding a new dataset to an existing dataset, please include all previous assay specimens or individuals. Please be sure to choose the correct assay type from the drop-down above, as well.", # nolint
+          #  placement = "left",
+          #  trigger = "hover"
+         # )
+        #),
         div(
           class = "result",
           div(
