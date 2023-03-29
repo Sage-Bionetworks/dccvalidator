@@ -293,17 +293,20 @@ veoibd:
     tab_name: "Study Documentation"
     path_to_docs_markdown: "inst/study-documentation-1kD.Rmd"
   teams:
-    - "3433360"
-    - "3436722"
-    - "3436721"
-    - "3436720"
-    - "3436719"
-    - "3436718"
-    - "3436509"
-    - "3436717"
-    - "3436716"
-    - "3436713"
-    - "3436714"
+    - "3433360"  # 1kD_admin
+    - "3436722"  # 1kD_Connectome
+    - "3436721"  # 1kD_InfantNaturalStatistics
+    - "3436720"  # 1kD_BRAINRISE
+    - "3436718"  # 1kD_KHULA
+    - "3436509"  # 1kD_MicrobiomeBrainDevelopment
+    - "3436717"  # 1kD_M4EFaD_LABS
+    - "3436716"  # 1kD_Assembloids
+    - "3436713"  # 1kD_DyadicSociometrics_NTU
+    - "3466183"  # 1kD_DyadicSociometrics_Cambridge
+    - "3436714"  # 1kD_First1000Daysdatabase
+    - "3458847"  # 1kD_M4EFaD_BMT team
+    - "3464137"  # 1kD_Stanford_Yeung team
+    - "3460645"  # 1kD_M4EFaD_Auckland
   include_biospecimen_type: FALSE
   templates:
     manifest_template: "syn27832372"
